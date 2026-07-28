@@ -303,14 +303,18 @@ td.description {
 .actions {
     display: flex;
     justify-content: center;
-    gap: 5px;
+    gap: 3px;
 }
 
 .action-btn {
-    height: 28px;
-    padding: 0 9px;
-    font-size: 10px;
+    width: 30px;
+    height: 26px;
+    padding: 0;
+    font-size: 14px;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .empty {
@@ -1190,14 +1194,16 @@ perfil==="admin"
 
 <button
 class="action-btn btn-blue"
+title="Editar"
 onclick="editarPalete('${p.id}')">
-EDITAR
+✏️
 </button>
 
 <button
 class="action-btn btn-red"
+title="Excluir"
 onclick="excluirPalete('${p.id}')">
-EXCLUIR
+🗑️
 </button>
 
 </div>
