@@ -659,11 +659,12 @@ td.description {
         DATA
     </th>
 
-    <th
-        class="no-print"
-        style="width: 10%;">
-        AÇÕES
-    </th>
+   <th
+    class="no-print coluna-acoes"
+    style="width: 10%;"
+>
+    AÇÕES
+</th>
 
 </tr>
 
@@ -1081,6 +1082,18 @@ function renderizar() {
             "tabelaPaletes"
         );
 
+    const colunaAcoes =
+document.querySelector(".coluna-acoes");
+
+if(colunaAcoes){
+
+    colunaAcoes.style.display =
+    perfil === "admin"
+    ? ""
+    : "none";
+
+}
+
 
     const pesquisa =
         document.getElementById(
@@ -1154,16 +1167,12 @@ p.descricao.toLowerCase().includes(pesquisa)
 
         tbody.innerHTML = `
 
-            <tr>
-
-                <td
-                    colspan="5"
-                    class="empty"
-                >
-                    Nenhum palete encontrado.
-                </td>
-
-            </tr>
+            <td
+    colspan="${perfil==="admin" ? 7 : 6}"
+    class="empty"
+>
+    Nenhum palete encontrado.
+</td>
 
         `;
 
