@@ -538,6 +538,13 @@ td.description {
 
         <div class="filters">
 
+            <input
+    type="text"
+    id="pesquisa"
+    placeholder="Pesquisar PA ou descrição"
+    oninput="renderizar()"
+>
+
            <select id="tipoPesquisa" onchange="renderizar()">
 
     <option value="todos">PA + Descrição</option>
@@ -616,12 +623,12 @@ td.description {
     CONTAINER
 </th>
 
-                    <th
-                        class="no-print"
-                        style="width: 12%;"
-                    >
-                        AÇÕES
-                    </th>
+<th
+    class="no-print"
+    style="width: 12%;"
+>
+    AÇÕES
+</th>
 
                 </tr>
 
@@ -778,6 +785,11 @@ if(perfil!=="admin"){
         Number(
             document.getElementById("caixas").value
         );
+
+    const descricao =
+    document.getElementById("descricao")
+        .value
+        .trim();
 
    const container =
 document.getElementById("container")
@@ -1110,10 +1122,14 @@ function renderizar() {
                 </td>
 
                 <td>
-                    G02
-                </td>
+    G02
+</td>
 
-               <td class="no-print">
+<td>
+    ${escapeHTML(p.container || "")}
+</td>
+
+<td class="no-print">
 
 ${
 perfil==="admin"
