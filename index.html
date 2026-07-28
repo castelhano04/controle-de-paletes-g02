@@ -482,6 +482,14 @@ td.description {
                 placeholder="DESCRIÇÃO"
                 autocomplete="off"
             >
+            
+            <input
+    type="text"
+    id="container"
+    placeholder="Nº CONTAINER"
+    autocomplete="off"
+>
+            
 
         </div>
 
@@ -530,28 +538,15 @@ td.description {
 
         <div class="filters">
 
-            <button
-                class="filter-btn active"
-                id="filtroTodos"
-                onclick="filtrar('TODOS')"
-            >
-                TODOS
-            </button>
+           <select id="tipoPesquisa" onchange="renderizar()">
 
-            <button
-                class="filter-btn"
-                id="filtroG02"
-                onclick="filtrar('G02')"
-            >
-                GALPÃO G02
-            </button>
+    <option value="todos">PA + Descrição</option>
 
-            <input
-                type="text"
-                id="pesquisa"
-                placeholder="Pesquisar PA ou descrição"
-                oninput="renderizar()"
-            >
+    <option value="pa">Somente PA</option>
+
+    <option value="descricao">Somente Descrição</option>
+
+</select>
 
             <button
                 class="btn-blue"
@@ -616,6 +611,10 @@ td.description {
                     <th style="width: 13%;">
                         GALPÃO
                     </th>
+
+                    <th style="width:15%;">
+    CONTAINER
+</th>
 
                     <th
                         class="no-print"
@@ -780,10 +779,13 @@ if(perfil!=="admin"){
             document.getElementById("caixas").value
         );
 
-    const descricao =
-        document.getElementById("descricao")
-            .value
-            .trim();
+   const container =
+document.getElementById("container")
+.value.trim();
+    
+    const container =
+document.getElementById("container")
+.value.trim();
 
 
     if (!pa) {
@@ -832,13 +834,16 @@ if(perfil!=="admin"){
 
         if (index !== -1) {
 
-db.collection("paletes")
-.doc(editandoId)
-.update({
+await db.collection("paletes").doc(editandoId).update({
 
     pa: pa,
+
     caixas: caixas,
+
     descricao: descricao,
+
+    container: container,
+
     galpao: GALPAO
 
 });
@@ -871,13 +876,20 @@ db.collection("paletes")
         }
 
 
-db.collection("paletes").add({
+await db.collection("paletes").add({
+
     pa: pa,
+
     caixas: caixas,
+
     descricao: descricao,
-    galpao: GALPAO,
-    dataCadastro: new Date()
+
+    container: container,
+
+    galpao: GALPAO
+
 });
+        
 alert("Palete cadastrado com sucesso!");
 
     }
@@ -902,6 +914,8 @@ function limparFormulario() {
 
     document.getElementById("descricao")
         .value = "";
+
+    document.getElementById("container").value="";
 
 
     editandoId = null;
@@ -938,6 +952,9 @@ if(perfil!=="admin") return;
 
     document.getElementById("descricao")
         .value = palete.descricao;
+
+    document.getElementById("container").value =
+palete.container || "";
 
 
     editandoId = id;
@@ -999,42 +1016,6 @@ alert("Palete excluído com sucesso!");
    FILTRO
 ========================= */
 
-function filtrar(tipo) {
-
-    filtroAtual = tipo;
-
-
-    document
-        .querySelectorAll(".filter-btn")
-        .forEach(btn => {
-
-            btn.classList.remove("active");
-
-        });
-
-
-    if (tipo === "TODOS") {
-
-        document
-            .getElementById("filtroTodos")
-            .classList.add("active");
-
-    }
-
-
-    if (tipo === "G02") {
-
-        document
-            .getElementById("filtroG02")
-            .classList.add("active");
-
-    }
-
-
-    renderizar();
-
-}
-
 
 /* =========================
    RENDERIZAR TABELA
@@ -1061,9 +1042,7 @@ function renderizar() {
         paletes.filter(p => {
 
 
-            const bateFiltro =
-                filtroAtual === "TODOS" ||
-                p.galpao === filtroAtual;
+            const bateFiltro = true;
 
 
             const batePesquisa =
