@@ -679,34 +679,43 @@ let editandoId = null;
    LOGIN
 ========================= */
 
-function entrar() {
+function entrar(){
 
-    const senha = document.getElementById("senhaLogin").value;
+    const senha=document.getElementById("senhaLogin").value;
 
-    const erro = document.getElementById("erroLogin");
+    const erro=document.getElementById("erroLogin");
 
-    if (senha === SENHA) {
+    erro.style.display="none";
 
-        perfil = "admin";
+    if(senha===SENHA){
 
-    } else if (senha === SENHA_CONSULTA) {
+        perfil="admin";
 
-        perfil = "consulta";
+    }else if(senha===SENHA_CONSULTA){
 
-    } else {
+        perfil="consulta";
 
-        erro.style.display = "block";
-        document.getElementById("senhaLogin").value = "";
+    }else{
+
+        erro.style.display="block";
+
+        document.getElementById("senhaLogin").value="";
+
         return;
 
     }
 
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("sistema").style.display = "block";
+    document.getElementById("loginScreen").style.display="none";
 
-    carregarFirebase();
+    document.getElementById("sistema").style.display="block";
+
+    sessionStorage.setItem("paletesLogado","true");
+
+    sessionStorage.setItem("perfil",perfil);
 
     configurarPermissoes();
+
+    carregarFirebase();
 
 }
 
@@ -728,6 +737,24 @@ function sair() {
     document.getElementById("senhaLogin")
         .value = "";
 
+sessionStorage.removeItem("perfil");
+
+}
+
+function configurarPermissoes(){
+
+    const cadastro=document.querySelector(".card.no-print");
+
+    if(perfil==="consulta"){
+
+        cadastro.style.display="none";
+
+    }else{
+
+        cadastro.style.display="block";
+
+    }
+
 }
 
 
@@ -736,6 +763,14 @@ function sair() {
 ========================= */
 
 async function salvarPalete() {
+
+if(perfil!=="admin"){
+
+    alert("Você não tem permissão.");
+
+    return;
+
+}
 
     const pa =
         document.getElementById("pa")
@@ -886,6 +921,8 @@ function limparFormulario() {
 
 function editarPalete(id) {
 
+if(perfil!=="admin") return;
+
     const palete =
         paletes.find(
             p => p.id === id
@@ -928,6 +965,8 @@ function editarPalete(id) {
 ========================= */
 
 async function excluirPalete(id) {
+
+if(perfil!=="admin") return;
 
     const palete =
         paletes.find(
@@ -1372,14 +1411,6 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
     carregarFirebase();
 
 }
-
-function configurarPermissoes() {
-
-    if (perfil === "consulta") {
-
-        document.querySelector(".card.no-print").style.display = "none";
-
-    }
 
 }
 
