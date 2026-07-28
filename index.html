@@ -489,6 +489,11 @@ td.description {
     placeholder="Nº CONTAINER"
     autocomplete="off"
 >
+
+            <input
+    type="date"
+    id="data"
+>
             
 
         </div>
@@ -547,11 +552,13 @@ td.description {
 
            <select id="tipoPesquisa" onchange="renderizar()">
 
-    <option value="todos">PA + Descrição</option>
+<option value="todos">PA + Descrição + Data</option>
 
-    <option value="pa">Somente PA</option>
+<option value="pa">Somente PA</option>
 
-    <option value="descricao">Somente Descrição</option>
+<option value="descricao">Somente Descrição</option>
+
+<option value="data">Somente Data</option>
 
 </select>
 
@@ -621,6 +628,10 @@ td.description {
 
                     <th style="width:15%;">
     CONTAINER
+</th>
+
+                    <th>
+    DATA
 </th>
 
 <th
@@ -794,6 +805,10 @@ if(perfil!=="admin"){
    const container =
 document.getElementById("container")
 .value.trim();
+
+    const data =
+document.getElementById("data")
+.value;
     
     if (!pa) {
 
@@ -851,6 +866,8 @@ await db.collection("paletes").doc(editandoId).update({
 
     container: container,
 
+    data: data,
+
     galpao: GALPAO
 
 });
@@ -893,6 +910,8 @@ await db.collection("paletes").add({
 
     container: container,
 
+    data: data,
+
     galpao: GALPAO
 
 });
@@ -923,6 +942,9 @@ function limparFormulario() {
         .value = "";
 
     document.getElementById("container").value="";
+
+    document.getElementById("data")
+.value = "";
 
 
     editandoId = null;
@@ -1052,18 +1074,45 @@ function renderizar() {
             const bateFiltro = true;
 
 
-            const batePesquisa =
-                !pesquisa ||
+           const tipo =
+document.getElementById("tipoPesquisa").value;
 
-                p.pa
-                    .toLowerCase()
-                    .includes(pesquisa)
 
-                ||
+const batePesquisa =
+!pesquisa ||
 
-                p.descricao
-                    .toLowerCase()
-                    .includes(pesquisa);
+(
+tipo === "pa" &&
+p.pa.toLowerCase().includes(pesquisa)
+)
+
+||
+
+(
+tipo === "descricao" &&
+p.descricao.toLowerCase().includes(pesquisa)
+)
+
+||
+
+(
+tipo === "data" &&
+p.data &&
+p.data.includes(pesquisa)
+)
+
+||
+
+(
+tipo === "todos" &&
+(
+p.pa.toLowerCase().includes(pesquisa)
+||
+p.descricao.toLowerCase().includes(pesquisa)
+||
+(p.data && p.data.includes(pesquisa))
+)
+);
 
 
             return (
@@ -1127,6 +1176,10 @@ function renderizar() {
 
 <td>
     ${escapeHTML(p.container || "")}
+</td>
+
+<td>
+${p.data ? p.data.split("-").reverse().join("/") : ""}
 </td>
 
 <td class="no-print">
