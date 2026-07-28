@@ -1450,9 +1450,13 @@ function carregarFirebase() {
 
 if (sessionStorage.getItem("paletesLogado") === "true") {
 
+    perfil = sessionStorage.getItem("perfil");
+
     document.getElementById("loginScreen").style.display = "none";
 
     document.getElementById("sistema").style.display = "block";
+
+    configurarPermissoes();
 
     carregarFirebase();
 
