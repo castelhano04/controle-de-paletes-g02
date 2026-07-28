@@ -1215,11 +1215,11 @@ p.descricao.toLowerCase().includes(pesquisa)
 ${p.data ? p.data.split("-").reverse().join("/") : ""}
 </td>
 
-<td class="no-print">
-
 ${
 perfil==="admin"
 ?`
+<td class="no-print">
+
 <div class="actions">
 
 <button
@@ -1237,6 +1237,8 @@ onclick="excluirPalete('${p.id}')">
 </button>
 
 </div>
+
+</td>
 `
 :""
 }
