@@ -1216,7 +1216,7 @@ p.descricao.toLowerCase().includes(pesquisa)
         Number(p.caixas).toLocaleString("pt-BR")
     }
     ${
-        p.descricao.toLowerCase().includes("mop")
+        ehMop(p.descricao)
         ? "PCS"
         : "CXS"
     }
@@ -1514,6 +1514,19 @@ function carregarFirebase() {
         });
 
     });
+
+    function ehMop(descricao) {
+
+    const texto = descricao.toLowerCase().trim();
+
+    // Se for refil, sempre será CXS
+    if (texto.includes("refil")) {
+        return false;
+    }
+
+    // Qualquer outro produto contendo "mop" será PCS
+    return texto.includes("mop");
+}
 
     renderizar();
 
