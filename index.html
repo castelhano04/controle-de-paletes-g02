@@ -1553,25 +1553,41 @@ function escapeHTML(text) {
 function carregarFirebase() {
 
     db.collection("paletes")
-.onSnapshot(function(snapshot){
+    .onSnapshot(function(snapshot){
 
-    paletes=[];
+        paletes = [];
 
-    snapshot.forEach(function(doc){
+        snapshot.forEach(function(doc){
 
-        paletes.push({
+            paletes.push({
 
-            id:doc.id,
+                id: doc.id,
 
-            ...doc.data()
+                ...doc.data()
+
+            });
 
         });
 
+       paletes.sort((a, b) => {
+
+    // Primeiro ordena pela data (mais recente primeiro)
+    const compararData = b.data.localeCompare(a.data);
+
+    if (compararData !== 0) {
+        return compararData;
+    }
+
+    // Se a data for igual, ordena pelo PA (maior primeiro)
+    return String(b.pa).localeCompare(String(a.pa), undefined, {
+        numeric: true
     });
 
-    renderizar();
-
 });
+
+        renderizar();
+
+    });
 
 }
 
