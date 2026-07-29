@@ -1296,7 +1296,7 @@ function atualizarResumo(lista) {
     const totalCxs =
     lista.reduce((total, p) => {
 
-        if (!p.descricao.toLowerCase().includes("mop")) {
+        if (!ehMop(p.descricao)) {
 
             return total + Number(p.caixas || 0);
 
@@ -1310,7 +1310,7 @@ function atualizarResumo(lista) {
 const totalPcs =
     lista.reduce((total, p) => {
 
-        if (p.descricao.toLowerCase().includes("mop")) {
+        if (ehMop(p.descricao)) {
 
             return total + Number(p.caixas || 0);
 
