@@ -1093,6 +1093,26 @@ function ehMop(descricao) {
         texto.startsWith("mop novo lava e seca")
     );
 }
+
+    function quantidadePaletes(pa) {
+
+    const texto = String(pa).trim();
+
+    // Aceita: até, ate, a ou -
+    const partes = texto.split(/\s*(?:até|ate|a|-)\s*/i);
+
+    if (partes.length === 2) {
+
+        const inicio = parseInt(partes[0]);
+        const fim = parseInt(partes[1]);
+
+        if (!isNaN(inicio) && !isNaN(fim) && fim >= inicio) {
+            return fim - inicio + 1;
+        }
+    }
+
+    return 1;
+}
     
 /* =========================
    RENDERIZAR TABELA
@@ -1305,9 +1325,27 @@ onclick="excluirPalete('${p.id}')">
 
 function atualizarResumo(lista) {
 
-    const totalPaletes =
-        lista.length;
+  const totalPaletes = lista.reduce((total, p) => {
 
+    const texto = p.pa.trim();
+
+    // Aceita: até, ate, a ou -
+    const partes = texto.split(/\s*(?:até|ate|a|-)\s*/i);
+
+    if (partes.length === 2) {
+
+        const inicio = parseInt(partes[0]);
+        const fim = parseInt(partes[1]);
+
+        if (!isNaN(inicio) && !isNaN(fim) && fim >= inicio) {
+            return total + (fim - inicio + 1);
+        }
+    }
+
+    // Se não for intervalo, conta apenas 1 palete
+    return total + 1;
+
+}, 0);
 
     const totalCxs =
     lista.reduce((total, p) => {
