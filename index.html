@@ -586,6 +586,8 @@ td.description {
 
 <option value="descricao">Somente Descrição</option>
 
+                <option value="container">Somente Container</option>
+
 <option value="data">Somente Data</option>
 
 </select>
@@ -1133,6 +1135,14 @@ p.descricao.toLowerCase().includes(pesquisa)
 ||
 
 (
+tipo === "container" &&
+p.container &&
+p.container.toLowerCase().includes(pesquisa)
+)
+
+||
+
+(
 tipo === "data" &&
 p.data &&
 p.data.includes(pesquisa)
@@ -1146,6 +1156,8 @@ tipo === "todos" &&
 p.pa.toLowerCase().includes(pesquisa)
 ||
 p.descricao.toLowerCase().includes(pesquisa)
+||
+(p.container && p.container.toLowerCase().includes(pesquisa))
 ||
 (p.data && p.data.includes(pesquisa))
 )
