@@ -1077,7 +1077,23 @@ alert("Palete excluído com sucesso!");
    FILTRO
 ========================= */
 
+function ehMop(descricao) {
 
+    const texto = descricao
+        .trim()
+        .toLowerCase();
+
+    return (
+        texto.startsWith("mop pro") ||
+        texto.startsWith("mop duo") ||
+        texto.startsWith("mop lava e seca") ||
+        texto.startsWith("mop giratório") ||
+        texto.startsWith("mop giratorio") ||
+        texto.startsWith("mop 3 em 1") ||
+        texto.startsWith("mop novo lava e seca")
+    );
+}
+    
 /* =========================
    RENDERIZAR TABELA
 ========================= */
@@ -1514,19 +1530,6 @@ function carregarFirebase() {
         });
 
     });
-
-    function ehMop(descricao) {
-
-    const texto = descricao.toLowerCase().trim();
-
-    // Se for refil, sempre será CXS
-    if (texto.includes("refil")) {
-        return false;
-    }
-
-    // Qualquer outro produto contendo "mop" será PCS
-    return texto.ehMop(p.descricao);
-}
 
     renderizar();
 
