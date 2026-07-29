@@ -1525,7 +1525,7 @@ function carregarFirebase() {
     }
 
     // Qualquer outro produto contendo "mop" será PCS
-    return texto.includes("mop");
+    return texto.ehMop(p.descricao);
 }
 
     renderizar();
