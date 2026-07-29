@@ -498,11 +498,11 @@ td.description {
             >
 
             <input
-                type="number"
-                id="caixas"
-                placeholder="QUANTIDADE DE CAIXAS"
-                min="0"
-            >
+    type="text"
+    id="caixas"
+    placeholder="Quantidade (ex.: 6150 (PCS), 120 CXS)"
+    autocomplete="off"
+>
 
             <input
                 type="text"
@@ -617,9 +617,14 @@ td.description {
             </div>
 
             <div class="summary-box">
-                CAIXAS:
-                <strong id="totalCaixas">0</strong>
-            </div>
+    CXS:
+    <strong id="totalCxs">0</strong>
+</div>
+
+<div class="summary-box">
+    PCS:
+    <strong id="totalPcs">0</strong>
+</div>
 
         </div>
 
@@ -644,9 +649,9 @@ td.description {
         PA
     </th>
 
-    <th style="width: 12%;">
-        QUANTIDADE DE CXS
-    </th>
+   <th style="width: 12%;">
+    QUANTIDADE
+</th>
 
     <th style="width: 28%;">
         DESCRIÇÃO
@@ -819,10 +824,10 @@ if(perfil!=="admin"){
             .value
             .trim();
 
-    const caixas =
-        Number(
-            document.getElementById("caixas").value
-        );
+   const caixas =
+    document.getElementById("caixas")
+        .value
+        .trim();
 
     const descricao =
     document.getElementById("descricao")
@@ -847,7 +852,7 @@ document.getElementById("data")
     }
 
 
-    if (!caixas || caixas < 0) {
+    if (!caixas) {
 
         alert(
             "Informe a quantidade de caixas."
@@ -1206,10 +1211,16 @@ p.descricao.toLowerCase().includes(pesquisa)
                     </strong>
                 </td>
 
-                <td>
-                    ${Number(p.caixas)
-                        .toLocaleString("pt-BR")}
-                </td>
+              <td>
+    ${
+        Number(p.caixas).toLocaleString("pt-BR")
+    }
+    ${
+        p.descricao.toLowerCase().includes("mop")
+        ? "PCS"
+        : "CXS"
+    }
+</td>
 
                 <td class="description">
                     ${escapeHTML(p.descricao)}
@@ -1282,16 +1293,32 @@ function atualizarResumo(lista) {
         lista.length;
 
 
-    const totalCaixas =
-        lista.reduce(
+    const totalCxs =
+    lista.reduce((total, p) => {
 
-            (total, p) =>
-                total +
-                Number(p.caixas || 0),
+        if (!p.descricao.toLowerCase().includes("mop")) {
 
-            0
+            return total + Number(p.caixas || 0);
 
-        );
+        }
+
+        return total;
+
+    }, 0);
+
+
+const totalPcs =
+    lista.reduce((total, p) => {
+
+        if (p.descricao.toLowerCase().includes("mop")) {
+
+            return total + Number(p.caixas || 0);
+
+        }
+
+        return total;
+
+    }, 0);
 
 
     document.getElementById(
@@ -1302,14 +1329,16 @@ function atualizarResumo(lista) {
             .toLocaleString("pt-BR");
 
 
-    document.getElementById(
-        "totalCaixas"
-    )
-    .textContent =
-        totalCaixas
-            .toLocaleString("pt-BR");
+    document.getElementById("totalCxs")
+.textContent =
+totalCxs.toLocaleString("pt-BR");
 
-}
+
+document.getElementById("totalPcs")
+.textContent =
+totalPcs.toLocaleString("pt-BR");
+
+    }
 
 
 /* =========================
