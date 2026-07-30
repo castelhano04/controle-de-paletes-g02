@@ -626,6 +626,11 @@ td.description {
     <strong id="totalPcs">0</strong>
 </div>
 
+            <div class="summary-box">
+    CONTAINERS:
+    <strong id="totalContainers">0</strong>
+</div>
+
         </div>
 
     </div>
@@ -1374,6 +1379,13 @@ const totalPcs =
 
     }, 0);
 
+    const totalContainers = 
+    [...new Set(
+        lista
+        .map(p => (p.container || "").trim().toUpperCase())
+        .filter(c => c !== "")
+    )].length;
+
 
     document.getElementById(
         "totalPaletes"
@@ -1391,6 +1403,10 @@ totalCxs.toLocaleString("pt-BR");
 document.getElementById("totalPcs")
 .textContent =
 totalPcs.toLocaleString("pt-BR");
+
+    document.getElementById("totalContainers")
+.textContent =
+totalContainers.toLocaleString("pt-BR");
 
     }
 
