@@ -1459,6 +1459,9 @@ onclick="retirarPA('${p.id}')">
    RESUMO
 ========================= */
 
+function atualizarResumo(lista) {
+
+
 const totalPaletes = lista.reduce((total, p) => {
 
     if(p.pasDisponiveis){
@@ -1527,7 +1530,7 @@ totalPcs.toLocaleString("pt-BR");
 .textContent =
 totalContainers.toLocaleString("pt-BR");
 
-
+}
 
 /* =========================
    SALVAR LOCAL
