@@ -995,6 +995,38 @@ document.getElementById("data")
         return;
     }
 
+    // Cria a lista de PAs disponíveis
+let pasDisponiveis = [];
+
+const partes = pa.split(/\s*(?:até|ate|a|-)\s*/i);
+
+if (partes.length === 2) {
+
+    const inicio = parseInt(partes[0]);
+    const fim = parseInt(partes[1]);
+
+    if (!isNaN(inicio) && !isNaN(fim)) {
+
+        for (let i = inicio; i <= fim; i++) {
+
+            pasDisponiveis.push({
+                numero: String(i),
+                disponivel: true
+            });
+
+        }
+
+    }
+
+} else {
+
+    pasDisponiveis.push({
+        numero: pa,
+        disponivel: true
+    });
+
+}
+
 
     /* EDITANDO */
 
