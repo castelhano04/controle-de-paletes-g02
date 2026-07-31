@@ -471,12 +471,6 @@ td.description {
 
         <div class="buttons no-print">
 
-<button 
-class="btn-dark"
-onclick="abrirAba('paletes')">
-CONTROLE PALETES
-</button>
-
 </div>
 
        <div>
@@ -486,6 +480,12 @@ CONTROLE PALETES
         By Castelhano
     </div>
 </div>
+
+    <button
+class="btn-dark"
+onclick="abrirAba('estoque')">
+CONTROLE ESTOQUE
+</button>
 
         <button
             class="btn-sair"
@@ -1885,6 +1885,63 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
     configurarPermissoes();
 
     carregarFirebase();
+
+}
+
+function abrirAba(tipo){
+
+    if(tipo==="estoque"){
+
+        document.getElementById("abaPaletes").style.display="none";
+
+        document.getElementById("abaEstoque").style.display="block";
+
+        renderizarEstoque();
+
+    }else{
+
+        document.getElementById("abaPaletes").style.display="block";
+
+        document.getElementById("abaEstoque").style.display="none";
+
+    }
+
+}
+
+    function renderizarEstoque(){
+
+    const tbody =
+    document.getElementById("tabelaEstoque");
+
+    tbody.innerHTML="";
+
+    paletes.forEach(p=>{
+
+        tbody.innerHTML += `
+        <tr>
+
+        <td><strong>${escapeHTML(p.pa)}</strong></td>
+
+        <td>-</td>
+
+        <td>${escapeHTML(p.caixas)}</td>
+
+        <td>${escapeHTML(p.descricao)}</td>
+
+        <td>G02</td>
+
+        <td>${escapeHTML(p.container||"")}</td>
+
+        <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
+
+        <td>
+            📦
+        </td>
+
+        </tr>
+        `;
+
+    });
 
 }
       
