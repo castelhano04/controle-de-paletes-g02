@@ -1917,33 +1917,51 @@ function abrirAba(tipo){
 
     paletes.forEach(p=>{
 
-        tbody.innerHTML += `
-        <tr>
+    let disponiveis = 1;
+    let total = 1;
 
-        <td><strong>${escapeHTML(p.pa)}</strong></td>
+    if (p.pasDisponiveis) {
 
-        <td>-</td>
+        total = p.pasDisponiveis.length;
 
-        <td>${escapeHTML(p.caixas)}</td>
+        disponiveis = p.pasDisponiveis.filter(pa => pa.disponivel).length;
 
-        <td>${escapeHTML(p.descricao)}</td>
+    }
 
-        <td>G02</td>
+    const cor =
+        disponiveis === total
+        ? "#198754"
+        : (disponiveis === 0 ? "#c62828" : "#ff9800");
 
-        <td>${escapeHTML(p.container||"")}</td>
+    tbody.innerHTML += `
+    <tr>
 
-        <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
+    <td><strong>${escapeHTML(p.pa)}</strong></td>
 
-        <td>
-            📦
-        </td>
+    <td style="font-weight:bold;color:${cor}">
+        ${disponiveis}/${total}
+    </td>
 
-        </tr>
-        `;
+    <td>${escapeHTML(p.caixas)}</td>
 
-    });
+    <td>${escapeHTML(p.descricao)}</td>
 
-}
+    <td>G02</td>
+
+    <td>${escapeHTML(p.container||"")}</td>
+
+    <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
+
+    <td>
+        📦
+    </td>
+
+    </tr>
+    `;
+
+});
+
+        }
       
 </script>
 
