@@ -740,6 +740,12 @@ SALDO MOPS
 SALDO DE MOPS
 </h3>
 
+    <button 
+class="btn-dark no-print"
+onclick="abrirAba('paletes')">
+← VOLTAR PALETES
+</button>
+
 
 <table>
 
@@ -1835,6 +1841,96 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
         calcularSaldoMops();
 
     }
+
+}
+
+    function calcularSaldoMops(){
+
+    const saldo = {};
+
+
+    paletes.forEach(p => {
+
+
+        if(ehMop(p.descricao)){
+
+
+            const nome = p.descricao
+            .trim()
+            .toUpperCase();
+
+
+            const quantidade =
+            Number(p.caixas || 0);
+
+
+            if(!saldo[nome]){
+
+                saldo[nome] = 0;
+
+            }
+
+
+            saldo[nome] += quantidade;
+
+
+        }
+
+
+    });
+
+
+
+    const tabela =
+    document.getElementById("tabelaMops");
+
+
+    tabela.innerHTML = "";
+
+
+
+    if(Object.keys(saldo).length === 0){
+
+        tabela.innerHTML = `
+
+        <tr>
+            <td colspan="2">
+                Nenhum MOP cadastrado.
+            </td>
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    Object.entries(saldo)
+    .forEach(([nome, quantidade])=>{
+
+
+        tabela.innerHTML += `
+
+        <tr>
+
+            <td>
+                ${escapeHTML(nome)}
+            </td>
+
+            <td>
+                ${quantidade.toLocaleString("pt-BR")}
+                PCS
+            </td>
+
+        </tr>
+
+        `;
+
+
+    });
+
 
 }
     
