@@ -403,6 +403,36 @@ td.description {
     margin-top: 3px;
     font-weight: bold;
 }
+
+    .cards-mops{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:15px;
+}
+
+.card-mop{
+    background:#fff;
+    border:2px solid #198754;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+
+.card-mop h2{
+    margin:0 0 15px;
+    color:#198754;
+    font-size:20px;
+}
+
+.card-mop .linha{
+    font-size:17px;
+    margin:8px 0;
+}
+
+.card-mop strong{
+    font-size:22px;
+}
+    
     </style>
     
 </head>
@@ -465,13 +495,6 @@ td.description {
     <!-- TOPO -->
 
     <div class="no-print" style="margin-bottom:10px">
-
-<button 
-class="btn-dark"
-onclick="abrirAba('paletes')">
-CONTROLE DE PALETES
-</button>
-
 
 <button 
 class="btn-green"
@@ -732,51 +755,26 @@ SALDO MOPS
 
 </div>
 
-    <div id="abaMops" style="display:none">
+   <div id="abaMops" style="display:none">
 
-<div class="card">
+    <div class="card">
 
-<h3>
-SALDO DE MOPS
-</h3>
+        <h3>SALDO DE MOPS</h3>
 
-    <button 
-class="btn-dark no-print"
-onclick="abrirAba('paletes')">
-← VOLTAR PALETES
-</button>
+        <button
+        class="btn-dark no-print"
+        onclick="abrirAba('paletes')">
+            ← VOLTAR AO CONTROLE
+        </button>
 
+        <br><br>
 
-<table>
+        <div id="cardsMops"></div>
 
-<thead>
-
-<tr>
-
-<th>
-TIPO DE MOP
-</th>
-
-<th>
-SALDO PCS
-</th>
-
-</tr>
-
-</thead>
-
-
-<tbody id="tabelaMops">
-
-</tbody>
-
-
-</table>
+    </div>
 
 </div>
-
-</div>
-
+    
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
@@ -1844,93 +1842,83 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
 
 }
 
-    function calcularSaldoMops(){
+   function calcularSaldoMops(){
 
-    const saldo = {};
+    const saldo={};
 
+    paletes.forEach(p=>{
 
-    paletes.forEach(p => {
+        if(!ehMop(p.descricao)) return;
 
+        const nome=p.descricao.trim().toUpperCase();
 
-        if(ehMop(p.descricao)){
+        if(!saldo[nome]){
 
+            saldo[nome]={
 
-            const nome = p.descricao
-            .trim()
-            .toUpperCase();
+                pcs:0,
 
+                containers:new Set()
 
-            const quantidade =
-            Number(p.caixas || 0);
-
-
-            if(!saldo[nome]){
-
-                saldo[nome] = 0;
-
-            }
-
-
-            saldo[nome] += quantidade;
-
+            };
 
         }
 
+        saldo[nome].pcs+=Number(p.caixas||0);
+
+        if(p.container){
+
+            saldo[nome].containers.add(
+                p.container.trim().toUpperCase()
+            );
+
+        }
 
     });
 
+    const painel=document.getElementById("cardsMops");
 
+    painel.innerHTML="";
 
-    const tabela =
-    document.getElementById("tabelaMops");
+    if(Object.keys(saldo).length===0){
 
-
-    tabela.innerHTML = "";
-
-
-
-    if(Object.keys(saldo).length === 0){
-
-        tabela.innerHTML = `
-
-        <tr>
-            <td colspan="2">
-                Nenhum MOP cadastrado.
-            </td>
-        </tr>
-
-        `;
+        painel.innerHTML="<p>Nenhum MOP encontrado.</p>";
 
         return;
 
     }
 
+    const wrapper=document.createElement("div");
 
+    wrapper.className="cards-mops";
 
     Object.entries(saldo)
-    .forEach(([nome, quantidade])=>{
+    .sort((a,b)=>a[0].localeCompare(b[0]))
+    .forEach(([nome,dados])=>{
 
+        wrapper.innerHTML+=`
 
-        tabela.innerHTML += `
+        <div class="card-mop">
 
-        <tr>
+            <h2>${escapeHTML(nome)}</h2>
 
-            <td>
-                ${escapeHTML(nome)}
-            </td>
+            <div class="linha">
+                📦 Containers:
+                <strong>${dados.containers.size}</strong>
+            </div>
 
-            <td>
-                ${quantidade.toLocaleString("pt-BR")}
-                PCS
-            </td>
+            <div class="linha">
+                📦 Saldo:
+                <strong>${dados.pcs.toLocaleString("pt-BR")} PCS</strong>
+            </div>
 
-        </tr>
+        </div>
 
         `;
 
-
     });
 
+    painel.appendChild(wrapper);
 
 }
     
