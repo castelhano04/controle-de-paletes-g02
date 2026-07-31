@@ -1051,14 +1051,44 @@ await db.collection("paletes").doc(editandoId).update({
             return;
         }
 
+        let pasDisponiveis = [];
+
+const partes = pa.split(/\s*(?:até|ate|a|-)\s*/i);
+
+if (partes.length === 2) {
+
+    const inicio = parseInt(partes[0]);
+    const fim = parseInt(partes[1]);
+
+    if (!isNaN(inicio) && !isNaN(fim)) {
+
+        for (let i = inicio; i <= fim; i++) {
+
+            pasDisponiveis.push({
+                numero: String(i),
+                disponivel: true
+            });
+
+        }
+
+    }
+
+} else {
+
+    pasDisponiveis.push({
+        numero: pa,
+        disponivel: true
+    });
+
+}   
 
 await db.collection("paletes").add({
 
     pa: pa,
 
-    pasDisponiveis: gerarListaPA(pa),
+    caixas: Number(caixas),
 
-    caixas: caixas,
+    saldoAtual: Number(caixas),
 
     descricao: descricao,
 
@@ -1066,7 +1096,9 @@ await db.collection("paletes").add({
 
     data: data,
 
-    galpao: GALPAO
+    galpao: GALPAO,
+
+    pasDisponiveis: pasDisponiveis
 
 });
         
