@@ -1174,9 +1174,9 @@ function limparFormulario() {
 
 
     const index =
-        palete.pasDisponiveis.indexOf(
-            paRetirar.trim()
-        );
+    palete.pasDisponiveis.findIndex(
+        p => p.numero === paRetirar.trim()
+    );
 
 
     if(index === -1){
@@ -1199,10 +1199,7 @@ function limparFormulario() {
     if(!confirmar) return;
 
 
-    palete.pasDisponiveis.splice(
-        index,
-        1
-    );
+   palete.pasDisponiveis[index].disponivel = false;
 
 
     await db.collection("paletes")
@@ -1218,6 +1215,61 @@ function limparFormulario() {
     alert(
         "PA retirado com sucesso!"
     );
+
+}
+
+    function abrirControlePA(id){
+
+    const palete = paletes.find(p => p.id === id);
+
+    if(!palete) return;
+
+    document.getElementById("modalPA").style.display="flex";
+
+    document.getElementById("tituloModalPA").innerHTML=
+    "CONTROLE DE PAs<br><small>"+palete.descricao+"</small>";
+
+    const lista=document.getElementById("listaPA");
+
+    lista.innerHTML="";
+
+    if(!palete.pasDisponiveis){
+
+        lista.innerHTML="Esse cadastro não possui controle por PA.";
+
+        return;
+
+    }
+
+    palete.pasDisponiveis.forEach((pa,index)=>{
+
+        lista.innerHTML+=`
+
+        <div onclick="alternarPA('${palete.id}',${index})"
+
+        style="
+        cursor:pointer;
+        padding:10px;
+        margin-bottom:6px;
+        border-radius:8px;
+        background:${pa.disponivel ? '#dff7e8' : '#ffdede'};
+        color:${pa.disponivel ? '#198754' : '#c62828'};
+        font-weight:bold;">
+
+        ${pa.disponivel ? '🟢' : '🔴'}
+        ${pa.numero}
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+function fecharModalPA(){
+
+    document.getElementById("modalPA").style.display="none";
 
 }
 
@@ -1539,8 +1591,7 @@ onclick="excluirPalete('${p.id}')">
 
 <button
 class="action-btn btn-green"
-title="Retirar PA"
-onclick="retirarPA('${p.id}')">
+onclick="abrirControlePA('${p.id}')">
 📦
 </button>
 
@@ -1931,6 +1982,50 @@ function abrirAba(tipo){
         }
       
 </script>
+
+    <!-- =========================
+     MODAL CONTROLE DE PA
+========================= -->
+
+<div id="modalPA" style="display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+z-index:99999;
+align-items:center;
+justify-content:center;">
+
+<div style="
+background:#fff;
+width:600px;
+max-width:95%;
+border-radius:12px;
+padding:20px;">
+
+<h3 id="tituloModalPA">
+Controle de PAs
+</h3>
+
+<div id="listaPA"
+style="
+max-height:450px;
+overflow:auto;
+margin-top:15px;">
+</div>
+
+<div style="margin-top:15px;text-align:right">
+
+<button
+class="btn-gray"
+onclick="fecharModalPA()">
+Fechar
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 </body>
 </html>
