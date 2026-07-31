@@ -403,35 +403,6 @@ td.description {
     margin-top: 3px;
     font-weight: bold;
 }
-
-    .cards-mops{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:15px;
-}
-
-.card-mop{
-    background:#fff;
-    border:2px solid #198754;
-    border-radius:12px;
-    padding:18px;
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
-}
-
-.card-mop h2{
-    margin:0 0 15px;
-    color:#198754;
-    font-size:20px;
-}
-
-.card-mop .linha{
-    font-size:17px;
-    margin:8px 0;
-}
-
-.card-mop strong{
-    font-size:22px;
-}
     
     </style>
     
@@ -495,14 +466,6 @@ td.description {
     <!-- TOPO -->
 
     <div class="no-print" style="margin-bottom:10px">
-
-<button 
-class="btn-green"
-onclick="abrirAba('mops')">
-SALDO DE MOPS
-</button>
-
-</div>
     
     <div class="top-bar no-print">
 
@@ -512,13 +475,6 @@ SALDO DE MOPS
 class="btn-dark"
 onclick="abrirAba('paletes')">
 CONTROLE PALETES
-</button>
-
-
-<button 
-class="btn-green"
-onclick="abrirAba('mops')">
-SALDO MOPS
 </button>
 
 </div>
@@ -755,25 +711,6 @@ SALDO MOPS
 
 </div>
 
-   <div id="abaMops" style="display:none">
-
-    <div class="card">
-
-        <h3>SALDO DE MOPS</h3>
-
-        <button
-        class="btn-dark no-print"
-        onclick="abrirAba('paletes')">
-            ← VOLTAR AO CONTROLE
-        </button>
-
-        <br><br>
-
-        <div id="cardsMops"></div>
-
-    </div>
-
-</div>
     
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 
@@ -1884,108 +1821,7 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
     carregarFirebase();
 
 }
-
-    function abrirAba(aba){
-
-    if(aba==="paletes"){
-
-        document.getElementById("abaPaletes").style.display="block";
-        document.getElementById("abaMops").style.display="none";
-
-    }
-
-
-    if(aba==="mops"){
-
-        document.getElementById("abaPaletes").style.display="none";
-        document.getElementById("abaMops").style.display="block";
-
-        calcularSaldoMops();
-
-    }
-
-}
-
-   function calcularSaldoMops(){
-
-    const saldo={};
-
-    paletes.forEach(p=>{
-
-        if(!ehMop(p.descricao)) return;
-
-        const nome=p.descricao.trim().toUpperCase();
-
-        if(!saldo[nome]){
-
-            saldo[nome]={
-
-                pcs:0,
-
-                containers:new Set()
-
-            };
-
-        }
-
-        saldo[nome].pcs+=Number(p.caixas||0);
-
-        if(p.container){
-
-            saldo[nome].containers.add(
-                p.container.trim().toUpperCase()
-            );
-
-        }
-
-    });
-
-    const painel=document.getElementById("cardsMops");
-
-    painel.innerHTML="";
-
-    if(Object.keys(saldo).length===0){
-
-        painel.innerHTML="<p>Nenhum MOP encontrado.</p>";
-
-        return;
-
-    }
-
-    const wrapper=document.createElement("div");
-
-    wrapper.className="cards-mops";
-
-    Object.entries(saldo)
-    .sort((a,b)=>a[0].localeCompare(b[0]))
-    .forEach(([nome,dados])=>{
-
-        wrapper.innerHTML+=`
-
-        <div class="card-mop">
-
-            <h2>${escapeHTML(nome)}</h2>
-
-            <div class="linha">
-                📦 Containers:
-                <strong>${dados.containers.size}</strong>
-            </div>
-
-            <div class="linha">
-                📦 Saldo:
-                <strong>${dados.pcs.toLocaleString("pt-BR")} PCS</strong>
-            </div>
-
-        </div>
-
-        `;
-
-    });
-
-    painel.appendChild(wrapper);
-
-}
-    
+      
 </script>
 
 </body>
