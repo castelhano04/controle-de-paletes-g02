@@ -747,7 +747,9 @@ CONTROLE DE ESTOQUE
 
 <th style="width:10%;">DISP.</th>
 
-<th style="width:12%;">QUANTIDADE</th>
+<th style="width:8%;">RECEBIDO</th>
+
+<th style="width:8%;">SALDO</th>
 
 <th style="width:28%;">DESCRIÇÃO</th>
 
@@ -2030,7 +2032,26 @@ function abrirAba(tipo){
         ${disponiveis}/${total}
     </td>
 
-    <td>${escapeHTML(p.caixas)}</td>
+   <td>
+
+${escapeHTML(p.caixas)}
+
+</td>
+
+<td>
+
+${p.saldoAtual ?? p.caixas}
+
+<button
+class="action-btn btn-blue"
+style="margin-left:8px"
+onclick="editarSaldo('${p.id}')">
+
+✏️
+
+</button>
+
+</td>
 
     <td>${escapeHTML(p.descricao)}</td>
 
@@ -2059,6 +2080,46 @@ title="Controlar PAs">
 });
 
         }
+
+    async function editarSaldo(id){
+
+    if(perfil !== "admin") return;
+
+    const palete = paletes.find(p=>p.id===id);
+
+    if(!palete) return;
+
+    const atual =
+        palete.saldoAtual ?? palete.caixas;
+
+    const novo = prompt(
+        "Novo saldo:",
+        atual
+    );
+
+    if(novo===null) return;
+
+    if(isNaN(novo)){
+
+        alert("Informe apenas números.");
+
+        return;
+
+    }
+
+    await db.collection("paletes")
+    .doc(id)
+    .update({
+
+        saldoAtual:Number(novo)
+
+    });
+
+    palete.saldoAtual=Number(novo);
+
+    renderizarEstoque();
+
+}
       
 </script>
 
