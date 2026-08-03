@@ -692,8 +692,8 @@ CONTROLE ESTOQUE
    <th
 id="thAcoesEstoque"
 class="no-print coluna-acoes"
-style="width:10%;">
-    AÇÕES
+style="width:10%; display:table-cell;">
+AÇÕES
 </th>
     
 </tr>
@@ -1992,12 +1992,21 @@ function abrirAba(tipo){
     const tbody = document.getElementById("tabelaEstoque");
     tbody.innerHTML = "";
 
-    const thAcoes = document.getElementById("thAcoesEstoque");
+   const thAcoes = document.getElementById("thAcoesEstoque");
 
-    if(thAcoes){
-        thAcoes.style.display =
-        perfil === "admin" ? "" : "none";
+if(thAcoes){
+
+    if(perfil==="admin"){
+
+        thAcoes.style.display="table-cell";
+
+    }else{
+
+        thAcoes.style.display="none";
+
     }
+
+}
 
     paletes.forEach(p=>{
 
