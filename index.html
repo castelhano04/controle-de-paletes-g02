@@ -2092,17 +2092,17 @@ function abrirAba(tipo){
                     <br>
 
                     <small
-                    onclick="abrirControlePA('${p.id}')"
-                    style="
+onclick="abrirControlePA('${p.id}')"
+style="
 cursor:pointer;
 color:#0d6efd;
 font-weight:bold;
 text-decoration:underline;
-"
+">
 
 🔍 Ver PAs
 
-                    </small>
+</small>
 
                 </div>
             `;
@@ -2175,14 +2175,20 @@ html += `
         <td>${escapeHTML(p.container || "")}</td>
         `;
 
-        // DATA
-        html += `
-        <td>
-        ${p.data ? p.data.split("-").reverse().join("/") : ""}
-        </td>
-        `;
+       // DATA
+html += `
+<td>
+${p.data ? p.data.split("-").reverse().join("/") : ""}
+</td>
+`;
 
-       renderizarEstoque()
+html += `</tr>`;
+
+tbody.innerHTML += html;
+
+});
+
+}
 
 async function editarSaldo(id){
 
