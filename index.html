@@ -304,18 +304,25 @@ td.description {
 }
 
 .actions {
-    display: flex;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    gap: 3px;
+    gap: 5px;
+    margin-left: 8px;
+    vertical-align: middle;
 }
 
-.action-btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    margin:auto;
+.action-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 14px;
 }
-
+    
 .empty {
     padding: 30px;
     color: #777;
@@ -1676,42 +1683,32 @@ ${
 </td>
 
 <td>
-${p.data ? p.data.split("-").reverse().join("/") : ""}
+    ${p.data ? p.data.split("-").reverse().join("/") : ""}
+
+    ${
+        perfil === "admin"
+        ? `
+        <span class="actions no-print">
+
+            <button
+                class="action-btn btn-blue"
+                title="Editar"
+                onclick="editarPalete('${p.id}')">
+                ✏️
+            </button>
+
+            <button
+                class="action-btn btn-red"
+                title="Excluir"
+                onclick="excluirPalete('${p.id}')">
+                🗑️
+            </button>
+
+        </span>
+        `
+        : ""
+    }
 </td>
-
-${
-perfil==="admin"
-?
-
-`<td class="no-print">
-
-<div class="actions">
-
-<button
-class="action-btn btn-blue"
-title="Editar"
-onclick="editarPalete('${p.id}')">
-✏️
-</button>
-
-<button
-class="action-btn btn-red"
-title="Excluir"
-onclick="excluirPalete('${p.id}')">
-🗑️
-</button>
-
-</div>
-
-</td>`
-
-:
-
-""
-
-}
-
-`;
 
 tbody.appendChild(tr);
 
