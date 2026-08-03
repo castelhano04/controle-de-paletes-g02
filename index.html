@@ -2088,14 +2088,25 @@ ${escapeHTML(p.caixas)}
 
 ${p.saldoAtual ?? p.caixas}
 
-<button
+${
+perfil==="admin"
+
+?
+
+`<button
 class="action-btn btn-blue"
 style="margin-left:8px"
 onclick="editarSaldo('${p.id}')">
 
 ✏️
 
-</button>
+</button>`
+
+:
+
+""
+
+}
 
 </td>
 
@@ -2107,7 +2118,12 @@ onclick="editarSaldo('${p.id}')">
 
     <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
 
-   <td>
+   ${
+perfil==="admin"
+
+?
+
+`<td style="text-align:center;">
 
 <button
 class="action-btn btn-green"
@@ -2118,14 +2134,13 @@ title="Controlar PAs">
 
 </button>
 
-</td>
+</td>`
 
-    </tr>
-    `;
+:
 
-});
+""
 
-        }
+}
 
     async function editarSaldo(id){
 
