@@ -1218,7 +1218,7 @@ function limparFormulario() {
 
 }
 
-    function abrirControlePA(id){
+   async function abrirControlePA(id){
 
     const palete = paletes.find(p => p.id === id);
 
@@ -1255,16 +1255,36 @@ ${escapeHTML(palete.descricao)}<br>
         padding:10px;
         margin-bottom:6px;
         border-radius:8px;
-        background:${pa.disponivel ? '#dff7e8' : '#ffdede'};
-        color:${pa.disponivel ? '#198754' : '#c62828'};
-        font-weight:bold;">
+        const disponivel =
+    typeof pa === "object"
+        ? pa.disponivel
+        : true;
 
-        ${pa.disponivel ? '🟢' : '🔴'}
-        ${pa.numero}
+const numero =
+    typeof pa === "object"
+        ? pa.numero
+        : pa;
 
-        </div>
+lista.innerHTML += `
 
-        `;
+<div onclick="alternarPA('${palete.id}',${index})"
+
+style="
+cursor:pointer;
+padding:10px;
+margin-bottom:6px;
+border-radius:8px;
+background:${disponivel ? '#dff7e8' : '#ffdede'};
+color:${disponivel ? '#198754' : '#c62828'};
+font-weight:bold;">
+
+${disponivel ? '🟢' : '🔴'}
+
+PA ${numero}
+
+</div>
+
+`;
 
     });
 
@@ -1275,6 +1295,26 @@ ${escapeHTML(palete.descricao)}<br>
     const palete = paletes.find(p => p.id === id);
 
     if(!palete) return;
+
+    // Converte registros antigos automaticamente
+if (
+    palete.pasDisponiveis &&
+    palete.pasDisponiveis.length > 0 &&
+    typeof palete.pasDisponiveis[0] === "string"
+) {
+
+    palete.pasDisponiveis = palete.pasDisponiveis.map(numero => ({
+        numero: numero,
+        disponivel: true
+    }));
+
+    await db.collection("paletes")
+        .doc(id)
+        .update({
+            pasDisponiveis: palete.pasDisponiveis
+        });
+
+}
 
     palete.pasDisponiveis[index].disponivel =
     !palete.pasDisponiveis[index].disponivel;
