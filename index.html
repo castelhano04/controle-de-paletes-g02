@@ -1284,16 +1284,36 @@ function limparFormulario() {
 
     lista.innerHTML="";
 
-    let disponiveis=0;
-    let retirados=0;
+   let disponiveis = 0;
+let retirados = 0;
 
-    palete.pasDisponiveis.forEach((pa,index)=>{
+const saldoEstoque =
+    Number(
+        palete.saldoAtual ??
+        palete.caixas ??
+        0
+    );
 
-        if(pa.disponivel){
-            disponiveis++;
-        }else{
-            retirados++;
-        }
+const saldoZerado =
+    saldoEstoque <= 0;
+
+palete.pasDisponiveis.forEach((pa,index)=>{
+
+    // Se saldo zerou, o PA fica RETIRADO
+    // somente visualmente nesta tela.
+    const paDisponivelVisual =
+        !saldoZerado &&
+        pa.disponivel;
+
+    if(paDisponivelVisual){
+
+        disponiveis++;
+
+    }else{
+
+        retirados++;
+
+    }
 
         lista.innerHTML += `
 
@@ -1314,8 +1334,11 @@ font-size:15px;
 transition:.2s;
 ">
 
-${pa.disponivel ? "🟢 Disponível" : "🔴 Retirado"}
-
+${
+    (!saldoZerado && pa.disponivel)
+    ? "🟢 Disponível"
+    : "🔴 Retirado"
+}
 <br>
 
 <small style="font-size:13px">
@@ -1991,17 +2014,37 @@ function abrirAba(tipo){
 
     paletes.forEach(p=>{
 
-        let total = 1;
-        let disponiveis = 1;
+       let total = 1;
+let disponiveis = 1;
 
-        if(p.pasDisponiveis){
+// SALDO VISUAL DO CONTROLE DE ESTOQUE
+const saldoEstoque =
+    Number(p.saldoAtual ?? p.caixas ?? 0);
 
-            total = p.pasDisponiveis.length;
+// Se o saldo chegou a zero,
+// todos os PAs ficam visualmente RETIRADOS
+// SOMENTE nesta tela.
+const saldoZerado =
+    saldoEstoque <= 0;
 
-            disponiveis =
-            p.pasDisponiveis.filter(pa=>pa.disponivel).length;
+if(p.pasDisponiveis){
 
-        }
+    total = p.pasDisponiveis.length;
+
+    if(saldoZerado){
+
+        disponiveis = 0;
+
+    }else{
+
+        disponiveis =
+            p.pasDisponiveis.filter(
+                pa => pa.disponivel
+            ).length;
+
+    }
+
+}
 
         const cor =
             disponiveis===total
@@ -2192,6 +2235,20 @@ async function editarSaldo(id){
 
     abrirControlePA(id);
 
+}
+
+    function paEstaRetiradoNoEstoque(p) {
+
+    const saldo = Number(p.caixas || 0);
+
+    // Se o saldo chegou a zero,
+    // o PA fica visualmente como RETIRADO
+    // somente no Controle de Estoque.
+    if (saldo <= 0) {
+        return true;
+    }
+
+    return false;
 }
       
 </script>
