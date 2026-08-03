@@ -2103,7 +2103,7 @@ onclick="editarSaldo('${p.id}')">
 
     <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
 
-   ${
+ ${
 perfil==="admin"
 
 ?
@@ -2127,7 +2127,14 @@ title="Controlar PAs">
 
 }
 
-    async function editarSaldo(id){
+</tr>
+`;
+
+});
+
+}
+
+async function editarSaldo(id){
 
     if(perfil !== "admin") return;
 
