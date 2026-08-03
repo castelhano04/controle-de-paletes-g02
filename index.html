@@ -911,13 +911,12 @@ function configurarPermissoes(){
 
     // Cabeçalho da coluna AÇÕES do estoque
     const thAcoesEstoque = document.getElementById("thAcoesEstoque");
-   if(thAcoes){
-
-    thAcoes.style.display =
-    perfil==="admin"
-    ? "table-cell"
-    : "none";
-
+    
+   if(thAcoesEstoque){
+    thAcoesEstoque.style.display =
+        perfil === "admin"
+        ? "table-cell"
+        : "none";
 }
 
     // Botão Salvar
