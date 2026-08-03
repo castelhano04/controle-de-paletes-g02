@@ -477,25 +477,30 @@ td.description {
     </div>
 </div>
 
-    <button
+   <button
 class="btn-dark"
+id="btnEstoque"
 onclick="abrirAba('estoque')">
+
 CONTROLE ESTOQUE
+
 </button>
 
         <button
-            class="btn-sair"
-            onclick="sair()"
-        >
-            SAIR
-        </button>
+class="btn-sair"
+id="btnSair"
+onclick="sair()">
+
+SAIR
+
+</button>
 
     </div>
 
 
     <!-- CADASTRO -->
 
-    <div class="card no-print">
+    <div class="card no-print" id="cardCadastro">
 
         <h3>Cadastrar palete</h3>
 
@@ -547,13 +552,16 @@ CONTROLE ESTOQUE
                 SALVAR PALETE
             </button>
 
-            <button
-                class="btn-gray"
-                onclick="limparFormulario()"
-            >
-                LIMPAR
-            </button>
+           <button
+class="btn-gray"
+id="btnLimpar"
+onclick="limparFormulario()">
 
+LIMPAR
+
+</button>
+                
+        
         </div>
 
         <div class="info">
@@ -565,7 +573,7 @@ CONTROLE ESTOQUE
 
     <!-- FILTROS -->
 
-    <div class="card no-print">
+   <div class="card no-print" id="cardFiltros">
 
         <h3>
             Filtros e busca
@@ -603,19 +611,23 @@ CONTROLE ESTOQUE
 
 </select>
 
-            <button
-                class="btn-blue"
-                onclick="imprimirRelatorio()"
-            >
-                IMPRIMIR RELATÓRIO
-            </button>
+           <button
+class="btn-blue"
+id="btnImprimir"
+onclick="imprimirRelatorio()">
 
+IMPRIMIR RELATÓRIO
+
+</button>
+               
             <button
-                class="btn-green"
-                onclick="exportarCSV()"
-            >
-                EXPORTAR EXCEL/CSV
-            </button>
+class="btn-green"
+id="btnExportar"
+onclick="exportarCSV()">
+
+EXPORTAR EXCEL/CSV
+
+</button>
 
         </div>
 
@@ -692,7 +704,7 @@ CONTROLE ESTOQUE
    <th
 id="thAcoesEstoque"
 class="no-print coluna-acoes"
-style="width:10%; display:table-cell;">
+style="width:10%;">
 AÇÕES
 </th>
     
@@ -762,8 +774,15 @@ CONTROLE DE ESTOQUE
 
 <th style="width:10%;">DATA</th>
 
-<th style="width:10%;">AÇÕES</th>
+<th
+id="thAcoesEstoque"
+class="no-print"
+style="width:10%;">
 
+AÇÕES
+
+</th>
+    
 </tr>
 
 </thead>
@@ -882,20 +901,59 @@ sessionStorage.removeItem("perfil");
 
 function configurarPermissoes(){
 
-    const cadastro=document.querySelector(".card.no-print");
+    const admin = (perfil === "admin");
 
-    if(perfil==="consulta"){
-
-        cadastro.style.display="none";
-
-    }else{
-
-        cadastro.style.display="block";
-
+    // Card de cadastro
+    const cardCadastro = document.getElementById("cardCadastro");
+    if(cardCadastro){
+        cardCadastro.style.display = admin ? "block" : "none";
     }
+
+    // Cabeçalho da coluna AÇÕES do estoque
+    const thAcoesEstoque = document.getElementById("thAcoesEstoque");
+   if(thAcoes){
+
+    thAcoes.style.display =
+    perfil==="admin"
+    ? "table-cell"
+    : "none";
 
 }
 
+    // Botão Salvar
+    const btnSalvar = document.getElementById("btnSalvar");
+    if(btnSalvar){
+        btnSalvar.style.display = admin ? "inline-block" : "none";
+    }
+
+    // Botão Limpar
+    const btnLimpar = document.getElementById("btnLimpar");
+    if(btnLimpar){
+        btnLimpar.style.display = admin ? "inline-block" : "none";
+    }
+
+    // Botão Exportar
+    const btnExportar = document.getElementById("btnExportar");
+    if(btnExportar){
+        btnExportar.style.display = admin ? "inline-block" : "none";
+    }
+
+    // Botão Imprimir
+    const btnImprimir = document.getElementById("btnImprimir");
+    if(btnImprimir){
+        btnImprimir.style.display = admin ? "inline-block" : "none";
+    }
+
+    const btnEstoque =
+document.getElementById("btnEstoque");
+
+if(btnEstoque){
+
+    btnEstoque.style.display="inline-block";
+
+}
+
+}
     function gerarListaPA(paTexto){
 
     const texto = paTexto.trim();
@@ -1575,7 +1633,7 @@ p.descricao.toLowerCase().includes(pesquisa)
         tbody.innerHTML = `
 
             <td
-    colspan="${perfil==="admin" ? 7 : 6}"
+    colspan="${perfil==="admin" ? 8 : 7}"
     class="empty"
 >
     Nenhum palete encontrado.
@@ -1969,6 +2027,8 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
 
 function abrirAba(tipo){
 
+    configurarPermissoes();
+
     if(tipo==="estoque"){
 
         document.getElementById("abaPaletes").style.display="none";
@@ -1995,20 +2055,6 @@ function abrirAba(tipo){
     tbody.innerHTML = "";
 
    const thAcoes = document.getElementById("thAcoesEstoque");
-
-if(thAcoes){
-
-    if(perfil==="admin"){
-
-        thAcoes.style.display="table-cell";
-
-    }else{
-
-        thAcoes.style.display="none";
-
-    }
-
-}
 
     paletes.forEach(p=>{
 
