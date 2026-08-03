@@ -700,13 +700,6 @@ EXPORTAR EXCEL/CSV
     <th style="width: 10%;">
         DATA
     </th>
-
-  <th
-id="thAcoesEstoque"
-class="no-print"
-style="width:10%;">
-AÇÕES
-</th>
     
 </tr>
 
@@ -1304,29 +1297,42 @@ function limparFormulario() {
             retirados++;
         }
 
-        lista.innerHTML+=`
+        lista.innerHTML += `
 
-        <div
-${perfil === "admin"
-    ? `onclick="alternarPA('${palete.id}',${index})"`
-    : ""}
-    
-        style="
-        cursor:${perfil === "admin" ? "pointer" : "default"};
-        padding:10px;
-        margin-bottom:6px;
-        border-radius:8px;
-        background:${pa.disponivel ? '#dff7e8' : '#ffdede'};
-        color:${pa.disponivel ? '#198754' : '#c62828'};
-        font-weight:bold;">
+<div
+${perfil==="admin"
+?`onclick="alternarPA('${palete.id}',${index})"`
+:""}
 
-        ${pa.disponivel ? '🟢' : '🔴'}
+style="
+cursor:${perfil==="admin"?"pointer":"default"};
+padding:12px;
+margin-bottom:8px;
+border-radius:10px;
+border:1px solid ${pa.disponivel ? "#198754" : "#c62828"};
+background:${pa.disponivel ? "#eefaf2" : "#fff0f0"};
+font-weight:bold;
+font-size:15px;
+transition:.2s;
+">
 
-        PA ${pa.numero}
+${pa.disponivel ? "🟢 Disponível" : "🔴 Retirado"}
 
-        </div>
+<br>
 
-        `;
+<small style="font-size:13px">
+
+PA ${pa.numero}
+
+${perfil==="admin"
+?'<br><span style="color:#666">Clique para alterar</span>'
+:''}
+
+</small>
+
+</div>
+
+`;
 
     });
 
@@ -1348,14 +1354,23 @@ ${perfil === "admin"
 
 }
 
-    async function alternarPA(id,index){
+   async function alternarPA(id,index){
 
-    const palete=paletes.find(p=>p.id===id);
+    if(perfil !== "admin") return;
+
+    const palete = paletes.find(p => p.id === id);
 
     if(!palete) return;
 
-    palete.pasDisponiveis[index].disponivel =
-    !palete.pasDisponiveis[index].disponivel;
+    const pa = palete.pasDisponiveis[index];
+
+    const mensagem = pa.disponivel
+        ? `Deseja marcar o PA ${pa.numero} como RETIRADO?`
+        : `Deseja marcar o PA ${pa.numero} como DISPONÍVEL?`;
+
+    if(!confirm(mensagem)) return;
+
+    pa.disponivel = !pa.disponivel;
 
     await db.collection("paletes")
     .doc(id)
@@ -2064,11 +2079,10 @@ function abrirAba(tipo){
         // PA
         html += `<td>`;
 
-        if(
-            perfil==="consulta" &&
-            p.pasDisponiveis &&
-            p.pasDisponiveis.length>1
-        ){
+       if(
+    p.pasDisponiveis &&
+    p.pasDisponiveis.length > 1
+){
 
             html += `
                 <div>
@@ -2080,11 +2094,13 @@ function abrirAba(tipo){
                     <small
                     onclick="abrirControlePA('${p.id}')"
                     style="
-                    cursor:pointer;
-                    color:#0d6efd;
-                    font-weight:600;">
+cursor:pointer;
+color:#0d6efd;
+font-weight:bold;
+text-decoration:underline;
+"
 
-                    🔍 Ver PAs
+🔍 Ver PAs
 
                     </small>
 
@@ -2100,11 +2116,17 @@ function abrirAba(tipo){
         html += `</td>`;
 
         // DISP
-        html += `
-        <td style="font-weight:bold;color:${cor}">
-            ${disponiveis}/${total}
-        </td>
-        `;
+const retirados = total - disponiveis;
+
+html += `
+<td style="
+    font-weight:bold;
+    color:${cor};
+    white-space:nowrap;
+">
+    🟢 ${disponiveis} / 🔴 ${retirados}
+</td>
+`;
 
         // RECEBIDO
         html += `
@@ -2160,39 +2182,7 @@ function abrirAba(tipo){
         </td>
         `;
 
-        // AÇÕES (somente ADMIN)
-        if(perfil==="admin"){
-
-            html += `
-
-            <td class="no-print">
-
-                <div class="actions">
-
-                    <button
-                    class="action-btn btn-green"
-                    title="Controlar PAs"
-                    onclick="abrirControlePA('${p.id}')">
-
-                    📦
-
-                    </button>
-
-                </div>
-
-            </td>
-
-            `;
-
-        }
-
-        html += `</tr>`;
-
-        tbody.innerHTML += html;
-
-    });
-
-}
+       renderizarEstoque()
 
 async function editarSaldo(id){
 
