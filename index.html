@@ -1810,22 +1810,21 @@ function exportarCSV() {
 
     if (paletes.length === 0) {
 
-        alert(
-            "Não existem paletes cadastrados."
-        );
+        alert("Não existem paletes cadastrados.");
 
         return;
 
     }
 
-
     const linhas = [
 
         [
             "Nº PA",
-            "Quantidade de Caixas",
+            "Quantidade",
             "Descrição",
-            "Galpão"
+            "Galpão",
+            "Container",
+            "Data"
         ],
 
         ...paletes.map(p => [
@@ -1836,65 +1835,48 @@ function exportarCSV() {
 
             p.descricao,
 
-            GALPAO
+            GALPAO,
+
+            p.container || "",
+
+            p.data || ""
 
         ])
 
     ];
 
-
     const csv =
         linhas
-        .map(
-
-            linha =>
-
-                linha
-                .map(
-
-                    valor =>
-                        `"${String(valor)
-                            .replace(
-                                /"/g,
-                                '""'
-                            )}"`
-
-                )
-                .join(";")
-
+        .map(linha =>
+            linha
+            .map(valor =>
+                `"${String(valor)
+                    .replace(/"/g, '""')}"`
+            )
+            .join(";")
         )
         .join("\n");
 
-
     const blob =
         new Blob(
-
             ["\uFEFF" + csv],
-
             {
-                type:
-                    "text/csv;charset=utf-8;"
+                type: "text/csv;charset=utf-8;"
             }
-
         );
-
 
     const url =
         URL.createObjectURL(blob);
 
-
     const a =
         document.createElement("a");
-
 
     a.href = url;
 
     a.download =
         "controle-paletes-G02.csv";
 
-
     a.click();
-
 
     URL.revokeObjectURL(url);
 
