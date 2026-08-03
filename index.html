@@ -1271,10 +1271,12 @@ function limparFormulario() {
         lista.innerHTML+=`
 
         <div
-        onclick="alternarPA('${palete.id}',${index})"
-
+${perfil === "admin"
+    ? `onclick="alternarPA('${palete.id}',${index})"`
+    : ""}
+    
         style="
-        cursor:pointer;
+        cursor:${perfil === "admin" ? "pointer" : "default"};
         padding:10px;
         margin-bottom:6px;
         border-radius:8px;
