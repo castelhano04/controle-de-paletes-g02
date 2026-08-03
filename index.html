@@ -1638,8 +1638,9 @@ ${p.data ? p.data.split("-").reverse().join("/") : ""}
 
 ${
 perfil==="admin"
-?`
-<td class="no-print">
+?
+
+`<td class="no-print">
 
 <div class="actions">
 
@@ -1657,32 +1658,22 @@ onclick="excluirPalete('${p.id}')">
 🗑️
 </button>
 
-${
-perfil==="admin"
-
-?
-
-`<td style="text-align:center;">
-
 <button
 class="action-btn btn-green"
+title="Controlar PAs"
 onclick="abrirControlePA('${p.id}')">
-
 📦
-
 </button>
+
+</div>
 
 </td>`
 
 :
 
-""
-
-}
-
-
-           </tr>
 `;
+
+tbody.appendChild(tr);
 
 });
 
