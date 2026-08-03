@@ -701,9 +701,9 @@ EXPORTAR EXCEL/CSV
         DATA
     </th>
 
-   <th
+  <th
 id="thAcoesEstoque"
-class="no-print coluna-acoes"
+class="no-print"
 style="width:10%;">
 AÇÕES
 </th>
@@ -901,58 +901,36 @@ sessionStorage.removeItem("perfil");
 
 function configurarPermissoes(){
 
-    const admin = (perfil === "admin");
+    const admin = perfil === "admin";
 
-    // Card de cadastro
-    const cardCadastro = document.getElementById("cardCadastro");
-    if(cardCadastro){
-        cardCadastro.style.display = admin ? "block" : "none";
-    }
+    document.getElementById("cardCadastro").style.display =
+        admin ? "block" : "none";
 
-    // Cabeçalho da coluna AÇÕES do estoque
-    const thAcoesEstoque = document.getElementById("thAcoesEstoque");
-    
-   if(thAcoesEstoque){
-    thAcoesEstoque.style.display =
-        perfil === "admin"
+    document.getElementById("btnSalvar").style.display =
+        admin ? "inline-block" : "none";
+
+    document.getElementById("btnLimpar").style.display =
+        admin ? "inline-block" : "none";
+
+    document.getElementById("btnExportar").style.display =
+        admin ? "inline-block" : "none";
+
+    document.getElementById("btnImprimir").style.display =
+        admin ? "inline-block" : "none";
+
+    const th = document.getElementById("thAcoesEstoque");
+
+    if(th){
+
+        th.style.display =
+        admin
         ? "table-cell"
         : "none";
+
+    }
+    
 }
-
-    // Botão Salvar
-    const btnSalvar = document.getElementById("btnSalvar");
-    if(btnSalvar){
-        btnSalvar.style.display = admin ? "inline-block" : "none";
-    }
-
-    // Botão Limpar
-    const btnLimpar = document.getElementById("btnLimpar");
-    if(btnLimpar){
-        btnLimpar.style.display = admin ? "inline-block" : "none";
-    }
-
-    // Botão Exportar
-    const btnExportar = document.getElementById("btnExportar");
-    if(btnExportar){
-        btnExportar.style.display = admin ? "inline-block" : "none";
-    }
-
-    // Botão Imprimir
-    const btnImprimir = document.getElementById("btnImprimir");
-    if(btnImprimir){
-        btnImprimir.style.display = admin ? "inline-block" : "none";
-    }
-
-    const btnEstoque =
-document.getElementById("btnEstoque");
-
-if(btnEstoque){
-
-    btnEstoque.style.display="inline-block";
-
-}
-
-}
+    
     function gerarListaPA(paTexto){
 
     const texto = paTexto.trim();
@@ -2048,12 +2026,19 @@ function abrirAba(tipo){
 
    function renderizarEstoque(){
 
-       console.log("Perfil:", perfil);
+    console.log("Perfil:", perfil);
 
     const tbody = document.getElementById("tabelaEstoque");
     tbody.innerHTML = "";
 
-   const thAcoes = document.getElementById("thAcoesEstoque");
+    const thAcoes = document.getElementById("thAcoesEstoque");
+
+    if(thAcoes){
+        thAcoes.style.display =
+            perfil === "admin"
+            ? "table-cell"
+            : "none";
+    }
 
     paletes.forEach(p=>{
 
@@ -2063,20 +2048,21 @@ function abrirAba(tipo){
         if(p.pasDisponiveis){
 
             total = p.pasDisponiveis.length;
+
             disponiveis =
             p.pasDisponiveis.filter(pa=>pa.disponivel).length;
 
         }
 
         const cor =
-        disponiveis===total
-        ? "#198754"
-        : (disponiveis===0 ? "#c62828" : "#ff9800");
+            disponiveis===total
+            ? "#198754"
+            : (disponiveis===0 ? "#c62828" : "#ff9800");
 
-        let html = `
-        <tr>
+        let html = `<tr>`;
 
-        <td>`;
+        // PA
+        html += `<td>`;
 
         if(
             perfil==="consulta" &&
@@ -2085,24 +2071,24 @@ function abrirAba(tipo){
         ){
 
             html += `
-            <div>
+                <div>
 
-                <strong>${escapeHTML(p.pa)}</strong>
+                    <strong>${escapeHTML(p.pa)}</strong>
 
-                <br>
+                    <br>
 
-                <small
-                onclick="abrirControlePA('${p.id}')"
-                style="
-                cursor:pointer;
-                color:#0d6efd;
-                font-weight:600;">
+                    <small
+                    onclick="abrirControlePA('${p.id}')"
+                    style="
+                    cursor:pointer;
+                    color:#0d6efd;
+                    font-weight:600;">
 
-                🔍 Ver PAs
+                    🔍 Ver PAs
 
-                </small>
+                    </small>
 
-            </div>
+                </div>
             `;
 
         }else{
@@ -2111,69 +2097,88 @@ function abrirAba(tipo){
 
         }
 
+        html += `</td>`;
+
+        // DISP
         html += `
-
-        </td>
-
         <td style="font-weight:bold;color:${cor}">
-        ${disponiveis}/${total}
+            ${disponiveis}/${total}
         </td>
+        `;
 
+        // RECEBIDO
+        html += `
         <td>
-        ${escapeHTML(p.caixas)}
+            ${escapeHTML(p.caixas)}
         </td>
+        `;
 
-        <td>
+        // SALDO
+        html += `<td>
 
-        ${p.saldoAtual ?? p.caixas}
-
-        ${
-        perfil==="admin"
-
-        ?
-
-        `<button
-        class="action-btn btn-blue"
-        style="margin-left:8px"
-        onclick="editarSaldo('${p.id}')">
-
-        ✏️
-
-        </button>`
-
-        :
-
-        ""
-
-        }
-
-        </td>
-
-        <td>${escapeHTML(p.descricao)}</td>
-
-        <td>G02</td>
-
-        <td>${escapeHTML(p.container||"")}</td>
-
-        <td>
-        ${p.data ? p.data.split("-").reverse().join("/") : ""}
-        </td>
+            ${p.saldoAtual ?? p.caixas}
         `;
 
         if(perfil==="admin"){
 
             html += `
 
-           <td class="coluna-acoes" style="text-align:center;">
-
             <button
-            class="action-btn btn-green"
-            onclick="abrirControlePA('${p.id}')"
-            title="Controlar PAs">
+            class="action-btn btn-blue"
+            style="margin-left:8px"
+            onclick="editarSaldo('${p.id}')">
 
-            📦
+            ✏️
 
             </button>
+
+            `;
+
+        }
+
+        html += `</td>`;
+
+        // DESCRIÇÃO
+        html += `
+        <td>${escapeHTML(p.descricao)}</td>
+        `;
+
+        // GALPÃO
+        html += `
+        <td>G02</td>
+        `;
+
+        // CONTAINER
+        html += `
+        <td>${escapeHTML(p.container || "")}</td>
+        `;
+
+        // DATA
+        html += `
+        <td>
+        ${p.data ? p.data.split("-").reverse().join("/") : ""}
+        </td>
+        `;
+
+        // AÇÕES (somente ADMIN)
+        if(perfil==="admin"){
+
+            html += `
+
+            <td class="no-print">
+
+                <div class="actions">
+
+                    <button
+                    class="action-btn btn-green"
+                    title="Controlar PAs"
+                    onclick="abrirControlePA('${p.id}')">
+
+                    📦
+
+                    </button>
+
+                </div>
 
             </td>
 
@@ -2181,13 +2186,9 @@ function abrirAba(tipo){
 
         }
 
-        html += `
-        </tr>
-        `;
+        html += `</tr>`;
 
         tbody.innerHTML += html;
-
-        console.log(html);
 
     });
 
