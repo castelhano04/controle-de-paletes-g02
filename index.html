@@ -1224,85 +1224,97 @@ function limparFormulario() {
 
     if(!palete) return;
 
-    document.getElementById("modalPA").style.display="flex";
+    // Converte registros antigos
+    if(
+        palete.pasDisponiveis &&
+        palete.pasDisponiveis.length > 0 &&
+        typeof palete.pasDisponiveis[0] === "string"
+    ){
 
-   document.getElementById("tituloModalPA").innerHTML = `
-<b>CONTROLE DE ESTOQUE</b><br>
-${escapeHTML(palete.descricao)}<br>
-<small>Container: ${escapeHTML(palete.container || "-")}</small>
-`;
+        palete.pasDisponiveis =
+            palete.pasDisponiveis.map(numero=>({
+                numero: numero,
+                disponivel: true
+            }));
 
-    const lista=document.getElementById("listaPA");
-
-    lista.innerHTML="";
-
-    if(!palete.pasDisponiveis){
-
-        lista.innerHTML="Esse cadastro não possui controle por PA.";
-
-        return;
-
-    }
-
-   palete.pasDisponiveis.forEach((pa,index)=>{
-
-    const disponivel =
-        typeof pa === "object"
-            ? pa.disponivel
-            : true;
-
-    const numero =
-        typeof pa === "object"
-            ? pa.numero
-            : pa;
-
-    lista.innerHTML += `
-
-    <div
-        onclick="alternarPA('${palete.id}',${index})"
-        style="
-        cursor:pointer;
-        padding:10px;
-        margin-bottom:6px;
-        border-radius:8px;
-        background:${disponivel ? '#dff7e8' : '#ffdede'};
-        color:${disponivel ? '#198754' : '#c62828'};
-        font-weight:bold;">
-
-        ${disponivel ? '🟢' : '🔴'}
-        PA ${numero}
-
-    </div>
-
-    `;
-
-});
-
-    async function alternarPA(id,index){
-
-    const palete = paletes.find(p => p.id === id);
-
-    if(!palete) return;
-
-    // Converte registros antigos automaticamente
-if (
-    palete.pasDisponiveis &&
-    palete.pasDisponiveis.length > 0 &&
-    typeof palete.pasDisponiveis[0] === "string"
-) {
-
-    palete.pasDisponiveis = palete.pasDisponiveis.map(numero => ({
-        numero: numero,
-        disponivel: true
-    }));
-
-    await db.collection("paletes")
+        await db.collection("paletes")
         .doc(id)
         .update({
             pasDisponiveis: palete.pasDisponiveis
         });
 
+    }
+
+    document.getElementById("modalPA").style.display="flex";
+
+    document.getElementById("tituloModalPA").innerHTML=`
+        <b>CONTROLE DE ESTOQUE</b><br>
+        ${escapeHTML(palete.descricao)}<br>
+        <small>Container: ${escapeHTML(palete.container || "-")}</small>
+    `;
+
+    const lista=document.getElementById("listaPA");
+
+    lista.innerHTML="";
+
+    let disponiveis=0;
+    let retirados=0;
+
+    palete.pasDisponiveis.forEach((pa,index)=>{
+
+        if(pa.disponivel){
+            disponiveis++;
+        }else{
+            retirados++;
+        }
+
+        lista.innerHTML+=`
+
+        <div
+        onclick="alternarPA('${palete.id}',${index})"
+
+        style="
+        cursor:pointer;
+        padding:10px;
+        margin-bottom:6px;
+        border-radius:8px;
+        background:${pa.disponivel ? '#dff7e8' : '#ffdede'};
+        color:${pa.disponivel ? '#198754' : '#c62828'};
+        font-weight:bold;">
+
+        ${pa.disponivel ? '🟢' : '🔴'}
+
+        PA ${pa.numero}
+
+        </div>
+
+        `;
+
+    });
+
+    lista.innerHTML+=`
+
+    <hr>
+
+    <div style="font-weight:bold">
+
+    Disponíveis: ${disponiveis}<br>
+
+    Retirados: ${retirados}<br>
+
+    Total: ${palete.pasDisponiveis.length}
+
+    </div>
+
+    `;
+
 }
+
+    async function alternarPA(id,index){
+
+    const palete=paletes.find(p=>p.id===id);
+
+    if(!palete) return;
 
     palete.pasDisponiveis[index].disponivel =
     !palete.pasDisponiveis[index].disponivel;
@@ -1315,9 +1327,9 @@ if (
 
     });
 
-    abrirControlePA(id);
-
     renderizarEstoque();
+
+    abrirControlePA(id);
 
 }
 
@@ -1326,7 +1338,6 @@ function fecharModalPA(){
     document.getElementById("modalPA").style.display="none";
 
 }
-
 
 /* =========================
    EDITAR
