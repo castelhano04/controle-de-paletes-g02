@@ -773,8 +773,6 @@ CONTROLE DE ESTOQUE
 <th style="width:15%;">CONTAINER</th>
 
 <th style="width:10%;">DATA</th>
-
-</th>
     
 </tr>
 
@@ -1529,19 +1527,6 @@ function renderizar() {
             "tabelaPaletes"
         );
 
-    const colunaAcoes =
-document.querySelector(".coluna-acoes");
-
-if(colunaAcoes){
-
-    colunaAcoes.style.display =
-    perfil === "admin"
-    ? ""
-    : "none";
-
-}
-
-
     const pesquisa =
         document.getElementById(
             "pesquisa"
@@ -1624,8 +1609,8 @@ p.descricao.toLowerCase().includes(pesquisa)
 
         tbody.innerHTML = `
 
-            <td
-    colspan="${perfil==="admin" ? 8 : 7}"
+           <td
+    colspan="7"
     class="empty"
 >
     Nenhum palete encontrado.
@@ -1845,18 +1830,18 @@ function exportarCSV() {
 
     ];
 
-    const csv =
-        linhas
-        .map(linha =>
-            linha
-            .map(valor =>
-                `"${String(valor)
-                    .replace(/"/g, '""')}"`
-            )
-            .join(";")
-        )
-        .join("\n");
-
+   const csv = linhas
+    .map(function(linha) {
+        return linha
+            .map(function(valor) {
+                return '"' +
+                    String(valor).replace(/"/g, '""') +
+                    '"';
+            })
+            .join(";");
+    })
+    .join("\r\n");
+    
     const blob =
         new Blob(
             ["\uFEFF" + csv],
