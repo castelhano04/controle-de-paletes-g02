@@ -1522,186 +1522,163 @@ function ehMop(descricao) {
 
 function renderizar() {
 
-    const tbody =
-        document.getElementById(
-            "tabelaPaletes"
-        );
+    const tbody = document.getElementById("tabelaPaletes");
 
-    const pesquisa =
-        document.getElementById(
-            "pesquisa"
-        )
+    const pesquisa = document
+        .getElementById("pesquisa")
         .value
         .toLowerCase()
         .trim();
 
+    const tipo = document
+        .getElementById("tipoPesquisa")
+        .value;
 
-    let lista =
-        paletes.filter(p => {
+    let lista = paletes.filter(function(p) {
 
+        const pa = String(p.pa || "").toLowerCase();
 
-            const bateFiltro = true;
+        const descricao = String(p.descricao || "").toLowerCase();
 
+        const container = String(p.container || "").toLowerCase();
 
-           const tipo =
-document.getElementById("tipoPesquisa").value;
+        const data = String(p.data || "").toLowerCase();
 
+        if (!pesquisa) {
+            return true;
+        }
 
-const batePesquisa =
-!pesquisa ||
+        if (tipo === "pa") {
+            return pa.includes(pesquisa);
+        }
 
-(
-tipo === "pa" &&
-p.pa.toLowerCase().includes(pesquisa)
-)
+        if (tipo === "descricao") {
+            return descricao.includes(pesquisa);
+        }
 
-||
+        if (tipo === "container") {
+            return container.includes(pesquisa);
+        }
 
-(
-tipo === "descricao" &&
-p.descricao.toLowerCase().includes(pesquisa)
-)
+        if (tipo === "data") {
+            return data.includes(pesquisa);
+        }
 
-||
+        return (
+            pa.includes(pesquisa) ||
+            descricao.includes(pesquisa) ||
+            container.includes(pesquisa) ||
+            data.includes(pesquisa)
+        );
 
-(
-tipo === "container" &&
-p.container &&
-p.container.toLowerCase().includes(pesquisa)
-)
-
-||
-
-(
-tipo === "data" &&
-p.data &&
-p.data.includes(pesquisa)
-)
-
-||
-
-(
-tipo === "todos" &&
-(
-p.pa.toLowerCase().includes(pesquisa)
-||
-p.descricao.toLowerCase().includes(pesquisa)
-||
-(p.container && p.container.toLowerCase().includes(pesquisa))
-||
-(p.data && p.data.includes(pesquisa))
-)
-);
-
-
-            return (
-                bateFiltro &&
-                batePesquisa
-            );
-
-        });
-
+    });
 
     tbody.innerHTML = "";
-
 
     if (lista.length === 0) {
 
         tbody.innerHTML = `
-
-           <td
-    colspan="7"
-    class="empty"
->
-    Nenhum palete encontrado.
-</td>
-
+            <tr>
+                <td
+                    colspan="7"
+                    class="empty"
+                >
+                    Nenhum palete encontrado.
+                </td>
+            </tr>
         `;
 
-    }
+    } else {
 
-    else {
+        lista.forEach(function(p) {
 
-        lista.forEach(p => {
+            const tr = document.createElement("tr");
 
-            const tr =
-                document.createElement("tr");
+            const quantidadePA =
+                p.pasDisponiveis
+                ? p.pasDisponiveis.length
+                : 1;
 
+            const quantidade =
+                Number(p.caixas || 0)
+                .toLocaleString("pt-BR");
+
+            const unidade =
+                ehMop(p.descricao)
+                ? "PCS"
+                : "CXS";
+
+            const dataFormatada =
+                p.data
+                ? p.data.split("-").reverse().join("/")
+                : "";
+
+            let botoes = "";
+
+            if (perfil === "admin") {
+
+                botoes = `
+                    <span class="actions no-print">
+
+                        <button
+                            class="action-btn btn-blue"
+                            title="Editar"
+                            onclick="editarPalete('${p.id}')">
+                            ✏️
+                        </button>
+
+                        <button
+                            class="action-btn btn-red"
+                            title="Excluir"
+                            onclick="excluirPalete('${p.id}')">
+                            🗑️
+                        </button>
+
+                    </span>
+                `;
+
+            }
 
             tr.innerHTML = `
-
                 <td>
                     <strong>
-                        ${escapeHTML(p.pa)}
+                        ${escapeHTML(p.pa || "")}
                     </strong>
                 </td>
 
                 <td>
-${
-    p.pasDisponiveis
-    ? p.pasDisponiveis.length
-    : 1
-}
-</td>
-
-              <td>
-    ${
-        Number(p.caixas).toLocaleString("pt-BR")
-    }
-    ${
-        ehMop(p.descricao)
-        ? "PCS"
-        : "CXS"
-    }
-</td>
-
-                <td class="description">
-                    ${escapeHTML(p.descricao)}
+                    ${quantidadePA}
                 </td>
 
                 <td>
-    G02
-</td>
+                    ${quantidade} ${unidade}
+                </td>
 
-<td>
-    ${escapeHTML(p.container || "")}
-</td>
+                <td class="description">
+                    ${escapeHTML(p.descricao || "")}
+                </td>
 
-<td>
-    ${p.data ? p.data.split("-").reverse().join("/") : ""}
+                <td>
+                    G02
+                </td>
 
-    ${
-        perfil === "admin"
-        ? `
-        <span class="actions no-print">
+                <td>
+                    ${escapeHTML(p.container || "")}
+                </td>
 
-            <button
-                class="action-btn btn-blue"
-                title="Editar"
-                onclick="editarPalete('${p.id}')">
-                ✏️
-            </button>
+                <td>
+                    ${dataFormatada}
+                    ${botoes}
+                </td>
+            `;
 
-            <button
-                class="action-btn btn-red"
-                title="Excluir"
-                onclick="excluirPalete('${p.id}')">
-                🗑️
-            </button>
+            tbody.appendChild(tr);
 
-        </span>
-        `
-        : ""
+        });
+
     }
-</td>
 
-tbody.appendChild(tr);
-
-});
-
-}
-
-atualizarResumo(lista);
+    atualizarResumo(lista);
 
 }
 
