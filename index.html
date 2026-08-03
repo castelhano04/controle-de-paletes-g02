@@ -1244,51 +1244,39 @@ ${escapeHTML(palete.descricao)}<br>
 
     }
 
-    palete.pasDisponiveis.forEach((pa,index)=>{
+   palete.pasDisponiveis.forEach((pa,index)=>{
 
-        lista.innerHTML+=`
+    const disponivel =
+        typeof pa === "object"
+            ? pa.disponivel
+            : true;
 
-        <div onclick="alternarPA('${palete.id}',${index})"
+    const numero =
+        typeof pa === "object"
+            ? pa.numero
+            : pa;
 
+    lista.innerHTML += `
+
+    <div
+        onclick="alternarPA('${palete.id}',${index})"
         style="
         cursor:pointer;
         padding:10px;
         margin-bottom:6px;
         border-radius:8px;
-        const disponivel =
-    typeof pa === "object"
-        ? pa.disponivel
-        : true;
+        background:${disponivel ? '#dff7e8' : '#ffdede'};
+        color:${disponivel ? '#198754' : '#c62828'};
+        font-weight:bold;">
 
-const numero =
-    typeof pa === "object"
-        ? pa.numero
-        : pa;
+        ${disponivel ? '🟢' : '🔴'}
+        PA ${numero}
 
-lista.innerHTML += `
+    </div>
 
-<div onclick="alternarPA('${palete.id}',${index})"
+    `;
 
-style="
-cursor:pointer;
-padding:10px;
-margin-bottom:6px;
-border-radius:8px;
-background:${disponivel ? '#dff7e8' : '#ffdede'};
-color:${disponivel ? '#198754' : '#c62828'};
-font-weight:bold;">
-
-${disponivel ? '🟢' : '🔴'}
-
-PA ${numero}
-
-</div>
-
-`;
-
-    });
-
-}
+});
 
     async function alternarPA(id,index){
 
