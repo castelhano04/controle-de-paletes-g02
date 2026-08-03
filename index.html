@@ -1226,8 +1226,11 @@ function limparFormulario() {
 
     document.getElementById("modalPA").style.display="flex";
 
-    document.getElementById("tituloModalPA").innerHTML=
-    "CONTROLE DE PAs<br><small>"+palete.descricao+"</small>";
+   document.getElementById("tituloModalPA").innerHTML = `
+<b>CONTROLE DE ESTOQUE</b><br>
+${escapeHTML(palete.descricao)}<br>
+<small>Container: ${escapeHTML(palete.container || "-")}</small>
+`;
 
     const lista=document.getElementById("listaPA");
 
@@ -1264,6 +1267,29 @@ function limparFormulario() {
         `;
 
     });
+
+}
+
+    async function alternarPA(id,index){
+
+    const palete = paletes.find(p => p.id === id);
+
+    if(!palete) return;
+
+    palete.pasDisponiveis[index].disponivel =
+    !palete.pasDisponiveis[index].disponivel;
+
+    await db.collection("paletes")
+    .doc(id)
+    .update({
+
+        pasDisponiveis: palete.pasDisponiveis
+
+    });
+
+    abrirControlePA(id);
+
+    renderizarEstoque();
 
 }
 
@@ -1970,9 +1996,18 @@ function abrirAba(tipo){
 
     <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
 
-    <td>
-        📦
-    </td>
+   <td>
+
+<button
+class="action-btn btn-green"
+onclick="abrirControlePA('${p.id}')"
+title="Controlar PAs">
+
+📦
+
+</button>
+
+</td>
 
     </tr>
     `;
