@@ -1987,150 +1987,151 @@ function abrirAba(tipo){
 
 }
 
-    function renderizarEstoque(){
+   function renderizarEstoque(){
 
-    const tbody =
-    document.getElementById("tabelaEstoque");
+    const tbody = document.getElementById("tabelaEstoque");
+    tbody.innerHTML = "";
 
-    tbody.innerHTML="";
+    const thAcoes = document.getElementById("thAcoesEstoque");
 
-    const thAcoes =
-document.getElementById("thAcoesEstoque");
-
-thAcoes.style.display =
-perfil === "admin"
-? ""
-: "none";
+    if(thAcoes){
+        thAcoes.style.display =
+        perfil === "admin" ? "" : "none";
+    }
 
     paletes.forEach(p=>{
 
-    let disponiveis = 1;
-    let total = 1;
+        let total = 1;
+        let disponiveis = 1;
 
-    if (p.pasDisponiveis) {
+        if(p.pasDisponiveis){
 
-        total = p.pasDisponiveis.length;
+            total = p.pasDisponiveis.length;
+            disponiveis =
+            p.pasDisponiveis.filter(pa=>pa.disponivel).length;
 
-        disponiveis = p.pasDisponiveis.filter(pa => pa.disponivel).length;
+        }
 
-    }
-
-    const cor =
-        disponiveis === total
+        const cor =
+        disponiveis===total
         ? "#198754"
-        : (disponiveis === 0 ? "#c62828" : "#ff9800");
+        : (disponiveis===0 ? "#c62828" : "#ff9800");
 
-    tbody.innerHTML += `
-    <tr>
+        let html = `
+        <tr>
 
-<td>
+        <td>`;
 
-${
-perfil === "consulta" &&
-p.pasDisponiveis &&
-p.pasDisponiveis.length > 1
+        if(
+            perfil==="consulta" &&
+            p.pasDisponiveis &&
+            p.pasDisponiveis.length>1
+        ){
 
-?
+            html += `
+            <div>
 
-`<div>
+                <strong>${escapeHTML(p.pa)}</strong>
 
-<strong>${escapeHTML(p.pa)}</strong>
+                <br>
 
-<br>
+                <small
+                onclick="abrirControlePA('${p.id}')"
+                style="
+                cursor:pointer;
+                color:#0d6efd;
+                font-weight:600;">
 
-<small
-onclick="abrirControlePA('${p.id}')"
-style="
-cursor:pointer;
-color:#0d6efd;
-font-weight:600;">
+                🔍 Ver PAs
 
-🔍 Ver PAs
+                </small>
 
-</small>
+            </div>
+            `;
 
-</div>`
+        }else{
 
-:
+            html += `<strong>${escapeHTML(p.pa)}</strong>`;
 
-`<strong>${escapeHTML(p.pa)}</strong>`
+        }
 
-}
+        html += `
 
-</td>
+        </td>
 
-    <td style="font-weight:bold;color:${cor}">
+        <td style="font-weight:bold;color:${cor}">
         ${disponiveis}/${total}
-    </td>
+        </td>
 
-   <td>
+        <td>
+        ${escapeHTML(p.caixas)}
+        </td>
 
-${escapeHTML(p.caixas)}
+        <td>
 
-</td>
+        ${p.saldoAtual ?? p.caixas}
 
-<td>
+        ${
+        perfil==="admin"
 
-${p.saldoAtual ?? p.caixas}
+        ?
 
-${
-perfil==="admin"
+        `<button
+        class="action-btn btn-blue"
+        style="margin-left:8px"
+        onclick="editarSaldo('${p.id}')">
 
-?
+        ✏️
 
-`<button
-class="action-btn btn-blue"
-style="margin-left:8px"
-onclick="editarSaldo('${p.id}')">
+        </button>`
 
-✏️
+        :
 
-</button>`
+        ""
 
-:
+        }
 
-""
+        </td>
 
-}
+        <td>${escapeHTML(p.descricao)}</td>
 
-</td>
+        <td>G02</td>
 
-    <td>${escapeHTML(p.descricao)}</td>
+        <td>${escapeHTML(p.container||"")}</td>
 
-    <td>G02</td>
+        <td>
+        ${p.data ? p.data.split("-").reverse().join("/") : ""}
+        </td>
+        `;
 
-    <td>${escapeHTML(p.container||"")}</td>
+        if(perfil==="admin"){
 
-    <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
+            html += `
 
- ${
-perfil==="admin"
+            <td style="text-align:center;">
 
-?
+            <button
+            class="action-btn btn-green"
+            onclick="abrirControlePA('${p.id}')"
+            title="Controlar PAs">
 
-`<td style="text-align:center;">
+            📦
 
-<button
-class="action-btn btn-green"
-onclick="abrirControlePA('${p.id}')"
-title="Controlar PAs">
+            </button>
 
-📦
+            </td>
 
-</button>
+            `;
 
-</td>`
+        }
 
-:
+        html += `
+        </tr>
+        `;
 
-""
+        tbody.innerHTML += html;
 
-}
-
-</tr>
-`;
-
-});
+    });
 
 }
 
