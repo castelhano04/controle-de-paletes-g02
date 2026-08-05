@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Controle de Paletes - G02 | By Castelhano</title>
+<title>Controle de Mercadoria - G02 | By Castelhano</title>
 
 <style>
 * {
@@ -422,7 +422,7 @@ td.description {
 
     <div class="login-box">
 
-        <h2>CONTROLE DE PALETES</h2>
+        <h2>CONTROLE DE REFERÊNCIAS</h2>
 
 <p>
     Acesso ao sistema - Galpão G02
@@ -477,7 +477,7 @@ td.description {
 </div>
 
        <div>
-    <strong>CONTROLE DE PALETES</strong>
+   <strong>CONTROLE DE REFERÊNCIAS</strong>
     <span class="badge">GALPÃO G02</span>
     <div class="assinatura-topo">
         By Castelhano
@@ -509,7 +509,7 @@ SAIR
 
     <div class="card no-print" id="cardCadastro">
 
-        <h3>Cadastrar palete</h3>
+        <h3>Cadastrar referência</h3>
 
         <div class="form-grid">
 
@@ -556,7 +556,7 @@ SAIR
                 onclick="salvarPalete()"
                 id="btnSalvar"
             >
-                SALVAR PALETE
+                SALVAR REFERÊNCIA
             </button>
 
            <button
@@ -642,7 +642,7 @@ EXPORTAR EXCEL/CSV
         <div class="summary">
 
             <div class="summary-box">
-                PALETES:
+               REFERÊNCIAS:
                 <strong id="totalPaletes">0</strong>
             </div>
 
@@ -671,8 +671,8 @@ EXPORTAR EXCEL/CSV
     <div class="table-card">
 
         <div class="table-title">
-            CONTROLE DE PALETES
-        </div>
+    CONTROLE DE REFERÊNCIAS
+</div>
 
         <table>
 
@@ -1053,7 +1053,7 @@ await db.collection("paletes").doc(editandoId).update({
 
 });
 
-        alert("Palete atualizado com sucesso!");
+        alert("Referência atualizada com sucesso!");
 
     }
 
@@ -1131,7 +1131,7 @@ await db.collection("paletes").add({
 
 });
         
-alert("Palete cadastrado com sucesso!");
+alert("Referência cadastrada com sucesso!");
 
     }
 
@@ -1166,7 +1166,7 @@ function limparFormulario() {
 
 
     document.getElementById("btnSalvar")
-        .textContent = "SALVAR PALETE";
+    .textContent = "SALVAR REFERÊNCIA";
 
 }
 
@@ -1446,8 +1446,8 @@ palete.container || "";
     editandoId = id;
 
 
-    document.getElementById("btnSalvar")
-        .textContent = "ATUALIZAR PALETE";
+   document.getElementById("btnSalvar")
+    .textContent = "ATUALIZAR REFERÊNCIA";
 
 
     window.scrollTo({
@@ -1493,7 +1493,7 @@ if(perfil!=="admin") return;
 .doc(id)
 .delete();
 
-alert("Palete excluído com sucesso!");
+alert("Referência excluída com sucesso!");
 
 }
 
@@ -1606,7 +1606,7 @@ function renderizar() {
                     colspan="7"
                     class="empty"
                 >
-                    Nenhum palete encontrado.
+                    Nenhuma referência encontrada.
                 </td>
             </tr>
         `;
@@ -1795,7 +1795,7 @@ function exportarCSV() {
 
     if (paletes.length === 0) {
 
-        alert("Não existem paletes cadastrados.");
+        alert("Não existem referências cadastradas.");
 
         return;
 
@@ -1859,7 +1859,7 @@ function exportarCSV() {
     a.href = url;
 
     a.download =
-        "controle-paletes-G02.csv";
+        "controle-referencias-G02.csv";
 
     a.click();
 
