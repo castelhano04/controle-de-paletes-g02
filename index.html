@@ -516,7 +516,7 @@ SAIR
             <input
                 type="text"
                 id="pa"
-                placeholder="Nº PA"
+                placeholder="Referência"
                 autocomplete="off"
             >
 
@@ -600,15 +600,15 @@ LIMPAR
             <input
     type="text"
     id="pesquisa"
-    placeholder="Pesquisar PA ou descrição"
+    placeholder="Pesquisar referência ou descrição"
     oninput="renderizar()"
 >
 
            <select id="tipoPesquisa" onchange="renderizar()">
 
-<option value="todos">PA + Descrição + Data</option>
+<option value="todos">Referência + Descrição + Data</option>
 
-<option value="pa">Somente PA</option>
+<option value="pa">Somente Referência</option>
 
 <option value="descricao">Somente Descrição</option>
 
@@ -681,7 +681,7 @@ EXPORTAR EXCEL/CSV
 <tr>
 
     <th style="width: 15%;">
-        PA
+        REFERÊCIA
     </th>
 
     <th style="width: 10%;">
@@ -1343,7 +1343,7 @@ ${
 
 <small style="font-size:13px">
 
-PA ${pa.numero}
+Referência ${pa.numero}
 
 ${perfil==="admin"
 ?'<br><span style="color:#666">Clique para alterar</span>'
@@ -2273,7 +2273,7 @@ border-radius:12px;
 padding:20px;">
 
 <h3 id="tituloModalPA">
-Controle de PAs
+Controle de Referências
 </h3>
 
 <div id="listaPA"
