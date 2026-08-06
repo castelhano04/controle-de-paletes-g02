@@ -735,23 +735,12 @@ CONTROLE DE ESTOQUE
 <tr>
 
 <th style="width:15%;">REFERÊNCIA</th>
-
-<th style="width:10%;">DISP.</th>
-
-<th style="width:8%;">RECEBIDO</th>
-
-<th style="width:8%;">SALDO</th>
-
-<th style="width:24%;">DESCRIÇÃO</th>
-
-<th style="width:10%;">GALPÃO</th>
-
-<th style="width:13%;">CONTAINER</th>
-
-<th style="width:8%;">DATA</th>
-
-<th id="thAcoesEstoque" style="width:4%;">AÇÕES</th>
-
+<th style="width:10%;">RECEBIDO</th>
+<th style="width:10%;">SALDO</th>
+<th style="width:30%;">DESCRIÇÃO</th>
+<th style="width:15%;">CONTAINER</th>
+<th style="width:10%;">DATA</th>
+<th style="width:10%;">AÇÕES</th>
 </tr>
 
 </thead>
@@ -886,6 +875,9 @@ function configurarPermissoes(){
 
     document.getElementById("btnImprimir").style.display =
         admin ? "inline-block" : "none";
+
+    document.getElementById("btnEstoque").style.display =
+    admin ? "inline-block" : "none";
 
     const th = document.getElementById("thAcoesEstoque");
 
@@ -2051,8 +2043,12 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
 function abrirAba(tipo){
 
     configurarPermissoes();
+    
+if(tipo==="estoque"){
 
-    if(tipo==="estoque"){
+    if(perfil !== "admin"){
+        return;
+    }
 
         document.getElementById("abaPaletes").style.display="none";
 
@@ -2070,124 +2066,62 @@ function abrirAba(tipo){
 
 }
 
-   function renderizarEstoque(){
-
-    console.log("Perfil:", perfil);
+  function renderizarEstoque(){
 
     const tbody = document.getElementById("tabelaEstoque");
+
     tbody.innerHTML = "";
 
     paletes.forEach(p=>{
 
-      let total = p.pasDisponiveis ? p.pasDisponiveis.length : 1;
+        tbody.innerHTML += `
+        <tr>
 
-const saldoEstoque = Number(p.saldoAtual ?? p.caixas ?? 0);
+            <td>${escapeHTML(p.pa)}</td>
 
-let disponiveis;
+            <td>${p.caixas}</td>
 
-if (saldoEstoque <= 0) {
+            <td>${p.saldoAtual ?? p.caixas}</td>
 
-    disponiveis = 0;
+            <td>${escapeHTML(p.descricao)}</td>
 
-} else if (p.pasDisponiveis) {
+            <td>${escapeHTML(p.container || "")}</td>
 
-    disponiveis = p.pasDisponiveis.filter(pa => pa.disponivel).length;
+            <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
 
-} else {
+           <td>
 
-    disponiveis = 1;
+    <button
+        class="action-btn btn-red"
+        title="Baixar estoque"
+        onclick="baixarEstoque('${p.id}')">
+        ➖
+    </button>
+
+    <button
+        class="action-btn btn-green"
+        title="Adicionar estoque"
+        onclick="adicionarEstoque('${p.id}')">
+        ➕
+    </button>
+
+    <button
+        class="action-btn btn-blue"
+        title="Ajustar saldo"
+        onclick="editarSaldo('${p.id}')">
+        ✏️
+    </button>
+
+</td>
+
+        </tr>
+        `;
+
+    });
 
 }
 
-        const cor =
-            disponiveis===total
-            ? "#198754"
-            : (disponiveis===0 ? "#c62828" : "#ff9800");
-
-        let html = `<tr>`;
-
-        // PA
-        html += `<td>`;
-
-       html += `
-    <strong>${escapeHTML(p.pa)}</strong>
-`;
-
-        html += `</td>`;
-
-        // DISP
-const retirados = total - disponiveis;
-
-html += `
-<td style="
-    font-weight:bold;
-    color:${cor};
-    white-space:nowrap;
-">
-    🟢 ${disponiveis} / 🔴 ${retirados}
-</td>
-`;
-
-        // RECEBIDO
-        html += `
-        <td>
-            ${escapeHTML(p.caixas)}
-        </td>
-        `;
-
-   // SALDO
-html += `
-<td>
-    ${p.saldoAtual ?? p.caixas}
-`;
-
-if (perfil === "admin") {
-
-    html += `
-        <button
-            class="action-btn btn-blue"
-            style="margin-left:8px"
-            title="Editar saldo"
-            onclick="editarSaldo('${p.id}')">
-            ✏️
-        </button>
-    `;
-
-}
-
-html += `
-</td>
-`;
-        
-        html += `
-        <td>${escapeHTML(p.descricao)}</td>
-        `;
-
-        // GALPÃO
-        html += `
-        <td>G02</td>
-        `;
-
-        // CONTAINER
-        html += `
-        <td>${escapeHTML(p.container || "")}</td>
-        `;
-
-       // DATA
-html += `
-<td>
-${p.data ? p.data.split("-").reverse().join("/") : ""}
-</td>
-`;
-
-html += `</tr>`;
-
-tbody.innerHTML += html;
-
-});
-
-}
-
+   
 async function editarSaldo(id){
 
     if(perfil !== "admin") return;
@@ -2223,6 +2157,66 @@ async function editarSaldo(id){
     });
 
     palete.saldoAtual=Number(novo);
+
+    renderizarEstoque();
+
+}
+
+    async function baixarEstoque(id){
+
+    if(perfil !== "admin") return;
+
+    const palete = paletes.find(p=>p.id===id);
+
+    if(!palete) return;
+
+
+    const saldoAtual =
+        palete.saldoAtual ?? palete.caixas;
+
+
+    const quantidade = prompt(
+        "Quantidade para baixar:",
+        ""
+    );
+
+
+    if(quantidade===null) return;
+
+
+    if(isNaN(quantidade) || Number(quantidade)<=0){
+
+        alert("Informe uma quantidade válida.");
+
+        return;
+
+    }
+
+
+    const novoSaldo =
+        Number(saldoAtual) - Number(quantidade);
+
+
+    if(novoSaldo < 0){
+
+        alert("Estoque insuficiente.");
+
+        return;
+
+    }
+
+
+    await db.collection("paletes")
+    .doc(id)
+    .update({
+
+        saldoAtual: novoSaldo
+
+    });
+
+
+    palete.saldoAtual = novoSaldo;
+
 
     renderizarEstoque();
 
