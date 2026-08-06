@@ -978,6 +978,122 @@ sessionStorage.removeItem("perfil");
 
 }
 
+    function renderizarEstoque(){
+
+    const tbody = document.getElementById("tabelaEstoque");
+
+    if(!tbody) return;
+
+
+    tbody.innerHTML = "";
+
+
+    if(!paletes || paletes.length === 0){
+
+        tbody.innerHTML = `
+        <tr>
+            <td colspan="7" class="empty">
+                Nenhuma referência cadastrada.
+            </td>
+        </tr>
+        `;
+
+        return;
+
+    }
+
+
+    paletes.forEach(p=>{
+
+
+        tbody.innerHTML += `
+
+        <tr>
+
+            <td>
+                ${escapeHTML(p.pa || "")}
+            </td>
+
+
+            <td>
+                ${Number(p.caixas || 0)
+                .toLocaleString("pt-BR")}
+            </td>
+
+
+            <td>
+                ${Number(
+                    p.saldoAtual ?? p.caixas ?? 0
+                )
+                .toLocaleString("pt-BR")}
+            </td>
+
+
+            <td>
+                ${escapeHTML(p.descricao || "")}
+            </td>
+
+
+            <td>
+                ${escapeHTML(p.container || "")}
+            </td>
+
+
+            <td>
+                ${
+                p.data
+                ? p.data.split("-").reverse().join("/")
+                : ""
+                }
+            </td>
+
+
+            <td>
+
+
+                <button
+                class="action-btn btn-red"
+                title="Baixar estoque"
+                onclick="baixarEstoque('${p.id}')">
+
+                ➖
+
+                </button>
+
+
+                <button
+                class="action-btn btn-green"
+                title="Adicionar estoque"
+                onclick="adicionarEstoque('${p.id}')">
+
+                ➕
+
+                </button>
+
+
+                <button
+                class="action-btn btn-blue"
+                title="Ajustar saldo"
+                onclick="editarSaldo('${p.id}')">
+
+                ✏️
+
+                </button>
+
+
+            </td>
+
+
+        </tr>
+
+        `;
+
+
+    });
+
+
+}
+
 function configurarPermissoes(){
 
     const btnEstoque = document.getElementById("btnEstoque");
