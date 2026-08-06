@@ -1052,9 +1052,7 @@ CONTROLE DE ESTOQUE
 
 <thead>
 
-
 <tr>
-
 
 <th>
 REFERÊNCIA
@@ -1062,7 +1060,12 @@ REFERÊNCIA
 
 
 <th>
-RECEBIDO
+ENTRADA
+</th>
+
+
+<th>
+SAÍDA
 </th>
 
 
@@ -1070,9 +1073,6 @@ RECEBIDO
 SALDO
 </th>
 
-    <th>
-STATUS
-</th>
 
 <th>
 DESCRIÇÃO
@@ -1089,16 +1089,9 @@ DATA
 </th>
 
 
-<th>
-AÇÕES
-</th>
-
-
 </tr>
 
-
 </thead>
-
 
 
 <tbody id="tabelaEstoque">
@@ -1301,7 +1294,7 @@ function restaurarAba(){
 
 
 
-    if(aba === "estoque"){
+    if(aba === "estoque" && perfil === "admin"){
 
 
         document.getElementById("abaPaletes")
@@ -1315,8 +1308,7 @@ function restaurarAba(){
         renderizarEstoque();
 
 
-    }else{
-
+}else{
 
         document.getElementById("abaPaletes")
         .style.display="block";
@@ -1960,43 +1952,17 @@ if(editandoId){
 
 
 await db.collection("paletes")
-.doc(editandoId)
-.update({
-
-    pa:pa,
-
-    caixas:caixas,
-
-    descricao:descricao,
-
-    container:container,
-
-    data:data,
-
-    galpao:GALPAO
-
-});
-
-
-alert("Referência atualizada!");
-
-
-editandoId=null;
-
-
-}else{
-
-
-await db.collection("paletes")
 .add({
 
     pa:pa,
 
     caixas:caixas,
 
+    entradaInicial:caixas,
+
     saldoAtual:caixas,
 
-        saldoAtual:caixas,
+    saidaTotal:0,
 
     descricao:descricao,
 
@@ -2178,16 +2144,14 @@ Nenhuma referência cadastrada.
 
 return;
 
-
 }
-
 
 
 
 paletes.forEach(p=>{
 
 
-const recebido =
+const entrada =
 Number(p.caixas || 0);
 
 
@@ -2198,15 +2162,13 @@ p.saldoAtual !== undefined
 ?
 p.saldoAtual
 :
-recebido
+entrada
 );
 
-    const statusEstoque =
-saldo > 0
-?
-"DISPONÍVEL"
-:
-"INDISPONÍVEL (RETIRADO)";
+
+
+const saida =
+entrada - saldo;
 
 
 
@@ -2217,78 +2179,63 @@ tbody.innerHTML += `
 
 
 <td>
+
+<strong>
 ${escapeHTML(p.pa || "")}
+</strong>
+
 </td>
 
 
 
 <td>
-${recebido.toLocaleString("pt-BR")}
+
+${entrada.toLocaleString("pt-BR")}
+
 </td>
 
 
 
 <td>
+
+${saida.toLocaleString("pt-BR")}
+
+</td>
+
+
+
+<td>
+
 ${saldo.toLocaleString("pt-BR")}
-</td>
 
-<td>
-${statusEstoque}
 </td>
 
 
+
 <td>
+
 ${escapeHTML(p.descricao || "")}
+
 </td>
 
 
 
 <td>
+
 ${escapeHTML(p.container || "")}
+
 </td>
 
 
 
 <td>
+
 ${
 p.data
 ?
 p.data.split("-").reverse().join("/")
 :
 ""
-}
-</td>
-
-
-
-<td>
-
-${
-perfil === "admin"
-?
-`
-
-<button
-class="action-btn btn-red"
-onclick="baixarEstoque('${p.id}')">
-
-➖
-
-</button>
-
-
-<button
-class="action-btn btn-green"
-onclick="adicionarEstoque('${p.id}')">
-
-➕
-
-</button>
-
-`
-:
-""
-
 }
 
 </td>
