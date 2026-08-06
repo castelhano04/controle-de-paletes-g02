@@ -2066,53 +2066,68 @@ if(tipo==="estoque"){
 
 }
 
-  function renderizarEstoque(){
+ function renderizarEstoque(){
 
     const tbody = document.getElementById("tabelaEstoque");
 
     tbody.innerHTML = "";
+
+    if(!paletes || paletes.length === 0){
+
+        tbody.innerHTML = `
+        <tr>
+            <td colspan="7" class="empty">
+                Nenhuma referência cadastrada.
+            </td>
+        </tr>
+        `;
+
+        return;
+
+    }
+
 
     paletes.forEach(p=>{
 
         tbody.innerHTML += `
         <tr>
 
-            <td>${escapeHTML(p.pa)}</td>
+            <td>${escapeHTML(p.pa || "")}</td>
 
-            <td>${p.caixas}</td>
+            <td>${p.caixas || 0}</td>
 
-            <td>${p.saldoAtual ?? p.caixas}</td>
+            <td>${p.saldoAtual ?? p.caixas ?? 0}</td>
 
-            <td>${escapeHTML(p.descricao)}</td>
+            <td>${escapeHTML(p.descricao || "")}</td>
 
             <td>${escapeHTML(p.container || "")}</td>
 
             <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
 
-           <td>
+            <td>
 
-    <button
-        class="action-btn btn-red"
-        title="Baixar estoque"
-        onclick="baixarEstoque('${p.id}')">
-        ➖
-    </button>
+                <button
+                    class="action-btn btn-red"
+                    title="Baixar estoque"
+                    onclick="baixarEstoque('${p.id}')">
+                    ➖
+                </button>
 
-    <button
-        class="action-btn btn-green"
-        title="Adicionar estoque"
-        onclick="adicionarEstoque('${p.id}')">
-        ➕
-    </button>
+                <button
+                    class="action-btn btn-green"
+                    title="Adicionar estoque"
+                    onclick="adicionarEstoque('${p.id}')">
+                    ➕
+                </button>
 
-    <button
-        class="action-btn btn-blue"
-        title="Ajustar saldo"
-        onclick="editarSaldo('${p.id}')">
-        ✏️
-    </button>
+                <button
+                    class="action-btn btn-blue"
+                    title="Ajustar saldo"
+                    onclick="editarSaldo('${p.id}')">
+                    ✏️
+                </button>
 
-</td>
+            </td>
 
         </tr>
         `;
@@ -2120,7 +2135,6 @@ if(tipo==="estoque"){
     });
 
 }
-
    
 async function editarSaldo(id){
 
