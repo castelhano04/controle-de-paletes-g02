@@ -944,11 +944,22 @@ sessionStorage.removeItem("perfil");
 
         document.getElementById("abaPaletes").style.display="none";
 
-        document.getElementById("abaEstoque").style.display="block";
+       document.getElementById("abaEstoque").style.display="block";
+
+
+document.getElementById("abaEstoque").innerHTML = `
+<h1 style="padding:50px">
+ESTOQUE TESTE OK
+</h1>
+`;
+
+
+alert("ABA ESTOQUE ABERTA");
 
     }
 
 }
+    
    function renderizarEstoque(){
 
     const tbody = document.getElementById("tabelaEstoque");
