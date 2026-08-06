@@ -742,18 +742,20 @@ CONTROLE DE ESTOQUE
 
 <th style="width:8%;">SALDO</th>
 
-<th style="width:28%;">DESCRIÇÃO</th>
+<th style="width:24%;">DESCRIÇÃO</th>
 
 <th style="width:10%;">GALPÃO</th>
 
-<th style="width:15%;">CONTAINER</th>
+<th style="width:13%;">CONTAINER</th>
 
-<th style="width:10%;">DATA</th>
-    
+<th style="width:8%;">DATA</th>
+
+<th id="thAcoesEstoque" style="width:4%;">AÇÕES</th>
+
 </tr>
 
 </thead>
-
+    
 <tbody id="tabelaEstoque"></tbody>
 
 </table>
@@ -2024,10 +2026,11 @@ function carregarFirebase() {
 
         renderizar();
 
-          });
-
+if (document.getElementById("abaEstoque").style.display === "block") {
+    renderizarEstoque();
 }
-
+        });
+    
 if (sessionStorage.getItem("paletesLogado") === "true") {
 
     perfil = sessionStorage.getItem("perfil");
@@ -2065,8 +2068,6 @@ function abrirAba(tipo){
 }
 
    function renderizarEstoque(){
-
-           alert("Entrou");
 
     console.log("Perfil:", perfil);
 
@@ -2131,30 +2132,32 @@ html += `
         </td>
         `;
 
-        // SALDO
-        html += `<td>
+    // SALDO
+html += `
+<td>
+    ${p.saldoAtual ?? p.caixas}
+</td>
+`;
 
-            ${p.saldoAtual ?? p.caixas}
-        `;
+// AÇÕES
+if (perfil === "admin") {
 
-        if(perfil==="admin"){
-
-            html += `
-
-            <button
+    html += `
+    <td>
+        <button
             class="action-btn btn-blue"
-            style="margin-left:8px"
+            title="Editar saldo"
             onclick="editarSaldo('${p.id}')">
-
             ✏️
+        </button>
+    </td>
+    `;
 
-            </button>
+} else {
 
-            `;
+    html += `<td></td>`;
 
-        }
-
-        html += `</td>`;
+}
 
         // DESCRIÇÃO
         html += `
