@@ -936,23 +936,15 @@ sessionStorage.removeItem("perfil");
 
     function abrirAba(tipo){
 
-    alert("Chamou abrirAba: " + tipo);
+    console.log("ABRIR:", tipo);
 
+    console.log(document.getElementById("abaEstoque"));
 
     if(tipo === "estoque"){
 
         document.getElementById("abaPaletes").style.display="none";
 
         document.getElementById("abaEstoque").style.display="block";
-
-
-        alert("ABA ESTOQUE ABERTA");
-
-    }else{
-
-        document.getElementById("abaPaletes").style.display="block";
-
-        document.getElementById("abaEstoque").style.display="none";
 
     }
 
