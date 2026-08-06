@@ -1950,42 +1950,42 @@ if(!pa || !caixas || !descricao){
 
 if(editandoId){
 
+    await db.collection("paletes")
+    .doc(editandoId)
+    .update({
+        pa,
+        caixas,
+        descricao,
+        container,
+        data,
+        galpao: GALPAO
+    });
 
-await db.collection("paletes")
-.add({
+    alert("Referência atualizada!");
+    editandoId = null;
 
-    pa:pa,
+}else{
 
-    caixas:caixas,
+    await db.collection("paletes")
+    .add({
+        pa,
+        caixas,
+        entradaInicial: caixas,
+        saldoAtual: caixas,
+        saidaTotal: 0,
+        descricao,
+        container,
+        data,
+        galpao: GALPAO,
+        pasDisponiveis:[
+            {
+                numero: pa,
+                disponivel: true
+            }
+        ]
+    });
 
-    entradaInicial:caixas,
-
-    saldoAtual:caixas,
-
-    saidaTotal:0,
-
-    descricao:descricao,
-
-    container:container,
-
-    data:data,
-
-    galpao:GALPAO,
-
-    pasDisponiveis:[
-
-        {
-            numero:pa,
-            disponivel:true
-        }
-
-    ]
-
-});
-
-
-alert("Referência cadastrada!");
-
+    alert("Referência cadastrada!");
 }
 
 
@@ -2341,6 +2341,8 @@ saldo > 0
 "indisponivel"
 
 });
+
+            }
 
         async function adicionarEstoque(id){
 
