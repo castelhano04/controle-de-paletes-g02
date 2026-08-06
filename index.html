@@ -934,7 +934,7 @@ sessionStorage.removeItem("perfil");
 
 }
 
-    function abrirAba(tipo){
+   function abrirAba(tipo){
 
     console.log("ABRIR:", tipo);
 
@@ -942,20 +942,9 @@ sessionStorage.removeItem("perfil");
 
         document.getElementById("abaPaletes").style.display="none";
 
-        const estoque = document.getElementById("abaEstoque");
+        document.getElementById("abaEstoque").style.display="block";
 
-        estoque.style.display="block";
-        estoque.style.background="yellow";
-        estoque.style.color="black";
-        estoque.style.minHeight="500px";
-
-        estoque.innerHTML = `
-        <h1 style="padding:50px">
-        TESTE ESTOQUE FUNCIONANDO
-        </h1>
-        `;
-
-        console.log(estoque);
+        renderizarEstoque();
 
     }else{
 
@@ -2293,6 +2282,8 @@ function carregarFirebase() {
 
 });
 
+            renderizar();
+        
        renderizar();
 
 }); // fecha onSnapshot
