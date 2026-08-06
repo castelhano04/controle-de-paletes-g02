@@ -1439,37 +1439,65 @@ window.onload = function(){
 
 function entrar(){
 
+  function entrar(){
+
+
     const senha = document
-        .getElementById("senhaLogin")
-        .value
-        .trim();
+    .getElementById("senhaLogin")
+    .value
+    .trim();
+
+
 
     const erro = document
-        .getElementById("erroLogin");
+    .getElementById("erroLogin");
+
 
     erro.style.display = "none";
 
+
+
     if(senha === SENHA_ADMIN){
+
 
         perfil = "admin";
 
-    }else if(senha === SENHA_CONSULTA){
+
+    }
+    else if(senha === SENHA_CONSULTA){
+
 
         perfil = "consulta";
 
-    }else{
+
+    }
+    else{
+
 
         erro.style.display = "block";
+
 
         return;
 
     }
 
-    sessionStorage.setItem("perfil",perfil);
 
-    sessionStorage.setItem("logado","true");
+
+    sessionStorage.setItem(
+        "perfil",
+        perfil
+    );
+
+
+    sessionStorage.setItem(
+        "logado",
+        "true"
+    );
+
+
 
     iniciarSistema();
+
 
 }
 
