@@ -2024,12 +2024,15 @@ function carregarFirebase() {
 
 });
 
-        renderizar();
+       renderizar();
 
 if (document.getElementById("abaEstoque").style.display === "block") {
     renderizarEstoque();
 }
-        });
+
+}); // fecha onSnapshot
+
+} // fecha carregarFirebase()
     
 if (sessionStorage.getItem("paletesLogado") === "true") {
 
@@ -2132,34 +2135,30 @@ html += `
         </td>
         `;
 
-    // SALDO
+   // SALDO
 html += `
 <td>
     ${p.saldoAtual ?? p.caixas}
-</td>
 `;
 
-// AÇÕES
 if (perfil === "admin") {
 
     html += `
-    <td>
         <button
             class="action-btn btn-blue"
+            style="margin-left:8px"
             title="Editar saldo"
             onclick="editarSaldo('${p.id}')">
             ✏️
         </button>
-    </td>
     `;
-
-} else {
-
-    html += `<td></td>`;
 
 }
 
-        // DESCRIÇÃO
+html += `
+</td>
+`;
+        
         html += `
         <td>${escapeHTML(p.descricao)}</td>
         `;
