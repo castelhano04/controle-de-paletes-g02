@@ -689,33 +689,19 @@ EXPORTAR EXCEL/CSV
 
 <tr>
 
-    <th style="width: 15%;">
-        REFERÊCIA
-    </th>
+    <th id="thReferencia" style="width:15%;">REFERÊNCIA</th>
 
-    <th style="width: 10%;">
-    DISP.
-</th>
+<th id="thDisp" style="width:10%;">DISP.</th>
 
-   <th style="width: 12%;">
-    QUANTIDADE
-</th>
+<th id="thQuantidade" style="width:12%;">QUANTIDADE</th>
 
-    <th style="width: 28%;">
-        DESCRIÇÃO
-    </th>
+<th id="thDescricao" style="width:28%;">DESCRIÇÃO</th>
 
-    <th style="width: 10%;">
-        GALPÃO
-    </th>
+<th id="thGalpao" style="width:10%;">GALPÃO</th>
 
-    <th style="width: 15%;">
-        CONTAINER
-    </th>
+<th id="thContainer" style="width:15%;">CONTAINER</th>
 
-    <th style="width: 10%;">
-        DATA
-    </th>
+<th id="thData" style="width:10%;">DATA</th>
     
 </tr>
 
@@ -726,38 +712,6 @@ EXPORTAR EXCEL/CSV
         </table>
 
     </div>
-
-     <!-- RESUMO -->
-
-<div class="table-card" style="flex:1; min-width:340px;">
-
-    <div class="table-title">
-        RESUMO DO ESTOQUE
-    </div>
-
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>REFERÊNCIA</th>
-
-                <th>DESCRIÇÃO</th>
-
-                <th>QTD</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody id="tabelaResumo">
-
-        </tbody>
-
-    </table>
-
-</div>
 
 </div>
 
@@ -1586,6 +1540,8 @@ function renderizar() {
 
     const tbody = document.getElementById("tabelaPaletes");
 
+    const thead = document.querySelector(".table-card table thead");
+
     const pesquisa = document
         .getElementById("pesquisa")
         .value
@@ -1635,7 +1591,74 @@ function renderizar() {
 
     });
 
+        const modoResumo = pesquisa !== "";
+
+    const thead = document.querySelector(".table-card table thead");
+
+if (modoResumo) {
+
+    thead.innerHTML = `
+        <tr>
+            <th style="width:25%;">REFERÊNCIA</th>
+            <th style="width:50%;">DESCRIÇÃO</th>
+            <th style="width:25%;">TOTAL</th>
+        </tr>
+    `;
+
+} else {
+
+    thead.innerHTML = `
+        <tr>
+
+            <th style="width:15%;">REFERÊNCIA</th>
+
+            <th style="width:10%;">DISP.</th>
+
+            <th style="width:12%;">QUANTIDADE</th>
+
+            <th style="width:28%;">DESCRIÇÃO</th>
+
+            <th style="width:10%;">GALPÃO</th>
+
+            <th style="width:15%;">CONTAINER</th>
+
+            <th style="width:10%;">DATA</th>
+
+        </tr>
+    `;
+
+}
     tbody.innerHTML = "";
+
+if (modoResumo) {
+
+    const resumo = {};
+
+    lista.forEach(function(p) {
+
+        if (!resumo[p.pa]) {
+
+            resumo[p.pa] = {
+
+                pa: p.pa,
+
+                descricao: p.descricao,
+
+                quantidade: 0,
+
+                unidade: ehMop(p.descricao) ? "PCS" : "CXS"
+
+            };
+
+        }
+
+        resumo[p.pa].quantidade += Number(p.caixas || 0);
+
+    });
+
+    lista = Object.values(resumo);
+
+}
 
     if (lista.length === 0) {
 
@@ -1701,40 +1724,66 @@ function renderizar() {
 
             }
 
-            tr.innerHTML = `
-                <td>
-                    <strong>
-                        ${escapeHTML(p.pa || "")}
-                    </strong>
-                </td>
+           if (modoResumo) {
 
-                <td>
-                    ${quantidadePA}
-                </td>
+    tr.innerHTML = `
 
-                <td>
-                    ${quantidade} ${unidade}
-                </td>
+        <td>
+            <strong>${escapeHTML(p.pa)}</strong>
+        </td>
 
-                <td class="description">
-                    ${escapeHTML(p.descricao || "")}
-                </td>
+        <td>
+            ${escapeHTML(p.descricao)}
+        </td>
 
-                <td>
-                    G02
-                </td>
+        <td>
+            <strong>
+                ${Number(p.quantidade).toLocaleString("pt-BR")} ${p.unidade}
+            </strong>
+        </td>
 
-                <td>
-                    ${escapeHTML(p.container || "")}
-                </td>
+    `;
 
-                <td>
-                    ${dataFormatada}
-                    ${botoes}
-                </td>
-            `;
+}
 
-            tbody.appendChild(tr);
+} else {
+
+    tr.innerHTML = `
+        <td>
+            <strong>
+                ${escapeHTML(p.pa || "")}
+            </strong>
+        </td>
+
+        <td>
+            ${quantidadePA}
+        </td>
+
+        <td>
+            ${quantidade} ${unidade}
+        </td>
+
+        <td class="description">
+            ${escapeHTML(p.descricao || "")}
+        </td>
+
+        <td>
+            G02
+        </td>
+
+        <td>
+            ${escapeHTML(p.container || "")}
+        </td>
+
+        <td>
+            ${dataFormatada}
+            ${botoes}
+        </td>
+    `;
+
+}
+
+tbody.appendChild(tr);
 
         });
 
@@ -1830,79 +1879,7 @@ totalContainers.toLocaleString("pt-BR");
    EXPORTAR CSV
 ========================= */
 
-    function renderizarResumoEstoque(){
-
-    const tbody =
-        document.getElementById("tabelaResumo");
-
-    if(!tbody) return;
-
-    tbody.innerHTML = "";
-
-    const resumo = {};
-
-    paletes.forEach(p=>{
-
-        const chave = p.pa;
-
-        if(!resumo[chave]){
-
-            resumo[chave]={
-
-                referencia:p.pa,
-
-                descricao:p.descricao,
-
-                quantidade:0,
-
-                unidade:ehMop(p.descricao)
-                    ?"PCS"
-                    :"CXS"
-
-            };
-
-        }
-
-        resumo[chave].quantidade +=
-            Number(p.caixas || 0);
-
-    });
-
-    Object.values(resumo)
-
-    .sort((a,b)=>
-        a.referencia.localeCompare(
-            b.referencia,
-            undefined,
-            {numeric:true}
-        )
-    )
-
-    .forEach(item=>{
-
-        tbody.innerHTML +=`
-
-<tr>
-
-<td>${escapeHTML(item.referencia)}</td>
-
-<td>${escapeHTML(item.descricao)}</td>
-
-<td>
-
-${item.quantidade.toLocaleString("pt-BR")}
-${item.unidade}
-
-</td>
-
-</tr>
-
-`;
-
-    });
-
-}
-
+    
 function exportarCSV() {
 
     if (paletes.length === 0) {
@@ -2068,9 +2045,7 @@ function carregarFirebase() {
 
         renderizar();
 
-        renderizarResumoEstoque();
-
-    });
+          });
 
 }
 
