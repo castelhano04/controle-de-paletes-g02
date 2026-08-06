@@ -1241,21 +1241,30 @@ function abrirAba(tipo){
 if(tipo === "estoque"){
 
 
-document.getElementById("abaPaletes")
-.style.display="none";
+    if(perfil !== "admin"){
+
+        alert("Acesso restrito ao administrador.");
+
+        return;
+
+    }
 
 
-document.getElementById("abaEstoque")
-.style.display="block";
+    document.getElementById("abaPaletes")
+    .style.display="none";
 
 
-localStorage.setItem(
-"abaAtual",
-"estoque"
-);
+    document.getElementById("abaEstoque")
+    .style.display="block";
 
 
-renderizarEstoque();
+    localStorage.setItem(
+    "abaAtual",
+    "estoque"
+    );
+
+
+    renderizarEstoque();
 
 
 }else{
