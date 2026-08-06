@@ -1386,15 +1386,12 @@ function entrar(){
     );
 
 
-
     document.getElementById("loginScreen")
     .style.display="none";
 
 
     document.getElementById("sistema")
     .style.display="block";
-
-
 
     configurarPermissoes();
 
@@ -1404,14 +1401,10 @@ function entrar(){
 
     restaurarAba();
 
-
-
 }
 
 
-
 function sair(){
-
 
     sessionStorage.removeItem("paletesLogado");
 
@@ -1432,9 +1425,6 @@ function sair(){
 
 }
 
-
-
-
 if(sessionStorage.getItem("paletesLogado")==="true"){
 
     perfil = sessionStorage.getItem("perfil");
@@ -1452,12 +1442,6 @@ if(sessionStorage.getItem("paletesLogado")==="true"){
     carregarFirebase();
     restaurarAba();
 }
-
-
-</script>
-
-    <script>
-
 
 function configurarPermissoes(){
 
