@@ -762,7 +762,7 @@ By Castelhano
 
 <button
 class="btn-dark"
-onclick="abrirAba('principal')">
+onclick="abrirAba('paletes')">
 
 ← VOLTAR
 
@@ -944,46 +944,35 @@ sessionStorage.removeItem("perfil");
 
     function abrirAba(tipo){
 
-
-    if(tipo==="estoque"){
-
-
-        if(perfil !== "admin"){
-            return;
-        }
+    alert("Chamou abrirAba: " + tipo);
 
 
-        document.getElementById("abaPaletes")
-        .style.display="none";
+    if(tipo === "estoque"){
+
+        document.getElementById("abaPaletes").style.display="none";
+
+        document.getElementById("abaEstoque").style.display="block";
 
 
-        document.getElementById("abaEstoque")
-        .style.display="block";
-
-
-        renderizarEstoque();
-
+        alert("ABA ESTOQUE ABERTA");
 
     }else{
 
+        document.getElementById("abaPaletes").style.display="block";
 
-        document.getElementById("abaPaletes")
-        .style.display="block";
-
-
-        document.getElementById("abaEstoque")
-        .style.display="none";
-
+        document.getElementById("abaEstoque").style.display="none";
 
     }
 
 }
-
-    function renderizarEstoque(){
+   function renderizarEstoque(){
 
     const tbody = document.getElementById("tabelaEstoque");
 
-    if(!tbody) return;
+    if(!tbody){
+        console.log("Tabela estoque não encontrada");
+        return;
+    }
 
 
     tbody.innerHTML = "";
@@ -1004,7 +993,16 @@ sessionStorage.removeItem("perfil");
     }
 
 
-    paletes.forEach(p=>{
+    paletes.forEach(function(p){
+
+
+        const recebido = Number(p.caixas || 0);
+
+        const saldo = Number(
+            p.saldoAtual !== undefined
+            ? p.saldoAtual
+            : recebido
+        );
 
 
         tbody.innerHTML += `
@@ -1012,31 +1010,27 @@ sessionStorage.removeItem("perfil");
         <tr>
 
             <td>
-                ${escapeHTML(p.pa || "")}
+                ${escapeHTML(String(p.pa || ""))}
             </td>
 
 
             <td>
-                ${Number(p.caixas || 0)
-                .toLocaleString("pt-BR")}
+                ${recebido.toLocaleString("pt-BR")}
             </td>
 
 
             <td>
-                ${Number(
-                    p.saldoAtual ?? p.caixas ?? 0
-                )
-                .toLocaleString("pt-BR")}
+                ${saldo.toLocaleString("pt-BR")}
             </td>
 
 
             <td>
-                ${escapeHTML(p.descricao || "")}
+                ${escapeHTML(String(p.descricao || ""))}
             </td>
 
 
             <td>
-                ${escapeHTML(p.container || "")}
+                ${escapeHTML(String(p.container || ""))}
             </td>
 
 
@@ -1052,34 +1046,25 @@ sessionStorage.removeItem("perfil");
             <td>
 
 
-                <button
-                class="action-btn btn-red"
-                title="Baixar estoque"
-                onclick="baixarEstoque('${p.id}')">
-
-                ➖
-
-                </button>
+            <button
+            class="action-btn btn-red"
+            onclick="baixarEstoque('${p.id}')">
+            ➖
+            </button>
 
 
-                <button
-                class="action-btn btn-green"
-                title="Adicionar estoque"
-                onclick="adicionarEstoque('${p.id}')">
-
-                ➕
-
-                </button>
+            <button
+            class="action-btn btn-green"
+            onclick="adicionarEstoque('${p.id}')">
+            ➕
+            </button>
 
 
-                <button
-                class="action-btn btn-blue"
-                title="Ajustar saldo"
-                onclick="editarSaldo('${p.id}')">
-
-                ✏️
-
-                </button>
+            <button
+            class="action-btn btn-blue"
+            onclick="editarSaldo('${p.id}')">
+            ✏️
+            </button>
 
 
             </td>
@@ -1094,7 +1079,7 @@ sessionStorage.removeItem("perfil");
 
 
 }
-
+    
 function configurarPermissoes(){
 
     const btnEstoque = document.getElementById("btnEstoque");
