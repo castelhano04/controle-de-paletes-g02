@@ -942,7 +942,20 @@ sessionStorage.removeItem("perfil");
 
         document.getElementById("abaPaletes").style.display="none";
 
-        document.getElementById("abaEstoque").style.display="block";
+        const estoque = document.getElementById("abaEstoque");
+
+        estoque.style.display="block";
+        estoque.style.background="yellow";
+        estoque.style.color="black";
+        estoque.style.minHeight="500px";
+
+        estoque.innerHTML = `
+        <h1 style="padding:50px">
+        TESTE ESTOQUE FUNCIONANDO
+        </h1>
+        `;
+
+        console.log(estoque);
 
     }else{
 
