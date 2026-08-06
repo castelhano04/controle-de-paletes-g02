@@ -941,16 +941,18 @@ sessionStorage.removeItem("perfil");
     if(tipo === "estoque"){
 
         document.getElementById("abaPaletes").style.display="none";
-
         document.getElementById("abaEstoque").style.display="block";
+
+        localStorage.setItem("abaAtual", "estoque");
 
         renderizarEstoque();
 
     }else{
 
         document.getElementById("abaPaletes").style.display="block";
-
         document.getElementById("abaEstoque").style.display="none";
+
+        localStorage.setItem("abaAtual", "paletes");
 
     }
 
@@ -2356,6 +2358,26 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
         :
         "Manutenção desativada."
     );
+
+}
+
+    function restaurarAba(){
+
+    const aba = localStorage.getItem("abaAtual");
+
+    if(aba === "estoque"){
+
+        document.getElementById("abaPaletes").style.display="none";
+        document.getElementById("abaEstoque").style.display="block";
+
+        renderizarEstoque();
+
+    }else{
+
+        document.getElementById("abaPaletes").style.display="block";
+        document.getElementById("abaEstoque").style.display="none";
+
+    }
 
 }
     
