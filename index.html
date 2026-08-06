@@ -519,16 +519,7 @@ Tente novamente mais tarde.
     </div>
 </div>
 
-   <button
-class="btn-dark"
-id="btnEstoque"
-onclick="abrirAba('estoque')">
-
-CONTROLE ESTOQUE
-
-</button>
-
-        <button
+           <button
 class="btn-red"
 id="btnManutencao"
 onclick="alternarManutencao()">
@@ -742,64 +733,7 @@ EXPORTAR EXCEL/CSV
 
         </div>
 
-    <div id="abaEstoque" style="display:none;">
-
-<div class="container">
-
-<div class="top-bar no-print">
-
-<div>
-
-<strong>CONTROLE DE ESTOQUE</strong>
-
-<div class="assinatura-topo">
-By Castelhano
-</div>
-
-</div>
-
-<button
-class="btn-dark"
-onclick="abrirAba('principal')">
-← VOLTAR
-</button>
-
-</div>
-
-<div class="table-card">
-
-<div class="table-title">
-CONTROLE DE ESTOQUE
-</div>
-
-<table>
-
-<thead>
-
-<tr>
-
-<th style="width:15%;">REFERÊNCIA</th>
-<th style="width:10%;">RECEBIDO</th>
-<th style="width:10%;">SALDO</th>
-<th style="width:30%;">DESCRIÇÃO</th>
-<th style="width:15%;">CONTAINER</th>
-<th style="width:10%;">DATA</th>
-<th style="width:10%;">AÇÕES</th>
-</tr>
-
-</thead>
-    
-<tbody id="tabelaEstoque"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
-
-    
+       
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
@@ -926,9 +860,6 @@ function configurarPermissoes(){
 
     document.getElementById("btnImprimir").style.display =
         admin ? "inline-block" : "none";
-
-    document.getElementById("btnEstoque").style.display =
-    admin ? "inline-block" : "none";
 
     document.getElementById("btnManutencao").style.display =
 admin ? "inline-block" : "none";
@@ -2113,10 +2044,6 @@ function carregarFirebase() {
 
        renderizar();
 
-if (document.getElementById("abaEstoque").style.display === "block") {
-    renderizarEstoque();
-}
-
 }); // fecha onSnapshot
 
 } // fecha carregarFirebase()
@@ -2134,203 +2061,7 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
     carregarFirebase();
 
 }
-
-function abrirAba(tipo){
-
-    configurarPermissoes();
-    
-if(tipo==="estoque"){
-
-    if(perfil !== "admin"){
-        return;
-    }
-
-        document.getElementById("abaPaletes").style.display="none";
-
-        document.getElementById("abaEstoque").style.display="block";
-
-        renderizarEstoque();
-
-    }else{
-
-        document.getElementById("abaPaletes").style.display="block";
-
-        document.getElementById("abaEstoque").style.display="none";
-
-    }
-
-}
-
- function renderizarEstoque(){
-
-    const tbody = document.getElementById("tabelaEstoque");
-
-    tbody.innerHTML = "";
-
-    if(!paletes || paletes.length === 0){
-
-        tbody.innerHTML = `
-        <tr>
-            <td colspan="7" class="empty">
-                Nenhuma referência cadastrada.
-            </td>
-        </tr>
-        `;
-
-        return;
-
-    }
-
-
-    paletes.forEach(p=>{
-
-        tbody.innerHTML += `
-        <tr>
-
-            <td>${escapeHTML(p.pa || "")}</td>
-
-            <td>${p.caixas || 0}</td>
-
-            <td>${p.saldoAtual ?? p.caixas ?? 0}</td>
-
-            <td>${escapeHTML(p.descricao || "")}</td>
-
-            <td>${escapeHTML(p.container || "")}</td>
-
-            <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
-
-            <td>
-
-                <button
-                    class="action-btn btn-red"
-                    title="Baixar estoque"
-                    onclick="baixarEstoque('${p.id}')">
-                    ➖
-                </button>
-
-                <button
-                    class="action-btn btn-green"
-                    title="Adicionar estoque"
-                    onclick="adicionarEstoque('${p.id}')">
-                    ➕
-                </button>
-
-                <button
-                    class="action-btn btn-blue"
-                    title="Ajustar saldo"
-                    onclick="editarSaldo('${p.id}')">
-                    ✏️
-                </button>
-
-            </td>
-
-        </tr>
-        `;
-
-    });
-
-}
    
-async function editarSaldo(id){
-
-    if(perfil !== "admin") return;
-
-    const palete = paletes.find(p=>p.id===id);
-
-    if(!palete) return;
-
-    const atual =
-        palete.saldoAtual ?? palete.caixas;
-
-    const novo = prompt(
-        "Novo saldo:",
-        atual
-    );
-
-    if(novo===null) return;
-
-    if(isNaN(novo)){
-
-        alert("Informe apenas números.");
-
-        return;
-
-    }
-
-    await db.collection("paletes")
-    .doc(id)
-    .update({
-
-        saldoAtual:Number(novo)
-
-    });
-
-    palete.saldoAtual=Number(novo);
-
-    renderizarEstoque();
-
-}
-
-    async function baixarEstoque(id){
-
-    if(perfil !== "admin") return;
-
-    const palete = paletes.find(p=>p.id===id);
-
-    if(!palete) return;
-
-
-    const saldoAtual =
-        palete.saldoAtual ?? palete.caixas;
-
-
-    const quantidade = prompt(
-        "Quantidade para baixar:",
-        ""
-    );
-
-
-    if(quantidade===null) return;
-
-
-    if(isNaN(quantidade) || Number(quantidade)<=0){
-
-        alert("Informe uma quantidade válida.");
-
-        return;
-
-    }
-
-
-    const novoSaldo =
-        Number(saldoAtual) - Number(quantidade);
-
-
-    if(novoSaldo < 0){
-
-        alert("Estoque insuficiente.");
-
-        return;
-
-    }
-
-
-    await db.collection("paletes")
-    .doc(id)
-    .update({
-
-        saldoAtual: novoSaldo
-
-    });
-
-
-    palete.saldoAtual = novoSaldo;
-
-
-    renderizarEstoque();
-
-}
-
            function paEstaRetiradoNoEstoque(p) {
 
     const saldo = Number(p.caixas || 0);
