@@ -1437,29 +1437,21 @@ function sair(){
 
 if(sessionStorage.getItem("paletesLogado")==="true"){
 
-
     perfil = sessionStorage.getItem("perfil");
 
+    if(perfil !== "admin" && perfil !== "consulta"){
 
-    document.getElementById("loginScreen")
-    .style.display="none";
+        sessionStorage.clear();
+        location.reload();
+    }
 
-
-    document.getElementById("sistema")
-    .style.display="block";
-
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("sistema").style.display = "block";
 
     configurarPermissoes();
-
-
     carregarFirebase();
-
-
     restaurarAba();
-
-
 }
-
 
 
 </script>
