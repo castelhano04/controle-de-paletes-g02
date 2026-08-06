@@ -696,6 +696,8 @@ EXPORTAR EXCEL/CSV
 
 </div>
 
+        </div>
+
     <div id="abaEstoque" style="display:none;">
 
 <div class="container">
@@ -2069,15 +2071,6 @@ function abrirAba(tipo){
     const tbody = document.getElementById("tabelaEstoque");
     tbody.innerHTML = "";
 
-    const thAcoes = document.getElementById("thAcoesEstoque");
-
-    if(thAcoes){
-        thAcoes.style.display =
-            perfil === "admin"
-            ? "table-cell"
-            : "none";
-    }
-
     paletes.forEach(p=>{
 
       let total = p.pasDisponiveis ? p.pasDisponiveis.length : 1;
@@ -2231,37 +2224,7 @@ async function editarSaldo(id){
 
 }
 
-        async function alternarPA(id,index){
-
-    if(perfil !== "admin") return;
-
-    const palete = paletes.find(p => p.id === id);
-
-    if(!palete) return;
-
-    const pa = palete.pasDisponiveis[index];
-
-    const mensagem = pa.disponivel
-        ? `Deseja marcar o PA ${pa.numero} como RETIRADO?`
-        : `Deseja marcar o PA ${pa.numero} como DISPONÍVEL?`;
-
-    if(!confirm(mensagem)) return;
-
-    pa.disponivel = !pa.disponivel;
-
-    await db.collection("paletes")
-        .doc(id)
-        .update({
-            pasDisponiveis: palete.pasDisponiveis
-        });
-
-    renderizarEstoque();
-
-    abrirControlePA(id);
-
-}
-
-    function paEstaRetiradoNoEstoque(p) {
+           function paEstaRetiradoNoEstoque(p) {
 
     const saldo = Number(p.caixas || 0);
 
