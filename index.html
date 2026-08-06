@@ -849,15 +849,15 @@ function entrar(){
 
     erro.style.display="none";
 
-    if(senha===SENHA){
+   if(senha===SENHA){
 
-        perfil="admin";
+    perfil="admin";
 
-    }else if(senha===SENHA_CONSULTA){
+}else if(senha===SENHA_CONSULTA){
 
-        perfil="consulta";
+    perfil="consulta";
 
-    }else{
+}else{
 
         erro.style.display="block";
 
@@ -874,6 +874,13 @@ function entrar(){
     sessionStorage.setItem("paletesLogado","true");
 
     sessionStorage.setItem("perfil",perfil);
+
+    // verifica manutenção somente para consulta
+if(perfil === "consulta"){
+
+    verificarManutencao();
+
+}
 
     configurarPermissoes();
 
@@ -923,6 +930,9 @@ function configurarPermissoes(){
     document.getElementById("btnEstoque").style.display =
     admin ? "inline-block" : "none";
 
+    document.getElementById("btnManutencao").style.display =
+admin ? "inline-block" : "none";
+
     const th = document.getElementById("thAcoesEstoque");
 
     if(th){
@@ -934,6 +944,47 @@ function configurarPermissoes(){
 
     }
     
+}
+
+    async function verificarManutencao(){
+
+    const doc = await db.collection("config")
+    .doc("manutencao")
+    .get();
+
+
+    if(doc.exists && doc.data().ativo){
+
+        document.getElementById("loginScreen")
+        .style.display="none";
+
+
+        document.getElementById("manutencaoScreen")
+        .style.display="flex";
+
+
+        document.getElementById("mensagemManutencao")
+        .innerHTML =
+        doc.data().mensagem ||
+        "Sistema em manutenção.";
+
+        return;
+
+    }
+
+
+    document.getElementById("loginScreen")
+    .style.display="none";
+
+
+    document.getElementById("sistema")
+    .style.display="block";
+
+
+    configurarPermissoes();
+
+    carregarFirebase();
+
 }
     
     function gerarListaPA(paTexto){
