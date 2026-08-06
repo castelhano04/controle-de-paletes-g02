@@ -674,6 +674,15 @@ EXPORTAR EXCEL/CSV
     CONTROLE DE REFERÊNCIAS
 </div>
 
+        <table><div style="display:flex; gap:15px; align-items:flex-start;">
+
+    <!-- TABELA PRINCIPAL -->
+    <div class="table-card" style="flex:3;">
+
+        <div class="table-title">
+            CONTROLE DE REFERÊNCIAS
+        </div>
+
         <table>
 
            <thead>
@@ -717,6 +726,36 @@ EXPORTAR EXCEL/CSV
         </table>
 
     </div>
+
+     <!-- RESUMO -->
+
+<div class="table-card" style="flex:1; min-width:340px;">
+
+    <div class="table-title">
+        RESUMO DO ESTOQUE
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>REFERÊNCIA</th>
+
+                <th>DESCRIÇÃO</th>
+
+                <th>QTD</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tabelaResumo">
+
+        </tbody>
+
+    </table>
 
 </div>
 
@@ -1791,6 +1830,79 @@ totalContainers.toLocaleString("pt-BR");
    EXPORTAR CSV
 ========================= */
 
+    function renderizarResumoEstoque(){
+
+    const tbody =
+        document.getElementById("tabelaResumo");
+
+    if(!tbody) return;
+
+    tbody.innerHTML = "";
+
+    const resumo = {};
+
+    paletes.forEach(p=>{
+
+        const chave = p.pa;
+
+        if(!resumo[chave]){
+
+            resumo[chave]={
+
+                referencia:p.pa,
+
+                descricao:p.descricao,
+
+                quantidade:0,
+
+                unidade:ehMop(p.descricao)
+                    ?"PCS"
+                    :"CXS"
+
+            };
+
+        }
+
+        resumo[chave].quantidade +=
+            Number(p.caixas || 0);
+
+    });
+
+    Object.values(resumo)
+
+    .sort((a,b)=>
+        a.referencia.localeCompare(
+            b.referencia,
+            undefined,
+            {numeric:true}
+        )
+    )
+
+    .forEach(item=>{
+
+        tbody.innerHTML +=`
+
+<tr>
+
+<td>${escapeHTML(item.referencia)}</td>
+
+<td>${escapeHTML(item.descricao)}</td>
+
+<td>
+
+${item.quantidade.toLocaleString("pt-BR")}
+${item.unidade}
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
+}
+
 function exportarCSV() {
 
     if (paletes.length === 0) {
@@ -1955,6 +2067,8 @@ function carregarFirebase() {
 });
 
         renderizar();
+
+        renderizarResumoEstoque();
 
     });
 
