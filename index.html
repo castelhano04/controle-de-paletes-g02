@@ -537,6 +537,15 @@ SAIR
 
 </button>
 
+        <button
+class="btn-dark"
+id="btnEstoque"
+onclick="abrirAba('estoque')">
+
+CONTROLE ESTOQUE
+
+</button>
+
     </div>
 
 
@@ -733,6 +742,96 @@ EXPORTAR EXCEL/CSV
 
         </div>
 
+        <div id="abaEstoque" style="display:none;">
+
+<div class="container">
+
+<div class="top-bar no-print">
+
+<div>
+
+<strong>CONTROLE DE ESTOQUE</strong>
+
+<div class="assinatura-topo">
+By Castelhano
+</div>
+
+</div>
+
+
+<button
+class="btn-dark"
+onclick="abrirAba('principal')">
+
+← VOLTAR
+
+</button>
+
+
+</div>
+
+
+<div class="table-card">
+
+<div class="table-title">
+CONTROLE DE ESTOQUE
+</div>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th style="width:15%;">
+REFERÊNCIA
+</th>
+
+<th style="width:10%;">
+RECEBIDO
+</th>
+
+<th style="width:10%;">
+SALDO
+</th>
+
+<th style="width:30%;">
+DESCRIÇÃO
+</th>
+
+<th style="width:15%;">
+CONTAINER
+</th>
+
+<th style="width:10%;">
+DATA
+</th>
+
+<th style="width:10%;">
+AÇÕES
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="tabelaEstoque">
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+</div>
+
        
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 
@@ -842,7 +941,55 @@ sessionStorage.removeItem("perfil");
 
 }
 
+    function abrirAba(tipo){
+
+
+    if(tipo==="estoque"){
+
+
+        if(perfil !== "admin"){
+            return;
+        }
+
+
+        document.getElementById("abaPaletes")
+        .style.display="none";
+
+
+        document.getElementById("abaEstoque")
+        .style.display="block";
+
+
+        renderizarEstoque();
+
+
+    }else{
+
+
+        document.getElementById("abaPaletes")
+        .style.display="block";
+
+
+        document.getElementById("abaEstoque")
+        .style.display="none";
+
+
+    }
+
+}
+
 function configurarPermissoes(){
+
+    const btnEstoque = document.getElementById("btnEstoque");
+
+if(btnEstoque){
+
+    btnEstoque.style.display =
+    perfil === "admin"
+    ? "inline-block"
+    : "none";
+
+}
 
     const admin = perfil === "admin";
 
