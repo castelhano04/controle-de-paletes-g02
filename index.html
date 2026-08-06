@@ -665,7 +665,7 @@ onclick="alternarManutencao()">
 <button
 class="btn-dark"
 id="btnEstoque"
-onclick="abrirAba('estoque')">
+onclick="if(verificarAcessoEstoque()) abrirAba('estoque')"
 
 CONTROLE ESTOQUE
 
@@ -1070,6 +1070,9 @@ RECEBIDO
 SALDO
 </th>
 
+    <th>
+STATUS
+</th>
 
 <th>
 DESCRIÇÃO
@@ -1984,6 +1987,8 @@ await db.collection("paletes")
 
     saldoAtual:caixas,
 
+        saldoAtual:caixas,
+
     descricao:descricao,
 
     container:container,
@@ -2187,6 +2192,13 @@ p.saldoAtual
 recebido
 );
 
+    const statusEstoque =
+saldo > 0
+?
+"DISPONÍVEL"
+:
+"INDISPONÍVEL (RETIRADO)";
+
 
 
 tbody.innerHTML += `
@@ -2211,6 +2223,9 @@ ${recebido.toLocaleString("pt-BR")}
 ${saldo.toLocaleString("pt-BR")}
 </td>
 
+<td>
+${statusEstoque}
+</td>
 
 
 <td>
@@ -2239,11 +2254,13 @@ p.data.split("-").reverse().join("/")
 
 <td>
 
+${
+perfil === "admin"
+?
+`
 
 <button
-
 class="action-btn btn-red"
-
 onclick="baixarEstoque('${p.id}')">
 
 ➖
@@ -2251,18 +2268,19 @@ onclick="baixarEstoque('${p.id}')">
 </button>
 
 
-
 <button
-
 class="action-btn btn-green"
-
 onclick="adicionarEstoque('${p.id}')">
 
 ➕
 
 </button>
 
+`
+:
+""
 
+}
 
 </td>
 
@@ -2301,8 +2319,6 @@ p.saldoAtual
 :
 p.caixas
 );
-
-
 
 if(saldo <= 0){
 
@@ -2359,13 +2375,16 @@ await db.collection("paletes")
 .doc(id)
 .update({
 
-saldoAtual:saldo
+saldoAtual: saldo,
+
+statusEstoque:
+saldo > 0
+?
+"disponivel"
+:
+"indisponivel"
 
 });
-
-
-
-}
 
         async function adicionarEstoque(id){
 
@@ -2434,6 +2453,210 @@ saldoAtual:saldo
 
 
 }
+
+        function exportarCSV(){
+
+
+if(paletes.length === 0){
+
+alert("Não existem referências.");
+
+return;
+
+}
+
+
+
+const linhas = [
+
+[
+"Nº PA",
+"Quantidade",
+"Descrição",
+"Galpão",
+"Container",
+"Data"
+],
+
+
+...paletes.map(p=>[
+
+p.pa,
+
+p.caixas,
+
+p.descricao,
+
+GALPAO,
+
+p.container || "",
+
+p.data || ""
+
+])
+
+];
+
+
+
+const csv =
+linhas
+.map(linha=>
+
+linha
+.map(valor=>
+
+`"${String(valor).replace(/"/g,'""')}"`
+
+)
+.join(";")
+
+)
+.join("\r\n");
+
+
+
+const blob =
+new Blob(
+["\uFEFF"+csv],
+{
+type:"text/csv;charset=utf-8;"
+}
+);
+
+
+
+const url =
+URL.createObjectURL(blob);
+
+
+
+const a =
+document.createElement("a");
+
+
+
+a.href=url;
+
+
+a.download =
+"controle-G02.csv";
+
+
+
+a.click();
+
+
+
+URL.revokeObjectURL(url);
+
+
+}
+
+
+
+
+function imprimirRelatorio(){
+
+
+window.print();
+
+
+}
+
+
+
+
+function fecharModalPA(){
+
+
+const modal =
+document.getElementById("modalPA");
+
+
+if(modal){
+
+modal.style.display="none";
+
+}
+
+
+}
+
+        async function alternarManutencao(){
+
+
+if(perfil !== "admin") return;
+
+
+
+const ref =
+db.collection("config")
+.doc("manutencao");
+
+
+
+const doc =
+await ref.get();
+
+
+
+const ativo =
+doc.exists &&
+doc.data().ativo;
+
+
+
+await ref.set({
+
+ativo:!ativo,
+
+
+mensagem:
+!ativo
+?
+"Sistema em manutenção. Tente novamente mais tarde."
+:
+""
+
+});
+
+
+
+alert(
+!ativo
+?
+"Manutenção ativada."
+:
+"Manutenção desativada."
+);
+
+
+}
+
+        </script>
+
+    <script>
+
+function verificarAcessoEstoque(){
+
+    if(perfil !== "admin"){
+
+        document.getElementById("abaEstoque").style.display="none";
+
+        document.getElementById("abaPaletes").style.display="block";
+
+        alert("Acesso restrito ao administrador.");
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+</script>
 
         
     
