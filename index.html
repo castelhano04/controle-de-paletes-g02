@@ -938,23 +938,17 @@ sessionStorage.removeItem("perfil");
 
     console.log("ABRIR:", tipo);
 
-    console.log(document.getElementById("abaEstoque"));
-
     if(tipo === "estoque"){
 
         document.getElementById("abaPaletes").style.display="none";
 
-       document.getElementById("abaEstoque").style.display="block";
+        document.getElementById("abaEstoque").style.display="block";
 
+    }else{
 
-document.getElementById("abaEstoque").innerHTML = `
-<h1 style="padding:50px">
-ESTOQUE TESTE OK
-</h1>
-`;
+        document.getElementById("abaPaletes").style.display="block";
 
-
-alert("ABA ESTOQUE ABERTA");
+        document.getElementById("abaEstoque").style.display="none";
 
     }
 
