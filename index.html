@@ -1321,73 +1321,73 @@ p.descricao.toLowerCase().includes(pesquisa)
                 document.createElement("tr");
 
 
-            tr.innerHTML = `
+           tr.innerHTML = `
 
-                <td>
-                    <strong>
-                        ${escapeHTML(p.pa)}
-                    </strong>
-                </td>
+    <td>
+        <strong>${escapeHTML(p.pa)}</strong>
+    </td>
 
-             <td>
-    <strong>Recebido:</strong>
-    ${Number(p.caixas).toLocaleString("pt-BR")}
-    ${ehMop(p.descricao) ? "PCS" : "CXS"}
+    <td>
+        <strong>Recebido:</strong>
+        ${Number(p.caixas).toLocaleString("pt-BR")}
+        ${ehMop(p.descricao) ? "PCS" : "CXS"}
 
-    <br>
+        <br>
 
-    <strong>Saldo:</strong>
-    ${Number(p.saldoAtual ?? p.caixas).toLocaleString("pt-BR")}
-    ${ehMop(p.descricao) ? "PCS" : "CXS"}
-</td>
+        <strong>Saldo:</strong>
+        ${Number(p.saldoAtual ?? p.caixas).toLocaleString("pt-BR")}
+        ${ehMop(p.descricao) ? "PCS" : "CXS"}
+    </td>
 
-                <td class="description">
-                    ${escapeHTML(p.descricao)}
-                </td>
+    <td class="description">
+        ${escapeHTML(p.descricao)}
+    </td>
 
-                <td>
-    G02
-</td>
+    <td>
+        G02
+    </td>
 
-<td>
-    ${escapeHTML(p.container || "")}
-</td>
+    ${
+    perfil === "admin"
+    ? `
+    <td style="text-align:center;">
 
-<td>
-${p.data ? p.data.split("-").reverse().join("/") : ""}
-</td>
+        <div style="
+            font-size:12px;
+            font-weight:bold;
+            margin-bottom:6px;
+        ">
+            ${escapeHTML(p.data)}
+        </div>
 
-${
-perfil==="admin"
-?`
-<td class="no-print">
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:6px;
+        ">
+            <button
+                class="action-btn"
+                onclick="editarPalete('${p.id}')">
+                ✏️
+            </button>
 
-<div class="actions">
+            <button
+                class="action-btn danger"
+                onclick="excluirPalete('${p.id}')">
+                🗑️
+            </button>
+        </div>
 
-<button
-class="action-btn btn-blue"
-title="Editar"
-onclick="editarPalete('${p.id}')">
-✏️
-</button>
+    </td>
+    `
+    : `
+    <td style="text-align:center;">
+        ${escapeHTML(p.data)}
+    </td>
+    `
+    }
 
-<button
-class="action-btn btn-red"
-title="Excluir"
-onclick="excluirPalete('${p.id}')">
-🗑️
-</button>
-
-</div>
-
-</td>
-`
-:""
-}
-
-</td>
-
-            `;
+`;
 
 
             tbody.appendChild(tr);
