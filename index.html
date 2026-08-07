@@ -1,449 +1,1936 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Controle - Galpao G02</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .login-container h1 {
-            text-align: center;
-            color: #667eea;
-            margin-bottom: 30px;
-            font-size: 24px;
-        }
-
-        .login-container h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn:hover {
-            background: #5568d3;
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-
-        .btn-success {
-            background: #28a745;
-        }
-
-        .btn-success:hover {
-            background: #218838;
-        }
-
-        .btn-danger {
-            background: #dc3545;
-        }
-
-        .btn-danger:hover {
-            background: #c82333;
-        }
-
-        .btn-warning {
-            background: #ffc107;
-            color: #212529;
-        }
-
-        .btn-warning:hover {
-            background: #e0a800;
-        }
-
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 12px;
-            width: auto;
-        }
-
-        .error-message {
-            color: #dc3545;
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .main-app {
-            display: none;
-            width: 100%;
-            max-width: 1400px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            overflow: hidden;
-        }
-
-        .header {
-            background: #667eea;
-            color: white;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header h1 {
-            font-size: 22px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .user-info span {
-            font-size: 14px;
-        }
-
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .tabs {
-            display: flex;
-            background: #f8f9fa;
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        .tab-btn {
-            padding: 15px 30px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            color: #555;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .tab-btn:hover {
-            background: #e9ecef;
-        }
-
-        .tab-btn.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
-        }
-
-        .tab-content {
-            padding: 30px;
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .table-container {
-            overflow-x: auto;
-            margin-top: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        th {
-            background: #f8f9fa;
-            color: #333;
-            font-weight: 600;
-            font-size: 13px;
-            white-space: nowrap;
-        }
-
-        tr:hover {
-            background: #f8f9fa;
-        }
-
-        .filter-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        .filter-section h3 {
-            margin-bottom: 15px;
-            color: #333;
-            font-size: 16px;
-        }
-
-        .stock-control {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        .stock-control h3 {
-            margin-bottom: 15px;
-            color: #333;
-            font-size: 16px;
-        }
-
-        .stock-summary {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .stock-card {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .stock-card h4 {
-            color: #667eea;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .stock-card p {
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-        }
-
-        .modal-content {
-            background: white;
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-header h2 {
-            color: #333;
-            font-size: 20px;
-        }
-
-        .close {
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover {
-            color: #000;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #667eea;
-            font-size: 18px;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 3px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .badge-container {
-            background: #667eea;
-            color: white;
-        }
-
-        .badge-pcs {
-            background: #28a745;
-            color: white;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            background: #28a745;
-            color: white;
-            border-radius: 5px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 2000;
-            display: none;
-            animation: slideIn 0.3s;
-        }
-
-        .notification.error {
-            background: #dc3545;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            color: #999;
-            font-size: 16px;
-        }
-
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            cursor: pointer;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controle de Paletes - G02 | By Castelhano</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f3f5;
+    color: #111;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#loginScreen {
+    position: fixed;
+    inset: 0;
+    background: #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.login-box {
+    width: 360px;
+    max-width: 90%;
+    background: white;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 5px 25px rgba(0,0,0,.15);
+    text-align: center;
+}
+
+.login-box h2 {
+    margin: 0 0 8px;
+}
+
+.login-box p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.login-box input {
+    width: 100%;
+    height: 42px;
+    border: 1px solid #bbb;
+    border-radius: 7px;
+    padding: 0 12px;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.login-box button {
+    width: 100%;
+    height: 42px;
+    border: 0;
+    border-radius: 7px;
+    background: #198754;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    opacity: .9;
+}
+
+.erro-login {
+    color: #c62828;
+    font-size: 12px;
+    margin-top: 10px;
+    display: none;
+}
+
+/* =========================
+   SISTEMA
+========================= */
+
+#sistema {
+    display: none;
+}
+
+.container {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 0 8px 30px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    margin: 0 0 12px;
+    font-size: 17px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 9px;
+}
+
+input {
+    width: 100%;
+    height: 37px;
+    border: 1px solid #bbb;
+    border-radius: 7px;
+    padding: 0 10px;
+    font-size: 13px;
+    outline: none;
+    background: white;
+}
+
+input:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 2px rgba(25,135,84,.1);
+}
+
+.galpao-fixo {
+    height: 37px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    border: 1px solid #bbb;
+    border-radius: 7px;
+    background: #f7f7f7;
+    font-size: 13px;
+    font-weight: bold;
+    color: #198754;
+}
+
+.buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+button {
+    border: 0;
+    border-radius: 7px;
+    height: 37px;
+    padding: 0 15px;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: .9;
+}
+
+.btn-green {
+    background: #198754;
+    color: white;
+}
+
+.btn-gray {
+    background: #555;
+    color: white;
+}
+
+.btn-blue {
+    background: #0d6efd;
+    color: white;
+}
+
+.btn-red {
+    background: #c62828;
+    color: white;
+}
+
+.btn-dark {
+    background: #111;
+    color: white;
+}
+
+.filters {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filters input {
+    width: 240px;
+}
+
+.filter-btn {
+    height: 35px;
+    border: 1px solid #111;
+    background: white;
+    color: #111;
+    border-radius: 20px;
+    padding: 0 17px;
+    font-weight: bold;
+}
+
+.filter-btn.active {
+    background: #111;
+    color: white;
+}
+
+.badge {
+    display: inline-block;
+    background: #dff7e8;
+    color: #198754;
+    padding: 5px 9px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.info {
+    color: #666;
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+.summary {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.summary-box {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-size: 12px;
+}
+
+.summary-box strong {
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+.table-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #111;
+}
+
+.table-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 22px;
+    padding: 11px;
+    border-bottom: 1px solid #111;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th,
+td {
+    border-right: 1px solid #111;
+    border-bottom: 1px solid #111;
+    padding: 8px;
+    font-size: 13px;
+    text-align: center;
+    height: 38px;
+}
+
+th {
+    background: #f5f5f5;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+th:last-child,
+td:last-child {
+    border-right: 0;
+}
+
+td.description {
+    text-align: center;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+}
+
+.action-btn {
+    width: 30px;
+    height: 26px;
+    padding: 0;
+    font-size: 14px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty {
+    padding: 30px;
+    color: #777;
+    text-align: center;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.btn-sair {
+    background: #555;
+    color: white;
+    height: 32px;
+    font-size: 11px;
+}
+
+/* RESPONSIVO */
+
+@media(max-width: 800px) {
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filters input {
+        width: 100%;
+    }
+
+    .filters {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .table-card {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 800px;
+    }
+}
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .container {
+        max-width: none;
+        padding: 0;
+    }
+
+    .card {
+        box-shadow: none;
+        border: 0;
+    }
+
+    .table-card {
+        border: 1px solid #000;
+    }
+}
+.assinatura {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #777;
+    font-weight: bold;
+}
+
+.assinatura-topo {
+    font-size: 11px;
+    color: #777;
+    margin-top: 3px;
+    font-weight: bold;
+}
+    
     </style>
+    
 </head>
+
 <body>
-    <!-- Tela de Login -->
-    <div class="login-container" id="loginScreen">
-        <h1>📦 Controle Galpao G02</h1>
-        <h2>Login</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="loginType">Tipo de Acesso</label>
-                <select id="loginType" required>
-                    <option value="">Selecione..
+
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<div id="loginScreen">
+
+    <div class="login-box">
+
+        <h2>CONTROLE DE PALETES</h2>
+
+<p>
+    Acesso ao sistema - Galpão G02
+</p>
+
+<div class="assinatura">
+    By Castelhano
+</div>
+
+        <input
+            type="password"
+            id="senhaLogin"
+            placeholder="Digite a senha"
+            onkeydown="if(event.key === 'Enter') entrar()"
+        >
+
+        <button onclick="entrar()">
+            ENTRAR
+        </button>
+
+        <div
+            id="erroLogin"
+            class="erro-login"
+        >
+            Senha incorreta.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     SISTEMA
+========================= -->
+
+<div id="sistema">
+
+<div class="container">
+
+    <div id="abaPaletes">
+
+
+    <!-- TOPO -->
+
+    <div class="no-print" style="margin-bottom:10px">
+    
+    <div class="top-bar no-print">
+
+        <div class="buttons no-print">
+
+</div>
+
+       <div>
+    <strong>CONTROLE DE PALETES</strong>
+    <span class="badge">GALPÃO G02</span>
+    <div class="assinatura-topo">
+        By Castelhano
+    </div>
+</div>
+
+    <button
+class="btn-dark"
+onclick="abrirAba('estoque')">
+CONTROLE ESTOQUE
+</button>
+
+        <button
+            class="btn-sair"
+            onclick="sair()"
+        >
+            SAIR
+        </button>
+
+    </div>
+
+
+    <!-- CADASTRO -->
+
+    <div class="card no-print">
+
+        <h3>Cadastrar palete</h3>
+
+        <div class="form-grid">
+
+            <input
+                type="text"
+                id="pa"
+                placeholder="Nº PA"
+                autocomplete="off"
+            >
+
+            <input
+    type="text"
+    id="caixas"
+    placeholder="Quantidade (ex.: 6150 (PCS), 120 CXS)"
+    autocomplete="off"
+>
+
+            <input
+                type="text"
+                id="descricao"
+                placeholder="DESCRIÇÃO"
+                autocomplete="off"
+            >
+            
+            <input
+    type="text"
+    id="container"
+    placeholder="Nº CONTAINER"
+    autocomplete="off"
+>
+
+            <input
+    type="date"
+    id="data"
+>
+            
+
+        </div>
+
+        <div class="buttons">
+
+            <button
+                class="btn-green"
+                onclick="salvarPalete()"
+                id="btnSalvar"
+            >
+                SALVAR PALETE
+            </button>
+
+            <button
+                class="btn-gray"
+                onclick="limparFormulario()"
+            >
+                LIMPAR
+            </button>
+
+        </div>
+
+        <div class="info">
+            Galpão fixo: <strong>G02</strong>
+        </div>
+
+    </div>
+
+
+    <!-- FILTROS -->
+
+    <div class="card no-print">
+
+        <h3>
+            Filtros e busca
+
+            <span class="badge">
+                G02
+            </span>
+
+            <span class="badge">
+                Backup local ativo
+            </span>
+
+        </h3>
+
+        <div class="filters">
+
+            <input
+    type="text"
+    id="pesquisa"
+    placeholder="Pesquisar PA ou descrição"
+    oninput="renderizar()"
+>
+
+           <select id="tipoPesquisa" onchange="renderizar()">
+
+<option value="todos">PA + Descrição + Data</option>
+
+<option value="pa">Somente PA</option>
+
+<option value="descricao">Somente Descrição</option>
+
+                <option value="container">Somente Container</option>
+
+<option value="data">Somente Data</option>
+
+</select>
+
+            <button
+                class="btn-blue"
+                onclick="imprimirRelatorio()"
+            >
+                IMPRIMIR RELATÓRIO
+            </button>
+
+            <button
+                class="btn-green"
+                onclick="exportarCSV()"
+            >
+                EXPORTAR EXCEL/CSV
+            </button>
+
+        </div>
+
+
+        <div class="summary">
+
+            <div class="summary-box">
+                PALETES:
+                <strong id="totalPaletes">0</strong>
+            </div>
+
+            <div class="summary-box">
+    CXS:
+    <strong id="totalCxs">0</strong>
+</div>
+
+<div class="summary-box">
+    PCS:
+    <strong id="totalPcs">0</strong>
+</div>
+
+            <div class="summary-box">
+    CONTAINERS:
+    <strong id="totalContainers">0</strong>
+</div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TABELA -->
+
+    <div class="table-card">
+
+        <div class="table-title">
+            CONTROLE DE PALETES
+        </div>
+
+        <table>
+
+           <thead>
+
+<tr>
+
+    <th style="width: 15%;">
+        PA
+    </th>
+
+    <th style="width: 10%;">
+    DISP.
+</th>
+
+   <th style="width: 12%;">
+    QUANTIDADE
+</th>
+
+    <th style="width: 28%;">
+        DESCRIÇÃO
+    </th>
+
+    <th style="width: 10%;">
+        GALPÃO
+    </th>
+
+    <th style="width: 15%;">
+        CONTAINER
+    </th>
+
+    <th style="width: 10%;">
+        DATA
+    </th>
+
+    <th class="no-print coluna-acoes" style="width: 10%;">
+        AÇÕES
+    </th>
+
+</tr>
+
+</thead>
+
+            <tbody id="tabelaPaletes"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</div>
+
+    <div id="abaEstoque" style="display:none;">
+
+<div class="container">
+
+<div class="top-bar no-print">
+
+<div>
+
+<strong>CONTROLE DE ESTOQUE</strong>
+
+<div class="assinatura-topo">
+By Castelhano
+</div>
+
+</div>
+
+<button
+class="btn-dark"
+onclick="abrirAba('principal')">
+← VOLTAR
+</button>
+
+</div>
+
+<div class="table-card">
+
+<div class="table-title">
+CONTROLE DE ESTOQUE
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th style="width:15%;">PA</th>
+
+<th style="width:10%;">DISP.</th>
+
+<th style="width:12%;">QUANTIDADE</th>
+
+<th style="width:28%;">DESCRIÇÃO</th>
+
+<th style="width:10%;">GALPÃO</th>
+
+<th style="width:15%;">CONTAINER</th>
+
+<th style="width:10%;">DATA</th>
+
+<th style="width:10%;">AÇÕES</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelaEstoque"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+    
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+
+<script>
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBPqhxtFR2QHMmiRNYbwnuISmn_SiObQME",
+  authDomain: "controle-de-paletes-a1ce6.firebaseapp.com",
+  projectId: "controle-de-paletes-a1ce6",
+  storageBucket: "controle-de-paletes-a1ce6.firebasestorage.app",
+  messagingSenderId: "188164343813",
+  appId: "1:188164343813:web:1308654f80cb560553746c"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+/* =========================
+   CONFIGURAÇÕES
+========================= */
+
+const SENHA = "161004";
+const SENHA_CONSULTA = "123";
+
+let perfil = "";
+
+const GALPAO = "G02";
+
+let paletes = [];
+
+let filtroAtual = "TODOS";
+
+let editandoId = null;
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function entrar(){
+
+    const senha=document.getElementById("senhaLogin").value;
+
+    const erro=document.getElementById("erroLogin");
+
+    erro.style.display="none";
+
+    if(senha===SENHA){
+
+        perfil="admin";
+
+    }else if(senha===SENHA_CONSULTA){
+
+        perfil="consulta";
+
+    }else{
+
+        erro.style.display="block";
+
+        document.getElementById("senhaLogin").value="";
+
+        return;
+
+    }
+
+    document.getElementById("loginScreen").style.display="none";
+
+    document.getElementById("sistema").style.display="block";
+
+    sessionStorage.setItem("paletesLogado","true");
+
+    sessionStorage.setItem("perfil",perfil);
+
+    configurarPermissoes();
+
+    carregarFirebase();
+
+}
+
+
+function sair() {
+
+    sessionStorage.removeItem(
+        "paletesLogado"
+    );
+
+    document.getElementById("sistema")
+        .style.display = "none";
+
+    document.getElementById("loginScreen")
+        .style.display = "flex";
+
+    document.getElementById("senhaLogin")
+        .value = "";
+
+sessionStorage.removeItem("perfil");
+
+}
+
+function configurarPermissoes(){
+
+    const cadastro=document.querySelector(".card.no-print");
+
+    if(perfil==="consulta"){
+
+        cadastro.style.display="none";
+
+    }else{
+
+        cadastro.style.display="block";
+
+    }
+
+}
+
+    function gerarListaPA(paTexto){
+
+    const texto = paTexto.trim();
+
+    const partes = texto.split(/\s*(?:até|ate|a|-)\s*/i);
+
+    if(partes.length === 2){
+
+        const inicio = parseInt(partes[0]);
+        const fim = parseInt(partes[1]);
+
+        if(!isNaN(inicio) && !isNaN(fim) && fim >= inicio){
+
+            let lista = [];
+
+            for(let i = inicio; i <= fim; i++){
+
+                lista.push(String(i));
+
+            }
+
+            return lista;
+
+        }
+
+    }
+
+    // Se for PA único
+    return [texto];
+
+}
+    
+
+/* =========================
+   CADASTRAR / EDITAR
+========================= */
+
+async function salvarPalete() {
+
+if(perfil!=="admin"){
+
+    alert("Você não tem permissão.");
+
+    return;
+
+}
+
+    const pa =
+        document.getElementById("pa")
+            .value
+            .trim();
+
+   const caixas =
+    document.getElementById("caixas")
+        .value
+        .trim();
+
+    const descricao =
+    document.getElementById("descricao")
+        .value
+        .trim();
+
+   const container =
+document.getElementById("container")
+.value.trim();
+
+    const data =
+document.getElementById("data")
+.value;
+    
+    if (!pa) {
+
+        alert("Informe o Nº PA.");
+
+        document.getElementById("pa").focus();
+
+        return;
+    }
+
+
+    if (!caixas) {
+
+        alert(
+            "Informe a quantidade de caixas."
+        );
+
+        document.getElementById("caixas")
+            .focus();
+
+        return;
+    }
+
+
+    if (!descricao) {
+
+        alert("Informe a descrição.");
+
+        document.getElementById("descricao")
+            .focus();
+
+        return;
+    }
+
+    /* EDITANDO */
+
+    if (editandoId !== null) {
+
+        const index =
+            paletes.findIndex(
+                p => p.id === editandoId
+            );
+
+
+        if (index !== -1) {
+
+await db.collection("paletes").doc(editandoId).update({
+
+    pa: pa,
+
+    caixas: caixas,
+
+    descricao: descricao,
+
+    container: container,
+
+    data: data,
+
+    galpao: GALPAO
+
+});
+
+        alert("Palete atualizado com sucesso!");
+
+    }
+
+}
+
+    /* NOVO */
+
+    else {
+
+        const existe =
+            paletes.some(
+                p =>
+                    p.pa.toLowerCase() ===
+                    pa.toLowerCase()
+            );
+
+
+        if (existe) {
+
+            alert(
+                "Esse Nº PA já está cadastrado."
+            );
+
+            return;
+        }
+
+        let pasDisponiveis = [];
+
+const partes = pa.split(/\s*(?:até|ate|a|-)\s*/i);
+
+if (partes.length === 2) {
+
+    const inicio = parseInt(partes[0]);
+    const fim = parseInt(partes[1]);
+
+    if (!isNaN(inicio) && !isNaN(fim)) {
+
+        for (let i = inicio; i <= fim; i++) {
+
+            pasDisponiveis.push({
+                numero: String(i),
+                disponivel: true
+            });
+
+        }
+
+    }
+
+} else {
+
+    pasDisponiveis.push({
+        numero: pa,
+        disponivel: true
+    });
+
+}   
+
+await db.collection("paletes").add({
+
+    pa: pa,
+
+    caixas: Number(caixas),
+
+    saldoAtual: Number(caixas),
+
+    descricao: descricao,
+
+    container: container,
+
+    data: data,
+
+    galpao: GALPAO,
+
+    pasDisponiveis: pasDisponiveis
+
+});
+        
+alert("Palete cadastrado com sucesso!");
+
+    }
+
+
+    limparFormulario();
+
+}
+
+
+/* =========================
+   LIMPAR
+========================= */
+
+function limparFormulario() {
+
+    document.getElementById("pa")
+        .value = "";
+
+    document.getElementById("caixas")
+        .value = "";
+
+    document.getElementById("descricao")
+        .value = "";
+
+    document.getElementById("container").value="";
+
+    document.getElementById("data")
+.value = "";
+
+
+    editandoId = null;
+
+
+    document.getElementById("btnSalvar")
+        .textContent = "SALVAR PALETE";
+
+}
+
+    async function retirarPA(id){
+
+    if(perfil !== "admin") return;
+
+
+    const palete = paletes.find(
+        p => p.id === id
+    );
+
+
+    if(!palete) return;
+
+
+    if(!palete.pasDisponiveis){
+
+        alert("Esse cadastro não possui controle individual de PA.");
+
+        return;
+
+    }
+
+
+    const paRetirar = prompt(
+        "Digite o PA que deseja retirar:"
+    );
+
+
+    if(!paRetirar) return;
+
+
+    const index =
+        palete.pasDisponiveis.indexOf(
+            paRetirar.trim()
+        );
+
+
+    if(index === -1){
+
+        alert(
+            "Esse PA não está disponível."
+        );
+
+        return;
+
+    }
+
+
+    const confirmar =
+        confirm(
+            "Retirar o PA " + paRetirar + "?"
+        );
+
+
+    if(!confirmar) return;
+
+
+    palete.pasDisponiveis.splice(
+        index,
+        1
+    );
+
+
+    await db.collection("paletes")
+    .doc(id)
+    .update({
+
+        pasDisponiveis:
+        palete.pasDisponiveis
+
+    });
+
+
+    alert(
+        "PA retirado com sucesso!"
+    );
+
+}
+
+
+/* =========================
+   EDITAR
+========================= */
+
+function editarPalete(id) {
+
+if(perfil!=="admin") return;
+
+    const palete =
+        paletes.find(
+            p => p.id === id
+        );
+
+
+    if (!palete) return;
+
+
+    document.getElementById("pa")
+        .value = palete.pa;
+
+    document.getElementById("caixas")
+        .value = palete.caixas;
+
+    document.getElementById("descricao")
+        .value = palete.descricao;
+
+    document.getElementById("container").value =
+palete.container || "";
+
+
+    editandoId = id;
+
+
+    document.getElementById("btnSalvar")
+        .textContent = "ATUALIZAR PALETE";
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* =========================
+   EXCLUIR
+========================= */
+
+async function excluirPalete(id) {
+
+if(perfil!=="admin") return;
+
+    const palete =
+        paletes.find(
+            p => p.id === id
+        );
+
+
+    if (!palete) return;
+
+
+    const confirmar =
+        confirm(
+            "Deseja realmente excluir o PA " +
+            palete.pa +
+            "?"
+        );
+
+
+    if (!confirmar) return;
+
+
+   db.collection("paletes")
+.doc(id)
+.delete();
+
+alert("Palete excluído com sucesso!");
+
+}
+
+
+/* =========================
+   FILTRO
+========================= */
+
+function ehMop(descricao) {
+
+    const texto = descricao
+        .trim()
+        .toLowerCase();
+
+    return (
+        texto.startsWith("mop pro") ||
+        texto.startsWith("mop duo") ||
+        texto.startsWith("mop lava e seca") ||
+        texto.startsWith("mop giratório") ||
+        texto.startsWith("mop giratorio") ||
+        texto.startsWith("mop 3 em 1") ||
+        texto.startsWith("mop novo lava e seca")
+    );
+}
+
+    function quantidadePaletes(pa) {
+
+    const texto = String(pa).trim();
+
+    // Aceita: até, ate, a ou -
+    const partes = texto.split(/\s*(?:até|ate|a|-)\s*/i);
+
+    if (partes.length === 2) {
+
+        const inicio = parseInt(partes[0]);
+        const fim = parseInt(partes[1]);
+
+        if (!isNaN(inicio) && !isNaN(fim) && fim >= inicio) {
+            return fim - inicio + 1;
+        }
+    }
+
+    return 1;
+}
+    
+/* =========================
+   RENDERIZAR TABELA
+========================= */
+
+function renderizar() {
+
+    const tbody =
+        document.getElementById(
+            "tabelaPaletes"
+        );
+
+    const colunaAcoes =
+document.querySelector(".coluna-acoes");
+
+if(colunaAcoes){
+
+    colunaAcoes.style.display =
+    perfil === "admin"
+    ? ""
+    : "none";
+
+}
+
+
+    const pesquisa =
+        document.getElementById(
+            "pesquisa"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    let lista =
+        paletes.filter(p => {
+
+
+            const bateFiltro = true;
+
+
+           const tipo =
+document.getElementById("tipoPesquisa").value;
+
+
+const batePesquisa =
+!pesquisa ||
+
+(
+tipo === "pa" &&
+p.pa.toLowerCase().includes(pesquisa)
+)
+
+||
+
+(
+tipo === "descricao" &&
+p.descricao.toLowerCase().includes(pesquisa)
+)
+
+||
+
+(
+tipo === "container" &&
+p.container &&
+p.container.toLowerCase().includes(pesquisa)
+)
+
+||
+
+(
+tipo === "data" &&
+p.data &&
+p.data.includes(pesquisa)
+)
+
+||
+
+(
+tipo === "todos" &&
+(
+p.pa.toLowerCase().includes(pesquisa)
+||
+p.descricao.toLowerCase().includes(pesquisa)
+||
+(p.container && p.container.toLowerCase().includes(pesquisa))
+||
+(p.data && p.data.includes(pesquisa))
+)
+);
+
+
+            return (
+                bateFiltro &&
+                batePesquisa
+            );
+
+        });
+
+
+    tbody.innerHTML = "";
+
+
+    if (lista.length === 0) {
+
+        tbody.innerHTML = `
+
+            <td
+    colspan="${perfil==="admin" ? 7 : 6}"
+    class="empty"
+>
+    Nenhum palete encontrado.
+</td>
+
+        `;
+
+    }
+
+    else {
+
+        lista.forEach(p => {
+
+            const tr =
+                document.createElement("tr");
+
+
+            tr.innerHTML = `
+
+                <td>
+                    <strong>
+                        ${escapeHTML(p.pa)}
+                    </strong>
+                </td>
+
+                <td>
+${
+    p.pasDisponiveis
+    ? p.pasDisponiveis.length
+    : 1
+}
+</td>
+
+              <td>
+    ${
+        Number(p.caixas).toLocaleString("pt-BR")
+    }
+    ${
+        ehMop(p.descricao)
+        ? "PCS"
+        : "CXS"
+    }
+</td>
+
+                <td class="description">
+                    ${escapeHTML(p.descricao)}
+                </td>
+
+                <td>
+    G02
+</td>
+
+<td>
+    ${escapeHTML(p.container || "")}
+</td>
+
+<td>
+${p.data ? p.data.split("-").reverse().join("/") : ""}
+</td>
+
+${
+perfil==="admin"
+?`
+<td class="no-print">
+
+<div class="actions">
+
+<button
+class="action-btn btn-blue"
+title="Editar"
+onclick="editarPalete('${p.id}')">
+✏️
+</button>
+
+<button
+class="action-btn btn-red"
+title="Excluir"
+onclick="excluirPalete('${p.id}')">
+🗑️
+</button>
+
+<button
+class="action-btn btn-green"
+title="Retirar PA"
+onclick="retirarPA('${p.id}')">
+📦
+</button>
+
+</div>
+
+</td>
+`
+:""
+}
+
+</td>
+
+            `;
+
+
+            tbody.appendChild(tr);
+
+        });
+
+    }
+
+
+    atualizarResumo(lista);
+
+}
+
+
+/* =========================
+   RESUMO
+========================= */
+
+function atualizarResumo(lista) {
+
+
+const totalPaletes = lista.reduce((total, p) => {
+
+    if(p.pasDisponiveis){
+
+        return total + p.pasDisponiveis.length;
+
+    }
+
+    return total + 1;
+
+}, 0);
+
+    const totalCxs =
+    lista.reduce((total, p) => {
+
+        if (!ehMop(p.descricao)) {
+
+            return total + Number(p.caixas || 0);
+
+        }
+
+        return total;
+
+    }, 0);
+
+
+const totalPcs =
+    lista.reduce((total, p) => {
+
+        if (ehMop(p.descricao)) {
+
+            return total + Number(p.caixas || 0);
+
+        }
+
+        return total;
+
+    }, 0);
+
+    const totalContainers = 
+    [...new Set(
+        lista
+        .map(p => (p.container || "").trim().toUpperCase())
+        .filter(c => c !== "")
+    )].length;
+
+
+    document.getElementById(
+        "totalPaletes"
+    )
+    .textContent =
+        totalPaletes
+            .toLocaleString("pt-BR");
+
+
+    document.getElementById("totalCxs")
+.textContent =
+totalCxs.toLocaleString("pt-BR");
+
+
+document.getElementById("totalPcs")
+.textContent =
+totalPcs.toLocaleString("pt-BR");
+
+    document.getElementById("totalContainers")
+.textContent =
+totalContainers.toLocaleString("pt-BR");
+
+}
+
+/* =========================
+   SALVAR LOCAL
+========================= */
+
+
+/* =========================
+   EXPORTAR CSV
+========================= */
+
+function exportarCSV() {
+
+    if (paletes.length === 0) {
+
+        alert(
+            "Não existem paletes cadastrados."
+        );
+
+        return;
+
+    }
+
+
+    const linhas = [
+
+        [
+            "Nº PA",
+            "Quantidade de Caixas",
+            "Descrição",
+            "Galpão"
+        ],
+
+        ...paletes.map(p => [
+
+            p.pa,
+
+            p.caixas,
+
+            p.descricao,
+
+            GALPAO
+
+        ])
+
+    ];
+
+
+    const csv =
+        linhas
+        .map(
+
+            linha =>
+
+                linha
+                .map(
+
+                    valor =>
+                        `"${String(valor)
+                            .replace(
+                                /"/g,
+                                '""'
+                            )}"`
+
+                )
+                .join(";")
+
+        )
+        .join("\n");
+
+
+    const blob =
+        new Blob(
+
+            ["\uFEFF" + csv],
+
+            {
+                type:
+                    "text/csv;charset=utf-8;"
+            }
+
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const a =
+        document.createElement("a");
+
+
+    a.href = url;
+
+    a.download =
+        "controle-paletes-G02.csv";
+
+
+    a.click();
+
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================
+   IMPRESSÃO
+========================= */
+
+function imprimirRelatorio() {
+
+    window.print();
+
+}
+
+
+/* =========================
+   SEGURANÇA HTML
+========================= */
+
+function escapeHTML(text) {
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================
+   INICIAR
+========================= */
+
+function carregarFirebase() {
+
+    db.collection("paletes")
+    .onSnapshot(function(snapshot){
+
+        paletes = [];
+
+        snapshot.forEach(function(doc){
+
+            paletes.push({
+
+                id: doc.id,
+
+                ...doc.data()
+
+            });
+
+        });
+
+       paletes.sort((a, b) => {
+
+    // Primeiro ordena pela data (mais recente primeiro)
+    const compararData = b.data.localeCompare(a.data);
+
+    if (compararData !== 0) {
+        return compararData;
+    }
+
+    // Se a data for igual, ordena pelo PA (maior primeiro)
+    return String(b.pa).localeCompare(String(a.pa), undefined, {
+        numeric: true
+    });
+
+});
+
+        renderizar();
+
+    });
+
+}
+
+if (sessionStorage.getItem("paletesLogado") === "true") {
+
+    perfil = sessionStorage.getItem("perfil");
+
+    document.getElementById("loginScreen").style.display = "none";
+
+    document.getElementById("sistema").style.display = "block";
+
+    configurarPermissoes();
+
+    carregarFirebase();
+
+}
+
+function abrirAba(tipo){
+
+    if(tipo==="estoque"){
+
+        document.getElementById("abaPaletes").style.display="none";
+
+        document.getElementById("abaEstoque").style.display="block";
+
+        renderizarEstoque();
+
+    }else{
+
+        document.getElementById("abaPaletes").style.display="block";
+
+        document.getElementById("abaEstoque").style.display="none";
+
+    }
+
+}
+
+    function renderizarEstoque(){
+
+    const tbody =
+    document.getElementById("tabelaEstoque");
+
+    tbody.innerHTML="";
+
+    paletes.forEach(p=>{
+
+    let disponiveis = 1;
+    let total = 1;
+
+    if (p.pasDisponiveis) {
+
+        total = p.pasDisponiveis.length;
+
+        disponiveis = p.pasDisponiveis.filter(pa => pa.disponivel).length;
+
+    }
+
+    const cor =
+        disponiveis === total
+        ? "#198754"
+        : (disponiveis === 0 ? "#c62828" : "#ff9800");
+
+    tbody.innerHTML += `
+    <tr>
+
+    <td><strong>${escapeHTML(p.pa)}</strong></td>
+
+    <td style="font-weight:bold;color:${cor}">
+        ${disponiveis}/${total}
+    </td>
+
+    <td>${escapeHTML(p.caixas)}</td>
+
+    <td>${escapeHTML(p.descricao)}</td>
+
+    <td>G02</td>
+
+    <td>${escapeHTML(p.container||"")}</td>
+
+    <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
+
+    <td>
+        📦
+    </td>
+
+    </tr>
+    `;
+
+});
+
+        }
+      
+</script>
+
+</body>
+</html>
