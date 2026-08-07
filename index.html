@@ -1727,13 +1727,15 @@ function abrirAba(tipo){
 
     <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
 
-   <td>
-    <button
-        class="action-btn btn-green"
-        title="Movimentar estoque"
-        onclick="movimentarSaldo('${p.id}')">
-        📦
-    </button>
+  <td style="text-align:center; vertical-align:middle;">
+    <div style="display:flex; justify-content:center; align-items:center;">
+        <button
+            class="action-btn btn-green"
+            title="Movimentar estoque"
+            onclick="movimentarSaldo('${p.id}')">
+            📦
+        </button>
+    </div>
 </td>
 
     </tr>
