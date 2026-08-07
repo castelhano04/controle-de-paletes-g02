@@ -672,8 +672,7 @@ CONTROLE ESTOQUE
 <th style="width:10%;">GALPÃO</th>
 <th style="width:15%;">CONTAINER</th>
 <th style="width:10%;">DATA</th>
-<th class="no-print" style="width:10%;">AÇÕES</th>
-
+<th class="coluna-acoes" id="thAcoes">AÇÕES</th>
 </tr>
 
 </thead>
@@ -1214,6 +1213,12 @@ if(colunaAcoes){
 
 }
 
+    document.querySelectorAll(".td-acoes").forEach(td=>{
+    td.style.display =
+        perfil === "admin"
+        ? ""
+        : "none";
+});
 
     const pesquisa =
         document.getElementById(
