@@ -1324,15 +1324,16 @@ p.descricao.toLowerCase().includes(pesquisa)
                     </strong>
                 </td>
 
-              <td>
-    ${
-        Number(p.caixas).toLocaleString("pt-BR")
-    }
-    ${
-        ehMop(p.descricao)
-        ? "PCS"
-        : "CXS"
-    }
+             <td>
+    <strong>Recebido:</strong>
+    ${Number(p.caixas).toLocaleString("pt-BR")}
+    ${ehMop(p.descricao) ? "PCS" : "CXS"}
+
+    <br>
+
+    <strong>Saldo:</strong>
+    ${Number(p.saldoAtual ?? p.caixas).toLocaleString("pt-BR")}
+    ${ehMop(p.descricao) ? "PCS" : "CXS"}
 </td>
 
                 <td class="description">
