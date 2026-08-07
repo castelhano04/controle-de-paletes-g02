@@ -1321,7 +1321,7 @@ p.descricao.toLowerCase().includes(pesquisa)
                 document.createElement("tr");
 
 
-           tr.innerHTML = `
+          tr.innerHTML = `
 
     <td>
         <strong>${escapeHTML(p.pa)}</strong>
@@ -1347,28 +1347,41 @@ p.descricao.toLowerCase().includes(pesquisa)
         G02
     </td>
 
-   ${
-perfil === "admin"
-? `
-<td style="text-align:center;">
+    <td style="text-align:center;">
 
-    <div style="font-size:12px;font-weight:bold;margin-bottom:6px;">
-        ${escapeHTML(p.data)}
-    </div>
+        <div style="
+            font-size:12px;
+            font-weight:bold;
+            margin-bottom:6px;
+        ">
+            ${escapeHTML(p.data)}
+        </div>
 
-    <div style="display:flex;justify-content:center;gap:6px;">
-        <button class="action-btn" onclick="editarPalete('${p.id}')">✏️</button>
-        <button class="action-btn danger" onclick="excluirPalete('${p.id}')">🗑️</button>
-    </div>
+        ${
+            perfil === "admin"
+            ? `
+                <div style="
+                    display:flex;
+                    justify-content:center;
+                    gap:6px;
+                ">
+                    <button
+                        class="action-btn"
+                        onclick="editarPalete('${p.id}')">
+                        ✏️
+                    </button>
 
-</td>
-`
-: `
-<td style="text-align:center;">
-    ${escapeHTML(p.data)}
-</td>
-`
-}
+                    <button
+                        class="action-btn danger"
+                        onclick="excluirPalete('${p.id}')">
+                        🗑️
+                    </button>
+                </div>
+            `
+            : ""
+        }
+
+    </td>
 
 `;
 
