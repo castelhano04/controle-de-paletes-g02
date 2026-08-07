@@ -1707,7 +1707,17 @@ function abrirAba(tipo){
 
     <td><strong>${escapeHTML(p.pa)}</strong></td>
 
-    <td>${escapeHTML(p.caixas)}</td>
+    <td>
+    ${
+        Number(p.saldoAtual ?? p.caixas)
+        .toLocaleString("pt-BR")
+    }
+    ${
+        ehMop(p.descricao)
+        ? "PCS"
+        : "CXS"
+    }
+</td>
 
     <td>${escapeHTML(p.descricao)}</td>
 
@@ -1717,9 +1727,14 @@ function abrirAba(tipo){
 
     <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
 
-    <td>
+   <td>
+    <button
+        class="action-btn btn-green"
+        title="Movimentar estoque"
+        onclick="movimentarSaldo('${p.id}')">
         📦
-    </td>
+    </button>
+</td>
 
     </tr>
     `;
@@ -1727,6 +1742,59 @@ function abrirAba(tipo){
 });
 
         }
+
+    async function movimentarSaldo(id){
+
+    if(perfil !== "admin"){
+        alert("Você não tem permissão.");
+        return;
+    }
+
+    const produto = paletes.find(p => p.id === id);
+
+    if(!produto) return;
+
+    const tipo = prompt(
+`Digite:
+
+1 = Adicionar saldo
+2 = Retirar saldo`
+    );
+
+    if(tipo !== "1" && tipo !== "2") return;
+
+    const quantidade = Number(
+        prompt("Informe a quantidade:")
+    );
+
+    if(isNaN(quantidade) || quantidade <= 0){
+        alert("Quantidade inválida.");
+        return;
+    }
+
+    const saldoAtual = Number(produto.saldoAtual ?? produto.caixas);
+
+    let novoSaldo = saldoAtual;
+
+    if(tipo === "1"){
+        novoSaldo += quantidade;
+    }else{
+        if(quantidade > saldoAtual){
+            alert("Saldo insuficiente.");
+            return;
+        }
+
+        novoSaldo -= quantidade;
+    }
+
+    await db.collection("paletes")
+        .doc(id)
+        .update({
+            saldoAtual: novoSaldo
+        });
+
+    alert("Saldo atualizado com sucesso!");
+}
       
 </script>
 
