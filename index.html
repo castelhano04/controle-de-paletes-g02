@@ -1633,27 +1633,13 @@ function abrirAba(tipo){
 
 
 
-    // fecha as duas
-
     paletesAba.style.display = "none";
 
     estoqueAba.style.display = "none";
 
 
 
-
-    // abre a escolhida
-
-
-   if(tipo === "estoque"){
-
-    estoqueAba.style.display = "block";
-
-    renderizarEstoque();
-
-    carregarHistorico();
-
-}
+    if(tipo === "estoque"){
 
 
         estoqueAba.style.display = "block";
@@ -1662,9 +1648,10 @@ function abrirAba(tipo){
         renderizarEstoque();
 
 
+        carregarHistorico();
+
+
     }
-
-
     else{
 
 
@@ -1675,7 +1662,6 @@ function abrirAba(tipo){
 
 
     }
-
 
 
 }
