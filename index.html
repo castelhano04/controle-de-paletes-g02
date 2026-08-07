@@ -1,3000 +1,449 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Controle de Mercadoria | Galpão G02</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-:root{
-
-    --verde:#198754;
-    --verde-hover:#157347;
-
-    --azul:#0d6efd;
-    --azul-hover:#0b5ed7;
-
-    --vermelho:#dc3545;
-    --vermelho-hover:#bb2d3b;
-
-    --cinza:#6c757d;
-
-    --fundo:#eef2f7;
-
-    --card:#ffffff;
-
-    --texto:#212529;
-
-    --borda:#dee2e6;
-
-    --shadow:0 10px 30px rgba(0,0,0,.08);
-
-}
-
-body{
-
-    background:var(--fundo);
-
-    font-family:'Inter',sans-serif;
-
-    color:var(--texto);
-
-}
-
-/*======================
-LOGIN
-======================*/
-
-#loginScreen{
-
-    position:fixed;
-
-    inset:0;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:linear-gradient(135deg,#198754,#0d6efd);
-
-}
-
-.login-box{
-
-    width:420px;
-
-    max-width:92%;
-
-    background:white;
-
-    border-radius:20px;
-
-    padding:40px;
-
-    box-shadow:0 20px 50px rgba(0,0,0,.25);
-
-}
-
-.login-box h1{
-
-    text-align:center;
-
-    font-size:30px;
-
-    margin-bottom:10px;
-
-}
-
-.login-box p{
-
-    text-align:center;
-
-    color:#777;
-
-    margin-bottom:30px;
-
-}
-
-.login-box input{
-
-    width:100%;
-
-    height:52px;
-
-    border:1px solid #ccc;
-
-    border-radius:10px;
-
-    padding:0 18px;
-
-    font-size:16px;
-
-    margin-bottom:20px;
-
-    transition:.2s;
-
-}
-
-.login-box input:focus{
-
-    outline:none;
-
-    border-color:var(--verde);
-
-}
-
-.login-box button{
-
-    width:100%;
-
-    height:52px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:var(--verde);
-
-    color:white;
-
-    font-size:16px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.25s;
-
-}
-
-.login-box button:hover{
-
-    background:var(--verde-hover);
-
-}
-
-#erroLogin{
-
-    color:red;
-
-    text-align:center;
-
-    margin-top:18px;
-
-    display:none;
-
-}
-
-/*======================
-SISTEMA
-======================*/
-
-#sistema{
-
-    display:none;
-
-    min-height:100vh;
-
-}
-
-/*======================
-HEADER
-======================*/
-
-header{
-
-    width:100%;
-
-    background:white;
-
-    box-shadow:var(--shadow);
-
-    padding:18px 40px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-}
-
-.logo{
-
-    display:flex;
-
-    flex-direction:column;
-
-}
-
-.logo h2{
-
-    font-size:24px;
-
-}
-
-.logo span{
-
-    color:#777;
-
-    font-size:13px;
-
-    margin-top:3px;
-
-}
-
-.menu{
-
-    display:flex;
-
-    gap:10px;
-
-}
-
-.menu button{
-
-    border:none;
-
-    border-radius:10px;
-
-    padding:12px 20px;
-
-    cursor:pointer;
-
-    color:white;
-
-    font-weight:600;
-
-    transition:.2s;
-
-}
-
-.btnHome{
-
-    background:var(--azul);
-
-}
-
-.btnHome:hover{
-
-    background:var(--azul-hover);
-
-}
-
-.btnEstoque{
-
-    background:var(--verde);
-
-}
-
-.btnEstoque:hover{
-
-    background:var(--verde-hover);
-
-}
-
-.btnSair{
-
-    background:var(--vermelho);
-
-}
-
-.btnSair:hover{
-
-    background:var(--vermelho-hover);
-
-}
-
-/*======================
-CONTAINER
-======================*/
-
-.container{
-
-    width:95%;
-
-    max-width:1500px;
-
-    margin:30px auto;
-
-}
-
-/*======================
-DASHBOARD
-======================*/
-
-.dashboard{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-
-    gap:20px;
-
-    margin-bottom:30px;
-
-}
-
-.cardResumo{
-
-    background:white;
-
-    border-radius:18px;
-
-    padding:25px;
-
-    box-shadow:var(--shadow);
-
-    transition:.25s;
-
-}
-
-.cardResumo:hover{
-
-    transform:translateY(-5px);
-
-}
-
-.cardResumo h3{
-
-    font-size:38px;
-
-    color:var(--verde);
-
-    margin-bottom:8px;
-
-}
-
-.cardResumo span{
-
-    color:#666;
-
-    font-size:15px;
-
-}
-
-/*======================
-CARDS
-======================*/
-
-.card{
-
-    background:white;
-
-    border-radius:18px;
-
-    box-shadow:var(--shadow);
-
-    padding:25px;
-
-    margin-bottom:25px;
-
-}
-
-    .form-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-
-    gap:15px;
-
-    margin-top:20px;
-
-}
-
-.form-grid input{
-
-    width:100%;
-
-    height:48px;
-
-    border:1px solid var(--borda);
-
-    border-radius:12px;
-
-    padding:0 15px;
-
-    font-size:15px;
-
-    transition:.25s;
-
-}
-
-.form-grid input:focus{
-
-    outline:none;
-
-    border-color:var(--verde);
-
-    box-shadow:0 0 0 4px rgba(25,135,84,.15);
-
-}
-
-.buttons{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:12px;
-
-    margin-top:20px;
-
-}
-
-.buttons button{
-
-    border:none;
-
-    border-radius:12px;
-
-    padding:13px 24px;
-
-    color:white;
-
-    cursor:pointer;
-
-    font-size:14px;
-
-    font-weight:600;
-
-    transition:.25s;
-
-}
-
-.btn-green{
-
-    background:var(--verde);
-
-}
-
-.btn-green:hover{
-
-    background:var(--verde-hover);
-
-}
-
-.btn-blue{
-
-    background:var(--azul);
-
-}
-
-.btn-blue:hover{
-
-    background:var(--azul-hover);
-
-}
-
-.btn-red{
-
-    background:var(--vermelho);
-
-}
-
-.btn-red:hover{
-
-    background:var(--vermelho-hover);
-
-}
-
-.btn-gray{
-
-    background:var(--cinza);
-
-}
-
-.table-card{
-
-    overflow:hidden;
-
-    background:white;
-
-    border-radius:18px;
-
-    box-shadow:var(--shadow);
-
-}
-
-.table-title{
-
-    padding:20px;
-
-    font-size:20px;
-
-    font-weight:700;
-
-    border-bottom:1px solid var(--borda);
-
-}
-
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-}
-
-thead{
-
-    background:#f8f9fa;
-
-}
-
-th{
-
-    padding:16px;
-
-    font-size:14px;
-
-    text-align:center;
-
-    border-bottom:1px solid var(--borda);
-
-}
-
-td{
-
-    padding:15px;
-
-    text-align:center;
-
-    border-bottom:1px solid #eee;
-
-}
-
-tbody tr{
-
-    transition:.2s;
-
-}
-
-tbody tr:hover{
-
-    background:#f7faf9;
-
-}
-
-.action-btn{
-
-    width:36px;
-
-    height:36px;
-
-    border:none;
-
-    border-radius:10px;
-
-    color:white;
-
-    cursor:pointer;
-
-    margin:0 3px;
-
-}
-
-.summary{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-
-    gap:15px;
-
-    margin-top:20px;
-
-}
-
-.summary-box{
-
-    background:#f8f9fa;
-
-    border-radius:14px;
-
-    padding:20px;
-
-    text-align:center;
-
-}
-
-.summary-box strong{
-
-    display:block;
-
-    font-size:30px;
-
-    color:var(--verde);
-
-    margin-top:8px;
-
-}
-
-.empty{
-
-    padding:40px;
-
-    color:#888;
-
-    text-align:center;
-
-}
-
-@media(max-width:900px){
-
-header{
-
-    flex-direction:column;
-
-    gap:20px;
-
-    padding:25px;
-
-}
-
-.menu{
-
-    width:100%;
-
-    flex-wrap:wrap;
-
-}
-
-.menu button{
-
-    flex:1;
-
-}
-
-.dashboard{
-
-    grid-template-columns:1fr;
-
-}
-
-.form-grid{
-
-    grid-template-columns:1fr;
-
-}
-
-.container{
-
-    width:96%;
-
-}
-
-.table-card{
-
-    overflow-x:auto;
-
-}
-
-table{
-
-    min-width:1000px;
-
-}
-
-}
-
-</style>
-
-    .no-print{
-}
-
-/* ===== HEADER ===== */
-
-.header{
-    background:#ffffff;
-    border-bottom:1px solid #dcdcdc;
-    padding:15px 25px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
-
-.logo h1{
-    margin:0;
-    font-size:24px;
-    color:#198754;
-}
-
-.logo span{
-    font-size:13px;
-    color:#666;
-}
-
-.header-right{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-/* ===== DASHBOARD ===== */
-
-.dashboard{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:15px;
-    margin-bottom:20px;
-}
-
-.card-info{
-    background:#fff;
-    border-radius:12px;
-    padding:18px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
-    border-left:5px solid #198754;
-}
-
-.card-info h4{
-    margin:0;
-    font-size:14px;
-    color:#666;
-}
-
-.card-info strong{
-    display:block;
-    margin-top:10px;
-    font-size:28px;
-    color:#111;
-}
-
-/* ===== FILTROS ===== */
-
-.filters{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-.filters input{
-    flex:1;
-    min-width:220px;
-}
-
-.filters select{
-    width:220px;
-}
-
-/* ===== MODAL ===== */
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.45);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-}
-
-.modal-box{
-    background:#fff;
-    width:700px;
-    max-width:95%;
-    border-radius:12px;
-    padding:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.2);
-}
-
-.modal-title{
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:20px;
-}
-
-.modal-footer{
-    margin-top:20px;
-    display:flex;
-    justify-content:flex-end;
-    gap:10px;
-}
-
-/* ===== RODAPÉ ===== */
-
-.footer{
-    margin-top:30px;
-    text-align:center;
-    color:#777;
-    font-size:12px;
-}
-
-/* ===== PRINT ===== */
-
-@media print{
-
-.no-print{
-    display:none !important;
-}
-
-body{
-    background:white;
-}
-
-.card,
-.table-card{
-    box-shadow:none;
-}
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Controle - Galpao G02</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-container h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            width: auto;
+        }
+
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .main-app {
+            display: none;
+            width: 100%;
+            max-width: 1400px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #667eea;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 22px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info span {
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: #e9ecef;
+        }
+
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            padding: 30px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #f8f9fa;
+            color: #333;
+            font-weight: 600;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .filter-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .filter-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .stock-control {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .stock-control h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .stock-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stock-card {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stock-card h4 {
+            color: #667eea;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stock-card p {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: #333;
+            font-size: 20px;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-container {
+            background: #667eea;
+            color: white;
+        }
+
+        .badge-pcs {
+            background: #28a745;
+            color: white;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 2000;
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        .notification.error {
+            background: #dc3545;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 16px;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+        }
+    </style>
 </head>
-
 <body>
-
-<!-- LOGIN -->
-
-<div id="loginScreen">
-
-    <div class="login-box">
-
-        <h2>CONTROLE DE REFERÊNCIAS</h2>
-
-        <p>Acesso ao sistema - Galpão G02</p>
-
-        <div class="assinatura">
-            By Castelhano
-        </div>
-
-        <input
-            type="password"
-            id="senhaLogin"
-            placeholder="Digite a senha"
-            onkeydown="if(event.key==='Enter') entrar()">
-
-        <button onclick="entrar()">
-            ENTRAR
-        </button>
-
-        <div
-            id="erroLogin"
-            class="erro-login">
-
-            Senha incorreta.
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- SISTEMA -->
-
-<div id="sistema">
-
-    <!-- HEADER -->
-
-    <div class="header">
-
-        <div class="logo">
-
-            <h1>Controle de Mercadoria</h1>
-
-            <span>Galpão G02 • By Castelhano</span>
-
-        </div>
-
-        <div class="header-right">
-
-            <button
-                class="btn-red"
-                id="btnManutencao"
-                onclick="alternarManutencao()">
-
-                🔧 Manutenção
-
-            </button>
-
-            <button
-                class="btn-dark"
-                id="btnEstoque"
-                onclick="abrirAba('estoque')">
-
-                📦 Estoque
-
-            </button>
-
-            <button
-                class="btn-gray"
-                onclick="sair()">
-
-                Sair
-
-            </button>
-
-        </div>
-
-    </div>
-
-    <div class="container">
-
-                <!-- DASHBOARD -->
-
-        <div class="dashboard">
-
-            <div class="card-info">
-                <h4>REFERÊNCIAS</h4>
-                <strong id="totalReferencias">0</strong>
-            </div>
-
-            <div class="card-info">
-                <h4>CAIXAS</h4>
-                <strong id="totalCaixas">0</strong>
-            </div>
-
-            <div class="card-info">
-                <h4>SALDO</h4>
-                <strong id="totalSaldo">0</strong>
-            </div>
-
-            <div class="card-info">
-                <h4>CONTAINERS</h4>
-                <strong id="totalContainers">0</strong>
-            </div>
-
-        </div>
-
-        <!-- CADASTRO -->
-
-        <div
-            class="card no-print"
-            id="cardCadastro">
-
-            <h3>Cadastro de Referência</h3>
-
-            <div class="form-grid">
-
-                <input
-                    type="text"
-                    id="pa"
-                    placeholder="Referência">
-
-                <input
-                    type="number"
-                    id="caixas"
-                    placeholder="Quantidade">
-
-                <input
-                    type="text"
-                    id="descricao"
-                    placeholder="Descrição">
-
-                <input
-                    type="text"
-                    id="container"
-                    placeholder="Container">
-
-                <input
-                    type="date"
-                    id="data">
-
-            </div>
-
-            <div class="buttons">
-
-                <button
-                    class="btn-green"
-                    id="btnSalvar"
-                    onclick="salvarReferencia()">
-
-                    💾 Salvar
-
-                </button>
-
-                <button
-                    class="btn-gray"
-                    onclick="limparFormulario()">
-
-                    Limpar
-
-                </button>
-
-            </div>
-
-        </div>
-
-        <!-- PESQUISA -->
-
-        <div class="card no-print">
-
-            <h3>Pesquisa</h3>
-
-            <div class="filters">
-
-                <input
-                    type="text"
-                    id="pesquisa"
-                    placeholder="Pesquisar..."
-                    onkeyup="renderizarTabela()">
-
-                <select
-                    id="tipoPesquisa"
-                    onchange="renderizarTabela()">
-
-                    <option value="todos">
-                        Todos
-                    </option>
-
-                    <option value="pa">
-                        Referência
-                    </option>
-
-                    <option value="descricao">
-                        Descrição
-                    </option>
-
-                    <option value="container">
-                        Container
-                    </option>
-
-                </select>
-
-                <button
-                    class="btn-blue"
-                    onclick="exportarCSV()">
-
-                    Exportar CSV
-
-                </button>
-
-                <button
-                    class="btn-dark"
-                    onclick="window.print()">
-
-                    Imprimir
-
-                </button>
-
-            </div>
-
-        </div>
-
-        <!-- TABELA -->
-
-        <div class="table-card">
-
-            <div class="table-title">
-
-                CONTROLE DE REFERÊNCIAS
-
-            </div>
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th style="width:14%">
-                            REFERÊNCIA
-                        </th>
-
-                        <th style="width:10%">
-                            QUANT.
-                        </th>
-
-                        <th style="width:28%">
-                            DESCRIÇÃO
-                        </th>
-
-                        <th style="width:12%">
-                            GALPÃO
-                        </th>
-
-                        <th style="width:16%">
-                            CONTAINER
-                        </th>
-
-                        <th style="width:12%">
-                            DATA
-                        </th>
-
-                        <th style="width:8%">
-                            AÇÕES
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="tabelaReferencias">
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-                <!-- ABA CONTROLE DE ESTOQUE -->
-
-        <div
-            id="abaEstoque"
-            style="display:none;">
-
-            <div class="card">
-
-                <div class="top-bar">
-
-                    <div>
-
-                        <h3 style="margin:0;">
-                            📦 Controle de Estoque
-                        </h3>
-
-                        <small>
-                            Entradas, saídas e saldo das referências
-                        </small>
-
-                    </div>
-
-                    <div class="buttons">
-
-                       <button
-    class="btn-gray"
-    onclick="abrirAba('paletes')">
-
-    ← Voltar
-
-</button>
-                        
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="dashboard">
-
-                <div class="card-info">
-
-                    <h4>Total Entrada</h4>
-
-                    <strong id="estoqueEntrada">
-
-                        0
-
-                    </strong>
-
-                </div>
-
-                <div class="card-info">
-
-                    <h4>Total Saída</h4>
-
-                    <strong id="estoqueSaida">
-
-                        0
-
-                    </strong>
-
-                </div>
-
-                <div class="card-info">
-
-                    <h4>Saldo Atual</h4>
-
-                    <strong id="estoqueSaldo">
-
-                        0
-
-                    </strong>
-
-                </div>
-
-                <div class="card-info">
-
-                    <h4>Itens</h4>
-
-                    <strong id="estoqueItens">
-
-                        0
-
-                    </strong>
-
-                </div>
-
-            </div>
-
-            <div class="table-card">
-
-                <div class="table-title">
-
-                    MOVIMENTAÇÃO DE ESTOQUE
-
-                </div>
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th style="width:14%;">
-                                REFERÊNCIA
-                            </th>
-
-                            <th style="width:12%;">
-                                ENTRADA
-                            </th>
-
-                            <th style="width:12%;">
-                                SAÍDA
-                            </th>
-
-                            <th style="width:12%;">
-                                SALDO
-                            </th>
-
-                            <th style="width:26%;">
-                                DESCRIÇÃO
-                            </th>
-
-                            <th style="width:14%;">
-                                CONTAINER
-                            </th>
-
-                            <th style="width:10%;">
-                                AÇÕES
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="tabelaEstoque">
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-            <div class="table-card">
-
-    <h3 class="table-title">
-        📋 Histórico de Movimentações
-    </h3>
-
-
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>DATA</th>
-                <th>REFERÊNCIA</th>
-                <th>TIPO</th>
-                <th>QUANTIDADE</th>
-
-            </tr>
-
-        </thead>
-
-
-        <tbody id="tabelaHistorico">
-
-        </tbody>
-
-
-    </table>
-
-</div>
-
-        </div>
-
-        <!-- MODAL -->
-
-        <div
-            class="modal"
-            id="modalMovimento">
-
-            <div class="modal-box">
-
-                <div class="modal-title">
-
-                    Movimentar Estoque
-
-                </div>
-
-                <input
-                    type="number"
-                    id="quantidadeMovimento"
-                    placeholder="Quantidade">
-
-                <div class="modal-footer">
-
-                    <button
-                        class="btn-gray"
-                        onclick="fecharModal()">
-
-                        Cancelar
-
-                    </button>
-
-                    <button
-                        class="btn-green"
-                        id="btnConfirmarMovimento">
-
-                        Confirmar
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
-
-<script>
-
-/* =====================================================
-   FIREBASE
-===================================================== */
-
-const firebaseConfig = {
-
-    apiKey: "AIzaSyBPqhxtFR2QHMmiRNYbwnuISmn_SiObQME",
-
-    authDomain: "controle-de-paletes-a1ce6.firebaseapp.com",
-
-    projectId: "controle-de-paletes-a1ce6",
-
-    storageBucket: "controle-de-paletes-a1ce6.firebasestorage.app",
-
-    messagingSenderId: "188164343813",
-
-    appId: "1:188164343813:web:1308654f80cb560553746c"
-
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const db = firebase.firestore();
-
-    console.log("JAVASCRIPT INICIOU");
-
-/* =====================================================
-   CONFIGURAÇÕES
-===================================================== */
-
-const SENHA_ADMIN = "161004";
-
-const SENHA_CONSULTA = "123";
-
-const GALPAO = "G02";
-
-/* =====================================================
-   VARIÁVEIS GLOBAIS
-===================================================== */
-
-let perfil = "";
-
-let referencias = [];
-
-let referenciaAtual = null;
-
-let filtroAtual = "todos";
-
-    let editandoId = null;
-
-let movimentoId = null;
-
-let tipoMovimento = "";
-
-/* =====================================================
-   ELEMENTOS
-===================================================== */
-
-const loginScreen = document.getElementById("loginScreen");
-
-const sistema = document.getElementById("sistema");
-
-const tabelaReferencias = document.getElementById("tabelaReferencias");
-
-const tabelaEstoque = document.getElementById("tabelaEstoque");
-
-const abaEstoque = document.getElementById("abaEstoque");
-
-const cardCadastro = document.getElementById("cardCadastro");
-
-/* =====================================================
-   INICIALIZAÇÃO
-===================================================== */
-
-window.onload = function(){
-
-    verificarSessao();
-
-};
-
-/* =====================================================
-   LOGIN
-===================================================== */
-
-    <script>
-        
-  function entrar(){
-
-
-    const senha = document
-    .getElementById("senhaLogin")
-    .value
-    .trim();
-
-
-
-    const erro = document
-    .getElementById("erroLogin");
-
-
-    erro.style.display = "none";
-
-
-
-    if(senha === SENHA_ADMIN){
-
-
-        perfil = "admin";
-
-
-    }
-    else if(senha === SENHA_CONSULTA){
-
-
-        perfil = "consulta";
-
-
-    }
-    else{
-
-
-        erro.style.display = "block";
-
-
-        return;
-
-    }
-
-
-
-    sessionStorage.setItem(
-        "perfil",
-        perfil
-    );
-
-
-    sessionStorage.setItem(
-        "logado",
-        "true"
-    );
-
-
-
-    iniciarSistema();
-
-
-}
-
-    </script>
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-function sair(){
-
-    sessionStorage.clear();
-
-    location.reload();
-
-}
-
-/* =====================================================
-   VERIFICAR SESSÃO
-===================================================== */
-
-function verificarSessao(){
-
-    if(sessionStorage.getItem("logado") !== "true"){
-
-        loginScreen.style.display = "flex";
-
-        sistema.style.display = "none";
-
-        return;
-
-    }
-
-    perfil = sessionStorage.getItem("perfil") || "";
-
-    iniciarSistema();
-
-}
-
-    /* =====================================================
-   INICIAR SISTEMA
-===================================================== */
-
-function iniciarSistema(){
-
-    loginScreen.style.display = "none";
-
-    sistema.style.display = "block";
-
-    configurarPermissoes();
-
-    carregarReferencias();
-
-}
-
-/* =====================================================
-   PERMISSÕES
-===================================================== */
-
-function configurarPermissoes(){
-
-    const admin = perfil === "admin";
-
-    cardCadastro.style.display =
-        admin ? "block" : "none";
-
-    document.getElementById("btnSalvar").style.display =
-        admin ? "inline-block" : "none";
-
-    document.getElementById("btnEstoque").style.display =
-        admin ? "inline-block" : "none";
-
-    document.getElementById("btnManutencao").style.display =
-        admin ? "inline-block" : "none";
-
-}
-
-/* =====================================================
-   CARREGAR FIREBASE
-===================================================== */
-
-function carregarReferencias(){
-
-    db.collection("paletes")
-
-    .orderBy("data","desc")
-
-    .onSnapshot(function(snapshot){
-
-        referencias = [];
-
-        snapshot.forEach(function(doc){
-
-            referencias.push({
-
-                id: doc.id,
-
-                ...doc.data()
-
-            });
-
-        });
-
-        renderizarTabela();
-
-        renderizarEstoque();
-
-        atualizarDashboard();
-
-    });
-
-}
-
-/* =====================================================
-   ABAS
-===================================================== */
-
-function abrirAba(tipo){
-
-
-    const paletesAba =
-    document.getElementById("abaPaletes");
-
-
-    const estoqueAba =
-    document.getElementById("abaEstoque");
-
-
-
-    if(!paletesAba || !estoqueAba){
-
-        console.error(
-            "Abas não encontradas"
-        );
-
-        return;
-
-    }
-
-
-
-    paletesAba.style.display = "none";
-
-    estoqueAba.style.display = "none";
-
-
-
-    if(tipo === "estoque"){
-
-
-        estoqueAba.style.display = "block";
-
-
-        renderizarEstoque();
-
-
-        carregarHistorico();
-
-
-    }
-    else{
-
-
-        paletesAba.style.display = "block";
-
-
-        renderizarTabela();
-
-
-    }
-
-
-}
-    
-/* =====================================================
-   DASHBOARD
-===================================================== */
-
-function atualizarDashboard(){
-
-    let caixas = 0;
-
-    let saldo = 0;
-
-    const containers = new Set();
-
-    referencias.forEach(function(item){
-
-        caixas += Number(item.caixas || 0);
-
-        saldo += Number(item.saldoAtual ?? item.caixas ?? 0);
-
-        if(item.container){
-
-            containers.add(item.container);
-
-        }
-
-    });
-
-    document.getElementById("totalReferencias").textContent =
-        referencias.length.toLocaleString("pt-BR");
-
-    document.getElementById("totalCaixas").textContent =
-        caixas.toLocaleString("pt-BR");
-
-    document.getElementById("totalSaldo").textContent =
-        saldo.toLocaleString("pt-BR");
-
-    document.getElementById("totalContainers").textContent =
-        containers.size.toLocaleString("pt-BR");
-
-}
-
-    function renderizarTabela(){
-
-    const tabela = document.getElementById("tabelaPaletes");
-
-    if(!tabela){
-        console.error("Tabela principal não encontrada");
-        return;
-    }
-
-
-    tabela.innerHTML = "";
-
-
-    let lista = [...paletes];
-
-        lista = ordenarTabela(lista);
-
-
-    const pesquisa = document.getElementById("pesquisa").value
-    .toLowerCase()
-    .trim();
-
-
-    const tipo = document.getElementById("tipoPesquisa").value;
-
-
-
-    if(pesquisa){
-
-        lista = lista.filter(p=>{
-
-
-            let campo="";
-
-
-            if(tipo==="pa"){
-                campo = p.pa;
-            }
-
-
-            else if(tipo==="descricao"){
-                campo = p.descricao;
-            }
-
-
-            else if(tipo==="container"){
-                campo = p.container;
-            }
-
-
-            else if(tipo==="data"){
-                campo = p.data;
-            }
-
-
-            else{
-
-                campo = 
-                p.pa +
-                " " +
-                p.descricao +
-                " " +
-                p.container +
-                " " +
-                p.data;
-
-            }
-
-
-            return String(campo)
-            .toLowerCase()
-            .includes(pesquisa);
-
-
-        });
-
-    }
-
-
-
-    if(lista.length===0){
-
-        tabela.innerHTML = `
-
-        <tr>
-
-            <td colspan="7"
-            style="
-            text-align:center;
-            padding:30px;
-            ">
-
-            Nenhum registro encontrado
-
-            </td>
-
-        </tr>
-
-        `;
-
-        return;
-
-    }
-
-
-
-
-
-    lista.forEach(p=>{
-
-
-        const data = p.data
-        ?
-        p.data.split("-").reverse().join("/")
-        :
-        "";
-
-
-
-        tabela.innerHTML += `
-
-
-        <tr>
-
-
-            <td>
-
-            ${escapeHTML(p.pa)}
-
-            </td>
-
-
-
-            <td>
-
-            ${Number(p.caixas || 0)
-            .toLocaleString("pt-BR")}
-
-            </td>
-
-
-
-            <td>
-
-            ${escapeHTML(p.descricao)}
-
-            </td>
-
-
-
-            <td>
-
-            ${escapeHTML(p.container)}
-
-            </td>
-
-
-
-            <td>
-
-            ${data}
-
-            </td>
-
-
-
-            <td>
-
-
-            <button
-
-            class="action-btn btn-edit"
-
-            onclick="editarPalete('${p.id}')">
-
-            ✏️
-
-            </button>
-
-
-
-            <button
-
-            class="action-btn btn-delete"
-
-            onclick="excluirPalete('${p.id}')">
-
-            🗑️
-
-            </button>
-
-
-            </td>
-
-
-        </tr>
-
-
-        `;
-
-
-    });
-
-        atualizarResumo();
-
-aplicarPermissoesTabela();
-
-
-}
-
-    function atualizarResumo(){
-
-    const totalReferencias = paletes.length;
-
-
-    const totalCaixas = paletes.reduce(
-        (total,p)=>{
-
-            return total + Number(p.caixas || 0);
-
-        },
-        0
-    );
-
-
-
-    const totalPecas = paletes.reduce(
-        (total,p)=>{
-
-            return total + Number(p.pecas || 0);
-
-        },
-        0
-    );
-
-
-
-    const containers = new Set();
-
-
-    paletes.forEach(p=>{
-
-        if(p.container){
-
-            containers.add(
-                p.container
-            );
-
-        }
-
-    });
-
-
-
-    const totalContainers = containers.size;
-
-
-
-
-    const campoReferencia =
-    document.getElementById("totalPaletes");
-
-
-    const campoCaixas =
-    document.getElementById("totalCxs");
-
-
-    const campoPecas =
-    document.getElementById("totalPcs");
-
-
-    const campoContainers =
-    document.getElementById("totalContainers");
-
-
-
-
-    if(campoReferencia){
-
-        campoReferencia.innerText =
-        totalReferencias.toLocaleString("pt-BR");
-
-    }
-
-
-
-    if(campoCaixas){
-
-        campoCaixas.innerText =
-        totalCaixas.toLocaleString("pt-BR");
-
-    }
-
-
-
-    if(campoPecas){
-
-        campoPecas.innerText =
-        totalPecas.toLocaleString("pt-BR");
-
-    }
-
-
-
-    if(campoContainers){
-
-        campoContainers.innerText =
-        totalContainers.toLocaleString("pt-BR");
-
-    }
-
-
-}
-
-    function ordenarTabela(lista){
-
-    return lista.sort((a,b)=>{
-
-
-        const referenciaA = String(a.pa || "")
-        .toLowerCase();
-
-
-        const referenciaB = String(b.pa || "")
-        .toLowerCase();
-
-
-
-        return referenciaA.localeCompare(
-            referenciaB,
-            "pt-BR",
-            {
-                numeric:true
-            }
-        );
-
-
-    });
-
-}
-
-    async function carregarPaletes(){
-
-    try{
-
-
-        const snapshot = await db
-        .collection("paletes")
-        .get();
-
-
-
-        paletes = [];
-
-
-
-        snapshot.forEach(doc=>{
-
-
-            paletes.push({
-
-                id: doc.id,
-
-                ...doc.data()
-
-            });
-
-
-        });
-
-
-
-        renderizarTabela();
-
-
-    }
-
-    catch(error){
-
-
-        console.error(
-            "Erro ao carregar paletes:",
-            error
-        );
-
-
-        alert(
-            "Erro ao carregar dados do sistema"
-        );
-
-
-    }
-
-
-}
-
-    function aplicarPermissoesTabela(){
-
-    const botoesEdicao =
-    document.querySelectorAll(
-        ".btn-edit, .btn-delete"
-    );
-
-
-    botoesEdicao.forEach(btn=>{
-
-
-        if(perfil === "consulta"){
-
-            btn.style.display="none";
-
-        }
-
-        else{
-
-            btn.style.display="inline-block";
-
-        }
-
-
-    });
-
-
-}
-
-   function editarPalete(id){
-
-
-    const registro = paletes.find(
-        p => p.id === id
-    );
-
-
-    if(!registro){
-
-        console.error(
-            "Registro não encontrado"
-        );
-
-        return;
-
-    }
-
-
-
-    editandoId = id;
-
-
-
-    document.getElementById("pa").value =
-    registro.pa || "";
-
-
-
-    document.getElementById("caixas").value =
-    registro.caixas || "";
-
-
-
-    document.getElementById("descricao").value =
-    registro.descricao || "";
-
-
-
-    document.getElementById("container").value =
-    registro.container || "";
-
-
-
-    document.getElementById("data").value =
-    registro.data || "";
-
-
-
-
-    document.getElementById("btnSalvar")
-    .innerHTML = "✏️ Atualizar";
-
-
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
-    });
-
-
-}
-    
-    async function salvarReferencia(){
-
-    const pa = document.getElementById("pa").value.trim();
-
-    const caixas = Number(
-        document.getElementById("caixas").value
-    );
-
-    const descricao =
-    document.getElementById("descricao").value.trim();
-
-
-    const container =
-    document.getElementById("container").value.trim();
-
-
-    const data =
-    document.getElementById("data").value;
-
-
-
-    if(!pa || !caixas || !descricao){
-
-        alert(
-            "Preencha referência, quantidade e descrição"
-        );
-
-        return;
-
-    }
-
-
-
-   const dados = {
-
-    pa,
-
-    caixas,
-
-    saldoAtual: caixas,
-
-    descricao,
-
-    container,
-
-    data,
-
-    atualizado:
-    new Date()
-
-};
-
-
-    try{
-
-
-        if(editandoId){
-
-
-            await db
-            .collection("paletes")
-            .doc(editandoId)
-            .update(dados);
-
-
-
-            editandoId = null;
-
-
-        }
-
-        else{
-
-
-            await db
-            .collection("paletes")
-            .add(dados);
-
-
-        }
-
-
-
-        limparFormulario();
-
-
-        document.getElementById("btnSalvar")
-        .innerHTML = "💾 Salvar";
-
-
-        carregarReferencias();
-
-
-    }
-
-
-    catch(error){
-
-
-        console.error(
-            "Erro ao salvar:",
-            error
-        );
-
-
-        alert(
-            "Erro ao salvar registro"
-        );
-
-
-    }
-
-
-}
-
-    async function excluirPalete(id){
-
-
-    const confirmar = confirm(
-        "Deseja realmente excluir este registro?"
-    );
-
-
-    if(!confirmar){
-
-        return;
-
-    }
-
-
-
-    try{
-
-
-        await db
-        .collection("paletes")
-        .doc(id)
-        .delete();
-
-
-
-        carregarReferencias();
-
-
-
-    }
-
-    catch(error){
-
-
-        console.error(
-            "Erro ao excluir:",
-            error
-        );
-
-
-        alert(
-            "Erro ao excluir registro"
-        );
-
-
-    }
-
-
-}
-
-    function renderizarEstoque(){
-
-    const tabela =
-    document.getElementById("tabelaEstoque");
-
-
-    if(!tabela){
-
-        console.error(
-            "Tabela de estoque não encontrada"
-        );
-
-        return;
-
-    }
-
-
-
-    tabela.innerHTML = "";
-
-
-
-    if(paletes.length === 0){
-
-
-        tabela.innerHTML = `
-
-        <tr>
-
-        <td colspan="7"
-        style="text-align:center;padding:30px">
-
-        Nenhum estoque cadastrado
-
-        </td>
-
-        </tr>
-
-        `;
-
-
-        return;
-
-    }
-
-
-
-
-    paletes.forEach(p=>{
-
-
-        const recebido =
-        Number(p.caixas || 0);
-
-
-
-        const saldo =
-        Number(
-            p.saldoAtual !== undefined
-            ?
-            p.saldoAtual
-            :
-            recebido
-        );
-
-
-
-        const data =
-        p.data
-        ?
-        p.data.split("-").reverse().join("/")
-        :
-        "";
-
-
-
-        tabela.innerHTML += `
-
-
-        <tr>
-
-
-        <td>${escapeHTML(p.pa)}</td>
-
-
-        <td>
-        ${recebido.toLocaleString("pt-BR")}
-        </td>
-
-
-        <td>
-        ${saldo.toLocaleString("pt-BR")}
-        </td>
-
-
-        <td>
-        ${escapeHTML(p.descricao)}
-        </td>
-
-
-        <td>
-        ${escapeHTML(p.container)}
-        </td>
-
-
-        <td>
-        ${data}
-        </td>
-
-
-        <td>
-
-        <button
-        class="action-btn btn-red"
-        onclick="abrirMovimento('${p.id}','SAIDA')">
-
-        ➖
-
-        </button>
-
-
-        <button
-        class="action-btn btn-green"
-        onclick="adicionarEstoque('${p.id}')">
-
-        ➕
-
-        </button>
-
-
-        </td>
-
-
-        </tr>
-
-
-        `;
-
-
-    });
-
-
-}
-
-    async function baixarEstoque(id, quantidade){
-
-
-    const registro = paletes.find(
-        p => p.id === id
-    );
-
-
-    if(!registro){
-
-        alert("Registro não encontrado");
-
-        return;
-
-    }
-
-    if(!quantidade || quantidade <= 0){
-
-        return;
-
-    }
-
-
-
-    const saldoAtual =
-    Number(
-        registro.saldoAtual !== undefined
-        ?
-        registro.saldoAtual
-        :
-        registro.caixas || 0
-    );
-
-
-
-    if(quantidade > saldoAtual){
-
-        alert(
-            "Saldo insuficiente"
-        );
-
-        return;
-
-    }
-
-
-
-    const novoSaldo =
-    saldoAtual - quantidade;
-
-
-
-    try{
-
-
-        await db
-        .collection("paletes")
-        .doc(id)
-        .update({
-
-            saldoAtual:
-            novoSaldo
-
-        });
-
-        await registrarMovimentacao(
-    registro,
-    "SAIDA",
-    quantidade
-);
-
-
-
-        carregarReferencias();
-
-renderizarEstoque();
-
-carregarHistorico();
-
-
-
-    }
-
-
-    catch(error){
-
-
-        console.error(
-            "Erro ao baixar estoque:",
-            error
-        );
-
-
-        alert(
-            "Erro ao atualizar estoque"
-        );
-
-
-    }
-
-
-}
-
-    async function adicionarEstoque(id, quantidade){
-
-
-    const registro = paletes.find(
-        p => p.id === id
-    );
-
-
-    if(!registro){
-
-        alert("Registro não encontrado");
-
-        return;
-
-    }
-
-    if(!quantidade || quantidade <= 0){
-
-        return;
-
-    }
-
-
-
-    const saldoAtual =
-    Number(
-        registro.saldoAtual !== undefined
-        ?
-        registro.saldoAtual
-        :
-        registro.caixas || 0
-    );
-
-
-
-    const novoSaldo =
-    saldoAtual + quantidade;
-
-
-
-    try{
-
-
-        await db
-        .collection("paletes")
-        .doc(id)
-        .update({
-
-            saldoAtual:
-            novoSaldo
-
-        });
-
-        await registrarMovimentacao(
-    registro,
-    "ENTRADA",
-    quantidade
-);
-
-
-
-        carregarReferencias();
-
-renderizarEstoque();
-
-carregarHistorico();
-
-
-
-    }
-
-
-    catch(error){
-
-
-        console.error(
-            "Erro ao adicionar estoque:",
-            error
-        );
-
-
-        alert(
-            "Erro ao atualizar estoque"
-        );
-
-
-    }
-
-
-}
-
-    async function registrarMovimentacao(
-    registro,
-    tipo,
-    quantidade
-){
-
-
-    await db
-    .collection("movimentacoes")
-    .add({
-
-        referencia:
-        registro.pa,
-
-
-        tipo:
-        tipo,
-
-
-        quantidade:
-        quantidade,
-
-
-        data:
-        new Date()
-        .toLocaleString("pt-BR"),
-
-
-        usuario:
-        perfil || "admin"
-
-
-    });
-
-
-}
-
-    async function registrarMovimentacao(
-    registro,
-    tipo,
-    quantidade
-){
-
-
-    await db
-    .collection("movimentacoes")
-    .add({
-
-        referencia:
-        registro.pa,
-
-
-        tipo:
-        tipo,
-
-
-        quantidade:
-        quantidade,
-
-
-        data:
-        new Date()
-        .toLocaleString("pt-BR")
-
-    });
-
-
-}
-    
-    async function carregarHistorico(){
-
-
-    const tabela =
-    document.getElementById("tabelaHistorico");
-
-
-    if(!tabela){
-
-        console.error(
-            "Tabela histórico não encontrada"
-        );
-
-        return;
-
-    }
-
-
-
-    tabela.innerHTML = "";
-
-
-
-    try{
-
-
-        const snapshot =
-        await db
-        .collection("movimentacoes")
-        .orderBy(
-            "data",
-            "desc"
-        )
-        .get();
-
-
-
-        if(snapshot.empty){
-
-
-            tabela.innerHTML = `
-
-            <tr>
-
-                <td colspan="4"
-                style="text-align:center;padding:30px">
-
-                    Nenhuma movimentação registrada
-
-                </td>
-
-            </tr>
-
-            `;
-
-
-            return;
-
-        }
-
-
-
-        snapshot.forEach(doc=>{
-
-
-            const m =
-            doc.data();
-
-
-
-            tabela.innerHTML += `
-
-            <tr>
-
-
-                <td>
-                    ${m.data || ""}
-                </td>
-
-
-                <td>
-                    ${escapeHTML(
-                        m.referencia || ""
-                    )}
-                </td>
-
-
-                <td>
-                    ${m.tipo || ""}
-                </td>
-
-
-                <td>
-                    ${Number(
-                        m.quantidade || 0
-                    ).toLocaleString("pt-BR")}
-                </td>
-
-
-            </tr>
-
-            `;
-
-
-        });
-
-
-    }
-
-
-    catch(error){
-
-
-        console.error(
-            "Erro ao carregar histórico:",
-            error
-        );
-
-
-    }
-
-
-}
-
-    function abrirMovimento(id,tipo){
-
-
-    movimentoId = id;
-
-    tipoMovimento = tipo;
-
-
-
-    document.getElementById(
-        "modalMovimento"
-    ).style.display = "flex";
-
-
-
-    document.getElementById(
-        "tituloMovimento"
-    ).innerHTML =
-    tipo === "ENTRADA"
-    ?
-    "➕ Adicionar Estoque"
-    :
-    "➖ Baixar Estoque";
-
-
-
-    document.getElementById(
-        "quantidadeMovimento"
-    ).value = "";
-
-
-}
-
-   
-    function fecharModal(){
-
-    document.getElementById("modalMovimento")
-    .style.display = "none";
-
-
-    movimentoId = null;
-
-    tipoMovimento = "";
-
-}
-
-    document
-.getElementById("btnConfirmarMovimento")
-.addEventListener("click", async ()=>{
-
-
-    const quantidade =
-    Number(
-        document.getElementById(
-            "quantidadeMovimento"
-        ).value
-    );
-
-
-    if(!quantidade || quantidade <= 0){
-
-        alert(
-            "Digite uma quantidade válida"
-        );
-
-        return;
-
-    }
-
-
-
-    if(tipoMovimento === "ENTRADA"){
-
-
-        await adicionarEstoque(
-            movimentoId,
-            quantidade
-        );
-
-
-    }
-    else{
-
-
-        await baixarEstoque(
-            movimentoId,
-            quantidade
-        );
-
-
-    }
-
-
-
-    fecharModal();
-
-
-});
+    <!-- Tela de Login -->
+    <div class="login-container" id="loginScreen">
+        <h1>📦 Controle Galpao G02</h1>
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginType">Tipo de Acesso</label>
+                <select id="loginType" required>
+                    <option value="">Selecione..
