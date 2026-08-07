@@ -2507,7 +2507,7 @@ aplicarPermissoesTabela();
 
 }
 
-    function baixarEstoque(id, quantidade){
+    async function baixarEstoque(id, quantidade){
 
 
     const registro = paletes.find(
@@ -2610,7 +2610,7 @@ carregarHistorico();
 
 }
 
-    function adicionarEstoque(id, quantidade){
+    async function adicionarEstoque(id, quantidade){
 
 
     const registro = paletes.find(
@@ -2769,7 +2769,7 @@ carregarHistorico();
 
 
 }
-
+    
     async function carregarHistorico(){
 
 
@@ -2927,22 +2927,7 @@ carregarHistorico();
 
 }
 
-    function abrirMovimento(id, tipo){
-
-    movimentoId = id;
-
-    tipoMovimento = tipo;
-
-
-    document.getElementById("modalMovimento")
-    .style.display = "flex";
-
-
-    document.getElementById("quantidadeMovimento")
-    .value = "";
-
-}
-
+   
     function fecharModal(){
 
     document.getElementById("modalMovimento")
