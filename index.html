@@ -481,12 +481,13 @@ td.description {
     </div>
 </div>
 
-    <button
+   <button
+id="btnEstoque"
 class="btn-dark"
 onclick="abrirAba('estoque')">
 CONTROLE ESTOQUE
 </button>
-
+        
         <button
             class="btn-sair"
             onclick="sair()"
@@ -881,20 +882,31 @@ sessionStorage.removeItem("perfil");
 
 function configurarPermissoes(){
 
-    const cadastro=document.querySelector(".card.no-print");
+    const cadastro = document.querySelector(".card.no-print");
+    const btnEstoque = document.getElementById("btnEstoque");
 
-    if(perfil==="consulta"){
+    if(perfil === "consulta"){
 
-        cadastro.style.display="none";
+        // Esconde cadastro
+        cadastro.style.display = "none";
+
+        // Esconde botão de estoque
+        if(btnEstoque){
+            btnEstoque.style.display = "none";
+        }
 
     }else{
 
-        cadastro.style.display="block";
+        cadastro.style.display = "block";
+
+        if(btnEstoque){
+            btnEstoque.style.display = "inline-block";
+        }
 
     }
 
 }
-
+    
     function gerarListaPA(paTexto){
 
     const texto = paTexto.trim();
