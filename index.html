@@ -666,37 +666,13 @@ CONTROLE ESTOQUE
 
 <tr>
 
-    <th style="width: 15%;">
-        PA
-    </th>
-
-    <th style="width: 10%;">
-    DISP.
-</th>
-
-   <th style="width: 12%;">
-    QUANTIDADE
-</th>
-
-    <th style="width: 28%;">
-        DESCRIÇÃO
-    </th>
-
-    <th style="width: 10%;">
-        GALPÃO
-    </th>
-
-    <th style="width: 15%;">
-        CONTAINER
-    </th>
-
-    <th style="width: 10%;">
-        DATA
-    </th>
-
-    <th class="no-print coluna-acoes" style="width: 10%;">
-        AÇÕES
-    </th>
+   <th style="width:18%;">REFERÊNCIA</th>
+<th style="width:15%;">QUANTIDADE</th>
+<th style="width:32%;">DESCRIÇÃO</th>
+<th style="width:10%;">GALPÃO</th>
+<th style="width:15%;">CONTAINER</th>
+<th style="width:10%;">DATA</th>
+<th class="no-print" style="width:10%;">AÇÕES</th>
 
 </tr>
 
@@ -749,8 +725,6 @@ CONTROLE DE ESTOQUE
 <tr>
 
 <th style="width:15%;">PA</th>
-
-<th style="width:10%;">DISP.</th>
 
 <th style="width:12%;">QUANTIDADE</th>
 
@@ -906,39 +880,7 @@ function configurarPermissoes(){
     }
 
 }
-    
-    function gerarListaPA(paTexto){
-
-    const texto = paTexto.trim();
-
-    const partes = texto.split(/\s*(?:até|ate|a|-)\s*/i);
-
-    if(partes.length === 2){
-
-        const inicio = parseInt(partes[0]);
-        const fim = parseInt(partes[1]);
-
-        if(!isNaN(inicio) && !isNaN(fim) && fim >= inicio){
-
-            let lista = [];
-
-            for(let i = inicio; i <= fim; i++){
-
-                lista.push(String(i));
-
-            }
-
-            return lista;
-
-        }
-
-    }
-
-    // Se for PA único
-    return [texto];
-
-}
-    
+       
 
 /* =========================
    CADASTRAR / EDITAR
@@ -1065,37 +1007,6 @@ await db.collection("paletes").doc(editandoId).update({
             return;
         }
 
-        let pasDisponiveis = [];
-
-const partes = pa.split(/\s*(?:até|ate|a|-)\s*/i);
-
-if (partes.length === 2) {
-
-    const inicio = parseInt(partes[0]);
-    const fim = parseInt(partes[1]);
-
-    if (!isNaN(inicio) && !isNaN(fim)) {
-
-        for (let i = inicio; i <= fim; i++) {
-
-            pasDisponiveis.push({
-                numero: String(i),
-                disponivel: true
-            });
-
-        }
-
-    }
-
-} else {
-
-    pasDisponiveis.push({
-        numero: pa,
-        disponivel: true
-    });
-
-}   
-
 await db.collection("paletes").add({
 
     pa: pa,
@@ -1111,8 +1022,6 @@ await db.collection("paletes").add({
     data: data,
 
     galpao: GALPAO,
-
-    pasDisponiveis: pasDisponiveis
 
 });
         
@@ -1152,84 +1061,6 @@ function limparFormulario() {
 
     document.getElementById("btnSalvar")
         .textContent = "SALVAR PALETE";
-
-}
-
-    async function retirarPA(id){
-
-    if(perfil !== "admin") return;
-
-
-    const palete = paletes.find(
-        p => p.id === id
-    );
-
-
-    if(!palete) return;
-
-
-    if(!palete.pasDisponiveis){
-
-        alert("Esse cadastro não possui controle individual de PA.");
-
-        return;
-
-    }
-
-
-    const paRetirar = prompt(
-        "Digite o PA que deseja retirar:"
-    );
-
-
-    if(!paRetirar) return;
-
-
-    const index =
-        palete.pasDisponiveis.indexOf(
-            paRetirar.trim()
-        );
-
-
-    if(index === -1){
-
-        alert(
-            "Esse PA não está disponível."
-        );
-
-        return;
-
-    }
-
-
-    const confirmar =
-        confirm(
-            "Retirar o PA " + paRetirar + "?"
-        );
-
-
-    if(!confirmar) return;
-
-
-    palete.pasDisponiveis.splice(
-        index,
-        1
-    );
-
-
-    await db.collection("paletes")
-    .doc(id)
-    .update({
-
-        pasDisponiveis:
-        palete.pasDisponiveis
-
-    });
-
-
-    alert(
-        "PA retirado com sucesso!"
-    );
 
 }
 
@@ -1493,14 +1324,6 @@ p.descricao.toLowerCase().includes(pesquisa)
                     </strong>
                 </td>
 
-                <td>
-${
-    p.pasDisponiveis
-    ? p.pasDisponiveis.length
-    : 1
-}
-</td>
-
               <td>
     ${
         Number(p.caixas).toLocaleString("pt-BR")
@@ -1549,13 +1372,6 @@ onclick="excluirPalete('${p.id}')">
 🗑️
 </button>
 
-<button
-class="action-btn btn-green"
-title="Retirar PA"
-onclick="retirarPA('${p.id}')">
-📦
-</button>
-
 </div>
 
 </td>
@@ -1587,17 +1403,7 @@ onclick="retirarPA('${p.id}')">
 function atualizarResumo(lista) {
 
 
-const totalPaletes = lista.reduce((total, p) => {
-
-    if(p.pasDisponiveis){
-
-        return total + p.pasDisponiveis.length;
-
-    }
-
-    return total + 1;
-
-}, 0);
+const totalPaletes = lista.length;
 
     const totalCxs =
     lista.reduce((total, p) => {
@@ -1896,30 +1702,10 @@ function abrirAba(tipo){
 
     paletes.forEach(p=>{
 
-    let disponiveis = 1;
-    let total = 1;
-
-    if (p.pasDisponiveis) {
-
-        total = p.pasDisponiveis.length;
-
-        disponiveis = p.pasDisponiveis.filter(pa => pa.disponivel).length;
-
-    }
-
-    const cor =
-        disponiveis === total
-        ? "#198754"
-        : (disponiveis === 0 ? "#c62828" : "#ff9800");
-
-    tbody.innerHTML += `
+       tbody.innerHTML += `
     <tr>
 
     <td><strong>${escapeHTML(p.pa)}</strong></td>
-
-    <td style="font-weight:bold;color:${cor}">
-        ${disponiveis}/${total}
-    </td>
 
     <td>${escapeHTML(p.caixas)}</td>
 
