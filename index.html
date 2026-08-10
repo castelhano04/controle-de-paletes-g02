@@ -502,14 +502,14 @@ CONTROLE ESTOQUE
 
     <div class="card no-print">
 
-        <h3>Cadastrar palete</h3>
+        <h3>Cadastrar referência</h3>
 
         <div class="form-grid">
 
             <input
                 type="text"
                 id="pa"
-                placeholder="Nº PA"
+                placeholder="REFERÊNCIA"
                 autocomplete="off"
             >
 
@@ -590,15 +590,15 @@ CONTROLE ESTOQUE
             <input
     type="text"
     id="pesquisa"
-    placeholder="Pesquisar PA ou descrição"
+    placeholder="Pesquisar referência ou descrição"
     oninput="renderizar()"
 >
 
            <select id="tipoPesquisa" onchange="renderizar()">
 
-<option value="todos">PA + Descrição + Data</option>
-
-<option value="pa">Somente PA</option>
+<option value="todos">Referência + Descrição + Data</option>
+               
+<option value="pa">Somente Referência</option>
 
 <option value="descricao">Somente Descrição</option>
 
@@ -628,7 +628,7 @@ CONTROLE ESTOQUE
         <div class="summary">
 
             <div class="summary-box">
-                PALETES:
+               REFERÊNCIAS:
                 <strong id="totalPaletes">0</strong>
             </div>
 
