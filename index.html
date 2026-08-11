@@ -1891,28 +1891,45 @@ p.descricao.toLowerCase().includes(pesquisa)
 <td style="text-align:center;">
 
     <div style="
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        gap:5px;
-        width:100%;
+        font-size:12px;
+        font-weight:bold;
+        margin-bottom:6px;
     ">
-
-        <button
-            class="action-btn btn-blue"
-            title="Editar pedido"
-            onclick="editarPedido('${p.id}')">
-            ✏️
-        </button>
-
-        <button
-            class="action-btn btn-red"
-            title="Excluir pedido"
-            onclick="excluirPedido('${p.id}')">
-            🗑️
-        </button>
-
+        ${
+            p.data
+            ? p.data.split("-").reverse().join("/")
+            : ""
+        }
     </div>
+
+    ${
+        perfil === "admin"
+        ? `
+        <div style="
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            gap:5px;
+        ">
+
+            <button
+                class="action-btn btn-blue"
+                title="Editar referência"
+                onclick="editarPalete('${p.id}')">
+                ✏️
+            </button>
+
+            <button
+                class="action-btn btn-red"
+                title="Excluir referência"
+                onclick="excluirPalete('${p.id}')">
+                🗑️
+            </button>
+
+        </div>
+        `
+        : ""
+    }
 
 </td>
 
