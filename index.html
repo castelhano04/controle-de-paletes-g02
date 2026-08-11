@@ -682,7 +682,13 @@ tbody tr:hover td {
 
 }
 
-    #tabelaPedidos .actions {
+  #tabelaPedidos .td-acoes-pedido {
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+}
+
+#tabelaPedidos .actions {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -691,9 +697,11 @@ tbody tr:hover td {
 }
 
 #tabelaPedidos .action-btn {
-    flex: 0 0 30px;
-    margin: 0;
+    width: 30px;
+    height: 26px;
+    flex-shrink: 0;
 }
+    
     
     </style>
     
@@ -2670,9 +2678,8 @@ function abrirAba(tipo){
                 }
             </td>
 
-            <td>
+           <td class="td-acoes-pedido">
 
-                <td>
     <div class="actions">
 
         <button
@@ -2690,8 +2697,8 @@ function abrirAba(tipo){
         </button>
 
     </div>
-</td>
 
+</td>
         `;
 
 
