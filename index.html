@@ -2602,6 +2602,31 @@ function abrirAba(tipo){
     limparPedido();
 }
 
+    function limparPedido(){
+
+    document.getElementById("pedidoNumero").value = "";
+
+    document.getElementById("pedidoReferencia").value = "";
+
+    document.getElementById("pedidoQuantidade").value = "";
+
+    document.getElementById("pedidoSeparador").value = "";
+
+    document.getElementById("pedidoData").value = "";
+
+    document.getElementById("pedidoPaleteInicio").value = "";
+
+    document.getElementById("pedidoPaleteFim").value = "";
+
+    editandoPedidoId = null;
+
+    const btn = document.getElementById("btnSalvarPedido");
+
+    if(btn){
+        btn.textContent = "SALVAR PEDIDO";
+    }
+}
+
     function carregarPedidos(){
 
     db.collection("pedidosG02")
