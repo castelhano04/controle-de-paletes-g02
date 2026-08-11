@@ -1251,6 +1251,10 @@ CONTROLE DE ESTOQUE
                         </th>
 
                         <th style="width:16%;">
+    PALETES
+</th>
+
+                        <th style="width:16%;">
                             DATA
                         </th>
 
@@ -2388,7 +2392,7 @@ function abrirAba(tipo){
     alert("Saldo atualizado com sucesso!");
 }
 
-    function gerarPaletes(inicio, fim){
+   function gerarPaletes(inicio, fim){
 
     const numInicio = Number(inicio);
     const numFim = Number(fim);
@@ -2409,8 +2413,9 @@ function abrirAba(tipo){
 
     return lista;
 }
-    
-    async function salvarPedido(){
+
+
+async function salvarPedido(){
 
     if(perfil !== "admin"){
         alert("Você não tem permissão.");
@@ -2429,7 +2434,8 @@ function abrirAba(tipo){
 
     const quantidade =
         Number(
-            document.getElementById("pedidoQuantidade").value
+            document.getElementById("pedidoQuantidade")
+            .value
         );
 
     const separador =
@@ -2451,10 +2457,6 @@ function abrirAba(tipo){
         .value
         .trim();
 
-
-    // =========================
-    // VALIDAÇÕES
-    // =========================
 
     if(!numero){
         alert("Informe o número do pedido.");
@@ -2487,12 +2489,11 @@ function abrirAba(tipo){
     }
 
 
-    // =========================
-    // GERAR PALETES
-    // =========================
-
     const paletesPedido =
-        gerarPaletes(paleteInicio, paleteFim);
+        gerarPaletes(
+            paleteInicio,
+            paleteFim
+        );
 
     if(!paletesPedido){
         alert("Faixa de paletes inválida.");
@@ -2500,26 +2501,23 @@ function abrirAba(tipo){
     }
 
 
-    // =========================
-    // VERIFICAR PALETE REPETIDO
-    // =========================
+    const conflito =
+        pedidos.find(pedido => {
 
-    const conflito = pedidos.find(pedido => {
+            if(pedido.id === editandoPedidoId){
+                return false;
+            }
 
-        // Se estiver editando, ignora o próprio pedido
-        if(pedido.id === editandoPedidoId){
-            return false;
-        }
+            if(!Array.isArray(pedido.paletes)){
+                return false;
+            }
 
-        if(!Array.isArray(pedido.paletes)){
-            return false;
-        }
+            return paletesPedido.some(
+                palete =>
+                    pedido.paletes.includes(palete)
+            );
 
-        return paletesPedido.some(
-            palete => pedido.paletes.includes(palete)
-        );
-
-    });
+        });
 
 
     if(conflito){
@@ -2541,10 +2539,6 @@ function abrirAba(tipo){
         return;
     }
 
-
-    // =========================
-    // DADOS DO PEDIDO
-    // =========================
 
     const dadosPedido = {
 
@@ -2568,10 +2562,6 @@ function abrirAba(tipo){
 
     };
 
-
-    // =========================
-    // EDITAR OU CADASTRAR
-    // =========================
 
     if(editandoPedidoId){
 
@@ -2602,7 +2592,8 @@ function abrirAba(tipo){
     limparPedido();
 }
 
-    function limparPedido(){
+
+function limparPedido(){
 
     document.getElementById("pedidoNumero").value = "";
 
@@ -2620,14 +2611,67 @@ function abrirAba(tipo){
 
     editandoPedidoId = null;
 
-    const btn = document.getElementById("btnSalvarPedido");
+
+    const btn =
+        document.getElementById("btnSalvarPedido");
 
     if(btn){
         btn.textContent = "SALVAR PEDIDO";
     }
 }
 
-    function carregarPedidos(){
+
+function editarPedido(id){
+
+    if(perfil !== "admin") return;
+
+    const pedido =
+        pedidos.find(p => p.id === id);
+
+    if(!pedido) return;
+
+
+    document.getElementById("pedidoNumero").value =
+        pedido.numero || "";
+
+    document.getElementById("pedidoReferencia").value =
+        pedido.referencia || "";
+
+    document.getElementById("pedidoQuantidade").value =
+        pedido.quantidade || "";
+
+    document.getElementById("pedidoSeparador").value =
+        pedido.separador || "";
+
+    document.getElementById("pedidoData").value =
+        pedido.data || "";
+
+    document.getElementById("pedidoPaleteInicio").value =
+        pedido.paleteInicio || "";
+
+    document.getElementById("pedidoPaleteFim").value =
+        pedido.paleteFim || "";
+
+
+    editandoPedidoId = id;
+
+
+    const btn =
+        document.getElementById("btnSalvarPedido");
+
+    if(btn){
+        btn.textContent = "ATUALIZAR PEDIDO";
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function carregarPedidos(){
 
     db.collection("pedidosG02")
     .onSnapshot(function(snapshot){
@@ -2650,7 +2694,9 @@ function abrirAba(tipo){
         pedidos.sort((a,b) => {
 
             return String(b.data || "")
-                .localeCompare(String(a.data || ""));
+                .localeCompare(
+                    String(a.data || "")
+                );
 
         });
 
@@ -2658,10 +2704,10 @@ function abrirAba(tipo){
         renderizarPedidos();
 
     });
-
 }
 
-    function renderizarPedidos(){
+
+function renderizarPedidos(){
 
     const tbody =
         document.getElementById("tabelaPedidos");
@@ -2676,9 +2722,15 @@ function abrirAba(tipo){
         tbody.innerHTML = `
 
             <tr>
-                <td colspan="6" class="empty">
+
+                <td
+                    colspan="7"
+                    class="empty">
+
                     Nenhum pedido cadastrado.
+
                 </td>
+
             </tr>
 
         `;
@@ -2691,6 +2743,21 @@ function abrirAba(tipo){
 
         const tr =
             document.createElement("tr");
+
+
+        const textoPaletes =
+
+            p.paleteInicio && p.paleteFim
+
+            ? (
+                p.paleteInicio === p.paleteFim
+
+                ? escapeHTML(p.paleteInicio)
+
+                : `${escapeHTML(p.paleteInicio)} → ${escapeHTML(p.paleteFim)}`
+            )
+
+            : "-";
 
 
         tr.innerHTML = `
@@ -2727,56 +2794,98 @@ function abrirAba(tipo){
 
             <td>
 
-    <div style="font-weight:bold;margin-bottom:5px;">
+                <div style="
+                    font-weight:bold;
+                    margin-bottom:5px;
+                ">
+                    ${textoPaletes}
+                </div>
 
-        ${
-            p.paleteInicio === p.paleteFim
-            ? escapeHTML(p.paleteInicio || "")
-            : `${escapeHTML(p.paleteInicio || "")} → ${escapeHTML(p.paleteFim || "")}`
-        }
+                <button
+                    class="btn-blue"
+                    style="
+                        height:26px;
+                        padding:0 8px;
+                        font-size:10px;
+                    "
+                    onclick="verPaletesPedido('${p.id}')">
 
-    </div>
+                    VER PAs
 
-    <button
-        class="btn-blue"
-        style="height:26px;padding:0 8px;font-size:10px;"
-        onclick="verPaletesPedido('${p.id}')">
-        VER PAs
-    </button>
+                </button>
 
-</td>
+            </td>
 
-           <td class="td-acoes-pedido">
+            <td class="td-acoes-pedido">
 
-    <div class="actions">
+                <div class="actions">
 
-        <button
-            class="action-btn btn-blue"
-            title="Editar pedido"
-            onclick="editarPedido('${p.id}')">
-            ✏️
-        </button>
+                    <button
+                        class="action-btn btn-blue"
+                        title="Editar pedido"
+                        onclick="editarPedido('${p.id}')">
+                        ✏️
+                    </button>
 
-        <button
-            class="action-btn btn-red"
-            title="Excluir pedido"
-            onclick="excluirPedido('${p.id}')">
-            🗑️
-        </button>
+                    <button
+                        class="action-btn btn-red"
+                        title="Excluir pedido"
+                        onclick="excluirPedido('${p.id}')">
+                        🗑️
+                    </button>
 
-    </div>
+                </div>
 
-</td>
+            </td>
+
         `;
 
 
         tbody.appendChild(tr);
 
     });
-
 }
 
-    async function excluirPedido(id){
+
+function verPaletesPedido(id){
+
+    const pedido =
+        pedidos.find(p => p.id === id);
+
+    if(!pedido) return;
+
+
+    const lista =
+        Array.isArray(pedido.paletes)
+        ? pedido.paletes
+        : [];
+
+
+    if(lista.length === 0){
+
+        alert(
+            "Esse pedido não possui paletes cadastrados."
+        );
+
+        return;
+    }
+
+
+    alert(
+        "PEDIDO: " +
+        pedido.numero +
+
+        "\n\nREFERÊNCIA: " +
+        pedido.referencia +
+
+        "\n\nPALETES:\n\n" +
+
+        lista.join("\n")
+    );
+}
+
+
+async function excluirPedido(id){
 
     if(perfil !== "admin") return;
 
