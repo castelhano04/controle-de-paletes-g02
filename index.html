@@ -1867,41 +1867,33 @@ p.descricao.toLowerCase().includes(pesquisa)
     ${escapeHTML(p.container)}
 </td>
 
-    <td style="text-align:center;">
+<td style="text-align:center;">
 
-        <div style="
-            font-size:12px;
-            font-weight:bold;
-            margin-bottom:6px;
-        ">
-            ${escapeHTML(p.data)}
-        </div>
+    <div style="
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:5px;
+        width:100%;
+    ">
 
-        ${
-            perfil === "admin"
-            ? `
-                <div style="
-                    display:flex;
-                    justify-content:center;
-                    gap:6px;
-                ">
-                    <button
-                        class="action-btn"
-                        onclick="editarPalete('${p.id}')">
-                        ✏️
-                    </button>
+        <button
+            class="action-btn btn-blue"
+            title="Editar pedido"
+            onclick="editarPedido('${p.id}')">
+            ✏️
+        </button>
 
-                    <button
-                        class="action-btn danger"
-                        onclick="excluirPalete('${p.id}')">
-                        🗑️
-                    </button>
-                </div>
-            `
-            : ""
-        }
+        <button
+            class="action-btn btn-red"
+            title="Excluir pedido"
+            onclick="excluirPedido('${p.id}')">
+            🗑️
+        </button>
 
-    </td>
+    </div>
+
+</td>
 
 `;
 
