@@ -1185,10 +1185,11 @@ CONTROLE DE ESTOQUE
             <div class="buttons">
 
                 <button
-                    class="btn-green"
-                    onclick="salvarPedido()">
-                    SALVAR PEDIDO
-                </button>
+    id="btnSalvarPedido"
+    class="btn-green"
+    onclick="salvarPedido()">
+    SALVAR PEDIDO
+</button>
 
                 <button
                     class="btn-gray"
@@ -1283,6 +1284,8 @@ const GALPAO = "G02";
 let paletes = [];
 
     let pedidos = [];
+
+    let editandoPedidoId = null;
 
 let filtroAtual = "TODOS";
 
@@ -2391,8 +2394,7 @@ function abrirAba(tipo){
 
     const quantidade =
         Number(
-            document.getElementById("pedidoQuantidade")
-            .value
+            document.getElementById("pedidoQuantidade").value
         );
 
     const separador =
@@ -2404,24 +2406,20 @@ function abrirAba(tipo){
         document.getElementById("pedidoData")
         .value;
 
-        const paleteInicio =
-    document.getElementById("pedidoPaleteInicio")
-    .value
-    .trim();
+    const paleteInicio =
+        document.getElementById("pedidoPaleteInicio")
+        .value
+        .trim();
 
-const paleteFim =
-    document.getElementById("pedidoPaleteFim")
-    .value
-    .trim();
+    const paleteFim =
+        document.getElementById("pedidoPaleteFim")
+        .value
+        .trim();
 
-        const paletesPedido =
-    gerarPaletes(paleteInicio, paleteFim);
 
-if(!paletesPedido){
-    alert("Faixa de paletes inválida.");
-    return;
-}
-
+    // =========================
+    // VALIDAÇÕES
+    // =========================
 
     if(!numero){
         alert("Informe o número do pedido.");
@@ -2448,44 +2446,72 @@ if(!paletesPedido){
         return;
     }
 
-        if(!paleteInicio || !paleteFim){
-    alert("Informe o primeiro e o último palete.");
-    return;
-}
-
-        const conflito = pedidos.find(pedido => {
-
-    if(!Array.isArray(pedido.paletes)){
-        return false;
+    if(!paleteInicio || !paleteFim){
+        alert("Informe o primeiro e o último palete.");
+        return;
     }
 
-    return paletesPedido.some(
-        palete => pedido.paletes.includes(palete)
-    );
 
-});
+    // =========================
+    // GERAR PALETES
+    // =========================
 
-if(conflito){
+    const paletesPedido =
+        gerarPaletes(paleteInicio, paleteFim);
 
-    const repetidos =
-        paletesPedido.filter(
-            palete =>
-                conflito.paletes.includes(palete)
+    if(!paletesPedido){
+        alert("Faixa de paletes inválida.");
+        return;
+    }
+
+
+    // =========================
+    // VERIFICAR PALETE REPETIDO
+    // =========================
+
+    const conflito = pedidos.find(pedido => {
+
+        // Se estiver editando, ignora o próprio pedido
+        if(pedido.id === editandoPedidoId){
+            return false;
+        }
+
+        if(!Array.isArray(pedido.paletes)){
+            return false;
+        }
+
+        return paletesPedido.some(
+            palete => pedido.paletes.includes(palete)
         );
 
-    alert(
-        "ATENÇÃO!\n\n" +
-        "Palete(s) já utilizado(s):\n" +
-        repetidos.join(", ") +
-        "\n\nPedido: " +
-        conflito.numero
-    );
-
-    return;
-}
+    });
 
 
-    await db.collection("pedidosG02").add({
+    if(conflito){
+
+        const repetidos =
+            paletesPedido.filter(
+                palete =>
+                    conflito.paletes.includes(palete)
+            );
+
+        alert(
+            "ATENÇÃO!\n\n" +
+            "Palete(s) já utilizado(s):\n" +
+            repetidos.join(", ") +
+            "\n\nPedido: " +
+            conflito.numero
+        );
+
+        return;
+    }
+
+
+    // =========================
+    // DADOS DO PEDIDO
+    // =========================
+
+    const dadosPedido = {
 
         numero: numero,
 
@@ -2498,18 +2524,45 @@ if(conflito){
         data: data,
 
         paleteInicio: paleteInicio,
-paleteFim: paleteFim,
-paletes: paletesPedido,
 
-        galpao: "G02",
+        paleteFim: paleteFim,
 
-        criadoEm:
-            firebase.firestore.FieldValue.serverTimestamp()
+        paletes: paletesPedido,
 
-    });
+        galpao: "G02"
+
+    };
 
 
-    alert("Pedido salvo com sucesso!");
+    // =========================
+    // EDITAR OU CADASTRAR
+    // =========================
+
+    if(editandoPedidoId){
+
+        await db.collection("pedidosG02")
+            .doc(editandoPedidoId)
+            .update(dadosPedido);
+
+        alert("Pedido atualizado com sucesso!");
+
+    }else{
+
+        await db.collection("pedidosG02")
+            .add({
+
+                ...dadosPedido,
+
+                criadoEm:
+                    firebase.firestore
+                    .FieldValue
+                    .serverTimestamp()
+
+            });
+
+        alert("Pedido salvo com sucesso!");
+    }
+
 
     limparPedido();
 }
@@ -2614,18 +2667,25 @@ paletes: paletesPedido,
 
             <td>
 
-                <div class="actions">
+                <td>
+    <div class="actions">
 
-                    <button
-                        class="action-btn btn-red"
-                        title="Excluir pedido"
-                        onclick="excluirPedido('${p.id}')">
-                        🗑️
-                    </button>
+        <button
+            class="action-btn btn-blue"
+            title="Editar pedido"
+            onclick="editarPedido('${p.id}')">
+            ✏️
+        </button>
 
-                </div>
+        <button
+            class="action-btn btn-red"
+            title="Excluir pedido"
+            onclick="excluirPedido('${p.id}')">
+            🗑️
+        </button>
 
-            </td>
+    </div>
+</td>
 
         `;
 
@@ -2770,6 +2830,49 @@ paletes: paletesPedido,
 
     });
 
+}
+
+    function editarPedido(id){
+
+    if(perfil !== "admin") return;
+
+    const pedido = pedidos.find(p => p.id === id);
+
+    if(!pedido) return;
+
+    document.getElementById("pedidoNumero").value =
+        pedido.numero || "";
+
+    document.getElementById("pedidoReferencia").value =
+        pedido.referencia || "";
+
+    document.getElementById("pedidoQuantidade").value =
+        pedido.quantidade || "";
+
+    document.getElementById("pedidoSeparador").value =
+        pedido.separador || "";
+
+    document.getElementById("pedidoData").value =
+        pedido.data || "";
+
+    document.getElementById("pedidoPaleteInicio").value =
+        pedido.paleteInicio || "";
+
+    document.getElementById("pedidoPaleteFim").value =
+        pedido.paleteFim || "";
+
+    editandoPedidoId = id;
+
+    const btn = document.getElementById("btnSalvarPedido");
+
+    if(btn){
+        btn.textContent = "ATUALIZAR PEDIDO";
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
       
 </script>
