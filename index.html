@@ -667,6 +667,13 @@ class="btn-dark"
 onclick="abrirAba('estoque')">
 CONTROLE ESTOQUE
 </button>
+
+        <button
+    id="btnPedidos"
+    class="btn-blue"
+    onclick="abrirAba('pedidos')">
+    CONTROLE PEDIDOS
+</button>
         
         <button
             class="btn-sair"
@@ -931,6 +938,137 @@ CONTROLE DE ESTOQUE
 
 </div>
 
+    <div id="abaPedidos" style="display:none;">
+
+    <div class="container">
+
+        <div class="top-bar no-print">
+
+            <div>
+                <strong>CONTROLE DE PEDIDOS G02</strong>
+
+                <div class="assinatura-topo">
+                    By Castelhano
+                </div>
+            </div>
+
+            <button
+                class="btn-dark"
+                onclick="abrirAba('principal')">
+                ← VOLTAR
+            </button>
+
+        </div>
+
+
+        <div class="card no-print">
+
+            <h3>Cadastrar pedido</h3>
+
+            <div class="form-grid">
+
+                <input
+                    type="text"
+                    id="pedidoNumero"
+                    placeholder="Nº DO PEDIDO"
+                    autocomplete="off"
+                >
+
+                <input
+                    type="text"
+                    id="pedidoReferencia"
+                    placeholder="REFERÊNCIA"
+                    autocomplete="off"
+                >
+
+                <input
+                    type="number"
+                    id="pedidoQuantidade"
+                    placeholder="QUANTIDADE CXS"
+                    min="1"
+                >
+
+                <input
+                    type="text"
+                    id="pedidoSeparador"
+                    placeholder="SEPARADOR"
+                    autocomplete="off"
+                >
+
+                <input
+                    type="date"
+                    id="pedidoData"
+                >
+
+            </div>
+
+            <div class="buttons">
+
+                <button
+                    class="btn-green"
+                    onclick="salvarPedido()">
+                    SALVAR PEDIDO
+                </button>
+
+                <button
+                    class="btn-gray"
+                    onclick="limparPedido()">
+                    LIMPAR
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-card">
+
+            <div class="table-title">
+                PEDIDOS G02
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+
+                        <th style="width:18%;">
+                            PEDIDO
+                        </th>
+
+                        <th style="width:20%;">
+                            REFERÊNCIA
+                        </th>
+
+                        <th style="width:14%;">
+                            QUANTIDADE
+                        </th>
+
+                        <th style="width:20%;">
+                            SEPARADOR
+                        </th>
+
+                        <th style="width:16%;">
+                            DATA
+                        </th>
+
+                        <th style="width:12%;">
+                            AÇÕES
+                        </th>
+
+                    </tr>
+                </thead>
+
+                <tbody id="tabelaPedidos"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
     
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 
@@ -963,6 +1101,8 @@ let perfil = "";
 const GALPAO = "G02";
 
 let paletes = [];
+
+    let pedidos = [];
 
 let filtroAtual = "TODOS";
 
@@ -1011,6 +1151,10 @@ function entrar(){
 
     carregarFirebase();
 
+    if(perfil === "admin"){
+    carregarPedidos();
+}
+    
 }
 
 
@@ -1037,6 +1181,7 @@ function configurarPermissoes(){
 
     const cadastro = document.querySelector(".card.no-print");
     const btnEstoque = document.getElementById("btnEstoque");
+    const btnPedidos = document.getElementById("btnPedidos");
 
     if(perfil === "consulta"){
 
@@ -1048,6 +1193,10 @@ function configurarPermissoes(){
             btnEstoque.style.display = "none";
         }
 
+        if(btnPedidos){
+    btnPedidos.style.display = "none";
+}
+
     }else{
 
         cadastro.style.display = "block";
@@ -1055,6 +1204,10 @@ function configurarPermissoes(){
         if(btnEstoque){
             btnEstoque.style.display = "inline-block";
         }
+
+        if(btnPedidos){
+    btnPedidos.style.display = "inline-block";
+}
 
     }
 
@@ -1857,23 +2010,54 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
 
     carregarFirebase();
 
+    if(perfil === "admin"){
+    carregarPedidos();
+}
+
 }
 
 function abrirAba(tipo){
 
-    if(tipo==="estoque"){
+    const abaPrincipal =
+        document.getElementById("abaPaletes");
 
-        document.getElementById("abaPaletes").style.display="none";
+    const abaEstoque =
+        document.getElementById("abaEstoque");
 
-        document.getElementById("abaEstoque").style.display="block";
+    const abaPedidos =
+        document.getElementById("abaPedidos");
+
+
+    abaPrincipal.style.display = "none";
+
+    abaEstoque.style.display = "none";
+
+    abaPedidos.style.display = "none";
+
+
+    if(tipo === "estoque"){
+
+        abaEstoque.style.display = "block";
 
         renderizarEstoque();
 
-    }else{
+    }
 
-        document.getElementById("abaPaletes").style.display="block";
+    else if(tipo === "pedidos"){
 
-        document.getElementById("abaEstoque").style.display="none";
+        if(perfil !== "admin"){
+            return;
+        }
+
+        abaPedidos.style.display = "block";
+
+        renderizarPedidos();
+
+    }
+
+    else{
+
+        abaPrincipal.style.display = "block";
 
     }
 
@@ -1982,6 +2166,241 @@ function abrirAba(tipo){
         });
 
     alert("Saldo atualizado com sucesso!");
+}
+
+    async function salvarPedido(){
+
+    if(perfil !== "admin"){
+        alert("Você não tem permissão.");
+        return;
+    }
+
+    const numero =
+        document.getElementById("pedidoNumero")
+        .value
+        .trim();
+
+    const referencia =
+        document.getElementById("pedidoReferencia")
+        .value
+        .trim();
+
+    const quantidade =
+        Number(
+            document.getElementById("pedidoQuantidade")
+            .value
+        );
+
+    const separador =
+        document.getElementById("pedidoSeparador")
+        .value
+        .trim();
+
+    const data =
+        document.getElementById("pedidoData")
+        .value;
+
+
+    if(!numero){
+        alert("Informe o número do pedido.");
+        return;
+    }
+
+    if(!referencia){
+        alert("Informe a referência.");
+        return;
+    }
+
+    if(!quantidade || quantidade <= 0){
+        alert("Informe uma quantidade válida.");
+        return;
+    }
+
+    if(!separador){
+        alert("Informe quem separou o pedido.");
+        return;
+    }
+
+    if(!data){
+        alert("Informe a data.");
+        return;
+    }
+
+
+    await db.collection("pedidosG02").add({
+
+        numero: numero,
+
+        referencia: referencia,
+
+        quantidade: quantidade,
+
+        separador: separador,
+
+        data: data,
+
+        galpao: "G02",
+
+        criadoEm:
+            firebase.firestore.FieldValue.serverTimestamp()
+
+    });
+
+
+    alert("Pedido salvo com sucesso!");
+
+    limparPedido();
+}
+
+    function carregarPedidos(){
+
+    db.collection("pedidosG02")
+    .onSnapshot(function(snapshot){
+
+        pedidos = [];
+
+        snapshot.forEach(function(doc){
+
+            pedidos.push({
+
+                id: doc.id,
+
+                ...doc.data()
+
+            });
+
+        });
+
+
+        pedidos.sort((a,b) => {
+
+            return String(b.data || "")
+                .localeCompare(String(a.data || ""));
+
+        });
+
+
+        renderizarPedidos();
+
+    });
+
+}
+
+    function renderizarPedidos(){
+
+    const tbody =
+        document.getElementById("tabelaPedidos");
+
+    if(!tbody) return;
+
+    tbody.innerHTML = "";
+
+
+    if(pedidos.length === 0){
+
+        tbody.innerHTML = `
+
+            <tr>
+                <td colspan="6" class="empty">
+                    Nenhum pedido cadastrado.
+                </td>
+            </tr>
+
+        `;
+
+        return;
+    }
+
+
+    pedidos.forEach(p => {
+
+        const tr =
+            document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+            <td>
+                <strong>
+                    ${escapeHTML(p.numero)}
+                </strong>
+            </td>
+
+            <td>
+                ${escapeHTML(p.referencia)}
+            </td>
+
+            <td>
+                ${Number(p.quantidade || 0)
+                    .toLocaleString("pt-BR")} CXS
+            </td>
+
+            <td>
+                ${escapeHTML(p.separador)}
+            </td>
+
+            <td>
+                ${
+                    p.data
+                    ? p.data
+                        .split("-")
+                        .reverse()
+                        .join("/")
+                    : ""
+                }
+            </td>
+
+            <td>
+
+                <div class="actions">
+
+                    <button
+                        class="action-btn btn-red"
+                        title="Excluir pedido"
+                        onclick="excluirPedido('${p.id}')">
+                        🗑️
+                    </button>
+
+                </div>
+
+            </td>
+
+        `;
+
+
+        tbody.appendChild(tr);
+
+    });
+
+}
+
+    async function excluirPedido(id){
+
+    if(perfil !== "admin") return;
+
+    const pedido =
+        pedidos.find(p => p.id === id);
+
+    if(!pedido) return;
+
+
+    const confirmar =
+        confirm(
+            "Deseja excluir o pedido " +
+            pedido.numero +
+            "?"
+        );
+
+
+    if(!confirmar) return;
+
+
+    await db.collection("pedidosG02")
+        .doc(id)
+        .delete();
+
+
+    alert("Pedido excluído.");
 }
       
 </script>
