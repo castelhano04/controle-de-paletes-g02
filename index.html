@@ -707,7 +707,84 @@ tbody tr:hover td {
     
 </head>
 
-<body>
+    <body>
+
+    <div id="modalPaletes" style="
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+">
+
+    <div style="
+        width:700px;
+        max-width:95vw;
+        max-height:85vh;
+        background:#fff;
+        border-radius:14px;
+        box-shadow:0 10px 35px rgba(0,0,0,.25);
+        overflow:hidden;
+        display:flex;
+        flex-direction:column;
+    ">
+
+        <div style="
+            background:#cfe4f3;
+            padding:14px 18px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            border-bottom:1px solid #9fb6c8;
+        ">
+
+            <strong id="modalPaletesTitulo">
+                PALETES DO PEDIDO
+            </strong>
+
+            <button
+                onclick="fecharModalPaletes()"
+                style="
+                    width:32px;
+                    height:32px;
+                    padding:0;
+                    background:#c62828;
+                    color:white;
+                    border-radius:6px;
+                ">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div id="modalPaletesInfo" style="
+            padding:14px 18px;
+            background:#f7fbfe;
+            border-bottom:1px solid #d7e3ec;
+            font-size:13px;
+        ">
+        </div>
+
+
+        <div
+            id="modalPaletesLista"
+            style="
+                padding:18px;
+                overflow-y:auto;
+                display:grid;
+                grid-template-columns:
+                    repeat(auto-fit, minmax(140px,1fr));
+                gap:8px;
+            ">
+        </div>
+
+    </div>
+
+</div>
 
 
 <!-- =========================
@@ -2858,27 +2935,165 @@ function verPaletesPedido(id){
 
     if(lista.length === 0){
 
-        alert(
-            "Esse pedido não possui paletes cadastrados."
-        );
+        alert("Esse pedido não possui paletes cadastrados.");
 
         return;
     }
 
 
-    alert(
-        "PEDIDO: " +
-        pedido.numero +
+    document.getElementById("modalPaletesTitulo")
+        .textContent =
+        "PALETES DO PEDIDO " + pedido.numero;
 
-        "\n\nREFERÊNCIA: " +
-        pedido.referencia +
 
-        "\n\nPALETES:\n\n" +
+    document.getElementById("modalPaletesInfo")
+        .innerHTML = `
 
-        lista.join("\n")
-    );
+            <strong>Referência:</strong>
+            ${escapeHTML(pedido.referencia)}
+
+            &nbsp;&nbsp; | &nbsp;&nbsp;
+
+            <strong>Separador:</strong>
+            ${escapeHTML(pedido.separador)}
+
+            &nbsp;&nbsp; | &nbsp;&nbsp;
+
+            <strong>Total de paletes:</strong>
+            ${lista.length}
+
+        `;
+
+
+    const area =
+        document.getElementById("modalPaletesLista");
+
+    area.innerHTML = "";
+
+
+    lista.forEach((palete, index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.style.cssText = `
+            border:1px solid #b8cfdf;
+            background:#f4f9fc;
+            border-radius:7px;
+            padding:9px;
+            text-align:center;
+            font-size:13px;
+            font-weight:bold;
+        `;
+
+        item.innerHTML = `
+            <div style="
+                font-size:10px;
+                color:#667;
+                margin-bottom:3px;
+            ">
+                PA ${index + 1}
+            </div>
+
+            ${escapeHTML(palete)}
+        `;
+
+        area.appendChild(item);
+
+    });
+
+
+    document.getElementById("modalPaletes")
+        .style.display = "flex";
 }
 
+    function verPaletesPedido(id){
+
+    const pedido =
+        pedidos.find(p => p.id === id);
+
+    if(!pedido) return;
+
+
+    const lista =
+        Array.isArray(pedido.paletes)
+        ? pedido.paletes
+        : [];
+
+
+    if(lista.length === 0){
+
+        alert("Esse pedido não possui paletes cadastrados.");
+
+        return;
+    }
+
+
+    document.getElementById("modalPaletesTitulo")
+        .textContent =
+        "PALETES DO PEDIDO " + pedido.numero;
+
+
+    document.getElementById("modalPaletesInfo")
+        .innerHTML = `
+
+            <strong>Referência:</strong>
+            ${escapeHTML(pedido.referencia)}
+
+            &nbsp;&nbsp; | &nbsp;&nbsp;
+
+            <strong>Separador:</strong>
+            ${escapeHTML(pedido.separador)}
+
+            &nbsp;&nbsp; | &nbsp;&nbsp;
+
+            <strong>Total de paletes:</strong>
+            ${lista.length}
+
+        `;
+
+
+    const area =
+        document.getElementById("modalPaletesLista");
+
+    area.innerHTML = "";
+
+
+    lista.forEach((palete, index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.style.cssText = `
+            border:1px solid #b8cfdf;
+            background:#f4f9fc;
+            border-radius:7px;
+            padding:9px;
+            text-align:center;
+            font-size:13px;
+            font-weight:bold;
+        `;
+
+        item.innerHTML = `
+            <div style="
+                font-size:10px;
+                color:#667;
+                margin-bottom:3px;
+            ">
+                PA ${index + 1}
+            </div>
+
+            ${escapeHTML(palete)}
+        `;
+
+        area.appendChild(item);
+
+    });
+
+
+    document.getElementById("modalPaletes")
+        .style.display = "flex";
+}
 
 async function excluirPedido(id){
 
