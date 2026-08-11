@@ -1166,6 +1166,20 @@ CONTROLE DE ESTOQUE
                     id="pedidoData"
                 >
 
+                <input
+    type="text"
+    id="pedidoPaleteInicio"
+    placeholder="PRIMEIRO PALETE"
+    autocomplete="off"
+>
+
+<input
+    type="text"
+    id="pedidoPaleteFim"
+    placeholder="ÚLTIMO PALETE"
+    autocomplete="off"
+>
+
             </div>
 
             <div class="buttons">
@@ -2336,6 +2350,28 @@ function abrirAba(tipo){
     alert("Saldo atualizado com sucesso!");
 }
 
+    function gerarPaletes(inicio, fim){
+
+    const numInicio = Number(inicio);
+    const numFim = Number(fim);
+
+    if(
+        isNaN(numInicio) ||
+        isNaN(numFim) ||
+        numFim < numInicio
+    ){
+        return null;
+    }
+
+    const lista = [];
+
+    for(let i = numInicio; i <= numFim; i++){
+        lista.push(String(i));
+    }
+
+    return lista;
+}
+    
     async function salvarPedido(){
 
     if(perfil !== "admin"){
@@ -2368,6 +2404,24 @@ function abrirAba(tipo){
         document.getElementById("pedidoData")
         .value;
 
+        const paleteInicio =
+    document.getElementById("pedidoPaleteInicio")
+    .value
+    .trim();
+
+const paleteFim =
+    document.getElementById("pedidoPaleteFim")
+    .value
+    .trim();
+
+        const paletesPedido =
+    gerarPaletes(paleteInicio, paleteFim);
+
+if(!paletesPedido){
+    alert("Faixa de paletes inválida.");
+    return;
+}
+
 
     if(!numero){
         alert("Informe o número do pedido.");
@@ -2394,6 +2448,42 @@ function abrirAba(tipo){
         return;
     }
 
+        if(!paleteInicio || !paleteFim){
+    alert("Informe o primeiro e o último palete.");
+    return;
+}
+
+        const conflito = pedidos.find(pedido => {
+
+    if(!Array.isArray(pedido.paletes)){
+        return false;
+    }
+
+    return paletesPedido.some(
+        palete => pedido.paletes.includes(palete)
+    );
+
+});
+
+if(conflito){
+
+    const repetidos =
+        paletesPedido.filter(
+            palete =>
+                conflito.paletes.includes(palete)
+        );
+
+    alert(
+        "ATENÇÃO!\n\n" +
+        "Palete(s) já utilizado(s):\n" +
+        repetidos.join(", ") +
+        "\n\nPedido: " +
+        conflito.numero
+    );
+
+    return;
+}
+
 
     await db.collection("pedidosG02").add({
 
@@ -2406,6 +2496,10 @@ function abrirAba(tipo){
         separador: separador,
 
         data: data,
+
+        paleteInicio: paleteInicio,
+paleteFim: paleteFim,
+paletes: paletesPedido,
 
         galpao: "G02",
 
