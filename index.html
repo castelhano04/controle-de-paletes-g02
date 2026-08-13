@@ -701,7 +701,26 @@ tbody tr:hover td {
     height: 26px;
     flex-shrink: 0;
 }
-    
+    /* TOTAL GERAL - SALDO DISPONÍVEL */
+
+.tabela-resumo-estoque tfoot td {
+    background: #cfe4f3 !important;
+    font-size: 12px;
+    font-weight: bold;
+    border-top: 2px solid #8fa8ba;
+}
+
+.tabela-resumo-estoque tfoot tr:last-child td {
+    border-bottom: 0;
+}
+
+.tabela-resumo-estoque tfoot td:first-child {
+    text-align: center;
+}
+
+.tabela-resumo-estoque tfoot td:last-child {
+    text-align: center;
+}
     
     </style>
     
@@ -1103,9 +1122,21 @@ CONTROLE ESTOQUE
 
             </thead>
 
-            <tbody id="resumoSaldoReferencias"></tbody>
+           <tbody id="resumoSaldoReferencias"></tbody>
 
-        </table>
+<tfoot>
+    <tr class="linha-total-saldo">
+        <td>TOTAL CXS</td>
+        <td id="totalSaldoCxs">0 CXS</td>
+    </tr>
+
+    <tr class="linha-total-saldo">
+        <td>TOTAL PCS</td>
+        <td id="totalSaldoPcs">0 PCS</td>
+    </tr>
+</tfoot>
+
+</table>
 
     </div>
 
@@ -3121,6 +3152,37 @@ async function excluirPedido(id){
         tbody.appendChild(tr);
 
     });
+
+        // ==============================
+// TOTAL GERAL DO SALDO
+// ==============================
+
+let totalSaldoCxs = 0;
+let totalSaldoPcs = 0;
+
+paletes.forEach(p => {
+
+    const saldo = Number(
+        p.saldoAtual ?? p.caixas ?? 0
+    );
+
+    if (ehMop(p.descricao || "")) {
+
+        totalSaldoPcs += saldo;
+
+    } else {
+
+        totalSaldoCxs += saldo;
+
+    }
+
+});
+
+document.getElementById("totalSaldoCxs").textContent =
+    totalSaldoCxs.toLocaleString("pt-BR") + " CXS";
+
+document.getElementById("totalSaldoPcs").textContent =
+    totalSaldoPcs.toLocaleString("pt-BR") + " PCS";
 
 }
 
