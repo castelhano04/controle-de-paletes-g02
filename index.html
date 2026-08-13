@@ -747,49 +747,142 @@ tbody tr:hover td {
     font-weight: bold;
 }
 
-    /* =========================================
-   TABELA PRINCIPAL MAIS COMPACTA
+    
+/* =========================================
+   AJUSTE FINAL - TABELAS MAIS COMPACTAS
 ========================================= */
 
+/* TABELA PRINCIPAL / RECEBIMENTO */
 #tabelaPaletes td {
-    padding: 4px 6px;
-    height: auto;
-    min-height: 0;
-    line-height: 1.15;
-    font-size: 12px;
-    vertical-align: middle;
+    padding: 4px 6px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    line-height: 1.12 !important;
+    font-size: 12px !important;
+    vertical-align: middle !important;
 }
 
-/* QUANTIDADE */
+/* Quantidade: recebido / saldo */
 #tabelaPaletes td:nth-child(2) {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    line-height: 1.15;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    line-height: 1.12 !important;
 }
 
-/* DESCRIÇÃO */
+/* Descrição */
 #tabelaPaletes td:nth-child(3) {
-    padding: 4px 6px;
+    padding: 4px 6px !important;
 }
 
-/* CONTAINER */
+/* Galpão */
+#tabelaPaletes td:nth-child(4) {
+    padding: 4px !important;
+}
+
+/* Container */
 #tabelaPaletes td:nth-child(5) {
-    padding: 4px;
-    line-height: 1.1;
+    padding: 4px !important;
+    line-height: 1.08 !important;
+    word-break: break-word;
 }
 
-/* DATA */
+/* Data */
 #tabelaPaletes td:nth-child(6) {
-    padding: 4px;
+    padding: 4px !important;
 }
 
-/* diminui cabeçalho também */
+/* Cabeçalho da tabela principal */
 .table-card th {
-    padding: 6px 5px;
-    height: 32px;
+    padding: 6px 5px !important;
+    height: 30px !important;
+    line-height: 1.1 !important;
+    font-size: 12px !important;
 }
 
-    </style>
+/* Reduz um pouco a altura visual das linhas */
+#tabelaPaletes tr {
+    height: auto !important;
+}
+
+/* Mantém apenas os rótulos Recebido / Saldo em destaque */
+#tabelaPaletes td:nth-child(2) strong {
+    font-weight: 700;
+}
+
+/* MINI TABELA SALDO DISPONÍVEL */
+.tabela-resumo-estoque th {
+    padding: 5px 4px !important;
+    height: 28px !important;
+    font-size: 10.5px !important;
+}
+
+.tabela-resumo-estoque td {
+    padding: 5px 4px !important;
+    height: auto !important;
+    line-height: 1.1 !important;
+    font-size: 10.5px !important;
+}
+
+/* Valores de CXS e PCS sem negrito */
+.tabela-resumo-estoque tbody td:nth-child(2),
+.tabela-resumo-estoque tbody td:nth-child(3) {
+    font-weight: 400 !important;
+}
+
+/* Referência continua destacada */
+.tabela-resumo-estoque tbody td:first-child {
+    font-weight: 700 !important;
+}
+
+/* Total geral destacado */
+.tabela-resumo-estoque tfoot td {
+    font-weight: 700 !important;
+}
+
+
+/* =========================================
+   AJUSTE FINAL - +2% E TUDO EM NEGRITO
+   TABELA PRINCIPAL DE RECEBIMENTO
+========================================= */
+
+/* Aumenta aproximadamente 2% o tamanho geral das informações */
+#tabelaPaletes td {
+    font-size: 12.24px !important;
+    font-weight: 700 !important;
+    padding: 4.08px 6.12px !important;
+    line-height: 1.1424 !important;
+}
+
+/* Todos os elementos internos seguem o negrito */
+#tabelaPaletes td *,
+#tabelaPaletes td span,
+#tabelaPaletes td div {
+    font-weight: 700 !important;
+}
+
+/* Cabeçalho também aumenta aproximadamente 2% */
+#tabelaPaletes {
+    font-size: 102%;
+}
+
+#tabelaPaletes + * {
+    font-size: inherit;
+}
+
+/* Cabeçalho da tabela que contém tabelaPaletes */
+table:has(#tabelaPaletes) th {
+    font-size: 12.24px !important;
+    font-weight: 700 !important;
+    padding: 6.12px 5.1px !important;
+    height: 30.6px !important;
+}
+
+/* Mantém a tabela visualmente compacta, só um pouco maior */
+table:has(#tabelaPaletes) {
+    width: 100%;
+}
+
+</style>
     
 </head>
 
@@ -3537,13 +3630,13 @@ async function excluirPedido(id){
                 ${escapeHTML(referencia)}
             </td>
 
-           <td>
-    ${formatarQuantidade(item.cxs)}
-</td>
+            <td>
+                ${formatarQuantidade(item.cxs)}
+            </td>
 
-<td>
-    ${formatarQuantidade(item.pcs)}
-</td>
+            <td>
+                ${formatarQuantidade(item.pcs)}
+            </td>
         `;
 
         tbody.appendChild(tr);
