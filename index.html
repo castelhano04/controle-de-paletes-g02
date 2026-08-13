@@ -669,6 +669,27 @@ tbody tr:hover td {
     font-weight: bold;
 }
 
+/* SALDO DISPONÍVEL: REFERÊNCIA | CXS | PCS */
+.tabela-resumo-estoque th:nth-child(1),
+.tabela-resumo-estoque td:nth-child(1) {
+    width: 50%;
+}
+
+.tabela-resumo-estoque th:nth-child(2),
+.tabela-resumo-estoque td:nth-child(2),
+.tabela-resumo-estoque th:nth-child(3),
+.tabela-resumo-estoque td:nth-child(3) {
+    width: 25%;
+    text-align: center;
+}
+
+.tabela-resumo-estoque tfoot td {
+    background: #cfe4f3 !important;
+    font-weight: bold;
+    border-top: 2px solid #8fa8ba;
+    text-align: center;
+}
+
 /* CELULAR */
 @media(max-width: 1000px) {
 
@@ -701,27 +722,31 @@ tbody tr:hover td {
     height: 26px;
     flex-shrink: 0;
 }
-    /* TOTAL GERAL - SALDO DISPONÍVEL */
+    
+    
 
+/* =========================
+   TOTAL DO SALDO + CXS/PCS
+========================= */
 .tabela-resumo-estoque tfoot td {
     background: #cfe4f3 !important;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
     border-top: 2px solid #8fa8ba;
 }
 
-.tabela-resumo-estoque tfoot tr:last-child td {
-    border-bottom: 0;
+.tabela-resumo-estoque .saldo-cxs {
+    font-weight: bold;
 }
 
-.tabela-resumo-estoque tfoot td:first-child {
-    text-align: center;
+.tabela-resumo-estoque .saldo-pcs {
+    display: block;
+    margin-top: 2px;
+    font-size: 10px;
+    color: #4b5563;
+    font-weight: bold;
 }
 
-.tabela-resumo-estoque tfoot td:last-child {
-    text-align: center;
-}
-    
     </style>
     
 </head>
@@ -916,9 +941,20 @@ CONTROLE ESTOQUE
             >
 
             <input
-    type="text"
+    type="number"
     id="caixas"
-    placeholder="Quantidade (ex.: 6150 (PCS), 120 CXS)"
+    placeholder="QUANTIDADE EM CXS"
+    min="0"
+    step="1"
+    autocomplete="off"
+>
+
+            <input
+    type="number"
+    id="pcsPorCx"
+    placeholder="PCS POR CX (ex.: 2, 6, 12)"
+    min="1"
+    step="1"
     autocomplete="off"
 >
 
@@ -965,6 +1001,11 @@ CONTROLE ESTOQUE
 
         <div class="info">
             Galpão fixo: <strong>G02</strong>
+            <br>
+            <span>
+                PCS por CX é preenchido automaticamente para referências cadastradas na regra.
+                Para referências novas, informe manualmente.
+            </span>
         </div>
 
     </div>
@@ -1117,26 +1158,23 @@ CONTROLE ESTOQUE
 
                 <tr>
                     <th>REFERÊNCIA</th>
-                    <th>SALDO</th>
+                    <th>CXS</th>
+                    <th>PCS</th>
                 </tr>
 
             </thead>
 
-           <tbody id="resumoSaldoReferencias"></tbody>
+            <tbody id="resumoSaldoReferencias"></tbody>
 
-<tfoot>
-    <tr class="linha-total-saldo">
-        <td>TOTAL CXS</td>
-        <td id="totalSaldoCxs">0 CXS</td>
-    </tr>
+            <tfoot>
+                <tr class="linha-total-saldo">
+                    <td><strong>TOTAL GERAL</strong></td>
+                    <td id="totalSaldoCxs">0</td>
+                    <td id="totalSaldoPcs">0</td>
+                </tr>
+            </tfoot>
 
-    <tr class="linha-total-saldo">
-        <td>TOTAL PCS</td>
-        <td id="totalSaldoPcs">0 PCS</td>
-    </tr>
-</tfoot>
-
-</table>
+        </table>
 
     </div>
 
@@ -1531,6 +1569,16 @@ if(perfil!=="admin"){
         .value
         .trim();
 
+    const regraPcsPorCx =
+        obterRegraPcsPorCx(pa);
+
+    const pcsPorCx =
+        regraPcsPorCx !== null
+            ? regraPcsPorCx
+            : Number(
+                document.getElementById("pcsPorCx").value
+            );
+
     const descricao =
     document.getElementById("descricao")
         .value
@@ -1567,6 +1615,16 @@ document.getElementById("data")
     }
 
 
+    if (!Number.isFinite(pcsPorCx) || pcsPorCx <= 0 || !Number.isInteger(pcsPorCx)) {
+
+        alert("Informe quantos PCS vêm em cada CX. Ex.: 2, 6, 12.");
+
+        document.getElementById("pcsPorCx").focus();
+
+        return;
+    }
+
+
     if (!descricao) {
 
         alert("Informe a descrição.");
@@ -1589,11 +1647,22 @@ document.getElementById("data")
 
         if (index !== -1) {
 
+const paleteAtual = paletes[index];
+
+const convertendoRegistroLegado =
+    ehRegistroLegadoPcs(paleteAtual);
+
 await db.collection("paletes").doc(editandoId).update({
 
     pa: pa,
 
-    caixas: caixas,
+    caixas: Number(caixas),
+
+    saldoAtual: convertendoRegistroLegado
+        ? Number(caixas)
+        : Number(paleteAtual.saldoAtual ?? caixas),
+
+    pcsPorCx: pcsPorCx,
 
     descricao: descricao,
 
@@ -1640,6 +1709,8 @@ await db.collection("paletes").add({
 
     saldoAtual: Number(caixas),
 
+    pcsPorCx: pcsPorCx,
+
     descricao: descricao,
 
     container: container,
@@ -1670,6 +1741,9 @@ function limparFormulario() {
         .value = "";
 
     document.getElementById("caixas")
+        .value = "";
+
+    document.getElementById("pcsPorCx")
         .value = "";
 
     document.getElementById("descricao")
@@ -1710,8 +1784,32 @@ if(perfil!=="admin") return;
     document.getElementById("pa")
         .value = palete.pa;
 
+    const registroLegado = ehRegistroLegadoPcs(palete);
+
     document.getElementById("caixas")
-        .value = palete.caixas;
+        .value = registroLegado ? "" : palete.caixas;
+
+    const regraAutomatica =
+        obterRegraPcsPorCx(palete.pa);
+
+    document.getElementById("pcsPorCx")
+        .value =
+            regraAutomatica !== null
+                ? regraAutomatica
+                : (
+                    registroLegado
+                        ? ""
+                        : Number(palete.pcsPorCx || 1)
+                );
+
+    atualizarPcsPorCxAutomatico();
+
+    if(registroLegado && regraAutomatica === null){
+        alert(
+            "Este MOP foi cadastrado no formato antigo somente em PCS.\n\n" +
+            "Informe a quantidade em CXS e quantos PCS vêm em cada CX."
+        );
+    }
 
     document.getElementById("descricao")
         .value = palete.descricao;
@@ -1795,6 +1893,280 @@ function ehMop(descricao) {
         texto.startsWith("mop novo lava e seca")
     );
 }
+
+
+/* =========================
+   CONVERSÃO CXS -> PCS
+   REGRAS AUTOMÁTICAS POR REFERÊNCIA
+
+   1.18054.*          = 2 PCS por CX (EDREDOM)
+   1.26030.80.1011    = 25 PCS por CX
+   1.26104.80.1011    = 20 PCS por CX (MOP 3 EM 1)
+   1.26051.02.1000    = 6 PCS por CX (LIXEIRA)
+   1.26043.80.1011    = 12 PCS por CX (REFIL MOP PRO / DUO)
+
+   Referências não cadastradas nesta regra continuam
+   aceitando o valor informado manualmente no campo PCS POR CX.
+========================= */
+
+function obterRegraPcsPorCx(referencia) {
+
+    const ref = String(referencia || "")
+        .trim()
+        .toUpperCase();
+
+    // EDREDOM - vale para qualquer referência iniciada por 1.18054.
+    if (ref.startsWith("1.18054.")) {
+        return 2;
+    }
+
+    if (ref === "1.26030.80.1011") {
+        return 25;
+    }
+
+    if (ref === "1.26104.80.1011") {
+        return 20;
+    }
+
+    if (ref === "1.26051.02.1000") {
+        return 6;
+    }
+
+    if (ref === "1.26043.80.1011") {
+        return 12;
+    }
+
+    return null;
+}
+
+
+/*
+   Compatibilidade com MOP cadastrado no formato antigo.
+
+   No sistema antigo, alguns MOPs eram cadastrados diretamente
+   em PCS no campo "caixas". Enquanto o registro ainda não tiver
+   pcsPorCx salvo no Firebase, ele é tratado como registro legado.
+*/
+function ehRegistroLegadoPcs(produto) {
+
+    const semConversao =
+        produto &&
+        (
+            produto.pcsPorCx === undefined ||
+            produto.pcsPorCx === null ||
+            produto.pcsPorCx === ""
+        );
+
+    return !!(
+        semConversao &&
+        ehMop(String(produto.descricao || ""))
+    );
+}
+
+
+/*
+   Retorna quantos PCS existem por CX.
+
+   Para referências conhecidas, a regra automática tem prioridade,
+   inclusive para registros antigos já existentes no Firebase.
+*/
+function obterPcsPorCx(produto) {
+
+    const referencia =
+        produto && typeof produto === "object"
+            ? produto.pa
+            : produto;
+
+    const regra =
+        obterRegraPcsPorCx(referencia);
+
+    if (regra !== null) {
+        return regra;
+    }
+
+    const valor =
+        Number(
+            produto && typeof produto === "object"
+                ? produto.pcsPorCx
+                : 0
+        );
+
+    return Number.isFinite(valor) && valor > 0
+        ? valor
+        : 1;
+}
+
+
+function converterCxsParaPcs(cxs, produto) {
+
+    return Number(cxs || 0) *
+        obterPcsPorCx(produto);
+}
+
+
+function obterCxsRecebidas(produto) {
+
+    if (ehRegistroLegadoPcs(produto)) {
+
+        const pcs =
+            Number(produto.caixas || 0);
+
+        const regra =
+            obterRegraPcsPorCx(produto.pa);
+
+        /*
+           Se o MOP antigo agora possui uma regra conhecida,
+           converte automaticamente os PCS antigos para CXS.
+        */
+        if (regra && regra > 0) {
+            return pcs / regra;
+        }
+
+        return 0;
+    }
+
+    return Number(produto.caixas || 0);
+}
+
+
+function obterPcsRecebidas(produto) {
+
+    if (ehRegistroLegadoPcs(produto)) {
+        return Number(produto.caixas || 0);
+    }
+
+    return converterCxsParaPcs(
+        produto.caixas,
+        produto
+    );
+}
+
+
+function obterSaldoCxs(produto) {
+
+    const saldo =
+        Number(
+            produto.saldoAtual ??
+            produto.caixas ??
+            0
+        );
+
+    if (ehRegistroLegadoPcs(produto)) {
+
+        const regra =
+            obterRegraPcsPorCx(produto.pa);
+
+        if (regra && regra > 0) {
+            return saldo / regra;
+        }
+
+        return 0;
+    }
+
+    return saldo;
+}
+
+
+function obterSaldoPcs(produto) {
+
+    const saldo =
+        Number(
+            produto.saldoAtual ??
+            produto.caixas ??
+            0
+        );
+
+    if (ehRegistroLegadoPcs(produto)) {
+        return saldo;
+    }
+
+    return converterCxsParaPcs(
+        saldo,
+        produto
+    );
+}
+
+
+/*
+   Preenche automaticamente o campo PCS POR CX
+   conforme a referência digitada.
+*/
+function atualizarPcsPorCxAutomatico() {
+
+    const campoReferencia =
+        document.getElementById("pa");
+
+    const campoPcs =
+        document.getElementById("pcsPorCx");
+
+    if (!campoReferencia || !campoPcs) {
+        return;
+    }
+
+    const regra =
+        obterRegraPcsPorCx(
+            campoReferencia.value
+        );
+
+    if (regra !== null) {
+
+        campoPcs.value = regra;
+        campoPcs.readOnly = true;
+        campoPcs.title =
+            "Valor definido automaticamente pela referência.";
+
+        campoPcs.style.background = "#eef6fb";
+
+    } else {
+
+        const estavaAutomatico =
+            campoPcs.readOnly;
+
+        campoPcs.readOnly = false;
+        campoPcs.title = "";
+        campoPcs.style.background = "";
+
+        if (estavaAutomatico) {
+            campoPcs.value = "";
+        }
+    }
+}
+
+
+/*
+   Como o script fica no final da página,
+   o campo já existe quando esta linha é executada.
+*/
+const campoReferenciaPcs =
+    document.getElementById("pa");
+
+if (campoReferenciaPcs) {
+
+    campoReferenciaPcs.addEventListener(
+        "input",
+        atualizarPcsPorCxAutomatico
+    );
+
+    campoReferenciaPcs.addEventListener(
+        "change",
+        atualizarPcsPorCxAutomatico
+    );
+}
+
+function formatarQuantidade(valor) {
+
+    const numero = Number(valor || 0);
+
+    if (Number.isInteger(numero)) {
+        return numero.toLocaleString("pt-BR");
+    }
+
+    return numero.toLocaleString("pt-BR", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
+}
+
 
     function quantidadePaletes(pa) {
 
@@ -1955,14 +2327,20 @@ p.descricao.toLowerCase().includes(pesquisa)
 
     <td>
         <strong>Recebido:</strong>
-        ${Number(p.caixas).toLocaleString("pt-BR")}
-        ${ehMop(p.descricao) ? "PCS" : "CXS"}
-
+        ${ehRegistroLegadoPcs(p)
+            ? "— CXS"
+            : obterCxsRecebidas(p).toLocaleString("pt-BR") + " CXS"}
         <br>
+        ${obterPcsRecebidas(p).toLocaleString("pt-BR")} PCS
+
+        <br><br>
 
         <strong>Saldo:</strong>
-        ${Number(p.saldoAtual ?? p.caixas).toLocaleString("pt-BR")}
-        ${ehMop(p.descricao) ? "PCS" : "CXS"}
+        ${ehRegistroLegadoPcs(p)
+            ? "— CXS"
+            : obterSaldoCxs(p).toLocaleString("pt-BR") + " CXS"}
+        <br>
+        ${obterSaldoPcs(p).toLocaleString("pt-BR")} PCS
     </td>
 
     <td class="description">
@@ -2048,31 +2426,14 @@ function atualizarResumo(lista) {
 
 const totalPaletes = lista.length;
 
-    const totalCxs =
+const totalCxs =
     lista.reduce((total, p) => {
-
-        if (!ehMop(p.descricao)) {
-
-            return total + Number(p.caixas || 0);
-
-        }
-
-        return total;
-
+        return total + obterCxsRecebidas(p);
     }, 0);
-
 
 const totalPcs =
     lista.reduce((total, p) => {
-
-        if (ehMop(p.descricao)) {
-
-            return total + Number(p.caixas || 0);
-
-        }
-
-        return total;
-
+        return total + obterPcsRecebidas(p);
     }, 0);
 
     const totalContainers = 
@@ -2382,15 +2743,13 @@ function abrirAba(tipo){
     <td><strong>${escapeHTML(p.pa)}</strong></td>
 
     <td>
-    ${
-        Number(p.saldoAtual ?? p.caixas)
-        .toLocaleString("pt-BR")
-    }
-    ${
-        ehMop(p.descricao)
-        ? "PCS"
-        : "CXS"
-    }
+        <strong>
+            ${ehRegistroLegadoPcs(p)
+                ? "— CXS"
+                : obterSaldoCxs(p).toLocaleString("pt-BR") + " CXS"}
+        </strong>
+        <br>
+        ${obterSaldoPcs(p).toLocaleString("pt-BR")} PCS
 </td>
 
     <td>${escapeHTML(p.descricao)}</td>
@@ -2440,11 +2799,19 @@ function abrirAba(tipo){
     if(tipo !== "1" && tipo !== "2") return;
 
     const quantidade = Number(
-        prompt("Informe a quantidade:")
+        prompt("Informe a quantidade em CXS:")
     );
 
     if(isNaN(quantidade) || quantidade <= 0){
         alert("Quantidade inválida.");
+        return;
+    }
+
+    if(ehRegistroLegadoPcs(produto)){
+        alert(
+            "Este MOP ainda está no formato antigo em PCS.\n\n" +
+            "Edite a referência primeiro e informe CXS + PCS por CX."
+        );
         return;
     }
 
@@ -3055,48 +3422,32 @@ async function excluirPedido(id){
 
     if(!tbody) return;
 
-
     const resumo = {};
-
 
     paletes.forEach(p => {
 
         const referencia =
             String(p.pa || "").trim();
 
-
         if(!referencia) return;
 
+        const saldoCxs = obterSaldoCxs(p);
 
-        const saldo =
-            Number(
-                p.saldoAtual ?? p.caixas ?? 0
-            );
-
-
-        const unidade =
-            ehMop(p.descricao)
-            ? "PCS"
-            : "CXS";
-
+        const saldoPcs = obterSaldoPcs(p);
 
         if(!resumo[referencia]){
-
             resumo[referencia] = {
-                saldo: 0,
-                unidade: unidade
+                cxs: 0,
+                pcs: 0
             };
-
         }
 
-
-        resumo[referencia].saldo += saldo;
+        resumo[referencia].cxs += saldoCxs;
+        resumo[referencia].pcs += saldoPcs;
 
     });
 
-
     tbody.innerHTML = "";
-
 
     const referencias =
         Object.keys(resumo)
@@ -3108,81 +3459,70 @@ async function excluirPedido(id){
             )
         );
 
+    let totalCxs = 0;
+    let totalPcs = 0;
 
     if(referencias.length === 0){
 
         tbody.innerHTML = `
-
             <tr>
-                <td colspan="2">
+                <td colspan="3">
                     Nenhum saldo disponível.
                 </td>
             </tr>
-
         `;
+
+        const elCxs = document.getElementById("totalSaldoCxs");
+        const elPcs = document.getElementById("totalSaldoPcs");
+
+        if(elCxs) elCxs.textContent = "0";
+        if(elPcs) elPcs.textContent = "0";
 
         return;
     }
 
-
     referencias.forEach(referencia => {
 
-        const item =
-            resumo[referencia];
+        const item = resumo[referencia];
 
+        totalCxs += item.cxs;
+        totalPcs += item.pcs;
 
-        const tr =
-            document.createElement("tr");
-
+        const tr = document.createElement("tr");
 
         tr.innerHTML = `
-
             <td>
                 ${escapeHTML(referencia)}
             </td>
 
-            <td>
-                ${item.saldo.toLocaleString("pt-BR")}
-                ${item.unidade}
-            </td>
+           <td>
+    ${formatarQuantidade(item.cxs)}
+</td>
 
+<td>
+    ${formatarQuantidade(item.pcs)}
+</td>
         `;
-
 
         tbody.appendChild(tr);
 
     });
 
-        // ==============================
-// TOTAL GERAL DO SALDO
-// ==============================
+    const totalSaldoCxs =
+        document.getElementById("totalSaldoCxs");
 
-let totalSaldoCxs = 0;
-let totalSaldoPcs = 0;
+    const totalSaldoPcs =
+        document.getElementById("totalSaldoPcs");
 
-paletes.forEach(p => {
-
-    const saldo = Number(
-        p.saldoAtual ?? p.caixas ?? 0
-    );
-
-    if (ehMop(p.descricao || "")) {
-
-        totalSaldoPcs += saldo;
-
-    } else {
-
-        totalSaldoCxs += saldo;
-
+    if(totalSaldoCxs){
+        totalSaldoCxs.textContent =
+            formatarQuantidade(totalCxs);
     }
 
-});
-
-document.getElementById("totalSaldoCxs").textContent =
-    totalSaldoCxs.toLocaleString("pt-BR") + " CXS";
-
-document.getElementById("totalSaldoPcs").textContent =
-    totalSaldoPcs.toLocaleString("pt-BR") + " PCS";
+    if(totalSaldoPcs){
+        totalSaldoPcs.textContent =
+            formatarQuantidade(totalPcs);
+    }
 
 }
 
