@@ -1981,22 +1981,19 @@ await db.collection("paletes").doc(editandoId).update({
 
     else {
 
-        const existe =
-            paletes.some(
-                p =>
-                    p.pa.toLowerCase() ===
-                    pa.toLowerCase()
-            );
+        /*
+           REFERÊNCIAS REPETIDAS SÃO PERMITIDAS.
 
+           A mesma referência pode entrar várias vezes,
+           porque cada recebimento pode ter:
+           - container diferente;
+           - data diferente;
+           - quantidade diferente;
+           - outras informações do descarregamento.
 
-        if (existe) {
-
-            alert(
-                "Esse Nº PA já está cadastrado."
-            );
-
-            return;
-        }
+           A aba SALDO DISPONÍVEL continua agrupando
+           e somando os registros da mesma referência.
+        */
 
 await db.collection("paletes").add({
 
