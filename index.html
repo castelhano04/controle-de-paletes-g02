@@ -603,7 +603,7 @@ tbody tr:hover td {
 
 /* MINI TABELA DE SALDO */
 .resumo-estoque-card {
-    width: 260px;
+    width: 520px;
     flex-shrink: 0;
 
     background: white;
@@ -669,17 +669,41 @@ tbody tr:hover td {
     font-weight: bold;
 }
 
-/* SALDO DISPONÍVEL: REFERÊNCIA | CXS | PCS */
+/* SALDO DISPONÍVEL:
+   REFERÊNCIA | CXS | PCS/CX | PCS | M³/CX | M³
+*/
 .tabela-resumo-estoque th:nth-child(1),
 .tabela-resumo-estoque td:nth-child(1) {
-    width: 50%;
+    width: 28%;
 }
 
 .tabela-resumo-estoque th:nth-child(2),
-.tabela-resumo-estoque td:nth-child(2),
+.tabela-resumo-estoque td:nth-child(2) {
+    width: 12%;
+    text-align: center;
+}
+
 .tabela-resumo-estoque th:nth-child(3),
 .tabela-resumo-estoque td:nth-child(3) {
-    width: 25%;
+    width: 13%;
+    text-align: center;
+}
+
+.tabela-resumo-estoque th:nth-child(4),
+.tabela-resumo-estoque td:nth-child(4) {
+    width: 13%;
+    text-align: center;
+}
+
+.tabela-resumo-estoque th:nth-child(5),
+.tabela-resumo-estoque td:nth-child(5) {
+    width: 17%;
+    text-align: center;
+}
+
+.tabela-resumo-estoque th:nth-child(6),
+.tabela-resumo-estoque td:nth-child(6) {
+    width: 17%;
     text-align: center;
 }
 
@@ -882,6 +906,75 @@ table:has(#tabelaPaletes) {
     width: 100%;
 }
 
+
+/* =========================================
+   ABA SALDO DISPONÍVEL - PÁGINA CHEIA
+========================================= */
+
+.saldo-pagina-card {
+    width: 100%;
+    max-width: none;
+    overflow-x: auto;
+}
+
+.tabela-saldo-pagina {
+    width: 100% !important;
+    table-layout: fixed;
+}
+
+.tabela-saldo-pagina th,
+.tabela-saldo-pagina td {
+    font-size: 13px !important;
+    padding: 9px 8px !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+}
+
+.tabela-saldo-pagina th:nth-child(1),
+.tabela-saldo-pagina td:nth-child(1) {
+    width: 26%;
+}
+
+.tabela-saldo-pagina th:nth-child(2),
+.tabela-saldo-pagina td:nth-child(2) {
+    width: 13%;
+}
+
+.tabela-saldo-pagina th:nth-child(3),
+.tabela-saldo-pagina td:nth-child(3) {
+    width: 13%;
+}
+
+.tabela-saldo-pagina th:nth-child(4),
+.tabela-saldo-pagina td:nth-child(4) {
+    width: 14%;
+}
+
+.tabela-saldo-pagina th:nth-child(5),
+.tabela-saldo-pagina td:nth-child(5) {
+    width: 17%;
+}
+
+.tabela-saldo-pagina th:nth-child(6),
+.tabela-saldo-pagina td:nth-child(6) {
+    width: 17%;
+}
+
+.tabela-saldo-pagina tfoot td {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+}
+
+/* A tela de recebimento volta a usar toda a largura */
+.area-recebimento {
+    display: block !important;
+}
+
+.area-recebimento > .table-card {
+    width: 100% !important;
+    max-width: none !important;
+}
+
 </style>
     
 </head>
@@ -1042,6 +1135,13 @@ class="btn-dark"
 onclick="abrirAba('estoque')">
 CONTROLE ESTOQUE
 </button>
+
+        <button
+            id="btnSaldo"
+            class="btn-blue"
+            onclick="abrirAba('saldo')">
+            SALDO DISPONÍVEL
+        </button>
 
         <button
     id="btnPedidos"
@@ -1279,45 +1379,98 @@ CONTROLE ESTOQUE
     </div>
 
 
-    <!-- MINI TABELA RESUMO -->
 
-    <div class="resumo-estoque-card">
+</div>
 
-        <div class="resumo-estoque-titulo">
-            SALDO DISPONÍVEL
+    </div>
+
+</div>
+
+
+    <div id="abaSaldo" style="display:none;">
+
+        <div class="container">
+
+            <div class="top-bar no-print">
+
+                <div>
+                    <strong>SALDO DISPONÍVEL</strong>
+                    <span class="badge">GALPÃO G02</span>
+
+                    <div class="assinatura-topo">
+                        By Castelhano
+                    </div>
+                </div>
+
+                <button
+                    class="btn-dark"
+                    onclick="abrirAba('principal')">
+                    ← VOLTAR
+                </button>
+
+            </div>
+
+            <div class="card no-print">
+
+                <h3>Consulta de saldo</h3>
+
+                <div class="filters">
+                    <input
+                        type="text"
+                        id="pesquisaSaldo"
+                        placeholder="Pesquisar referência"
+                        oninput="atualizarResumoSaldoReferencias()"
+                    >
+                </div>
+
+                <div class="info">
+                    PCS/CX = quantidade de peças dentro de 1 caixa &nbsp; | &nbsp;
+                    M³/CX = cubagem de 1 caixa.
+                    <br>
+                    O M³ disponível é calculado pelo saldo atual de CXS × M³/CX.
+                </div>
+
+            </div>
+
+            <div class="table-card saldo-pagina-card">
+
+                <div class="table-title">
+                    SALDO DISPONÍVEL - G02
+                </div>
+
+                <table class="tabela-resumo-estoque tabela-saldo-pagina">
+
+                    <thead>
+                        <tr>
+                            <th>REFERÊNCIA</th>
+                            <th>CXS</th>
+                            <th>PCS/CX</th>
+                            <th>PCS</th>
+                            <th>M³/CX</th>
+                            <th>M³</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="resumoSaldoReferencias"></tbody>
+
+                    <tfoot>
+                        <tr class="linha-total-saldo">
+                            <td><strong>TOTAL GERAL</strong></td>
+                            <td id="totalSaldoCxs">0</td>
+                            <td>-</td>
+                            <td id="totalSaldoPcs">0</td>
+                            <td>-</td>
+                            <td id="totalSaldoM3">0,000</td>
+                        </tr>
+                    </tfoot>
+
+                </table>
+
+            </div>
+
         </div>
 
-        <table class="tabela-resumo-estoque">
-
-            <thead>
-
-                <tr>
-                    <th>REFERÊNCIA</th>
-                    <th>CXS</th>
-                    <th>PCS</th>
-                </tr>
-
-            </thead>
-
-            <tbody id="resumoSaldoReferencias"></tbody>
-
-            <tfoot>
-                <tr class="linha-total-saldo">
-                    <td><strong>TOTAL GERAL</strong></td>
-                    <td id="totalSaldoCxs">0</td>
-                    <td id="totalSaldoPcs">0</td>
-                </tr>
-            </tfoot>
-
-        </table>
-
     </div>
-
-</div>
-
-    </div>
-
-</div>
 
     <div id="abaEstoque" style="display:none;">
 
@@ -1647,6 +1800,7 @@ function configurarPermissoes(){
 
     const cadastro = document.querySelector(".card.no-print");
     const btnEstoque = document.getElementById("btnEstoque");
+    const btnSaldo = document.getElementById("btnSaldo");
     const btnPedidos = document.getElementById("btnPedidos");
 
     if(perfil === "consulta"){
@@ -1663,6 +1817,10 @@ function configurarPermissoes(){
     btnPedidos.style.display = "none";
 }
 
+        if(btnSaldo){
+            btnSaldo.style.display = "inline-block";
+        }
+
     }else{
 
         cadastro.style.display = "block";
@@ -1674,6 +1832,10 @@ function configurarPermissoes(){
         if(btnPedidos){
     btnPedidos.style.display = "inline-block";
 }
+
+        if(btnSaldo){
+            btnSaldo.style.display = "inline-block";
+        }
 
     }
 
@@ -2072,6 +2234,104 @@ function obterRegraPcsPorCx(referencia) {
     }
 
     return null;
+}
+
+/* =========================
+   CUBAGEM EM M³ POR CX
+
+   EDREDOM CASAL
+   1.18054.01.* = 0,044100 m³/CX
+
+   EDREDOM SOLTEIRO
+   1.18054.02.* = 0,033850 m³/CX
+
+   EDREDOM QUEEN
+   1.18054.93.* = 0,049000 m³/CX
+
+   EDREDOM KING
+   1.18054.94.* = 0,057150 m³/CX
+
+   MOP GIRATÓRIO PRO - CAIXA MASTER 25 PCS
+   1.26030.80.1011 = 0,236175 m³/CX
+
+   MOP 3 EM 1 - CAIXA MASTER 20 PCS
+   1.26104.80.1011 = 0,369171 m³/CX
+
+   LIXEIRA
+   1.26051.02.1000 = 0,014950 m³/CX
+
+   REFIL MOP PRO / DUO
+   1.26043.80.1011 = 0,00162067 m³/CX
+========================= */
+
+function obterM3PorCx(referencia) {
+
+    const ref = String(referencia || "")
+        .trim()
+        .toUpperCase();
+
+    // EDREDOM CASAL
+    if (ref.startsWith("1.18054.01.")) {
+        return 0.044100;
+    }
+
+    // EDREDOM SOLTEIRO
+    if (ref.startsWith("1.18054.02.")) {
+        return 0.033850;
+    }
+
+    // EDREDOM QUEEN
+    if (ref.startsWith("1.18054.93.")) {
+        return 0.049000;
+    }
+
+    // EDREDOM KING
+    if (ref.startsWith("1.18054.94.")) {
+        return 0.057150;
+    }
+
+    // MOP GIRATÓRIO PRO - CAIXA MASTER 25 PCS
+    if (ref === "1.26030.80.1011") {
+        return 0.236175;
+    }
+
+    // MOP GIRATÓRIO 3 EM 1 - CAIXA MASTER 20 PCS
+    if (ref === "1.26104.80.1011") {
+        return 0.369171;
+    }
+
+    // LIXEIRA
+    if (ref === "1.26051.02.1000") {
+        return 0.014950;
+    }
+
+    // REFIL MOP PRO / DUO
+    if (ref === "1.26043.80.1011") {
+        return 0.00162067;
+    }
+
+    // Referência ainda sem cubagem cadastrada
+    return 0;
+}
+
+
+function formatarM3PorCx(valor) {
+
+    return Number(valor || 0)
+        .toLocaleString("pt-BR", {
+            minimumFractionDigits: 6,
+            maximumFractionDigits: 8
+        });
+}
+
+
+function formatarM3Total(valor) {
+
+    return Number(valor || 0)
+        .toLocaleString("pt-BR", {
+            minimumFractionDigits: 3,
+            maximumFractionDigits: 3
+        });
 }
 
 
@@ -2827,6 +3087,9 @@ function abrirAba(tipo){
     const abaPedidos =
         document.getElementById("abaPedidos");
 
+    const abaSaldo =
+        document.getElementById("abaSaldo");
+
 
     abaPrincipal.style.display = "none";
 
@@ -2834,12 +3097,22 @@ function abrirAba(tipo){
 
     abaPedidos.style.display = "none";
 
+    abaSaldo.style.display = "none";
+
 
     if(tipo === "estoque"){
 
         abaEstoque.style.display = "block";
 
         renderizarEstoque();
+
+    }
+
+    else if(tipo === "saldo"){
+
+        abaSaldo.style.display = "block";
+
+        atualizarResumoSaldoReferencias();
 
     }
 
@@ -3567,25 +3840,57 @@ async function excluirPedido(id){
         if(!referencia) return;
 
         const saldoCxs = obterSaldoCxs(p);
-
         const saldoPcs = obterSaldoPcs(p);
+
+        const pcsPorCx =
+            obterPcsPorCx(p);
+
+        const m3PorCx =
+            obterM3PorCx(referencia);
+
+        const totalM3 =
+            saldoCxs * m3PorCx;
 
         if(!resumo[referencia]){
             resumo[referencia] = {
                 cxs: 0,
-                pcs: 0
+                pcs: 0,
+                pcsPorCx: pcsPorCx,
+                m3PorCx: m3PorCx,
+                m3: 0
             };
         }
 
         resumo[referencia].cxs += saldoCxs;
         resumo[referencia].pcs += saldoPcs;
+        resumo[referencia].m3 += totalM3;
+
+        /*
+           PCS/CX e M³/CX são propriedades da referência.
+           Se houver mais de um registro da mesma referência,
+           o sistema mantém a regra da própria referência.
+        */
+        resumo[referencia].pcsPorCx = pcsPorCx;
+        resumo[referencia].m3PorCx = m3PorCx;
 
     });
 
     tbody.innerHTML = "";
 
+    const pesquisaSaldoEl =
+        document.getElementById("pesquisaSaldo");
+
+    const termoSaldo =
+        pesquisaSaldoEl
+            ? pesquisaSaldoEl.value.trim().toLowerCase()
+            : "";
+
     const referencias =
         Object.keys(resumo)
+        .filter(referencia =>
+            !termoSaldo ||
+            referencia.toLowerCase().includes(termoSaldo)
+        )
         .sort((a,b) =>
             a.localeCompare(
                 b,
@@ -3596,22 +3901,30 @@ async function excluirPedido(id){
 
     let totalCxs = 0;
     let totalPcs = 0;
+    let totalM3 = 0;
 
     if(referencias.length === 0){
 
         tbody.innerHTML = `
             <tr>
-                <td colspan="3">
+                <td colspan="6">
                     Nenhum saldo disponível.
                 </td>
             </tr>
         `;
 
-        const elCxs = document.getElementById("totalSaldoCxs");
-        const elPcs = document.getElementById("totalSaldoPcs");
+        const elCxs =
+            document.getElementById("totalSaldoCxs");
+
+        const elPcs =
+            document.getElementById("totalSaldoPcs");
+
+        const elM3 =
+            document.getElementById("totalSaldoM3");
 
         if(elCxs) elCxs.textContent = "0";
         if(elPcs) elPcs.textContent = "0";
+        if(elM3) elM3.textContent = "0,000";
 
         return;
     }
@@ -3622,8 +3935,13 @@ async function excluirPedido(id){
 
         totalCxs += item.cxs;
         totalPcs += item.pcs;
+        totalM3 += item.m3;
 
-        const tr = document.createElement("tr");
+        const tr =
+            document.createElement("tr");
+
+        const cubagemConhecida =
+            item.m3PorCx > 0;
 
         tr.innerHTML = `
             <td>
@@ -3634,8 +3952,28 @@ async function excluirPedido(id){
                 ${formatarQuantidade(item.cxs)}
             </td>
 
+            <td title="${formatarQuantidade(item.pcsPorCx)} PCS por CX">
+                ${formatarQuantidade(item.pcsPorCx)}
+            </td>
+
             <td>
                 ${formatarQuantidade(item.pcs)}
+            </td>
+
+            <td title="Cubagem de 1 CX">
+                ${
+                    cubagemConhecida
+                    ? formatarM3PorCx(item.m3PorCx)
+                    : "-"
+                }
+            </td>
+
+            <td title="Saldo em CXS × M³ por CX">
+                ${
+                    cubagemConhecida
+                    ? formatarM3Total(item.m3)
+                    : "-"
+                }
             </td>
         `;
 
@@ -3649,6 +3987,9 @@ async function excluirPedido(id){
     const totalSaldoPcs =
         document.getElementById("totalSaldoPcs");
 
+    const totalSaldoM3 =
+        document.getElementById("totalSaldoM3");
+
     if(totalSaldoCxs){
         totalSaldoCxs.textContent =
             formatarQuantidade(totalCxs);
@@ -3657,6 +3998,11 @@ async function excluirPedido(id){
     if(totalSaldoPcs){
         totalSaldoPcs.textContent =
             formatarQuantidade(totalPcs);
+    }
+
+    if(totalSaldoM3){
+        totalSaldoM3.textContent =
+            formatarM3Total(totalM3);
     }
 
 }
