@@ -2352,6 +2352,11 @@ function ehRegistroLegadoPcs(produto) {
             produto.pcsPorCx === ""
         );
 
+    /*
+       Registros antigos de MOP armazenavam a quantidade em PCS.
+       Como hoje conhecemos PCS/CX por referência, conseguimos
+       converter automaticamente para CXS sem editar um por um.
+    */
     return !!(
         semConversao &&
         ehMop(String(produto.descricao || ""))
@@ -2722,18 +2727,14 @@ p.descricao.toLowerCase().includes(pesquisa)
 
     <td>
         <strong>Recebido:</strong>
-        ${ehRegistroLegadoPcs(p)
-            ? "— CXS"
-            : obterCxsRecebidas(p).toLocaleString("pt-BR") + " CXS"}
+        ${formatarQuantidade(obterCxsRecebidas(p))} CXS
         <br>
         ${obterPcsRecebidas(p).toLocaleString("pt-BR")} PCS
 
         <br><br>
 
         <strong>Saldo:</strong>
-        ${ehRegistroLegadoPcs(p)
-            ? "— CXS"
-            : obterSaldoCxs(p).toLocaleString("pt-BR") + " CXS"}
+        ${formatarQuantidade(obterSaldoCxs(p))} CXS
         <br>
         ${obterSaldoPcs(p).toLocaleString("pt-BR")} PCS
     </td>
@@ -3152,9 +3153,7 @@ function abrirAba(tipo){
 
     <td>
         <strong>
-            ${ehRegistroLegadoPcs(p)
-                ? "— CXS"
-                : obterSaldoCxs(p).toLocaleString("pt-BR") + " CXS"}
+            ${formatarQuantidade(obterSaldoCxs(p))} CXS
         </strong>
         <br>
         ${obterSaldoPcs(p).toLocaleString("pt-BR")} PCS
