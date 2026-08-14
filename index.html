@@ -1239,7 +1239,8 @@ CONTROLE ESTOQUE
             <br>
             <span>
                 PCS por CX é preenchido automaticamente para referências cadastradas na regra.
-                Para referências novas, informe manualmente.
+                Para MOP, digite a QUANTIDADE EM PCS; o sistema divide automaticamente pelos PCS/CX e mostra as CXS.
+                Para os demais produtos, digite a quantidade em CXS.
             </span>
         </div>
 
@@ -1922,6 +1923,33 @@ document.getElementById("data")
     }
 
 
+    const quantidadeDigitada =
+        Number(caixas);
+
+    const entradaEmPcs =
+        ehReferenciaEntradaPcs(pa) ||
+        ehMop(descricao);
+
+    if (
+        entradaEmPcs &&
+        quantidadeDigitada % pcsPorCx !== 0
+    ) {
+
+        alert(
+            "Para este MOP a quantidade deve ser informada em PCS.\n\n" +
+            "A quantidade digitada (" +
+            quantidadeDigitada.toLocaleString("pt-BR") +
+            " PCS) não fecha caixas completas de " +
+            pcsPorCx +
+            " PCS por CX."
+        );
+
+        document.getElementById("caixas").focus();
+
+        return;
+    }
+
+
     if (!descricao) {
 
         alert("Informe a descrição.");
@@ -1946,8 +1974,11 @@ document.getElementById("data")
 
 const paleteAtual = paletes[index];
 
-const convertendoRegistroLegado =
-    ehRegistroLegadoPcs(paleteAtual);
+const entradaEmPcsAtual =
+    produtoEhEntradaPcs(paleteAtual);
+
+const entradaEmPcsNova =
+    entradaEmPcs;
 
 await db.collection("paletes").doc(editandoId).update({
 
@@ -1955,9 +1986,22 @@ await db.collection("paletes").doc(editandoId).update({
 
     caixas: Number(caixas),
 
-    saldoAtual: convertendoRegistroLegado
-        ? Number(caixas)
-        : Number(paleteAtual.saldoAtual ?? caixas),
+    /*
+       Para MOP, caixas/saldoAtual ficam armazenados em PCS.
+       Para os demais produtos, continuam armazenados em CXS.
+    */
+    saldoAtual:
+        entradaEmPcsNova
+            ? (
+                entradaEmPcsAtual
+                    ? Number(paleteAtual.saldoAtual ?? caixas)
+                    : Number(caixas)
+              )
+            : (
+                entradaEmPcsAtual
+                    ? Number(caixas)
+                    : Number(paleteAtual.saldoAtual ?? caixas)
+              ),
 
     pcsPorCx: pcsPorCx,
 
@@ -2080,8 +2124,12 @@ if(perfil!=="admin") return;
 
     const registroLegado = ehRegistroLegadoPcs(palete);
 
+    /*
+       MOP: palete.caixas contém PCS.
+       Outros produtos: palete.caixas contém CXS.
+    */
     document.getElementById("caixas")
-        .value = registroLegado ? "" : palete.caixas;
+        .value = palete.caixas;
 
     const regraAutomatica =
         obterRegraPcsPorCx(palete.pa);
@@ -2097,13 +2145,6 @@ if(perfil!=="admin") return;
                 );
 
     atualizarPcsPorCxAutomatico();
-
-    if(registroLegado && regraAutomatica === null){
-        alert(
-            "Este MOP foi cadastrado no formato antigo somente em PCS.\n\n" +
-            "Informe a quantidade em CXS e quantos PCS vêm em cada CX."
-        );
-    }
 
     document.getElementById("descricao")
         .value = palete.descricao;
@@ -2185,6 +2226,38 @@ function ehMop(descricao) {
         texto.startsWith("mop giratorio") ||
         texto.startsWith("mop 3 em 1") ||
         texto.startsWith("mop novo lava e seca")
+    );
+}
+
+/*
+   PRODUTOS CADASTRADOS EM PCS
+
+   Para estes MOPs, o valor digitado no campo QUANTIDADE
+   representa PCS, e o sistema divide automaticamente pelo
+   PCS/CX da referência para obter CXS.
+*/
+function ehReferenciaEntradaPcs(referencia) {
+
+    const ref =
+        String(referencia || "")
+            .trim()
+            .toUpperCase();
+
+    return (
+        ref === "1.26030.80.1011" || // MOP PRO - 25 PCS/CX
+        ref === "1.26104.80.1011" || // MOP 3 EM 1 - 20 PCS/CX
+        ref === "1.26043.80.1011"    // REFIL MOP PRO/DUO - 12 PCS/CX
+    );
+}
+
+
+function produtoEhEntradaPcs(produto) {
+
+    if(!produto) return false;
+
+    return (
+        ehReferenciaEntradaPcs(produto.pa) ||
+        ehMop(String(produto.descricao || ""))
     );
 }
 
@@ -2341,23 +2414,12 @@ function formatarM3Total(valor) {
 */
 function ehRegistroLegadoPcs(produto) {
 
-    const semConversao =
-        produto &&
-        (
-            produto.pcsPorCx === undefined ||
-            produto.pcsPorCx === null ||
-            produto.pcsPorCx === ""
-        );
-
     /*
-       Registros antigos de MOP armazenavam a quantidade em PCS.
-       Como hoje conhecemos PCS/CX por referência, conseguimos
-       converter automaticamente para CXS sem editar um por um.
+       Mantido por compatibilidade com o restante do sistema.
+       Agora qualquer MOP/refil configurado como entrada em PCS
+       é tratado como quantidade armazenada em PCS.
     */
-    return !!(
-        semConversao &&
-        ehMop(String(produto.descricao || ""))
-    );
+    return produtoEhEntradaPcs(produto);
 }
 
 
@@ -2403,37 +2465,34 @@ function converterCxsParaPcs(cxs, produto) {
 
 function obterCxsRecebidas(produto) {
 
-    if (ehRegistroLegadoPcs(produto)) {
+    const quantidade =
+        Number(produto.caixas || 0);
 
-        const pcs =
-            Number(produto.caixas || 0);
+    if (produtoEhEntradaPcs(produto)) {
 
-        const regra =
-            obterRegraPcsPorCx(produto.pa);
+        const pcsPorCx =
+            obterPcsPorCx(produto);
 
-        /*
-           Se o MOP antigo agora possui uma regra conhecida,
-           converte automaticamente os PCS antigos para CXS.
-        */
-        if (regra && regra > 0) {
-            return pcs / regra;
-        }
-
-        return 0;
+        return pcsPorCx > 0
+            ? quantidade / pcsPorCx
+            : 0;
     }
 
-    return Number(produto.caixas || 0);
+    return quantidade;
 }
 
 
 function obterPcsRecebidas(produto) {
 
-    if (ehRegistroLegadoPcs(produto)) {
-        return Number(produto.caixas || 0);
+    const quantidade =
+        Number(produto.caixas || 0);
+
+    if (produtoEhEntradaPcs(produto)) {
+        return quantidade;
     }
 
     return converterCxsParaPcs(
-        produto.caixas,
+        quantidade,
         produto
     );
 }
@@ -2448,16 +2507,14 @@ function obterSaldoCxs(produto) {
             0
         );
 
-    if (ehRegistroLegadoPcs(produto)) {
+    if (produtoEhEntradaPcs(produto)) {
 
-        const regra =
-            obterRegraPcsPorCx(produto.pa);
+        const pcsPorCx =
+            obterPcsPorCx(produto);
 
-        if (regra && regra > 0) {
-            return saldo / regra;
-        }
-
-        return 0;
+        return pcsPorCx > 0
+            ? saldo / pcsPorCx
+            : 0;
     }
 
     return saldo;
@@ -2473,7 +2530,7 @@ function obterSaldoPcs(produto) {
             0
         );
 
-    if (ehRegistroLegadoPcs(produto)) {
+    if (produtoEhEntradaPcs(produto)) {
         return saldo;
     }
 
@@ -2496,8 +2553,23 @@ function atualizarPcsPorCxAutomatico() {
     const campoPcs =
         document.getElementById("pcsPorCx");
 
+    const campoQuantidade =
+        document.getElementById("caixas");
+
     if (!campoReferencia || !campoPcs) {
         return;
+    }
+
+    if (campoQuantidade) {
+
+        if (ehReferenciaEntradaPcs(campoReferencia.value)) {
+            campoQuantidade.placeholder = "QUANTIDADE EM PCS";
+            campoQuantidade.title =
+                "Para MOP, informe PCS. O sistema divide automaticamente por PCS/CX para calcular CXS.";
+        } else {
+            campoQuantidade.placeholder = "QUANTIDADE EM CXS";
+            campoQuantidade.title = "";
+        }
     }
 
     const regra =
