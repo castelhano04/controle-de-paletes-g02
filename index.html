@@ -1927,8 +1927,7 @@ document.getElementById("data")
         Number(caixas);
 
     const entradaEmPcs =
-        ehReferenciaEntradaPcs(pa) ||
-        ehMop(descricao);
+        ehMopEntradaPcs(pa, descricao);
 
     if (
         entradaEmPcs &&
@@ -2214,10 +2213,15 @@ alert("Palete excluído com sucesso!");
 
 function ehMop(descricao) {
 
-    const texto = descricao
+    const texto = String(descricao || "")
         .trim()
         .toLowerCase();
 
+    /*
+       Só é MOP quando a descrição COMEÇA com um dos nomes abaixo.
+       Assim, descrições como "REFIL MOP PRO E DUO" NÃO entram
+       na lógica de quantidade em PCS.
+    */
     return (
         texto.startsWith("mop pro") ||
         texto.startsWith("mop duo") ||
@@ -2230,34 +2234,44 @@ function ehMop(descricao) {
 }
 
 /*
-   PRODUTOS CADASTRADOS EM PCS
+   REFERÊNCIAS QUE PODEM SER MOP COM ENTRADA EM PCS
 
-   Para estes MOPs, o valor digitado no campo QUANTIDADE
-   representa PCS, e o sistema divide automaticamente pelo
-   PCS/CX da referência para obter CXS.
+   Regra:
+   - a referência precisa estar nesta lista;
+   - E a descrição precisa começar como um MOP válido.
+
+   Portanto REFIL MOP, mesmo contendo a palavra MOP,
+   continua sendo cadastrado em CXS.
 */
 function ehReferenciaEntradaPcs(referencia) {
 
-    const ref =
-        String(referencia || "")
-            .trim()
-            .toUpperCase();
+    const ref = String(referencia || "")
+        .trim()
+        .toUpperCase();
 
     return (
-        ref === "1.26030.80.1011" || // MOP PRO - 25 PCS/CX
-        ref === "1.26104.80.1011" || // MOP 3 EM 1 - 20 PCS/CX
-        ref === "1.26043.80.1011"    // REFIL MOP PRO/DUO - 12 PCS/CX
+        ref === "1.26026.80.1011" ||
+        ref === "1.26030.80.1011" ||
+        ref === "1.26104.80.1011" ||
+        ref === "1.26042.80.1011" ||
+        ref === "1.26044.36.1011"
     );
 }
 
+function ehMopEntradaPcs(referencia, descricao) {
+    return (
+        ehReferenciaEntradaPcs(referencia) &&
+        ehMop(descricao)
+    );
+}
 
 function produtoEhEntradaPcs(produto) {
 
     if(!produto) return false;
 
-    return (
-        ehReferenciaEntradaPcs(produto.pa) ||
-        ehMop(String(produto.descricao || ""))
+    return ehMopEntradaPcs(
+        produto.pa,
+        String(produto.descricao || "")
     );
 }
 
@@ -2270,7 +2284,7 @@ function produtoEhEntradaPcs(produto) {
    1.26030.80.1011    = 25 PCS por CX
    1.26104.80.1011    = 20 PCS por CX (MOP 3 EM 1)
    1.26051.02.1000    = 6 PCS por CX (LIXEIRA)
-   1.26043.80.1011    = 12 PCS por CX (REFIL MOP PRO / DUO)
+   1.26043.80.1011    = 12 PCS por CX (REFIL MOP PRO / DUO - entrada em CXS)
 
    Referências não cadastradas nesta regra continuam
    aceitando o valor informado manualmente no campo PCS POR CX.
