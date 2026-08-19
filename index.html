@@ -2280,7 +2280,10 @@ function produtoEhEntradaPcs(produto) {
    CONVERSÃO CXS -> PCS
    REGRAS AUTOMÁTICAS POR REFERÊNCIA
 
-   1.18054.*          = 2 PCS por CX (EDREDOM)
+   1.18054.01.*       = 5 PCS por CX (EDREDOM CASAL)
+   1.18054.02.*       = 5 PCS por CX (EDREDOM SOLTEIRO)
+   1.18054.93.*       = 4 PCS por CX (EDREDOM QUEEN)
+   1.18054.94.*       = 4 PCS por CX (EDREDOM KING)
    1.26030.80.1011    = 25 PCS por CX
    1.26104.80.1011    = 20 PCS por CX (MOP 3 EM 1)
    1.26051.02.1000    = 6 PCS por CX (LIXEIRA)
@@ -2296,9 +2299,14 @@ function obterRegraPcsPorCx(referencia) {
         .trim()
         .toUpperCase();
 
-    // EDREDOM - vale para qualquer referência iniciada por 1.18054.
-    if (ref.startsWith("1.18054.")) {
-        return 2;
+    // EDREDOM CASAL / SOLTEIRO = 5 PCS por CX
+    if (ref.startsWith("1.18054.01.") || ref.startsWith("1.18054.02.")) {
+        return 5;
+    }
+
+    // EDREDOM QUEEN / KING = 4 PCS por CX
+    if (ref.startsWith("1.18054.93.") || ref.startsWith("1.18054.94.")) {
+        return 4;
     }
 
     if (ref === "1.26030.80.1011") {
