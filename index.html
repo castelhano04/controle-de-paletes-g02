@@ -2457,7 +2457,7 @@ function ehRegistroLegadoPcs(produto) {
        6 CXS
        150 PCS
     */
-    const pcsPorCx = Number(produto.pcsPorCx);
+   const pcsPorCx = Number(obterPcsPorCx(produto));
 
     return (
         !Number.isFinite(pcsPorCx) ||
