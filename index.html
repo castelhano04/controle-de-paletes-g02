@@ -2436,12 +2436,33 @@ function formatarM3Total(valor) {
 */
 function ehRegistroLegadoPcs(produto) {
 
+    if (!produto) {
+        return false;
+    }
+
+    // Se não é um MOP de entrada em PCS, nunca é legado.
+    if (!produtoEhEntradaPcs(produto)) {
+        return false;
+    }
+
     /*
-       Mantido por compatibilidade com o restante do sistema.
-       Agora qualquer MOP/refil configurado como entrada em PCS
-       é tratado como quantidade armazenada em PCS.
+       MOP no formato atual:
+       precisa possuir PCS/CX válido salvo no Firebase.
+
+       Exemplo:
+       caixas = 150 PCS
+       pcsPorCx = 25
+
+       Resultado exibido:
+       6 CXS
+       150 PCS
     */
-    return produtoEhEntradaPcs(produto);
+    const pcsPorCx = Number(produto.pcsPorCx);
+
+    return (
+        !Number.isFinite(pcsPorCx) ||
+        pcsPorCx <= 0
+    );
 }
 
 
