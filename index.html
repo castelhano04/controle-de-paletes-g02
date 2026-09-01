@@ -981,7 +981,60 @@ table:has(#tabelaPaletes) {
 
     <body>
 
-    <div id="modalPaletes" style="
+    
+<!-- =========================
+     MODAL - CONTAINERS POR REFERÊNCIA
+========================= -->
+<div id="modalContainersRef" style="
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.48);
+    z-index:10050;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+">
+    <div style="
+        width:820px;
+        max-width:96vw;
+        max-height:88vh;
+        background:#fff;
+        border-radius:14px;
+        box-shadow:0 12px 40px rgba(0,0,0,.28);
+        overflow:hidden;
+        display:flex;
+        flex-direction:column;
+    ">
+        <div style="
+            background:#cfe4f3;
+            padding:14px 18px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            border-bottom:1px solid #9fb6c8;
+            gap:12px;
+        ">
+            <div>
+                <strong id="modalContainersRefTitulo">CONTAINERS DA REFERÊNCIA</strong>
+                <div id="modalContainersRefResumo" style="font-size:12px;color:#4b5563;margin-top:3px;"></div>
+            </div>
+            <button onclick="fecharModalContainersRef()" style="
+                width:34px;height:34px;padding:0;background:#c62828;color:white;border-radius:7px;
+                flex-shrink:0;
+            ">✕</button>
+        </div>
+        <div id="modalContainersRefLista" style="
+            padding:16px;
+            overflow-y:auto;
+            display:grid;
+            gap:10px;
+            background:#f7fbfe;
+        "></div>
+    </div>
+</div>
+
+<div id="modalPaletes" style="
     display:none;
     position:fixed;
     inset:0;
@@ -2325,21 +2378,6 @@ function obterRegraPcsPorCx(referencia) {
         return 12;
     }
 
-    // MOP PRO
-if (ref === "1.26026.80.1011") {
-    return 24;
-}
-
-// LIXEIRA MATTE 5L
-if (ref === "1.26071.02.8199") {
-    return 6;
-}
-
-// CESTO RETRÁTIL 26L
-if (ref === "1.26033.80.9165") {
-    return 12;
-}
-
     return null;
 }
 
@@ -2416,21 +2454,6 @@ function obterM3PorCx(referencia) {
     if (ref === "1.26043.80.1011") {
         return 0.00162067;
     }
-
-    // MOP PRO - 24 PCS/CX
-if (ref === "1.26026.80.1011") {
-    return 0.156180;
-}
-
-// LIXEIRA MATTE 5L - 6 PCS/CX
-if (ref === "1.26071.02.8199") {
-    return 0.145350;
-}
-
-// CESTO RETRÁTIL 26L - 12 PCS/CX
-if (ref === "1.26033.80.9165") {
-    return 0.007380;
-}
 
     // Referência ainda sem cubagem cadastrada
     return 0;
@@ -2734,226 +2757,279 @@ function formatarQuantidade(valor) {
    RENDERIZAR TABELA
 ========================= */
 
-function renderizar() {
-
-    const tbody =
-        document.getElementById(
-            "tabelaPaletes"
-        );
-
-    const colunaAcoes =
-document.querySelector(".coluna-acoes");
-
-if(colunaAcoes){
-
-    colunaAcoes.style.display =
-    perfil === "admin"
-    ? ""
-    : "none";
-
+function chaveReferencia(valor) {
+    return String(valor || "")
+        .trim()
+        .toUpperCase();
 }
 
-    document.querySelectorAll(".td-acoes").forEach(td=>{
-    td.style.display =
-        perfil === "admin"
-        ? ""
-        : "none";
-});
+function formatarDataBR(data) {
+    if (!data) return "-";
+    const partes = String(data).split("-");
+    if (partes.length === 3) {
+        return partes.reverse().join("/");
+    }
+    return String(data);
+}
 
-    const pesquisa =
-        document.getElementById(
-            "pesquisa"
-        )
-        .value
-        .toLowerCase()
-        .trim();
+function fecharModalContainersRef() {
+    const modal = document.getElementById("modalContainersRef");
+    if (modal) modal.style.display = "none";
+}
 
+function abrirModalContainersPorRef(refCodificada) {
+    const referencia = decodeURIComponent(refCodificada);
+    const chave = chaveReferencia(referencia);
 
-    let lista =
-        paletes.filter(p => {
+    const registros = paletes
+        .filter(p => chaveReferencia(p.pa) === chave)
+        .sort((a, b) => String(b.data || "").localeCompare(String(a.data || "")));
 
+    const modal = document.getElementById("modalContainersRef");
+    const titulo = document.getElementById("modalContainersRefTitulo");
+    const resumo = document.getElementById("modalContainersRefResumo");
+    const lista = document.getElementById("modalContainersRefLista");
 
-            const bateFiltro = true;
+    if (!modal || !titulo || !resumo || !lista) return;
 
+    const recebidoCxs = registros.reduce((t, p) => t + obterCxsRecebidas(p), 0);
+    const recebidoPcs = registros.reduce((t, p) => t + obterPcsRecebidas(p), 0);
+    const saldoCxs = registros.reduce((t, p) => t + obterSaldoCxs(p), 0);
+    const saldoPcs = registros.reduce((t, p) => t + obterSaldoPcs(p), 0);
 
-           const tipo =
-document.getElementById("tipoPesquisa").value;
+    const containersUnicos = [...new Set(
+        registros
+            .map(p => String(p.container || "").trim().toUpperCase())
+            .filter(Boolean)
+    )];
 
+    titulo.textContent = `CONTAINERS - ${referencia}`;
+    resumo.textContent =
+        `${registros.length} registro(s) | ${containersUnicos.length} container(s) | ` +
+        `Recebido: ${formatarQuantidade(recebidoCxs)} CXS / ${formatarQuantidade(recebidoPcs)} PCS | ` +
+        `Saldo: ${formatarQuantidade(saldoCxs)} CXS / ${formatarQuantidade(saldoPcs)} PCS`;
 
-const batePesquisa =
-!pesquisa ||
+    lista.innerHTML = "";
 
-(
-tipo === "pa" &&
-p.pa.toLowerCase().includes(pesquisa)
-)
+    registros.forEach((p, indice) => {
+        const container = String(p.container || "").trim() || "SEM CONTAINER";
+        const recebidoCx = obterCxsRecebidas(p);
+        const recebidoPc = obterPcsRecebidas(p);
+        const saldoCx = obterSaldoCxs(p);
+        const saldoPc = obterSaldoPcs(p);
 
-||
+        const card = document.createElement("div");
+        card.style.cssText = `
+            background:#fff;
+            border:1px solid #c7d8e8;
+            border-radius:10px;
+            padding:12px 14px;
+            display:grid;
+            grid-template-columns:minmax(170px,1.1fr) minmax(110px,.75fr) minmax(160px,1fr) minmax(160px,1fr);
+            gap:10px;
+            align-items:center;
+        `;
 
-(
-tipo === "descricao" &&
-p.descricao.toLowerCase().includes(pesquisa)
-)
+        card.innerHTML = `
+            <div style="text-align:left;">
+                <div style="font-size:10px;color:#64748b;font-weight:700;">CONTAINER ${indice + 1}</div>
+                <strong style="font-size:14px;">${escapeHTML(container)}</strong>
+                <div style="font-size:11px;color:#64748b;margin-top:4px;">${escapeHTML(p.descricao || "")}</div>
+            </div>
+            <div>
+                <div style="font-size:10px;color:#64748b;font-weight:700;">DATA</div>
+                <strong>${formatarDataBR(p.data)}</strong>
+            </div>
+            <div>
+                <div style="font-size:10px;color:#64748b;font-weight:700;">RECEBIDO</div>
+                <strong>${formatarQuantidade(recebidoCx)} CXS</strong><br>
+                <span>${formatarQuantidade(recebidoPc)} PCS</span>
+            </div>
+            <div>
+                <div style="font-size:10px;color:#64748b;font-weight:700;">SALDO</div>
+                <strong>${formatarQuantidade(saldoCx)} CXS</strong><br>
+                <span>${formatarQuantidade(saldoPc)} PCS</span>
+                ${perfil === "admin" ? `
+                    <div style="display:flex;gap:5px;justify-content:center;margin-top:7px;">
+                        <button class="action-btn btn-blue" title="Editar este registro"
+                            onclick="fecharModalContainersRef();editarPalete('${p.id}')">✏️</button>
+                        <button class="action-btn btn-red" title="Excluir este registro"
+                            onclick="fecharModalContainersRef();excluirPalete('${p.id}')">🗑️</button>
+                    </div>
+                ` : ""}
+            </div>
+        `;
 
-||
+        lista.appendChild(card);
+    });
 
-(
-tipo === "container" &&
-p.container &&
-p.container.toLowerCase().includes(pesquisa)
-)
+    modal.style.display = "flex";
+}
 
-||
+function renderizar() {
 
-(
-tipo === "data" &&
-p.data &&
-p.data.includes(pesquisa)
-)
+    const tbody = document.getElementById("tabelaPaletes");
 
-||
+    const colunaAcoes = document.querySelector(".coluna-acoes");
+    if (colunaAcoes) {
+        colunaAcoes.style.display = perfil === "admin" ? "" : "none";
+    }
 
-(
-tipo === "todos" &&
-(
-p.pa.toLowerCase().includes(pesquisa)
-||
-p.descricao.toLowerCase().includes(pesquisa)
-||
-(p.container && p.container.toLowerCase().includes(pesquisa))
-||
-(p.data && p.data.includes(pesquisa))
-)
-);
+    const pesquisa = document.getElementById("pesquisa").value.toLowerCase().trim();
+    const tipo = document.getElementById("tipoPesquisa").value;
 
+    // Primeiro filtra os registros originais.
+    // Depois agrupa APENAS pela referência, independente de descrição, data ou container.
+    const lista = paletes.filter(p => {
+        const ref = String(p.pa || "").toLowerCase();
+        const descricao = String(p.descricao || "").toLowerCase();
+        const container = String(p.container || "").toLowerCase();
+        const data = String(p.data || "").toLowerCase();
 
-            return (
-                bateFiltro &&
-                batePesquisa
-            );
+        if (!pesquisa) return true;
+        if (tipo === "pa") return ref.includes(pesquisa);
+        if (tipo === "descricao") return descricao.includes(pesquisa);
+        if (tipo === "container") return container.includes(pesquisa);
+        if (tipo === "data") return data.includes(pesquisa);
 
-        });
+        return (
+            ref.includes(pesquisa) ||
+            descricao.includes(pesquisa) ||
+            container.includes(pesquisa) ||
+            data.includes(pesquisa)
+        );
+    });
 
+    const grupos = new Map();
+
+    lista.forEach(p => {
+        const chave = chaveReferencia(p.pa);
+        if (!chave) return;
+
+        if (!grupos.has(chave)) {
+            grupos.set(chave, []);
+        }
+        grupos.get(chave).push(p);
+    });
 
     tbody.innerHTML = "";
 
-
-    if (lista.length === 0) {
-
+    if (grupos.size === 0) {
         tbody.innerHTML = `
-
-            <td
-    colspan="${perfil==="admin" ? 7 : 6}"
-    class="empty"
->
-    Nenhum palete encontrado.
-</td>
-
+            <tr>
+                <td colspan="${perfil === "admin" ? 7 : 6}" class="empty">
+                    Nenhuma referência encontrada.
+                </td>
+            </tr>
         `;
+    } else {
+        [...grupos.entries()]
+            .sort((a, b) => a[0].localeCompare(b[0], undefined, {numeric:true}))
+            .forEach(([referencia, registrosFiltrados]) => {
 
+                // Para a linha consolidada, usa TODOS os registros da mesma referência,
+                // mesmo quando a busca encontrou apenas um container/data específico.
+                const todosRegistros = paletes.filter(
+                    p => chaveReferencia(p.pa) === referencia
+                );
+
+                const recebidoCxs = todosRegistros.reduce((t, p) => t + obterCxsRecebidas(p), 0);
+                const recebidoPcs = todosRegistros.reduce((t, p) => t + obterPcsRecebidas(p), 0);
+                const saldoCxs = todosRegistros.reduce((t, p) => t + obterSaldoCxs(p), 0);
+                const saldoPcs = todosRegistros.reduce((t, p) => t + obterSaldoPcs(p), 0);
+
+                const ordenados = [...todosRegistros].sort(
+                    (a, b) => String(b.data || "").localeCompare(String(a.data || ""))
+                );
+
+                // Descrição da entrada mais recente. Se houver erro antigo de digitação,
+                // isso não impede o agrupamento porque a chave é somente a referência.
+                const descricaoPrincipal =
+                    (ordenados.find(p => String(p.descricao || "").trim()) || todosRegistros[0]).descricao || "";
+
+                const datasUnicas = [...new Set(
+                    todosRegistros.map(p => String(p.data || "").trim()).filter(Boolean)
+                )];
+
+                const containersUnicos = [...new Set(
+                    todosRegistros
+                        .map(p => String(p.container || "").trim().toUpperCase())
+                        .filter(Boolean)
+                )];
+
+                const tr = document.createElement("tr");
+                const refCodificada = encodeURIComponent(referencia);
+
+                let dataResumo = "-";
+                if (datasUnicas.length === 1) {
+                    dataResumo = formatarDataBR(datasUnicas[0]);
+                } else if (datasUnicas.length > 1) {
+                    const maisRecente = [...datasUnicas].sort().reverse()[0];
+                    dataResumo = `ÚLTIMA: ${formatarDataBR(maisRecente)}<br><span style="font-size:10px;color:#64748b;">${datasUnicas.length} DATAS</span>`;
+                }
+
+                tr.innerHTML = `
+                    <td>
+                        <strong>${escapeHTML(referencia)}</strong>
+                        ${todosRegistros.length > 1 ? `<br><span style="font-size:10px;color:#64748b;">${todosRegistros.length} ENTRADAS</span>` : ""}
+                    </td>
+
+                    <td>
+                        <strong>Recebido:</strong>
+                        ${formatarQuantidade(recebidoCxs)} CXS<br>
+                        ${formatarQuantidade(recebidoPcs)} PCS
+                        <br><br>
+                        <strong>Saldo:</strong>
+                        ${formatarQuantidade(saldoCxs)} CXS<br>
+                        ${formatarQuantidade(saldoPcs)} PCS
+                    </td>
+
+                    <td class="description">
+                        ${escapeHTML(descricaoPrincipal)}
+                    </td>
+
+                    <td>G02</td>
+
+                    <td>
+                        <button class="btn-blue" style="height:31px;padding:0 10px;font-size:10.5px;white-space:nowrap;"
+                            onclick="abrirModalContainersPorRef('${refCodificada}')"
+                            title="Ver containers, datas, recebido e saldo desta referência">
+                            🔍 VER CONTAINERS (${containersUnicos.length})
+                        </button>
+                    </td>
+
+                    <td style="text-align:center;">
+                        ${dataResumo}
+                    </td>
+
+                    ${perfil === "admin" ? `
+                        <td class="td-acoes">
+                            ${todosRegistros.length === 1 ? `
+                                <div style="display:flex;justify-content:center;gap:5px;">
+                                    <button class="action-btn btn-blue" title="Editar referência"
+                                        onclick="editarPalete('${todosRegistros[0].id}')">✏️</button>
+                                    <button class="action-btn btn-red" title="Excluir referência"
+                                        onclick="excluirPalete('${todosRegistros[0].id}')">🗑️</button>
+                                </div>
+                            ` : `
+                                <button class="btn-dark" style="height:30px;padding:0 9px;font-size:10px;"
+                                    onclick="abrirModalContainersPorRef('${refCodificada}')"
+                                    title="Abra os registros para editar individualmente">
+                                    DETALHES
+                                </button>
+                            `}
+                        </td>
+                    ` : ""}
+                `;
+
+                tbody.appendChild(tr);
+            });
     }
 
-    else {
-
-        lista.forEach(p => {
-
-            const tr =
-                document.createElement("tr");
-
-
-          tr.innerHTML = `
-
-    <td>
-        <strong>${escapeHTML(p.pa)}</strong>
-    </td>
-
-    <td>
-        <strong>Recebido:</strong>
-        ${formatarQuantidade(obterCxsRecebidas(p))} CXS
-        <br>
-        ${obterPcsRecebidas(p).toLocaleString("pt-BR")} PCS
-
-        <br><br>
-
-        <strong>Saldo:</strong>
-        ${formatarQuantidade(obterSaldoCxs(p))} CXS
-        <br>
-        ${obterSaldoPcs(p).toLocaleString("pt-BR")} PCS
-    </td>
-
-    <td class="description">
-        ${escapeHTML(p.descricao)}
-    </td>
-
-    <td>
-        G02
-    </td>
-
-    <td>
-    ${escapeHTML(p.container)}
-</td>
-
-<td style="text-align:center;">
-
-    <div style="
-        font-size:12px;
-        font-weight:bold;
-        margin-bottom:6px;
-    ">
-        ${
-            p.data
-            ? p.data.split("-").reverse().join("/")
-            : ""
-        }
-    </div>
-
-    ${
-        perfil === "admin"
-        ? `
-        <div style="
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            gap:5px;
-        ">
-
-            <button
-                class="action-btn btn-blue"
-                title="Editar referência"
-                onclick="editarPalete('${p.id}')">
-                ✏️
-            </button>
-
-            <button
-                class="action-btn btn-red"
-                title="Excluir referência"
-                onclick="excluirPalete('${p.id}')">
-                🗑️
-            </button>
-
-        </div>
-        `
-        : ""
-    }
-
-</td>
-
-`;
-
-
-            tbody.appendChild(tr);
-
-        });
-
-    }
-
-
+    // Mantém os totais usando os registros reais, sem perder nenhum recebimento/saldo.
     atualizarResumo(lista);
-
     atualizarResumoSaldoReferencias();
-
 }
-
 
 /* =========================
    RESUMO
@@ -2962,7 +3038,7 @@ p.descricao.toLowerCase().includes(pesquisa)
 function atualizarResumo(lista) {
 
 
-const totalPaletes = lista.length;
+const totalPaletes = new Set(lista.map(p => chaveReferencia(p.pa)).filter(Boolean)).size;
 
 const totalCxs =
     lista.reduce((total, p) => {
