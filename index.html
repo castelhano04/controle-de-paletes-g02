@@ -2325,6 +2325,21 @@ function obterRegraPcsPorCx(referencia) {
         return 12;
     }
 
+    // MOP PRO
+if (ref === "1.26026.80.1011") {
+    return 24;
+}
+
+// LIXEIRA MATTE 5L
+if (ref === "1.26071.02.8199") {
+    return 6;
+}
+
+// CESTO RETRÁTIL 26L
+if (ref === "1.26033.80.9165") {
+    return 12;
+}
+
     return null;
 }
 
@@ -2401,6 +2416,21 @@ function obterM3PorCx(referencia) {
     if (ref === "1.26043.80.1011") {
         return 0.00162067;
     }
+
+    // MOP PRO - 24 PCS/CX
+if (ref === "1.26026.80.1011") {
+    return 0.156180;
+}
+
+// LIXEIRA MATTE 5L - 6 PCS/CX
+if (ref === "1.26071.02.8199") {
+    return 0.145350;
+}
+
+// CESTO RETRÁTIL 26L - 12 PCS/CX
+if (ref === "1.26033.80.9165") {
+    return 0.007380;
+}
 
     // Referência ainda sem cubagem cadastrada
     return 0;
