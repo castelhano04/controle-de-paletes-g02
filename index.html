@@ -1039,6 +1039,49 @@ table:has(#tabelaPaletes) {
     overflow: hidden;
 }
 
+
+/* =========================================
+   CONTROLE DE ESTOQUE AGRUPADO POR REFERÊNCIA
+========================================= */
+#tabelaEstoque .btn-ver-containers-estoque {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 32px;
+    padding: 4px 3px !important;
+    font-size: 9px !important;
+    line-height: 1.05 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+}
+
+#tabelaEstoque td {
+    padding: 5px 5px !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.12 !important;
+    vertical-align: middle !important;
+}
+
+#tabelaEstoque .estoque-acoes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tabelaEstoque .estoque-acoes .action-btn {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 29px !important;
+    padding: 0 !important;
+}
+
 </style>
     
 </head>
@@ -1629,7 +1672,7 @@ CONTROLE DE ESTOQUE
 
 <th style="width:15%;">REFERÊNCIA</th>
 
-<th style="width:12%;">QUANTIDADE</th>
+<th style="width:12%;">SALDO</th>
 
 <th style="width:28%;">DESCRIÇÃO</th>
 
@@ -1639,7 +1682,7 @@ CONTROLE DE ESTOQUE
 
 <th style="width:10%;">DATA</th>
 
-<th style="width:10%;">AÇÕES</th>
+<th style="width:10%;">MOVIMENTAR</th>
 
 </tr>
 
@@ -1885,7 +1928,12 @@ function entrar(){
 
     sessionStorage.setItem("perfil",perfil);
 
+    // Novo login começa na tela principal. A partir daí,
+    // a aba escolhida fica salva durante a sessão e sobrevive ao F5.
+    sessionStorage.setItem("abaAtivaG02", "principal");
+
     configurarPermissoes();
+    abrirAba("principal");
 
     carregarFirebase();
 
@@ -1912,6 +1960,7 @@ function sair() {
         .value = "";
 
 sessionStorage.removeItem("perfil");
+sessionStorage.removeItem("abaAtivaG02");
 
 }
 
@@ -2842,9 +2891,10 @@ function fecharModalContainersRef() {
     if (modal) modal.style.display = "none";
 }
 
-function abrirModalContainersPorRef(refCodificada) {
+function abrirModalContainersPorRef(refCodificada, modo = "recebimento") {
     const referencia = decodeURIComponent(refCodificada);
     const chave = chaveReferencia(referencia);
+    const modoEstoque = modo === "estoque";
 
     const registros = paletes
         .filter(p => chaveReferencia(p.pa) === chave)
@@ -2868,7 +2918,10 @@ function abrirModalContainersPorRef(refCodificada) {
             .filter(Boolean)
     )];
 
-    titulo.textContent = `CONTAINERS - ${referencia}`;
+    titulo.textContent = modoEstoque
+        ? `ESTOQUE - ${referencia}`
+        : `CONTAINERS - ${referencia}`;
+
     resumo.textContent =
         `${registros.length} registro(s) | ${containersUnicos.length} container(s) | ` +
         `Recebido: ${formatarQuantidade(recebidoCxs)} CXS / ${formatarQuantidade(recebidoPcs)} PCS | ` +
@@ -2890,7 +2943,7 @@ function abrirModalContainersPorRef(refCodificada) {
             border-radius:10px;
             padding:12px 14px;
             display:grid;
-            grid-template-columns:minmax(170px,1.1fr) minmax(110px,.75fr) minmax(160px,1fr) minmax(160px,1fr);
+            grid-template-columns:minmax(170px,1.1fr) minmax(110px,.75fr) minmax(160px,1fr) minmax(170px,1fr);
             gap:10px;
             align-items:center;
         `;
@@ -2914,14 +2967,27 @@ function abrirModalContainersPorRef(refCodificada) {
                 <div style="font-size:10px;color:#64748b;font-weight:700;">SALDO</div>
                 <strong>${formatarQuantidade(saldoCx)} CXS</strong><br>
                 <span>${formatarQuantidade(saldoPc)} PCS</span>
-                ${perfil === "admin" ? `
-                    <div style="display:flex;gap:5px;justify-content:center;margin-top:7px;">
-                        <button class="action-btn btn-blue" title="Editar este registro"
-                            onclick="fecharModalContainersRef();editarPalete('${p.id}')">✏️</button>
-                        <button class="action-btn btn-red" title="Excluir este registro"
-                            onclick="fecharModalContainersRef();excluirPalete('${p.id}')">🗑️</button>
-                    </div>
-                ` : ""}
+                ${perfil === "admin" ? (
+                    modoEstoque
+                    ? `
+                        <div style="display:flex;justify-content:center;margin-top:7px;">
+                            <button class="btn-green"
+                                style="height:29px;padding:0 10px;font-size:10px;"
+                                title="Adicionar ou retirar saldo deste container"
+                                onclick="fecharModalContainersRef();movimentarSaldo('${p.id}')">
+                                📦 MOVIMENTAR
+                            </button>
+                        </div>
+                    `
+                    : `
+                        <div style="display:flex;gap:5px;justify-content:center;margin-top:7px;">
+                            <button class="action-btn btn-blue" title="Editar este registro"
+                                onclick="fecharModalContainersRef();editarPalete('${p.id}')">✏️</button>
+                            <button class="action-btn btn-red" title="Excluir este registro"
+                                onclick="fecharModalContainersRef();excluirPalete('${p.id}')">🗑️</button>
+                        </div>
+                    `
+                ) : ""}
             </div>
         `;
 
@@ -3342,6 +3408,20 @@ function carregarFirebase() {
 
         renderizar();
 
+        // Se o usuário estiver em outra aba, mantém essa aba atualizada
+        // quando os dados do Firebase forem recarregados/alterados.
+        const abaAtiva = sessionStorage.getItem("abaAtivaG02") || "principal";
+
+        if (abaAtiva === "estoque") {
+            renderizarEstoque();
+        }
+        else if (abaAtiva === "saldo") {
+            atualizarResumoSaldoReferencias();
+        }
+        else if (abaAtiva === "pedidos" && perfil === "admin") {
+            renderizarPedidos();
+        }
+
     });
 
 }
@@ -3356,6 +3436,15 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
 
     configurarPermissoes();
 
+    // Recupera a aba em que o usuário estava antes do F5/recarregamento.
+    let abaSalva = sessionStorage.getItem("abaAtivaG02") || "principal";
+
+    // Perfil consulta não pode voltar para a aba de pedidos.
+    if (abaSalva === "pedidos" && perfil !== "admin") {
+        abaSalva = "principal";
+    }
+
+    abrirAba(abaSalva);
     carregarFirebase();
 
     if(perfil === "admin"){
@@ -3365,6 +3454,21 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
 }
 
 function abrirAba(tipo){
+
+    // Aceita apenas as abas existentes.
+    const abasValidas = ["principal", "estoque", "saldo", "pedidos"];
+
+    if (!abasValidas.includes(tipo)) {
+        tipo = "principal";
+    }
+
+    // Consulta não possui acesso aos pedidos.
+    if (tipo === "pedidos" && perfil !== "admin") {
+        tipo = "principal";
+    }
+
+    // Guarda a aba atual para manter a mesma tela após F5/reload.
+    sessionStorage.setItem("abaAtivaG02", tipo);
 
     const abaPrincipal =
         document.getElementById("abaPaletes");
@@ -3427,50 +3531,138 @@ function abrirAba(tipo){
     function renderizarEstoque(){
 
     const tbody =
-    document.getElementById("tabelaEstoque");
+        document.getElementById("tabelaEstoque");
 
-    tbody.innerHTML="";
+    if(!tbody) return;
 
-    paletes.forEach(p=>{
+    tbody.innerHTML = "";
 
-       tbody.innerHTML += `
-    <tr>
+    // Agrupa SOMENTE pela referência.
+    // Container, data e descrição continuam preservados em cada registro do Firebase.
+    const grupos = new Map();
 
-    <td><strong>${escapeHTML(p.pa)}</strong></td>
+    paletes.forEach(p => {
+        const referencia = chaveReferencia(p.pa);
+        if(!referencia) return;
 
-    <td>
-        <strong>
-            ${formatarQuantidade(obterSaldoCxs(p))} CXS
-        </strong>
-        <br>
-        ${obterSaldoPcs(p).toLocaleString("pt-BR")} PCS
-</td>
-
-    <td>${escapeHTML(p.descricao)}</td>
-
-    <td>G02</td>
-
-    <td>${escapeHTML(p.container||"")}</td>
-
-    <td>${p.data ? p.data.split("-").reverse().join("/") : ""}</td>
-
-  <td style="text-align:center; vertical-align:middle;">
-    <div style="display:flex; justify-content:center; align-items:center;">
-        <button
-            class="action-btn btn-green"
-            title="Movimentar estoque"
-            onclick="movimentarSaldo('${p.id}')">
-            📦
-        </button>
-    </div>
-</td>
-
-    </tr>
-    `;
-
-});
-
+        if(!grupos.has(referencia)){
+            grupos.set(referencia, []);
         }
+
+        grupos.get(referencia).push(p);
+    });
+
+    if(grupos.size === 0){
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="empty">
+                    Nenhuma referência encontrada.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    [...grupos.entries()]
+        .sort((a,b) => a[0].localeCompare(b[0], undefined, {numeric:true}))
+        .forEach(([referencia, registros]) => {
+
+            const ordenados = [...registros].sort(
+                (a,b) => String(b.data || "").localeCompare(String(a.data || ""))
+            );
+
+            const descricaoPrincipal =
+                (ordenados.find(p => String(p.descricao || "").trim()) || registros[0]).descricao || "";
+
+            const saldoCxs = registros.reduce(
+                (total,p) => total + obterSaldoCxs(p),
+                0
+            );
+
+            const saldoPcs = registros.reduce(
+                (total,p) => total + obterSaldoPcs(p),
+                0
+            );
+
+            const containersUnicos = [...new Set(
+                registros
+                    .map(p => String(p.container || "").trim().toUpperCase())
+                    .filter(Boolean)
+            )];
+
+            const datasUnicas = [...new Set(
+                registros
+                    .map(p => String(p.data || "").trim())
+                    .filter(Boolean)
+            )];
+
+            let dataResumo = "-";
+
+            if(datasUnicas.length === 1){
+                dataResumo = formatarDataBR(datasUnicas[0]);
+            }
+            else if(datasUnicas.length > 1){
+                const maisRecente = [...datasUnicas].sort().reverse()[0];
+                dataResumo = `
+                    <strong>ÚLTIMA: ${formatarDataBR(maisRecente)}</strong><br>
+                    <span style="font-size:10px;color:#64748b;">${datasUnicas.length} DATAS</span>
+                `;
+            }
+
+            const refCodificada = encodeURIComponent(referencia);
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>
+                    <strong>${escapeHTML(referencia)}</strong>
+                    ${registros.length > 1
+                        ? `<br><span style="font-size:10px;color:#64748b;">${registros.length} ENTRADAS</span>`
+                        : ""
+                    }
+                </td>
+
+                <td>
+                    <strong>${formatarQuantidade(saldoCxs)} CXS</strong><br>
+                    ${formatarQuantidade(saldoPcs)} PCS
+                </td>
+
+                <td>${escapeHTML(descricaoPrincipal)}</td>
+
+                <td>G02</td>
+
+                <td>
+                    <button
+                        class="btn-blue btn-ver-containers-estoque"
+                        onclick="abrirModalContainersPorRef('${refCodificada}', 'estoque')"
+                        title="Ver containers e movimentar o saldo de cada entrada">
+                        <span>🔍 VER</span>
+                        <span>CONTAINERS (${containersUnicos.length})</span>
+                    </button>
+                </td>
+
+                <td style="text-align:center;">
+                    ${dataResumo}
+                </td>
+
+                <td>
+                    <div class="estoque-acoes">
+                        <button
+                            class="action-btn btn-green"
+                            title="Adicionar ou retirar saldo"
+                            onclick="${
+                                registros.length === 1
+                                    ? `movimentarSaldo('${registros[0].id}')`
+                                    : `abrirModalContainersPorRef('${refCodificada}', 'estoque')`
+                            }">
+                            📦
+                        </button>
+                    </div>
+                </td>
+            `;
+
+            tbody.appendChild(tr);
+        });
+}
 
     async function movimentarSaldo(id){
 
@@ -3484,7 +3676,12 @@ function abrirAba(tipo){
     if(!produto) return;
 
     const tipo = prompt(
-`Digite:
+`REFERÊNCIA: ${produto.pa}
+CONTAINER: ${produto.container || "SEM CONTAINER"}
+DATA: ${formatarDataBR(produto.data)}
+SALDO ATUAL: ${formatarQuantidade(obterSaldoCxs(produto))} CXS
+
+Digite:
 
 1 = Adicionar saldo
 2 = Retirar saldo`
@@ -3492,11 +3689,11 @@ function abrirAba(tipo){
 
     if(tipo !== "1" && tipo !== "2") return;
 
-    const quantidade = Number(
+    const quantidadeCxs = Number(
         prompt("Informe a quantidade em CXS:")
     );
 
-    if(isNaN(quantidade) || quantidade <= 0){
+    if(!Number.isFinite(quantidadeCxs) || quantidadeCxs <= 0){
         alert("Quantidade inválida.");
         return;
     }
@@ -3509,28 +3706,54 @@ function abrirAba(tipo){
         return;
     }
 
-    const saldoAtual = Number(produto.saldoAtual ?? produto.caixas);
+    /*
+       MOPs de entrada em PCS ficam armazenados internamente em PCS.
+       Como a movimentação é informada em CXS, convertemos antes de salvar.
+       Os demais produtos continuam armazenados em CXS normalmente.
+    */
+    const quantidadeInterna = produtoEhEntradaPcs(produto)
+        ? quantidadeCxs * obterPcsPorCx(produto)
+        : quantidadeCxs;
 
-    let novoSaldo = saldoAtual;
+    const saldoAtualInterno = Number(
+        produto.saldoAtual ?? produto.caixas ?? 0
+    );
+
+    let novoSaldoInterno = saldoAtualInterno;
 
     if(tipo === "1"){
-        novoSaldo += quantidade;
-    }else{
-        if(quantidade > saldoAtual){
-            alert("Saldo insuficiente.");
+        novoSaldoInterno += quantidadeInterna;
+    }
+    else{
+        if(quantidadeInterna > saldoAtualInterno){
+            alert(
+                "Saldo insuficiente.\n\n" +
+                `Saldo disponível: ${formatarQuantidade(obterSaldoCxs(produto))} CXS.`
+            );
             return;
         }
 
-        novoSaldo -= quantidade;
+        novoSaldoInterno -= quantidadeInterna;
     }
 
     await db.collection("paletes")
         .doc(id)
         .update({
-            saldoAtual: novoSaldo
+            saldoAtual: novoSaldoInterno
         });
 
-    alert("Saldo atualizado com sucesso!");
+    alert(
+        tipo === "1"
+            ? `${formatarQuantidade(quantidadeCxs)} CXS adicionadas ao saldo.`
+            : `${formatarQuantidade(quantidadeCxs)} CXS retiradas do saldo.`
+    );
+
+    // onSnapshot atualiza a lista. Se a aba de estoque estiver aberta,
+    // a tabela agrupada também é redesenhada imediatamente.
+    const abaEstoque = document.getElementById("abaEstoque");
+    if(abaEstoque && abaEstoque.style.display !== "none"){
+        renderizarEstoque();
+    }
 }
 
    function gerarPaletes(inicio, fim){
