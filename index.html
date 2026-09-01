@@ -975,6 +975,70 @@ table:has(#tabelaPaletes) {
     max-width: none !important;
 }
 
+
+
+/* =========================================
+   AJUSTE AÇÕES - TABELA DE RECEBIMENTO
+   Mantém editar/excluir visíveis dentro da tabela
+========================================= */
+#tabelaPaletes .td-acoes {
+    width: 10% !important;
+    min-width: 78px;
+    padding: 4px !important;
+    text-align: center !important;
+    white-space: nowrap;
+}
+
+#tabelaPaletes .td-acoes > div,
+#tabelaPaletes .acoes-grupo-ref {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 5px !important;
+    flex-wrap: nowrap !important;
+}
+
+#tabelaPaletes .td-acoes .action-btn {
+    width: 30px !important;
+    min-width: 30px !important;
+    height: 27px !important;
+    padding: 0 !important;
+    flex: 0 0 30px !important;
+}
+
+/* Não deixa a coluna AÇÕES ser cortada na lateral direita */
+.area-recebimento > .table-card {
+    overflow-x: auto !important;
+}
+
+
+/* =========================================
+   BOTÃO VER CONTAINERS - SEM ULTRAPASSAR COLUNA
+========================================= */
+#tabelaPaletes .btn-ver-containers {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 32px;
+    padding: 4px 3px !important;
+    font-size: 9px !important;
+    line-height: 1.05 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+}
+
+#tabelaPaletes td:nth-child(5) {
+    padding: 4px !important;
+    overflow: hidden;
+}
+
 </style>
     
 </head>
@@ -1404,21 +1468,22 @@ CONTROLE ESTOQUE
 
                 <tr>
 
-                    <th style="width:18%;">REFERÊNCIA</th>
+                    <th style="width:16%;">REFERÊNCIA</th>
 
                     <th style="width:15%;">QUANTIDADE</th>
 
-                    <th style="width:32%;">DESCRIÇÃO</th>
+                    <th style="width:27%;">DESCRIÇÃO</th>
 
-                    <th style="width:10%;">GALPÃO</th>
+                    <th style="width:8%;">GALPÃO</th>
 
-                    <th style="width:15%;">CONTAINER</th>
+                    <th style="width:14%;">CONTAINER</th>
 
                     <th style="width:10%;">DATA</th>
 
                     <th
                         class="coluna-acoes"
-                        id="thAcoes">
+                        id="thAcoes"
+                        style="width:10%;">
                         AÇÕES
                     </th>
 
@@ -2991,10 +3056,11 @@ function renderizar() {
                     <td>G02</td>
 
                     <td>
-                        <button class="btn-blue" style="height:31px;padding:0 10px;font-size:10.5px;white-space:nowrap;"
+                        <button class="btn-blue btn-ver-containers"
                             onclick="abrirModalContainersPorRef('${refCodificada}')"
                             title="Ver containers, datas, recebido e saldo desta referência">
-                            🔍 VER CONTAINERS (${containersUnicos.length})
+                            <span>🔍 VER</span>
+                            <span>CONTAINERS (${containersUnicos.length})</span>
                         </button>
                     </td>
 
@@ -3012,11 +3078,14 @@ function renderizar() {
                                         onclick="excluirPalete('${todosRegistros[0].id}')">🗑️</button>
                                 </div>
                             ` : `
-                                <button class="btn-dark" style="height:30px;padding:0 9px;font-size:10px;"
-                                    onclick="abrirModalContainersPorRef('${refCodificada}')"
-                                    title="Abra os registros para editar individualmente">
-                                    DETALHES
-                                </button>
+                                <div class="acoes-grupo-ref">
+                                    <button class="action-btn btn-blue"
+                                        title="Ver registros desta referência para editar"
+                                        onclick="abrirModalContainersPorRef('${refCodificada}')">✏️</button>
+                                    <button class="action-btn btn-red"
+                                        title="Ver registros desta referência para excluir"
+                                        onclick="abrirModalContainersPorRef('${refCodificada}')">🗑️</button>
+                                </div>
                             `}
                         </td>
                     ` : ""}
