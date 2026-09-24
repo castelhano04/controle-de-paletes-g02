@@ -2451,13 +2451,10 @@ function produtoEhEntradaPcs(produto) {
    1.18054.02.*       = 5 PCS por CX (EDREDOM SOLTEIRO)
    1.18054.93.*       = 4 PCS por CX (EDREDOM QUEEN)
    1.18054.94.*       = 4 PCS por CX (EDREDOM KING)
-   1.26026.80.1011    = 24 PCS por CX (MOP GIRATÓRIO)
    1.26030.80.1011    = 25 PCS por CX
    1.26104.80.1011    = 20 PCS por CX (MOP 3 EM 1)
    1.26051.02.1000    = 6 PCS por CX (LIXEIRA)
    1.26043.80.1011    = 12 PCS por CX (REFIL MOP PRO / DUO - entrada em CXS)
-   1.26071.02.8199    = 6 PCS por CX (LIXEIRA MATTE 5L)
-   1.26033.80.9165    = 12 PCS por CX (CESTO RETRÁTIL 26L)
 
    Referências não cadastradas nesta regra continuam
    aceitando o valor informado manualmente no campo PCS POR CX.
@@ -2479,10 +2476,6 @@ function obterRegraPcsPorCx(referencia) {
         return 4;
     }
 
-    if (ref === "1.26026.80.1011") {
-        return 24;
-    }
-
     if (ref === "1.26030.80.1011") {
         return 25;
     }
@@ -2496,14 +2489,6 @@ function obterRegraPcsPorCx(referencia) {
     }
 
     if (ref === "1.26043.80.1011") {
-        return 12;
-    }
-
-    if (ref === "1.26071.02.8199") {
-        return 6;
-    }
-
-    if (ref === "1.26033.80.9165") {
         return 12;
     }
 
@@ -2525,9 +2510,6 @@ function obterRegraPcsPorCx(referencia) {
    EDREDOM KING
    1.18054.94.* = 0,057150 m³/CX
 
-   MOP GIRATÓRIO - CAIXA MASTER 24 PCS
-   1.26026.80.1011 = 0,156180 m³/CX
-
    MOP GIRATÓRIO PRO - CAIXA MASTER 25 PCS
    1.26030.80.1011 = 0,236175 m³/CX
 
@@ -2539,12 +2521,6 @@ function obterRegraPcsPorCx(referencia) {
 
    REFIL MOP PRO / DUO
    1.26043.80.1011 = 0,00162067 m³/CX
-
-   LIXEIRA MATTE 5L
-   1.26071.02.8199 = 0,145350 m³/CX
-
-   CESTO RETRÁTIL 26L
-   1.26033.80.9165 = 0,007380 m³/CX
 ========================= */
 
 function obterM3PorCx(referencia) {
@@ -2573,11 +2549,6 @@ function obterM3PorCx(referencia) {
         return 0.057150;
     }
 
-    // MOP GIRATÓRIO - CAIXA MASTER 24 PCS
-    if (ref === "1.26026.80.1011") {
-        return 0.156180;
-    }
-
     // MOP GIRATÓRIO PRO - CAIXA MASTER 25 PCS
     if (ref === "1.26030.80.1011") {
         return 0.236175;
@@ -2596,16 +2567,6 @@ function obterM3PorCx(referencia) {
     // REFIL MOP PRO / DUO
     if (ref === "1.26043.80.1011") {
         return 0.00162067;
-    }
-
-    // LIXEIRA MATTE 5L
-    if (ref === "1.26071.02.8199") {
-        return 0.145350;
-    }
-
-    // CESTO RETRÁTIL 26L
-    if (ref === "1.26033.80.9165") {
-        return 0.007380;
     }
 
     // Referência ainda sem cubagem cadastrada
@@ -2969,7 +2930,45 @@ function abrirModalContainersPorRef(refCodificada, modo = "recebimento") {
     lista.innerHTML = "";
 
     registros.forEach((p, indice) => {
-        const container = String(p.container || "").trim() || "SEM CONTAINER";
+        const containersLista = String(p.container || "")
+            .split(/[,;|]+/)
+            .map(item => item.trim())
+            .filter(Boolean);
+
+        const containerBadgesHtml = containersLista.length
+            ? containersLista.map(item => `
+                <span style="
+                    display:inline-flex;
+                    align-items:center;
+                    min-height:24px;
+                    padding:3px 8px;
+                    border-radius:999px;
+                    background:#eaf4fb;
+                    border:1px solid #c7d8e8;
+                    color:#1f2937;
+                    font-size:11px;
+                    font-weight:700;
+                    line-height:1.15;
+                    max-width:100%;
+                    overflow-wrap:anywhere;
+                    word-break:break-word;
+                ">${escapeHTML(item)}</span>
+            `).join("")
+            : `
+                <span style="
+                    display:inline-flex;
+                    align-items:center;
+                    min-height:24px;
+                    padding:3px 8px;
+                    border-radius:999px;
+                    background:#f3f4f6;
+                    border:1px solid #d1d5db;
+                    color:#4b5563;
+                    font-size:11px;
+                    font-weight:700;
+                ">SEM CONTAINER</span>
+            `;
+
         const recebidoCx = obterCxsRecebidas(p);
         const recebidoPc = obterPcsRecebidas(p);
         const saldoCx = obterSaldoCxs(p);
@@ -2979,39 +2978,43 @@ function abrirModalContainersPorRef(refCodificada, modo = "recebimento") {
         card.style.cssText = `
             background:#fff;
             border:1px solid #c7d8e8;
-            border-radius:10px;
-            padding:12px 14px;
+            border-radius:12px;
+            padding:14px 16px;
             display:grid;
-            grid-template-columns:minmax(170px,1.1fr) minmax(110px,.75fr) minmax(160px,1fr) minmax(170px,1fr);
-            gap:10px;
-            align-items:center;
+            grid-template-columns:minmax(0,2fr) minmax(110px,.8fr) minmax(140px,1fr) minmax(150px,1fr);
+            gap:12px;
+            align-items:start;
         `;
 
         card.innerHTML = `
-            <div style="text-align:left;">
-                <div style="font-size:10px;color:#64748b;font-weight:700;">CONTAINER ${indice + 1}</div>
-                <strong style="font-size:14px;">${escapeHTML(container)}</strong>
-                <div style="font-size:11px;color:#64748b;margin-top:4px;">${escapeHTML(p.descricao || "")}</div>
+            <div style="text-align:left;min-width:0;">
+                <div style="font-size:10px;color:#64748b;font-weight:700;letter-spacing:.3px;">CONTAINER ${indice + 1}</div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:flex-start;">
+                    ${containerBadgesHtml}
+                </div>
+                <div style="font-size:11px;color:#64748b;margin-top:8px;line-height:1.3;overflow-wrap:anywhere;word-break:break-word;">
+                    ${escapeHTML(p.descricao || "")}
+                </div>
             </div>
-            <div>
-                <div style="font-size:10px;color:#64748b;font-weight:700;">DATA</div>
-                <strong>${formatarDataBR(p.data)}</strong>
+            <div style="min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;">
+                <div style="font-size:10px;color:#64748b;font-weight:700;letter-spacing:.3px;">DATA</div>
+                <strong style="font-size:14px;line-height:1.2;">${formatarDataBR(p.data)}</strong>
             </div>
-            <div>
-                <div style="font-size:10px;color:#64748b;font-weight:700;">RECEBIDO</div>
-                <strong>${formatarQuantidade(recebidoCx)} CXS</strong><br>
-                <span>${formatarQuantidade(recebidoPc)} PCS</span>
+            <div style="min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;">
+                <div style="font-size:10px;color:#64748b;font-weight:700;letter-spacing:.3px;">RECEBIDO</div>
+                <strong style="font-size:14px;line-height:1.2;">${formatarQuantidade(recebidoCx)} CXS</strong>
+                <span style="font-size:12px;color:#4b5563;font-weight:700;line-height:1.2;">${formatarQuantidade(recebidoPc)} PCS</span>
             </div>
-            <div>
-                <div style="font-size:10px;color:#64748b;font-weight:700;">SALDO</div>
-                <strong>${formatarQuantidade(saldoCx)} CXS</strong><br>
-                <span>${formatarQuantidade(saldoPc)} PCS</span>
+            <div style="min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;">
+                <div style="font-size:10px;color:#64748b;font-weight:700;letter-spacing:.3px;">SALDO</div>
+                <strong style="font-size:14px;line-height:1.2;">${formatarQuantidade(saldoCx)} CXS</strong>
+                <span style="font-size:12px;color:#4b5563;font-weight:700;line-height:1.2;">${formatarQuantidade(saldoPc)} PCS</span>
                 ${perfil === "admin" ? (
                     modoEstoque
                     ? `
-                        <div style="display:flex;justify-content:center;margin-top:7px;">
+                        <div style="display:flex;justify-content:flex-start;margin-top:8px;">
                             <button class="btn-green"
-                                style="height:29px;padding:0 10px;font-size:10px;"
+                                style="height:30px;padding:0 12px;font-size:10px;"
                                 title="Adicionar ou retirar saldo deste container"
                                 onclick="fecharModalContainersRef();movimentarSaldo('${p.id}')">
                                 📦 MOVIMENTAR
@@ -3019,7 +3022,7 @@ function abrirModalContainersPorRef(refCodificada, modo = "recebimento") {
                         </div>
                     `
                     : `
-                        <div style="display:flex;gap:5px;justify-content:center;margin-top:7px;">
+                        <div style="display:flex;gap:5px;justify-content:flex-start;margin-top:8px;">
                             <button class="action-btn btn-blue" title="Editar este registro"
                                 onclick="fecharModalContainersRef();editarPalete('${p.id}')">✏️</button>
                             <button class="action-btn btn-red" title="Excluir este registro"
@@ -3737,17 +3740,6 @@ Digite:
         return;
     }
 
-    // O estoque é movimentado sempre em caixas inteiras.
-    // Isso impede saldos quebrados como 974,22 CXS.
-    if(!Number.isInteger(quantidadeCxs)){
-        alert(
-            "A movimentação deve ser feita em CXS inteiras.\n\n" +
-            "Exemplos válidos: 1, 2, 10, 25.\n" +
-            "Não use valores como 0,5 ou 7,78."
-        );
-        return;
-    }
-
     if(ehRegistroLegadoPcs(produto)){
         alert(
             "Este MOP ainda está no formato antigo em PCS.\n\n" +
@@ -3768,28 +3760,6 @@ Digite:
     const saldoAtualInterno = Number(
         produto.saldoAtual ?? produto.caixas ?? 0
     );
-
-    // Proteção para MOPs: o saldo interno precisa fechar caixas completas.
-    // Se existir dado antigo quebrado no Firebase, não permite movimentar
-    // até ele ser corrigido, evitando aumentar a inconsistência.
-    if (produtoEhEntradaPcs(produto)) {
-        const pcsPorCxAtual = obterPcsPorCx(produto);
-        const saldoEmCxsExato = pcsPorCxAtual > 0
-            ? saldoAtualInterno / pcsPorCxAtual
-            : 0;
-
-        if (!Number.isInteger(saldoEmCxsExato)) {
-            alert(
-                "⚠️ SALDO ANTIGO INCONSISTENTE\n\n" +
-                `Referência: ${produto.pa}\n` +
-                `Container: ${produto.container || "SEM CONTAINER"}\n` +
-                `Saldo gravado: ${formatarQuantidade(saldoEmCxsExato)} CXS\n\n` +
-                "Esse registro possui saldo quebrado de uma versão antiga. " +
-                "Corrija o saldo no Firebase antes de fazer nova movimentação."
-            );
-            return;
-        }
-    }
 
     let novoSaldoInterno = saldoAtualInterno;
 
