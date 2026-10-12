@@ -1082,6 +1082,293 @@ table:has(#tabelaPaletes) {
     padding: 0 !important;
 }
 
+
+/* =====================================================
+   ENDEREÇAMENTO G02 - MÓDULO OPERACIONAL
+===================================================== */
+#sistemaEnderecamento {
+    display: none;
+    min-height: 100vh;
+    background: #eaf2f8;
+    padding: 14px 0 28px;
+}
+
+.end-container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 12px;
+}
+
+.end-topbar {
+    background: #d9eaf7;
+    border: 1px solid #b8d1e5;
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.06);
+}
+
+.end-topbar strong {
+    display: block;
+    font-size: 19px;
+}
+
+.end-subtitle {
+    margin-top: 3px;
+    color: #4b5563;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.end-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(300px, .75fr);
+    gap: 14px;
+    align-items: start;
+}
+
+.end-card {
+    background: #fff;
+    border: 1px solid #c7d8e8;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.07);
+    padding: 16px;
+    margin-bottom: 14px;
+}
+
+.end-card h3 {
+    margin: 0 0 12px;
+    font-size: 16px;
+}
+
+.end-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 14px;
+}
+
+.end-step {
+    background: #e7f2fa;
+    border: 1px solid #bfd7e8;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #1f2937;
+}
+
+.end-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.end-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 10px;
+    color: #53606c;
+    font-weight: 800;
+    letter-spacing: .35px;
+}
+
+.end-field input,
+.end-field select {
+    width: 100%;
+    height: 46px;
+    border: 1px solid #9fb6c8;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 16px;
+    font-weight: 700;
+    background: #fff;
+    color: #111;
+    outline: none;
+}
+
+.end-field input:focus,
+.end-field select:focus {
+    border-color: #2878b5;
+    box-shadow: 0 0 0 3px rgba(40,120,181,.12);
+}
+
+.end-status {
+    min-height: 38px;
+    border-radius: 8px;
+    padding: 9px 11px;
+    background: #f5f9fc;
+    border: 1px solid #d3e1ea;
+    font-size: 11px;
+    line-height: 1.35;
+    color: #334155;
+}
+
+.end-status.ok {
+    background: #eaf7ef;
+    border-color: #b9dfc7;
+    color: #17633a;
+}
+
+.end-status.warn {
+    background: #fff7e6;
+    border-color: #f0d39a;
+    color: #8a5a00;
+}
+
+.end-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 2px;
+}
+
+.end-primary {
+    min-height: 42px;
+    padding: 0 18px;
+    background: #198754;
+    color: #fff;
+}
+
+.end-secondary {
+    min-height: 42px;
+    padding: 0 18px;
+    background: #5f6b76;
+    color: #fff;
+}
+
+.end-vaga-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 115px;
+    gap: 8px;
+}
+
+.end-vaga-form .end-actions {
+    grid-column: 1 / -1;
+}
+
+.end-vagas-lista {
+    display: grid;
+    gap: 7px;
+    margin-top: 12px;
+    max-height: 330px;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.end-vaga-item {
+    border: 1px solid #d4e0e9;
+    background: #f9fcfe;
+    border-radius: 8px;
+    padding: 8px 9px;
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto auto;
+    align-items: center;
+    gap: 8px;
+}
+
+.end-vaga-codigo {
+    min-width: 0;
+    font-size: 12px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.end-nivel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    height: 25px;
+    border-radius: 999px;
+    padding: 0 8px;
+    background: #dcecf7;
+    border: 1px solid #b7d0e2;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.end-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #9fb6c8;
+    border-radius: 10px;
+}
+
+.end-table {
+    width: 100%;
+    min-width: 880px;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.end-table th,
+.end-table td {
+    padding: 8px 7px !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    height: auto !important;
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+}
+
+.end-table th {
+    background: #dcecf7;
+}
+
+.end-table tbody tr:nth-child(even) td {
+    background: #f7fbfe;
+}
+
+.end-table .end-table-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.end-busca {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.end-busca input {
+    width: min(420px, 100%);
+    height: 38px;
+}
+
+.end-count {
+    font-size: 11px;
+    color: #53606c;
+    font-weight: 700;
+}
+
+.end-empty {
+    padding: 24px !important;
+    color: #64748b;
+    text-align: center;
+}
+
+@media(max-width: 900px) {
+    .end-grid {
+        grid-template-columns: 1fr;
+    }
+    .end-vaga-form {
+        grid-template-columns: 1fr;
+    }
+    .end-vaga-form .end-actions {
+        grid-column: auto;
+    }
+}
+
 </style>
     
 </head>
@@ -1849,6 +2136,165 @@ CONTROLE DE ESTOQUE
 </div>
 
     
+
+<!-- =====================================================
+     SISTEMA SEPARADO - ENDEREÇAMENTO G02
+===================================================== -->
+<div id="sistemaEnderecamento">
+    <div class="end-container">
+
+        <div class="end-topbar">
+            <div>
+                <strong>ENDEREÇAMENTO G02</strong>
+                <div class="end-subtitle">BIPAGEM OPERACIONAL • PA → VAGA → REFERÊNCIA / DESCRIÇÃO</div>
+            </div>
+            <button class="btn-sair" onclick="sair()">SAIR</button>
+        </div>
+
+        <div class="end-grid">
+
+            <div class="end-card">
+                <h3>Endereçar palete</h3>
+
+                <div class="end-steps">
+                    <span class="end-step">1 • BIPAR PA</span>
+                    <span class="end-step">2 • BIPAR VAGA</span>
+                    <span class="end-step">3 • REF. OU DESCRIÇÃO</span>
+                    <span class="end-step">4 • SALVAR</span>
+                </div>
+
+                <div class="end-form">
+
+                    <div class="end-field">
+                        <label>PALETE / PA</label>
+                        <input
+                            id="endPa"
+                            type="text"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            placeholder="Bipe ou digite o PA"
+                            onkeydown="if(event.key==='Enter'){event.preventDefault();focarCampoEndereco('endVaga');}"
+                        >
+                    </div>
+
+                    <div class="end-field">
+                        <label>VAGA</label>
+                        <input
+                            id="endVaga"
+                            type="text"
+                            autocomplete="off"
+                            list="endVagasDatalist"
+                            placeholder="Bipe ou digite a vaga cadastrada"
+                            oninput="atualizarInfoVagaEnderecamento()"
+                            onkeydown="if(event.key==='Enter'){event.preventDefault();focarCampoEndereco('endProduto');}"
+                        >
+                        <datalist id="endVagasDatalist"></datalist>
+                    </div>
+
+                    <div id="endVagaInfo" class="end-status">
+                        Bipe uma vaga cadastrada para identificar automaticamente o nível.
+                    </div>
+
+                    <div class="end-field">
+                        <label>REFERÊNCIA OU DESCRIÇÃO</label>
+                        <input
+                            id="endProduto"
+                            type="text"
+                            autocomplete="off"
+                            list="endProdutosDatalist"
+                            placeholder="Ex.: 1.26030.80.1011 ou MOP GIRATÓRIO"
+                            onkeydown="if(event.key==='Enter'){event.preventDefault();salvarEnderecamentoG02();}"
+                        >
+                        <datalist id="endProdutosDatalist"></datalist>
+                    </div>
+
+                    <div class="end-actions">
+                        <button class="end-primary" onclick="salvarEnderecamentoG02()">✓ ENDEREÇAR</button>
+                        <button class="end-secondary" onclick="limparFormularioEnderecamento()">LIMPAR</button>
+                    </div>
+
+                    <div id="endMensagem" class="end-status">
+                        Pronto para leitura do primeiro PA.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="end-card">
+                <h3>Cadastrar vagas</h3>
+
+                <div class="end-vaga-form">
+
+                    <div class="end-field">
+                        <label>CÓDIGO DA VAGA</label>
+                        <input
+                            id="endNovaVaga"
+                            type="text"
+                            autocomplete="off"
+                            placeholder="Ex.: A01-01"
+                            onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('endNivel').focus();}"
+                        >
+                    </div>
+
+                    <div class="end-field">
+                        <label>NÍVEL</label>
+                        <select id="endNivel">
+                            <option value="0">NÍVEL 0</option>
+                            <option value="1">NÍVEL 1</option>
+                            <option value="2">NÍVEL 2</option>
+                            <option value="3">NÍVEL 3</option>
+                            <option value="4">NÍVEL 4</option>
+                        </select>
+                    </div>
+
+                    <div class="end-actions">
+                        <button class="btn-blue" onclick="cadastrarVagaG02()">+ CADASTRAR VAGA</button>
+                    </div>
+                </div>
+
+                <div id="endResumoVagas" class="end-count" style="margin-top:10px;">
+                    0 vagas cadastradas
+                </div>
+
+                <div id="endListaVagas" class="end-vagas-lista"></div>
+            </div>
+
+        </div>
+
+        <div class="end-card">
+            <h3>Paletes endereçados</h3>
+
+            <div class="end-busca">
+                <input
+                    id="endBusca"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Pesquisar por PA, vaga, referência ou descrição"
+                    oninput="renderizarEnderecamentosG02()"
+                >
+                <span id="endResumoEnderecados" class="end-count">0 paletes endereçados</span>
+            </div>
+
+            <div class="end-table-wrap">
+                <table class="end-table">
+                    <thead>
+                        <tr>
+                            <th style="width:16%;">PA</th>
+                            <th style="width:16%;">VAGA</th>
+                            <th style="width:10%;">NÍVEL</th>
+                            <th style="width:34%;">REFERÊNCIA / DESCRIÇÃO</th>
+                            <th style="width:14%;">ATUALIZADO</th>
+                            <th style="width:10%;">AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody id="endTabelaEnderecamentos"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
@@ -1874,6 +2320,7 @@ const db = firebase.firestore();
 
 const SENHA = "161004";
 const SENHA_CONSULTA = "123";
+const SENHA_ENDERECAMENTO = "camesa123";
 
 let perfil = "";
 
@@ -1887,7 +2334,19 @@ let paletes = [];
 
 let filtroAtual = "TODOS";
 
+
 let editandoId = null;
+
+/* Catálogo permanente de PCS/CX por referência */
+const catalogoPcsPorCx = new Map();
+let unsubscribeCatalogoReferencias = null;
+
+/* Endereçamento G02 */
+let vagasG02 = [];
+let enderecamentosG02 = [];
+let unsubscribeVagasG02 = null;
+let unsubscribeEnderecamentosG02 = null;
+
 
 
 /* =========================
@@ -1910,6 +2369,10 @@ function entrar(){
 
         perfil="consulta";
 
+    }else if(senha===SENHA_ENDERECAMENTO){
+
+        perfil="enderecamento";
+
     }else{
 
         erro.style.display="block";
@@ -1922,11 +2385,25 @@ function entrar(){
 
     document.getElementById("loginScreen").style.display="none";
 
-    document.getElementById("sistema").style.display="block";
-
     sessionStorage.setItem("paletesLogado","true");
-
     sessionStorage.setItem("perfil",perfil);
+
+    if(perfil === "enderecamento"){
+
+        document.getElementById("sistema").style.display="none";
+        document.getElementById("sistemaEnderecamento").style.display="block";
+
+        sessionStorage.removeItem("abaAtivaG02");
+
+        carregarEnderecamentoG02();
+        preencherProdutosDatalistEndereco();
+
+        setTimeout(() => focarCampoEndereco("endPa"), 80);
+        return;
+    }
+
+    document.getElementById("sistemaEnderecamento").style.display="none";
+    document.getElementById("sistema").style.display="block";
 
     // Novo login começa na tela principal. A partir daí,
     // a aba escolhida fica salva durante a sessão e sobrevive ao F5.
@@ -1935,11 +2412,12 @@ function entrar(){
     configurarPermissoes();
     abrirAba("principal");
 
+    carregarCatalogoReferencias();
     carregarFirebase();
 
     if(perfil === "admin"){
-    carregarPedidos();
-}
+        carregarPedidos();
+    }
     
 }
 
@@ -1952,6 +2430,28 @@ function sair() {
 
     document.getElementById("sistema")
         .style.display = "none";
+
+    const sistemaEnderecamento =
+        document.getElementById("sistemaEnderecamento");
+
+    if(sistemaEnderecamento){
+        sistemaEnderecamento.style.display = "none";
+    }
+
+    if(typeof unsubscribeVagasG02 === "function"){
+        unsubscribeVagasG02();
+        unsubscribeVagasG02 = null;
+    }
+
+    if(typeof unsubscribeEnderecamentosG02 === "function"){
+        unsubscribeEnderecamentosG02();
+        unsubscribeEnderecamentosG02 = null;
+    }
+
+    if(typeof unsubscribeCatalogoReferencias === "function"){
+        unsubscribeCatalogoReferencias();
+        unsubscribeCatalogoReferencias = null;
+    }
 
     document.getElementById("loginScreen")
         .style.display = "flex";
@@ -2034,12 +2534,12 @@ if(perfil!=="admin"){
         .value
         .trim();
 
-    const regraPcsPorCx =
-        obterRegraPcsPorCx(pa);
+    const pcsConhecido =
+        obterPcsPorCxConhecido(pa);
 
     const pcsPorCx =
-        regraPcsPorCx !== null
-            ? regraPcsPorCx
+        pcsConhecido !== null
+            ? pcsConhecido.valor
             : Number(
                 document.getElementById("pcsPorCx").value
             );
@@ -2230,6 +2730,12 @@ alert("Palete cadastrado com sucesso!");
     }
 
 
+    await salvarCatalogoReferenciaSeNecessario(
+        pa,
+        pcsPorCx,
+        descricao
+    );
+
     limparFormulario();
 
 }
@@ -2297,13 +2803,13 @@ if(perfil!=="admin") return;
     document.getElementById("caixas")
         .value = palete.caixas;
 
-    const regraAutomatica =
-        obterRegraPcsPorCx(palete.pa);
+    const pcsConhecido =
+        obterPcsPorCxConhecido(palete.pa);
 
     document.getElementById("pcsPorCx")
         .value =
-            regraAutomatica !== null
-                ? regraAutomatica
+            pcsConhecido !== null
+                ? pcsConhecido.valor
                 : (
                     registroLegado
                         ? ""
@@ -2476,6 +2982,10 @@ function obterRegraPcsPorCx(referencia) {
         return 4;
     }
 
+    if (ref === "1.26026.80.1011") {
+        return 24;
+    }
+
     if (ref === "1.26030.80.1011") {
         return 25;
     }
@@ -2489,6 +2999,14 @@ function obterRegraPcsPorCx(referencia) {
     }
 
     if (ref === "1.26043.80.1011") {
+        return 12;
+    }
+
+    if (ref === "1.26071.02.8199") {
+        return 6;
+    }
+
+    if (ref === "1.26033.80.9165") {
         return 12;
     }
 
@@ -2549,6 +3067,11 @@ function obterM3PorCx(referencia) {
         return 0.057150;
     }
 
+    // MOP GIRATÓRIO - CAIXA MASTER 24 PCS
+    if (ref === "1.26026.80.1011") {
+        return 0.156180;
+    }
+
     // MOP GIRATÓRIO PRO - CAIXA MASTER 25 PCS
     if (ref === "1.26030.80.1011") {
         return 0.236175;
@@ -2567,6 +3090,16 @@ function obterM3PorCx(referencia) {
     // REFIL MOP PRO / DUO
     if (ref === "1.26043.80.1011") {
         return 0.00162067;
+    }
+
+    // LIXEIRA MATTE 5L
+    if (ref === "1.26071.02.8199") {
+        return 0.145350;
+    }
+
+    // CESTO RETRÁTIL 26L
+    if (ref === "1.26033.80.9165") {
+        return 0.007380;
     }
 
     // Referência ainda sem cubagem cadastrada
@@ -2751,6 +3284,136 @@ function obterSaldoPcs(produto) {
 }
 
 
+
+/* =====================================================
+   CATÁLOGO PERMANENTE DE PCS/CX
+   - Regra fixa do sistema tem prioridade.
+   - Depois usa o primeiro valor salvo no catálogo.
+   - Para referências antigas ainda sem catálogo, aprende
+     com o recebimento histórico já existente no Firebase.
+===================================================== */
+
+function chaveCatalogoReferencia(referencia) {
+    return String(referencia || "").trim().toUpperCase();
+}
+
+function idCatalogoReferencia(referencia) {
+    return encodeURIComponent(chaveCatalogoReferencia(referencia));
+}
+
+function obterPcsPorCxHistorico(referencia) {
+    const chave = chaveCatalogoReferencia(referencia);
+
+    const registros = paletes
+        .filter(p => chaveCatalogoReferencia(p.pa) === chave)
+        .filter(p => Number.isFinite(Number(p.pcsPorCx)) && Number(p.pcsPorCx) > 0)
+        .sort((a, b) => String(a.data || "").localeCompare(String(b.data || "")));
+
+    if (!registros.length) return null;
+
+    const valor = Number(registros[0].pcsPorCx);
+    return Number.isInteger(valor) && valor > 0 ? valor : null;
+}
+
+function obterPcsPorCxConhecido(referencia) {
+    const regraFixa = obterRegraPcsPorCx(referencia);
+
+    if (regraFixa !== null) {
+        return {
+            valor: regraFixa,
+            origem: "regra"
+        };
+    }
+
+    const chave = chaveCatalogoReferencia(referencia);
+
+    if (catalogoPcsPorCx.has(chave)) {
+        return {
+            valor: catalogoPcsPorCx.get(chave),
+            origem: "catalogo"
+        };
+    }
+
+    const historico = obterPcsPorCxHistorico(referencia);
+
+    if (historico !== null) {
+        return {
+            valor: historico,
+            origem: "historico"
+        };
+    }
+
+    return null;
+}
+
+function carregarCatalogoReferencias() {
+    if (typeof unsubscribeCatalogoReferencias === "function") {
+        return;
+    }
+
+    unsubscribeCatalogoReferencias =
+        db.collection("referencias_config")
+        .onSnapshot(snapshot => {
+            catalogoPcsPorCx.clear();
+
+            snapshot.forEach(doc => {
+                const dados = doc.data() || {};
+                const ref = chaveCatalogoReferencia(dados.referencia);
+                const pcs = Number(dados.pcsPorCx);
+
+                if (ref && Number.isInteger(pcs) && pcs > 0) {
+                    catalogoPcsPorCx.set(ref, pcs);
+                }
+            });
+
+            atualizarPcsPorCxAutomatico();
+            preencherProdutosDatalistEndereco();
+        }, erro => {
+            console.warn("Não foi possível carregar o catálogo de referências:", erro);
+        });
+}
+
+async function salvarCatalogoReferenciaSeNecessario(referencia, pcsPorCx, descricao = "") {
+    const ref = chaveCatalogoReferencia(referencia);
+    const pcs = Number(pcsPorCx);
+
+    if (!ref || !Number.isInteger(pcs) || pcs <= 0) {
+        return;
+    }
+
+    // As regras fixas já pertencem ao código e não dependem do catálogo.
+    if (obterRegraPcsPorCx(ref) !== null) {
+        return;
+    }
+
+    const docRef =
+        db.collection("referencias_config")
+        .doc(idCatalogoReferencia(ref));
+
+    try {
+        await db.runTransaction(async transaction => {
+            const snap = await transaction.get(docRef);
+
+            // O primeiro PCS/CX cadastrado vira o padrão permanente.
+            if (!snap.exists) {
+                transaction.set(docRef, {
+                    referencia: ref,
+                    pcsPorCx: pcs,
+                    descricao: String(descricao || "").trim(),
+                    criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+        });
+
+        if (!catalogoPcsPorCx.has(ref)) {
+            catalogoPcsPorCx.set(ref, pcs);
+        }
+    } catch (erro) {
+        console.warn("Não foi possível salvar o catálogo PCS/CX:", erro);
+    }
+}
+
+
 /*
    Preenche automaticamente o campo PCS POR CX
    conforme a referência digitada.
@@ -2782,19 +3445,21 @@ function atualizarPcsPorCxAutomatico() {
         }
     }
 
-    const regra =
-        obterRegraPcsPorCx(
+    const conhecido =
+        obterPcsPorCxConhecido(
             campoReferencia.value
         );
 
-    if (regra !== null) {
+    if (conhecido !== null) {
 
-        campoPcs.value = regra;
+        campoPcs.value = conhecido.valor;
         campoPcs.readOnly = true;
-        campoPcs.title =
-            "Valor definido automaticamente pela referência.";
-
         campoPcs.style.background = "#eef6fb";
+
+        campoPcs.title =
+            conhecido.origem === "regra"
+                ? "Valor definido automaticamente pela regra desta referência."
+                : "PCS/CX recuperado automaticamente do primeiro cadastro desta referência.";
 
     } else {
 
@@ -3409,6 +4074,663 @@ function escapeHTML(text) {
 }
 
 
+
+/* =====================================================
+   ENDEREÇAMENTO G02
+===================================================== */
+
+function normalizarEndereco(valor) {
+    return String(valor || "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .toUpperCase();
+}
+
+function idSeguroEndereco(valor) {
+    return encodeURIComponent(normalizarEndereco(valor));
+}
+
+function formatarDataHoraEndereco(iso) {
+    if (!iso) return "-";
+
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return String(iso);
+
+    return d.toLocaleString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+function focarCampoEndereco(id) {
+    const campo = document.getElementById(id);
+    if (!campo) return;
+
+    campo.focus();
+    if (typeof campo.select === "function") {
+        campo.select();
+    }
+}
+
+function obterVagaG02(codigo) {
+    const chave = normalizarEndereco(codigo);
+
+    return vagasG02.find(
+        vaga => normalizarEndereco(vaga.codigo) === chave
+    ) || null;
+}
+
+function atualizarInfoVagaEnderecamento() {
+    const campo = document.getElementById("endVaga");
+    const info = document.getElementById("endVagaInfo");
+
+    if (!campo || !info) return;
+
+    const valor = normalizarEndereco(campo.value);
+
+    if (!valor) {
+        info.className = "end-status";
+        info.textContent =
+            "Bipe uma vaga cadastrada para identificar automaticamente o nível.";
+        return;
+    }
+
+    const vaga = obterVagaG02(valor);
+
+    if (!vaga) {
+        info.className = "end-status warn";
+        info.textContent =
+            "Vaga ainda não cadastrada. Cadastre a vaga e o nível antes de endereçar.";
+        return;
+    }
+
+    info.className = "end-status ok";
+    info.textContent =
+        `${vaga.codigo} localizada • NÍVEL ${vaga.nivel}`;
+}
+
+function preencherVagasDatalist() {
+    const lista = document.getElementById("endVagasDatalist");
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    [...vagasG02]
+        .sort((a, b) =>
+            Number(a.nivel) - Number(b.nivel) ||
+            String(a.codigo).localeCompare(String(b.codigo), undefined, {numeric:true})
+        )
+        .forEach(vaga => {
+            const option = document.createElement("option");
+            option.value = vaga.codigo;
+            option.label = `Nível ${vaga.nivel}`;
+            lista.appendChild(option);
+        });
+}
+
+function preencherProdutosDatalistEndereco() {
+    const lista = document.getElementById("endProdutosDatalist");
+    if (!lista) return;
+
+    const valores = new Set();
+
+    paletes.forEach(p => {
+        const ref = String(p.pa || "").trim();
+        const desc = String(p.descricao || "").trim();
+
+        if (ref) valores.add(ref);
+        if (desc) valores.add(desc);
+    });
+
+    enderecamentosG02.forEach(item => {
+        const produto = String(item.produto || "").trim();
+        if (produto) valores.add(produto);
+    });
+
+    lista.innerHTML = "";
+
+    [...valores]
+        .sort((a, b) => a.localeCompare(b, undefined, {numeric:true}))
+        .slice(0, 800)
+        .forEach(valor => {
+            const option = document.createElement("option");
+            option.value = valor;
+            lista.appendChild(option);
+        });
+}
+
+function renderizarVagasG02() {
+    const lista = document.getElementById("endListaVagas");
+    const resumo = document.getElementById("endResumoVagas");
+
+    if (!lista || !resumo) return;
+
+    const ordenadas = [...vagasG02].sort((a, b) =>
+        Number(a.nivel) - Number(b.nivel) ||
+        String(a.codigo).localeCompare(String(b.codigo), undefined, {numeric:true})
+    );
+
+    resumo.textContent =
+        `${ordenadas.length} vaga(s) cadastrada(s) • níveis 0 a 4`;
+
+    lista.innerHTML = "";
+
+    if (!ordenadas.length) {
+        lista.innerHTML = `
+            <div class="end-status">
+                Nenhuma vaga cadastrada. Cadastre a primeira vaga acima.
+            </div>
+        `;
+        preencherVagasDatalist();
+        return;
+    }
+
+    ordenadas.forEach(vaga => {
+        const item = document.createElement("div");
+        item.className = "end-vaga-item";
+
+        item.innerHTML = `
+            <div class="end-vaga-codigo">${escapeHTML(vaga.codigo)}</div>
+            <span class="end-nivel">NÍVEL ${escapeHTML(vaga.nivel)}</span>
+            <button
+                class="action-btn btn-red"
+                title="Excluir vaga"
+                onclick="excluirVagaG02('${encodeURIComponent(vaga.codigo)}')"
+            >🗑️</button>
+        `;
+
+        lista.appendChild(item);
+    });
+
+    preencherVagasDatalist();
+    atualizarInfoVagaEnderecamento();
+}
+
+async function cadastrarVagaG02() {
+    if (perfil !== "enderecamento") return;
+
+    const campoVaga = document.getElementById("endNovaVaga");
+    const campoNivel = document.getElementById("endNivel");
+
+    const codigo = normalizarEndereco(campoVaga?.value);
+    const nivel = Number(campoNivel?.value);
+
+    if (!codigo) {
+        alert("Informe o código da vaga.");
+        focarCampoEndereco("endNovaVaga");
+        return;
+    }
+
+    if (![0,1,2,3,4].includes(nivel)) {
+        alert("Selecione um nível entre 0 e 4.");
+        return;
+    }
+
+    const existente = obterVagaG02(codigo);
+
+    if (existente) {
+        alert(
+            `A vaga ${codigo} já está cadastrada no NÍVEL ${existente.nivel}.`
+        );
+        return;
+    }
+
+    try {
+        await db.collection("vagas_g02")
+            .doc(idSeguroEndereco(codigo))
+            .set({
+                codigo,
+                nivel,
+                galpao: "G02",
+                ativo: true,
+                criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+        campoVaga.value = "";
+        campoNivel.value = "0";
+        focarCampoEndereco("endNovaVaga");
+
+    } catch (erro) {
+        console.error(erro);
+        alert(
+            "Não foi possível cadastrar a vaga.\n\n" +
+            "Verifique as regras/permissões do Firebase."
+        );
+    }
+}
+
+async function excluirVagaG02(codigoCodificado) {
+    if (perfil !== "enderecamento") return;
+
+    const codigo = decodeURIComponent(codigoCodificado);
+
+    const emUso = enderecamentosG02.filter(
+        item => normalizarEndereco(item.vaga) === normalizarEndereco(codigo)
+    );
+
+    if (emUso.length) {
+        alert(
+            `Não é possível excluir ${codigo}.\n\n` +
+            `Existem ${emUso.length} PA(s) atualmente endereçado(s) nessa vaga.`
+        );
+        return;
+    }
+
+    if (!confirm(`Excluir a vaga ${codigo}?`)) {
+        return;
+    }
+
+    try {
+        await db.collection("vagas_g02")
+            .doc(idSeguroEndereco(codigo))
+            .delete();
+    } catch (erro) {
+        console.error(erro);
+        alert("Não foi possível excluir a vaga.");
+    }
+}
+
+function limparFormularioEnderecamento() {
+    const pa = document.getElementById("endPa");
+    const vaga = document.getElementById("endVaga");
+    const produto = document.getElementById("endProduto");
+    const mensagem = document.getElementById("endMensagem");
+
+    if (pa) pa.value = "";
+    if (vaga) vaga.value = "";
+    if (produto) produto.value = "";
+
+    atualizarInfoVagaEnderecamento();
+
+    if (mensagem) {
+        mensagem.className = "end-status";
+        mensagem.textContent = "Pronto para leitura do próximo PA.";
+    }
+
+    setTimeout(() => focarCampoEndereco("endPa"), 50);
+}
+
+async function salvarEnderecamentoG02() {
+    if (perfil !== "enderecamento") return;
+
+    const pa = normalizarEndereco(
+        document.getElementById("endPa")?.value
+    );
+
+    const vagaCodigo = normalizarEndereco(
+        document.getElementById("endVaga")?.value
+    );
+
+    const produto = String(
+        document.getElementById("endProduto")?.value || ""
+    ).trim();
+
+    const mensagem = document.getElementById("endMensagem");
+
+    if (!pa) {
+        alert("Bipe ou informe o PA.");
+        focarCampoEndereco("endPa");
+        return;
+    }
+
+    if (!vagaCodigo) {
+        alert("Bipe ou informe a vaga.");
+        focarCampoEndereco("endVaga");
+        return;
+    }
+
+    const vaga = obterVagaG02(vagaCodigo);
+
+    if (!vaga) {
+        alert(
+            `A vaga ${vagaCodigo} ainda não está cadastrada.\n\n` +
+            "Cadastre a vaga e selecione o nível antes de endereçar."
+        );
+        focarCampoEndereco("endVaga");
+        return;
+    }
+
+    if (!produto) {
+        alert("Informe a referência ou a descrição da mercadoria.");
+        focarCampoEndereco("endProduto");
+        return;
+    }
+
+    const anterior = enderecamentosG02.find(
+        item => normalizarEndereco(item.pa) === pa
+    );
+
+    if (anterior) {
+        const mudou =
+            normalizarEndereco(anterior.vaga) !== vagaCodigo ||
+            String(anterior.produto || "").trim().toUpperCase() !==
+                produto.toUpperCase();
+
+        if (mudou) {
+            const confirmar = confirm(
+                `PA JÁ ENDEREÇADO\n\n` +
+                `PA: ${pa}\n` +
+                `Vaga atual: ${anterior.vaga}\n` +
+                `Produto: ${anterior.produto}\n\n` +
+                `Novo endereço: ${vaga.codigo} • Nível ${vaga.nivel}\n` +
+                `Novo produto/ref.: ${produto}\n\n` +
+                "Deseja reendereçar este PA?"
+            );
+
+            if (!confirmar) {
+                return;
+            }
+        }
+    }
+
+    const agoraIso = new Date().toISOString();
+    const atualRef =
+        db.collection("enderecamentos_g02")
+        .doc(idSeguroEndereco(pa));
+
+    const historicoRef =
+        db.collection("enderecamentos_g02_historico")
+        .doc();
+
+    const batch = db.batch();
+
+    batch.set(
+        atualRef,
+        {
+            pa,
+            vaga: vaga.codigo,
+            nivel: Number(vaga.nivel),
+            produto,
+            galpao: "G02",
+            status: "ENDEREÇADO",
+            atualizadoIso: agoraIso,
+            atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        },
+        { merge: true }
+    );
+
+    batch.set(
+        historicoRef,
+        {
+            pa,
+            vaga: vaga.codigo,
+            nivel: Number(vaga.nivel),
+            produto,
+            galpao: "G02",
+            acao: anterior ? "REENDEREÇADO" : "ENDEREÇADO",
+            vagaAnterior: anterior?.vaga || "",
+            nivelAnterior:
+                anterior && Number.isFinite(Number(anterior.nivel))
+                    ? Number(anterior.nivel)
+                    : null,
+            produtoAnterior: anterior?.produto || "",
+            dataIso: agoraIso,
+            criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        }
+    );
+
+    try {
+        await batch.commit();
+
+        if (mensagem) {
+            mensagem.className = "end-status ok";
+            mensagem.textContent =
+                `${pa} endereçado em ${vaga.codigo} • NÍVEL ${vaga.nivel}.`;
+        }
+
+        limparFormularioEnderecamento();
+
+    } catch (erro) {
+        console.error(erro);
+
+        if (mensagem) {
+            mensagem.className = "end-status warn";
+            mensagem.textContent =
+                "Falha ao gravar o endereçamento. Verifique a conexão/permissões do Firebase.";
+        }
+
+        alert(
+            "Não foi possível salvar o endereçamento.\n\n" +
+            "Se o Firebase informar falta de permissão, será necessário liberar as novas coleções nas regras."
+        );
+    }
+}
+
+function editarEnderecamentoG02(paCodificado) {
+    const pa = decodeURIComponent(paCodificado);
+
+    const item = enderecamentosG02.find(
+        registro => normalizarEndereco(registro.pa) === normalizarEndereco(pa)
+    );
+
+    if (!item) return;
+
+    document.getElementById("endPa").value =
+        item.pa || "";
+
+    document.getElementById("endVaga").value =
+        item.vaga || "";
+
+    document.getElementById("endProduto").value =
+        item.produto || "";
+
+    atualizarInfoVagaEnderecamento();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    setTimeout(() => focarCampoEndereco("endVaga"), 250);
+}
+
+async function removerEnderecamentoG02(paCodificado) {
+    if (perfil !== "enderecamento") return;
+
+    const pa = decodeURIComponent(paCodificado);
+
+    const item = enderecamentosG02.find(
+        registro => normalizarEndereco(registro.pa) === normalizarEndereco(pa)
+    );
+
+    if (!item) return;
+
+    if (!confirm(
+        `RETIRAR ENDEREÇAMENTO?\n\n` +
+        `PA: ${item.pa}\n` +
+        `Vaga: ${item.vaga}\n` +
+        `Produto: ${item.produto}\n\n` +
+        "O histórico será preservado."
+    )) {
+        return;
+    }
+
+    const agoraIso = new Date().toISOString();
+    const batch = db.batch();
+
+    batch.delete(
+        db.collection("enderecamentos_g02")
+        .doc(idSeguroEndereco(item.pa))
+    );
+
+    batch.set(
+        db.collection("enderecamentos_g02_historico").doc(),
+        {
+            pa: item.pa,
+            vaga: item.vaga,
+            nivel: Number(item.nivel),
+            produto: item.produto,
+            galpao: "G02",
+            acao: "RETIRADO",
+            vagaAnterior: item.vaga,
+            nivelAnterior: Number(item.nivel),
+            produtoAnterior: item.produto,
+            dataIso: agoraIso,
+            criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        }
+    );
+
+    try {
+        await batch.commit();
+    } catch (erro) {
+        console.error(erro);
+        alert("Não foi possível retirar o endereçamento.");
+    }
+}
+
+function renderizarEnderecamentosG02() {
+    const tbody =
+        document.getElementById("endTabelaEnderecamentos");
+
+    const resumo =
+        document.getElementById("endResumoEnderecados");
+
+    if (!tbody || !resumo) return;
+
+    const busca = String(
+        document.getElementById("endBusca")?.value || ""
+    ).trim().toLowerCase();
+
+    const lista = enderecamentosG02
+        .filter(item => {
+            if (!busca) return true;
+
+            return [
+                item.pa,
+                item.vaga,
+                item.nivel,
+                item.produto
+            ].some(valor =>
+                String(valor ?? "")
+                    .toLowerCase()
+                    .includes(busca)
+            );
+        })
+        .sort((a, b) =>
+            String(b.atualizadoIso || "")
+                .localeCompare(String(a.atualizadoIso || ""))
+        );
+
+    resumo.textContent =
+        `${lista.length} de ${enderecamentosG02.length} PA(s)`;
+
+    tbody.innerHTML = "";
+
+    if (!lista.length) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6" class="end-empty">
+                    Nenhum PA encontrado.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    lista.forEach(item => {
+        const tr = document.createElement("tr");
+        const paCodificado = encodeURIComponent(item.pa);
+
+        tr.innerHTML = `
+            <td><strong>${escapeHTML(item.pa)}</strong></td>
+            <td><strong>${escapeHTML(item.vaga)}</strong></td>
+            <td><span class="end-nivel">NÍVEL ${escapeHTML(item.nivel)}</span></td>
+            <td>${escapeHTML(item.produto)}</td>
+            <td>${escapeHTML(formatarDataHoraEndereco(item.atualizadoIso))}</td>
+            <td>
+                <div class="end-table-actions">
+                    <button
+                        class="action-btn btn-blue"
+                        title="Reendereçar / editar"
+                        onclick="editarEnderecamentoG02('${paCodificado}')"
+                    >✏️</button>
+                    <button
+                        class="action-btn btn-red"
+                        title="Retirar do endereçamento"
+                        onclick="removerEnderecamentoG02('${paCodificado}')"
+                    >🗑️</button>
+                </div>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+}
+
+function carregarEnderecamentoG02() {
+    if (typeof unsubscribeVagasG02 !== "function") {
+        unsubscribeVagasG02 =
+            db.collection("vagas_g02")
+            .where("galpao", "==", "G02")
+            .onSnapshot(snapshot => {
+                vagasG02 = [];
+
+                snapshot.forEach(doc => {
+                    vagasG02.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                renderizarVagasG02();
+            }, erro => {
+                console.error("Erro ao carregar vagas:", erro);
+            });
+    }
+
+    if (typeof unsubscribeEnderecamentosG02 !== "function") {
+        unsubscribeEnderecamentosG02 =
+            db.collection("enderecamentos_g02")
+            .where("galpao", "==", "G02")
+            .onSnapshot(snapshot => {
+                enderecamentosG02 = [];
+
+                snapshot.forEach(doc => {
+                    enderecamentosG02.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                renderizarEnderecamentosG02();
+                preencherProdutosDatalistEndereco();
+            }, erro => {
+                console.error("Erro ao carregar endereçamentos:", erro);
+            });
+    }
+
+    // Carrega os recebimentos somente para oferecer sugestões de
+    // referências/descrições no campo único. Não mistura os módulos.
+    if (!paletes.length) {
+        db.collection("paletes")
+            .where("galpao", "==", "G02")
+            .get()
+            .then(snapshot => {
+                const sugestoes = [];
+                snapshot.forEach(doc => {
+                    sugestoes.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                if (!paletes.length) {
+                    paletes = sugestoes;
+                }
+
+                preencherProdutosDatalistEndereco();
+            })
+            .catch(erro => {
+                console.warn("Sugestões de produtos indisponíveis:", erro);
+            });
+    }
+}
+
+
+
 /* =========================
    INICIAR
 ========================= */
@@ -3449,6 +4771,8 @@ function carregarFirebase() {
 });
 
         renderizar();
+        atualizarPcsPorCxAutomatico();
+        preencherProdutosDatalistEndereco();
 
         // Se o usuário estiver em outra aba, mantém essa aba atualizada
         // quando os dados do Firebase forem recarregados/alterados.
@@ -3474,25 +4798,39 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
 
     document.getElementById("loginScreen").style.display = "none";
 
-    document.getElementById("sistema").style.display = "block";
+    if (perfil === "enderecamento") {
 
-    configurarPermissoes();
+        document.getElementById("sistema").style.display = "none";
+        document.getElementById("sistemaEnderecamento").style.display = "block";
 
-    // Recupera a aba em que o usuário estava antes do F5/recarregamento.
-    let abaSalva = sessionStorage.getItem("abaAtivaG02") || "principal";
+        carregarEnderecamentoG02();
+        preencherProdutosDatalistEndereco();
 
-    // Perfil consulta não pode voltar para a aba de pedidos.
-    if (abaSalva === "pedidos" && perfil !== "admin") {
-        abaSalva = "principal";
+        setTimeout(() => focarCampoEndereco("endPa"), 80);
+
+    } else {
+
+        document.getElementById("sistemaEnderecamento").style.display = "none";
+        document.getElementById("sistema").style.display = "block";
+
+        configurarPermissoes();
+
+        // Recupera a aba em que o usuário estava antes do F5/recarregamento.
+        let abaSalva = sessionStorage.getItem("abaAtivaG02") || "principal";
+
+        // Perfil consulta não pode voltar para a aba de pedidos.
+        if (abaSalva === "pedidos" && perfil !== "admin") {
+            abaSalva = "principal";
+        }
+
+        abrirAba(abaSalva);
+        carregarCatalogoReferencias();
+        carregarFirebase();
+
+        if(perfil === "admin"){
+            carregarPedidos();
+        }
     }
-
-    abrirAba(abaSalva);
-    carregarFirebase();
-
-    if(perfil === "admin"){
-    carregarPedidos();
-}
-
 }
 
 function abrirAba(tipo){
@@ -3740,6 +5078,14 @@ Digite:
         return;
     }
 
+    if(!Number.isInteger(quantidadeCxs)){
+        alert(
+            "A movimentação deve ser feita em CXS inteiras.\n\n" +
+            "Exemplos válidos: 1, 2, 10, 25."
+        );
+        return;
+    }
+
     if(ehRegistroLegadoPcs(produto)){
         alert(
             "Este MOP ainda está no formato antigo em PCS.\n\n" +
@@ -3760,6 +5106,25 @@ Digite:
     const saldoAtualInterno = Number(
         produto.saldoAtual ?? produto.caixas ?? 0
     );
+
+    if (produtoEhEntradaPcs(produto)) {
+        const pcsPorCxAtual = obterPcsPorCx(produto);
+        const saldoEmCxsExato =
+            pcsPorCxAtual > 0
+                ? saldoAtualInterno / pcsPorCxAtual
+                : 0;
+
+        if (!Number.isInteger(saldoEmCxsExato)) {
+            alert(
+                "SALDO ANTIGO INCONSISTENTE\n\n" +
+                `Referência: ${produto.pa}\n` +
+                `Container: ${produto.container || "SEM CONTAINER"}\n` +
+                `Saldo gravado: ${formatarQuantidade(saldoEmCxsExato)} CXS\n\n` +
+                "Esse registro possui saldo quebrado de uma versão antiga. Corrija o saldo antes de fazer nova movimentação."
+            );
+            return;
+        }
+    }
 
     let novoSaldoInterno = saldoAtualInterno;
 
