@@ -17,6 +17,41 @@ body {
     color: #111;
 }
 
+
+function exibirModuloEnderecamento() {
+
+    const sistemaPrincipal =
+        document.getElementById("sistema");
+
+    const modulo =
+        document.getElementById("sistemaEnderecamento");
+
+    if (!modulo) {
+        console.error("Módulo de endereçamento não encontrado.");
+        return false;
+    }
+
+    /*
+       O HTML original possui uma estrutura de DIVs antiga.
+       Em alguns navegadores o módulo novo pode acabar sendo interpretado
+       como filho do #sistema. Se o pai for escondido, a tela fica branca.
+
+       Antes de abrir o módulo, movemos ele diretamente para o BODY.
+       Assim os dois sistemas ficam visualmente independentes.
+    */
+    if (modulo.parentElement !== document.body) {
+        document.body.appendChild(modulo);
+    }
+
+    if (sistemaPrincipal) {
+        sistemaPrincipal.style.display = "none";
+    }
+
+    modulo.style.display = "block";
+
+    return true;
+}
+
 /* =========================
    LOGIN
 ========================= */
@@ -2390,8 +2425,10 @@ function entrar(){
 
     if(perfil === "enderecamento"){
 
-        document.getElementById("sistema").style.display="none";
-        document.getElementById("sistemaEnderecamento").style.display="block";
+        if (!exibirModuloEnderecamento()) {
+            alert("Não foi possível abrir o módulo de endereçamento.");
+            return;
+        }
 
         sessionStorage.removeItem("abaAtivaG02");
 
@@ -4800,13 +4837,12 @@ if (sessionStorage.getItem("paletesLogado") === "true") {
 
     if (perfil === "enderecamento") {
 
-        document.getElementById("sistema").style.display = "none";
-        document.getElementById("sistemaEnderecamento").style.display = "block";
+        if (exibirModuloEnderecamento()) {
+            carregarEnderecamentoG02();
+            preencherProdutosDatalistEndereco();
 
-        carregarEnderecamentoG02();
-        preencherProdutosDatalistEndereco();
-
-        setTimeout(() => focarCampoEndereco("endPa"), 80);
+            setTimeout(() => focarCampoEndereco("endPa"), 80);
+        }
 
     } else {
 
