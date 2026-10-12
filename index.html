@@ -1370,6 +1370,620 @@ table:has(#tabelaPaletes) {
     }
 }
 
+
+/* =====================================================
+   INTERFACE PROFISSIONAL V6 - G02
+   Ajuste visual final, sem alterar a lógica de negócio
+===================================================== */
+:root {
+    --g02-bg: #edf4f8;
+    --g02-surface: #ffffff;
+    --g02-surface-soft: #f7fafc;
+    --g02-border: #d4e1ea;
+    --g02-border-strong: #b8ccd9;
+    --g02-text: #17212b;
+    --g02-muted: #64748b;
+    --g02-blue: #246f9f;
+    --g02-blue-dark: #18577f;
+    --g02-blue-soft: #e6f1f8;
+    --g02-green: #188452;
+    --g02-red: #bf3f3f;
+    --g02-shadow: 0 8px 24px rgba(35, 70, 95, .08);
+    --g02-radius: 14px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--g02-bg) !important;
+    color: var(--g02-text) !important;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif !important;
+}
+
+.container,
+.end-container {
+    max-width: 1360px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+}
+
+/* LOGIN */
+#loginScreen {
+    background:
+        radial-gradient(circle at 20% 10%, rgba(62, 142, 190, .14), transparent 34%),
+        linear-gradient(145deg, #e9f3f9, #f7fafc) !important;
+}
+
+.login-box {
+    width: 390px !important;
+    padding: 34px !important;
+    border-radius: 18px !important;
+    border: 1px solid var(--g02-border) !important;
+    box-shadow: 0 18px 45px rgba(31, 72, 100, .14) !important;
+}
+
+.login-box h2 {
+    font-size: 24px !important;
+    letter-spacing: -.4px;
+}
+
+.login-box p {
+    color: var(--g02-muted) !important;
+    margin-top: 7px !important;
+}
+
+.login-box input {
+    height: 48px !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--g02-border-strong) !important;
+    font-size: 17px !important;
+}
+
+.login-box button {
+    height: 46px !important;
+    border-radius: 10px !important;
+    background: var(--g02-blue) !important;
+    box-shadow: 0 6px 14px rgba(36,111,159,.16);
+}
+
+/* CABEÇALHO / NAVEGAÇÃO */
+.app-header {
+    position: sticky;
+    top: 8px;
+    z-index: 120;
+    display: grid !important;
+    grid-template-columns: minmax(230px, auto) minmax(0, 1fr) auto;
+    align-items: center !important;
+    gap: 14px !important;
+    margin: 10px 0 16px !important;
+    padding: 10px 12px !important;
+    background: rgba(255,255,255,.96) !important;
+    border: 1px solid var(--g02-border) !important;
+    border-radius: 16px !important;
+    box-shadow: var(--g02-shadow) !important;
+    backdrop-filter: blur(8px);
+}
+
+.brand-block {
+    min-width: 0;
+}
+
+.brand-title {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.15px;
+    color: var(--g02-text);
+}
+
+.brand-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+    font-size: 10px;
+    color: var(--g02-muted);
+    font-weight: 700;
+}
+
+.brand-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #9db3c2;
+}
+
+.app-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 0;
+    flex-wrap: wrap;
+}
+
+.nav-tab {
+    min-height: 36px !important;
+    height: auto !important;
+    padding: 7px 12px !important;
+    border: 1px solid transparent !important;
+    border-radius: 9px !important;
+    background: transparent !important;
+    color: #52616d !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    white-space: nowrap;
+    box-shadow: none !important;
+}
+
+.nav-tab:hover {
+    background: #edf5fa !important;
+    color: var(--g02-blue-dark) !important;
+    transform: none !important;
+}
+
+.nav-tab.active {
+    background: var(--g02-blue) !important;
+    border-color: var(--g02-blue) !important;
+    color: white !important;
+    box-shadow: 0 4px 10px rgba(36,111,159,.16) !important;
+}
+
+.app-logout {
+    min-width: 62px;
+    border-radius: 9px !important;
+    background: #eef2f5 !important;
+    color: #46535e !important;
+    border: 1px solid #d2dde5 !important;
+}
+
+/* CARDS E TÍTULOS */
+.card,
+.table-card,
+.end-card,
+.saldo-pagina-card {
+    border: 1px solid var(--g02-border) !important;
+    border-radius: var(--g02-radius) !important;
+    box-shadow: var(--g02-shadow) !important;
+    overflow: hidden;
+}
+
+.card {
+    padding: 17px !important;
+}
+
+.card h3,
+.end-card h3 {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    color: var(--g02-text) !important;
+    margin: 0 0 14px !important;
+}
+
+.table-title {
+    background: linear-gradient(180deg, #eff7fb, #e2f0f8) !important;
+    color: var(--g02-text) !important;
+    border-bottom: 1px solid var(--g02-border-strong) !important;
+    font-size: 15px !important;
+    letter-spacing: .15px;
+    padding: 11px 14px !important;
+}
+
+/* FORMULÁRIOS */
+.form-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+}
+
+.form-field {
+    min-width: 0;
+}
+
+.form-field label {
+    display: block;
+    margin: 0 0 5px 2px;
+    font-size: 10px;
+    color: #5d6b77;
+    font-weight: 800;
+    letter-spacing: .28px;
+    text-transform: uppercase;
+}
+
+.form-field input,
+.form-field select {
+    width: 100%;
+    height: 41px !important;
+    border-radius: 9px !important;
+    border-color: var(--g02-border-strong) !important;
+    font-size: 13px !important;
+    font-weight: 650;
+}
+
+.form-field.span-2 { grid-column: span 2; }
+.form-field.span-3 { grid-column: span 3; }
+.form-field.span-4 { grid-column: span 4; }
+.form-field.span-5 { grid-column: span 5; }
+.form-field.span-6 { grid-column: span 6; }
+.form-field.span-12 { grid-column: span 12; }
+
+.buttons {
+    gap: 7px !important;
+}
+
+button {
+    border-radius: 8px !important;
+}
+
+.btn-blue { background: var(--g02-blue) !important; }
+.btn-green { background: var(--g02-green) !important; }
+.btn-red { background: var(--g02-red) !important; }
+.btn-gray, .btn-sair { background: #65737e !important; }
+.btn-dark { background: #33404a !important; }
+
+.info {
+    background: #f5f9fc;
+    border: 1px solid #dce8ef;
+    border-radius: 9px;
+    padding: 9px 11px;
+    color: #5d6b77 !important;
+    line-height: 1.4;
+}
+
+/* BUSCA */
+.filters {
+    gap: 7px !important;
+}
+
+.filters input,
+.filters select {
+    height: 39px !important;
+    border-radius: 9px !important;
+}
+
+.filters input {
+    min-width: 310px;
+}
+
+/* RESUMOS */
+.summary {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px !important;
+    margin-top: 14px !important;
+}
+
+.summary-box {
+    position: relative;
+    min-height: 76px;
+    margin: 0 !important;
+    padding: 12px 13px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+    background: #f7fbfd !important;
+    border: 1px solid var(--g02-border) !important;
+    border-radius: 11px !important;
+    color: #667581 !important;
+    font-size: 10px !important;
+    font-weight: 800;
+    letter-spacing: .3px;
+}
+
+.summary-box::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 12px;
+    bottom: 12px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: #77acd0;
+}
+
+.summary-box strong {
+    margin-left: 0 !important;
+    font-size: 21px !important;
+    line-height: 1;
+    color: var(--g02-text) !important;
+    letter-spacing: -.35px;
+}
+
+/* TABELAS */
+.table-card {
+    overflow: auto !important;
+    background: var(--g02-surface) !important;
+}
+
+table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+th,
+td {
+    border-right: 0 !important;
+    border-bottom: 1px solid #e1e9ef !important;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    background: #edf5fa !important;
+    color: #33404b !important;
+    font-size: 10.5px !important;
+    letter-spacing: .28px;
+    border-bottom: 1px solid #c8dae6 !important;
+}
+
+td {
+    color: #26323c !important;
+}
+
+tbody tr:nth-child(even) td {
+    background: #fbfdfe !important;
+}
+
+tbody tr:hover td {
+    background: #eef7fc !important;
+}
+
+#tabelaPaletes td,
+#tabelaEstoque td,
+#tabelaPedidos td {
+    padding: 7px 8px !important;
+    line-height: 1.22 !important;
+}
+
+#tabelaPaletes td:first-child,
+#tabelaEstoque td:first-child,
+#tabelaPedidos td:first-child {
+    color: #163f59 !important;
+}
+
+.action-btn {
+    border: 0 !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,.08);
+}
+
+/* SALDO DISPONÍVEL */
+.tabela-saldo-pagina th,
+.tabela-saldo-pagina td {
+    padding: 10px 9px !important;
+    font-size: 12px !important;
+}
+
+.tabela-saldo-pagina tbody td:first-child {
+    text-align: left;
+    padding-left: 18px !important;
+    color: #163f59 !important;
+}
+
+.tabela-saldo-pagina tfoot td {
+    background: #dcecf6 !important;
+    border-top: 2px solid #9ebdce !important;
+    font-size: 12px !important;
+}
+
+/* MODAL CONTAINERS */
+#modalContainersRef > div {
+    width: 930px !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(255,255,255,.4);
+}
+
+#modalContainersRefLista {
+    gap: 9px !important;
+    padding: 14px !important;
+    background: #f3f8fb !important;
+}
+
+/* ENDEREÇAMENTO */
+#sistemaEnderecamento {
+    background: var(--g02-bg) !important;
+}
+
+.end-topbar {
+    position: sticky;
+    top: 8px;
+    z-index: 120;
+    background: rgba(255,255,255,.96) !important;
+    border: 1px solid var(--g02-border) !important;
+    border-radius: 16px !important;
+    box-shadow: var(--g02-shadow) !important;
+}
+
+.end-topbar strong {
+    font-size: 18px !important;
+}
+
+.end-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(330px, .65fr) !important;
+    gap: 14px !important;
+}
+
+.end-card {
+    padding: 18px !important;
+}
+
+.end-steps {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px !important;
+}
+
+.end-step {
+    border-radius: 9px !important;
+    text-align: center;
+    background: #eff7fb !important;
+    border-color: #cde0ec !important;
+    padding: 8px 6px !important;
+}
+
+.end-field input,
+.end-field select {
+    height: 52px !important;
+    border-radius: 10px !important;
+    font-size: 17px !important;
+    border: 1px solid var(--g02-border-strong) !important;
+}
+
+#endPa,
+#endVaga {
+    font-size: 20px !important;
+    letter-spacing: .4px;
+}
+
+.end-status {
+    border-radius: 9px !important;
+    padding: 10px 12px !important;
+}
+
+.end-primary {
+    min-height: 46px !important;
+    border-radius: 9px !important;
+    font-size: 12px !important;
+    flex: 1;
+}
+
+.end-secondary {
+    min-height: 46px !important;
+}
+
+.end-vagas-lista {
+    max-height: 420px !important;
+    gap: 10px !important;
+}
+
+.end-level-section {
+    border: 1px solid #d7e4ec;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.end-level-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 10px;
+    background: #eef6fa;
+    border-bottom: 1px solid #d7e4ec;
+    font-size: 10px;
+    font-weight: 800;
+    color: #40515e;
+}
+
+.end-level-items {
+    display: grid;
+    gap: 0;
+}
+
+.end-level-items .end-vaga-item {
+    border: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #edf1f4 !important;
+}
+
+.end-level-items .end-vaga-item:last-child {
+    border-bottom: 0 !important;
+}
+
+.end-table-wrap {
+    border-color: var(--g02-border) !important;
+    border-radius: 11px !important;
+}
+
+/* RESPONSIVO */
+@media(max-width: 1000px) {
+    .app-header {
+        position: static;
+        grid-template-columns: 1fr auto;
+    }
+
+    .app-tabs {
+        grid-column: 1 / -1;
+        order: 3;
+        justify-content: flex-start;
+    }
+
+    .nav-tab {
+        flex: 1 1 130px;
+    }
+
+    .summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .form-field.span-2,
+    .form-field.span-3,
+    .form-field.span-4,
+    .form-field.span-5,
+    .form-field.span-6 {
+        grid-column: span 6;
+    }
+
+    .end-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media(max-width: 640px) {
+    .container,
+    .end-container {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    .app-header {
+        grid-template-columns: 1fr auto;
+        border-radius: 12px !important;
+    }
+
+    .brand-title {
+        font-size: 15px;
+    }
+
+    .app-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        width: 100%;
+    }
+
+    .nav-tab {
+        width: 100%;
+    }
+
+    .summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .form-field.span-2,
+    .form-field.span-3,
+    .form-field.span-4,
+    .form-field.span-5,
+    .form-field.span-6,
+    .form-field.span-12 {
+        grid-column: 1 / -1;
+    }
+
+    .filters input,
+    .filters select,
+    .filters button {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .end-steps {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
 </style>
     
 </head>
@@ -1563,50 +2177,23 @@ table:has(#tabelaPaletes) {
 
     <div class="no-print" style="margin-bottom:10px">
     
-    <div class="top-bar no-print">
+    <div class="top-bar no-print app-header">
+        <div class="brand-block">
+            <div class="brand-title">CONTROLE DE MERCADORIA</div>
+            <div class="brand-meta">
+                <span>GALPÃO G02</span><span class="brand-dot"></span><span>By Castelhano</span>
+            </div>
+        </div>
 
-        <div class="buttons no-print">
+        <div class="app-tabs">
+            <button class="nav-tab" data-tab="principal" onclick="abrirAba('principal')">RECEBIMENTO</button>
+            <button class="nav-tab admin-nav" data-tab="estoque" data-admin-only="true" onclick="abrirAba('estoque')">ESTOQUE</button>
+            <button class="nav-tab" data-tab="saldo" onclick="abrirAba('saldo')">SALDO</button>
+            <button class="nav-tab admin-nav" data-tab="pedidos" data-admin-only="true" onclick="abrirAba('pedidos')">PEDIDOS</button>
+        </div>
 
-</div>
-
-       <div>
-    <strong>CONTROLE DE MERCADORIA</strong>
-    <span class="badge">GALPÃO G02</span>
-    <div class="assinatura-topo">
-        By Castelhano
+        <button class="btn-sair app-logout" onclick="sair()">SAIR</button>
     </div>
-</div>
-
-   <button
-id="btnEstoque"
-class="btn-dark"
-onclick="abrirAba('estoque')">
-CONTROLE ESTOQUE
-</button>
-
-        <button
-            id="btnSaldo"
-            class="btn-blue"
-            onclick="abrirAba('saldo')">
-            SALDO DISPONÍVEL
-        </button>
-
-        <button
-    id="btnPedidos"
-    class="btn-blue"
-    onclick="abrirAba('pedidos')">
-    CONTROLE PEDIDOS
-</button>
-        
-        <button
-            class="btn-sair"
-            onclick="sair()"
-        >
-            SAIR
-        </button>
-
-    </div>
-
 
     <!-- CADASTRO -->
 
@@ -1614,52 +2201,37 @@ CONTROLE ESTOQUE
 
         <h3>Cadastrar referência</h3>
 
-        <div class="form-grid">
+        <div class="form-grid cadastro-referencia-grid">
 
-            <input
-                type="text"
-                id="pa"
-                placeholder="REFERÊNCIA"
-                autocomplete="off"
-            >
+            <div class="form-field span-3">
+                <label for="pa">Referência</label>
+                <input type="text" id="pa" placeholder="Ex.: 1.26030.80.1011" autocomplete="off">
+            </div>
 
-            <input
-    type="number"
-    id="caixas"
-    placeholder="QUANTIDADE EM CXS"
-    min="0"
-    step="1"
-    autocomplete="off"
->
+            <div class="form-field span-2">
+                <label for="caixas">Quantidade</label>
+                <input type="number" id="caixas" placeholder="CXS" min="0" step="1" autocomplete="off">
+            </div>
 
-            <input
-    type="number"
-    id="pcsPorCx"
-    placeholder="PCS POR CX (ex.: 2, 6, 12)"
-    min="1"
-    step="1"
-    autocomplete="off"
->
+            <div class="form-field span-2">
+                <label for="pcsPorCx">PCS por CX</label>
+                <input type="number" id="pcsPorCx" placeholder="Ex.: 12" min="1" step="1" autocomplete="off">
+            </div>
 
-            <input
-                type="text"
-                id="descricao"
-                placeholder="DESCRIÇÃO"
-                autocomplete="off"
-            >
-            
-            <input
-    type="text"
-    id="container"
-    placeholder="Nº CONTAINER"
-    autocomplete="off"
->
+            <div class="form-field span-5">
+                <label for="descricao">Descrição</label>
+                <input type="text" id="descricao" placeholder="Descrição da mercadoria" autocomplete="off">
+            </div>
 
-            <input
-    type="date"
-    id="data"
->
-            
+            <div class="form-field span-4">
+                <label for="container">Container</label>
+                <input type="text" id="container" placeholder="Nº do container" autocomplete="off">
+            </div>
+
+            <div class="form-field span-3">
+                <label for="data">Data de recebimento</label>
+                <input type="date" id="data">
+            </div>
 
         </div>
 
@@ -1841,24 +2413,23 @@ CONTROLE ESTOQUE
 
         <div class="container">
 
-            <div class="top-bar no-print">
-
-                <div>
-                    <strong>SALDO DISPONÍVEL</strong>
-                    <span class="badge">GALPÃO G02</span>
-
-                    <div class="assinatura-topo">
-                        By Castelhano
-                    </div>
-                </div>
-
-                <button
-                    class="btn-dark"
-                    onclick="abrirAba('principal')">
-                    ← VOLTAR
-                </button>
-
+            <div class="top-bar no-print app-header">
+        <div class="brand-block">
+            <div class="brand-title">CONTROLE DE MERCADORIA</div>
+            <div class="brand-meta">
+                <span>GALPÃO G02</span><span class="brand-dot"></span><span>By Castelhano</span>
             </div>
+        </div>
+
+        <div class="app-tabs">
+            <button class="nav-tab" data-tab="principal" onclick="abrirAba('principal')">RECEBIMENTO</button>
+            <button class="nav-tab admin-nav" data-tab="estoque" data-admin-only="true" onclick="abrirAba('estoque')">ESTOQUE</button>
+            <button class="nav-tab" data-tab="saldo" onclick="abrirAba('saldo')">SALDO</button>
+            <button class="nav-tab admin-nav" data-tab="pedidos" data-admin-only="true" onclick="abrirAba('pedidos')">PEDIDOS</button>
+        </div>
+
+        <button class="btn-sair app-logout" onclick="sair()">SAIR</button>
+    </div>
 
             <div class="card no-print">
 
@@ -1926,25 +2497,23 @@ CONTROLE ESTOQUE
 
 <div class="container">
 
-<div class="top-bar no-print">
+<div class="top-bar no-print app-header">
+        <div class="brand-block">
+            <div class="brand-title">CONTROLE DE MERCADORIA</div>
+            <div class="brand-meta">
+                <span>GALPÃO G02</span><span class="brand-dot"></span><span>By Castelhano</span>
+            </div>
+        </div>
 
-<div>
+        <div class="app-tabs">
+            <button class="nav-tab" data-tab="principal" onclick="abrirAba('principal')">RECEBIMENTO</button>
+            <button class="nav-tab admin-nav" data-tab="estoque" data-admin-only="true" onclick="abrirAba('estoque')">ESTOQUE</button>
+            <button class="nav-tab" data-tab="saldo" onclick="abrirAba('saldo')">SALDO</button>
+            <button class="nav-tab admin-nav" data-tab="pedidos" data-admin-only="true" onclick="abrirAba('pedidos')">PEDIDOS</button>
+        </div>
 
-<strong>CONTROLE DE ESTOQUE</strong>
-
-<div class="assinatura-topo">
-By Castelhano
-</div>
-
-</div>
-
-<button
-class="btn-dark"
-onclick="abrirAba('principal')">
-← VOLTAR
-</button>
-
-</div>
+        <button class="btn-sair app-logout" onclick="sair()">SAIR</button>
+    </div>
 
 <div class="table-card">
 
@@ -1990,77 +2559,65 @@ CONTROLE DE ESTOQUE
 
     <div class="container">
 
-        <div class="top-bar no-print">
-
-            <div>
-                <strong>CONTROLE DE PEDIDOS G02</strong>
-
-                <div class="assinatura-topo">
-                    By Castelhano
-                </div>
+        <div class="top-bar no-print app-header">
+        <div class="brand-block">
+            <div class="brand-title">CONTROLE DE MERCADORIA</div>
+            <div class="brand-meta">
+                <span>GALPÃO G02</span><span class="brand-dot"></span><span>By Castelhano</span>
             </div>
-
-            <button
-                class="btn-dark"
-                onclick="abrirAba('principal')">
-                ← VOLTAR
-            </button>
-
         </div>
+
+        <div class="app-tabs">
+            <button class="nav-tab" data-tab="principal" onclick="abrirAba('principal')">RECEBIMENTO</button>
+            <button class="nav-tab admin-nav" data-tab="estoque" data-admin-only="true" onclick="abrirAba('estoque')">ESTOQUE</button>
+            <button class="nav-tab" data-tab="saldo" onclick="abrirAba('saldo')">SALDO</button>
+            <button class="nav-tab admin-nav" data-tab="pedidos" data-admin-only="true" onclick="abrirAba('pedidos')">PEDIDOS</button>
+        </div>
+
+        <button class="btn-sair app-logout" onclick="sair()">SAIR</button>
+    </div>
 
 
         <div class="card no-print">
 
             <h3>Cadastrar pedido</h3>
 
-            <div class="form-grid">
+            <div class="form-grid pedidos-form-grid">
 
-                <input
-                    type="text"
-                    id="pedidoNumero"
-                    placeholder="Nº DO PEDIDO"
-                    autocomplete="off"
-                >
+                <div class="form-field span-3">
+                    <label for="pedidoNumero">Nº do pedido</label>
+                    <input type="text" id="pedidoNumero" placeholder="Pedido" autocomplete="off">
+                </div>
 
-                <input
-                    type="text"
-                    id="pedidoReferencia"
-                    placeholder="REFERÊNCIA"
-                    autocomplete="off"
-                >
+                <div class="form-field span-3">
+                    <label for="pedidoReferencia">Referência</label>
+                    <input type="text" id="pedidoReferencia" placeholder="Referência" autocomplete="off">
+                </div>
 
-                <input
-                    type="number"
-                    id="pedidoQuantidade"
-                    placeholder="QUANTIDADE CXS"
-                    min="1"
-                >
+                <div class="form-field span-2">
+                    <label for="pedidoQuantidade">Quantidade CXS</label>
+                    <input type="number" id="pedidoQuantidade" placeholder="CXS" min="1">
+                </div>
 
-                <input
-                    type="text"
-                    id="pedidoSeparador"
-                    placeholder="SEPARADOR"
-                    autocomplete="off"
-                >
+                <div class="form-field span-4">
+                    <label for="pedidoSeparador">Separador</label>
+                    <input type="text" id="pedidoSeparador" placeholder="Nome do separador" autocomplete="off">
+                </div>
 
-                <input
-                    type="date"
-                    id="pedidoData"
-                >
+                <div class="form-field span-3">
+                    <label for="pedidoData">Data</label>
+                    <input type="date" id="pedidoData">
+                </div>
 
-                <input
-    type="text"
-    id="pedidoPaleteInicio"
-    placeholder="PRIMEIRO PALETE"
-    autocomplete="off"
->
+                <div class="form-field span-3">
+                    <label for="pedidoPaleteInicio">Primeiro palete</label>
+                    <input type="text" id="pedidoPaleteInicio" placeholder="Primeiro PA" autocomplete="off">
+                </div>
 
-<input
-    type="text"
-    id="pedidoPaleteFim"
-    placeholder="ÚLTIMO PALETE"
-    autocomplete="off"
->
+                <div class="form-field span-3">
+                    <label for="pedidoPaleteFim">Último palete</label>
+                    <input type="text" id="pedidoPaleteFim" placeholder="Último PA" autocomplete="off">
+                </div>
 
             </div>
 
@@ -2147,7 +2704,7 @@ CONTROLE DE ESTOQUE
         <div class="end-topbar">
             <div>
                 <strong>ENDEREÇAMENTO G02</strong>
-                <div class="end-subtitle">BIPAGEM OPERACIONAL • PA → VAGA → REFERÊNCIA / DESCRIÇÃO</div>
+                <div class="end-subtitle">FLUXO RÁPIDO DE ENDEREÇAMENTO • PA → VAGA → REFERÊNCIA / DESCRIÇÃO</div>
             </div>
             <button class="btn-sair" onclick="sair()">SAIR</button>
         </div>
@@ -2500,49 +3057,27 @@ sessionStorage.removeItem("abaAtivaG02");
 
 function configurarPermissoes(){
 
-    const cadastro = document.querySelector(".card.no-print");
-    const btnEstoque = document.getElementById("btnEstoque");
-    const btnSaldo = document.getElementById("btnSaldo");
-    const btnPedidos = document.getElementById("btnPedidos");
+    const cadastro = document.querySelector("#abaPaletes .card.no-print");
+    const adminNavs = document.querySelectorAll('[data-admin-only="true"]');
 
     if(perfil === "consulta"){
 
-        // Esconde cadastro
-        cadastro.style.display = "none";
+        if(cadastro) cadastro.style.display = "none";
 
-        // Esconde botão de estoque
-        if(btnEstoque){
-            btnEstoque.style.display = "none";
-        }
-
-        if(btnPedidos){
-    btnPedidos.style.display = "none";
-}
-
-        if(btnSaldo){
-            btnSaldo.style.display = "inline-block";
-        }
+        adminNavs.forEach(botao => {
+            botao.style.display = "none";
+        });
 
     }else{
 
-        cadastro.style.display = "block";
+        if(cadastro) cadastro.style.display = "block";
 
-        if(btnEstoque){
-            btnEstoque.style.display = "inline-block";
-        }
-
-        if(btnPedidos){
-    btnPedidos.style.display = "inline-block";
-}
-
-        if(btnSaldo){
-            btnSaldo.style.display = "inline-block";
-        }
-
+        adminNavs.forEach(botao => {
+            botao.style.display = "inline-flex";
+        });
     }
-
 }
-       
+
 
 /* =========================
    CADASTRAR / EDITAR
@@ -4298,21 +4833,44 @@ function renderizarVagasG02() {
         return;
     }
 
-    ordenadas.forEach(vaga => {
-        const item = document.createElement("div");
-        item.className = "end-vaga-item";
+    [0,1,2,3,4].forEach(nivel => {
+        const vagasNivel = ordenadas.filter(
+            vaga => Number(vaga.nivel) === nivel
+        );
 
-        item.innerHTML = `
-            <div class="end-vaga-codigo">${escapeHTML(vaga.codigo)}</div>
-            <span class="end-nivel">NÍVEL ${escapeHTML(vaga.nivel)}</span>
-            <button
-                class="action-btn btn-red"
-                title="Excluir vaga"
-                onclick="excluirVagaG02('${encodeURIComponent(vaga.codigo)}')"
-            >🗑️</button>
+        if (!vagasNivel.length) return;
+
+        const secao = document.createElement("div");
+        secao.className = "end-level-section";
+
+        secao.innerHTML = `
+            <div class="end-level-title">
+                <span>NÍVEL ${nivel}</span>
+                <span>${vagasNivel.length} VAGA(S)</span>
+            </div>
+            <div class="end-level-items"></div>
         `;
 
-        lista.appendChild(item);
+        const itens = secao.querySelector(".end-level-items");
+
+        vagasNivel.forEach(vaga => {
+            const item = document.createElement("div");
+            item.className = "end-vaga-item";
+
+            item.innerHTML = `
+                <div class="end-vaga-codigo">${escapeHTML(vaga.codigo)}</div>
+                <span class="end-nivel">NÍVEL ${escapeHTML(vaga.nivel)}</span>
+                <button
+                    class="action-btn btn-red"
+                    title="Excluir vaga"
+                    onclick="excluirVagaG02('${encodeURIComponent(vaga.codigo)}')"
+                >🗑️</button>
+            `;
+
+            itens.appendChild(item);
+        });
+
+        lista.appendChild(secao);
     });
 
     preencherVagasDatalist();
@@ -4403,7 +4961,7 @@ async function excluirVagaG02(codigoCodificado) {
     }
 }
 
-function limparFormularioEnderecamento() {
+function limparFormularioEnderecamento(preservarMensagem = false) {
     const pa = document.getElementById("endPa");
     const vaga = document.getElementById("endVaga");
     const produto = document.getElementById("endProduto");
@@ -4415,7 +4973,7 @@ function limparFormularioEnderecamento() {
 
     atualizarInfoVagaEnderecamento();
 
-    if (mensagem) {
+    if (mensagem && !preservarMensagem) {
         mensagem.className = "end-status";
         mensagem.textContent = "Pronto para leitura do próximo PA.";
     }
@@ -4551,7 +5109,7 @@ async function salvarEnderecamentoG02() {
                 `${pa} endereçado em ${vaga.codigo} • NÍVEL ${vaga.nivel}.`;
         }
 
-        limparFormularioEnderecamento();
+        limparFormularioEnderecamento(true);
 
     } catch (erro) {
         console.error(erro);
@@ -4918,6 +5476,14 @@ function abrirAba(tipo){
 
     // Guarda a aba atual para manter a mesma tela após F5/reload.
     sessionStorage.setItem("abaAtivaG02", tipo);
+
+    // Atualiza visualmente a aba ativa em todos os cabeçalhos.
+    document.querySelectorAll(".nav-tab[data-tab]").forEach(botao => {
+        botao.classList.toggle(
+            "active",
+            botao.dataset.tab === tipo
+        );
+    });
 
     const abaPrincipal =
         document.getElementById("abaPaletes");
