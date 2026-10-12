@@ -3101,6 +3101,12 @@ function obterM3PorCx(referencia) {
         return 0.057150;
     }
 
+    // 17132.44.9999 / 1.17132.44.9999
+    // Usa a mesma cubagem da referência 45: 0,068634 m³/CX
+    if (ref === "17132.44.9999" || ref === "1.17132.44.9999") {
+        return 0.068634;
+    }
+
     // 17132.45.9999 / 1.17132.45.9999
     // Cubagem informada no cadastro CAMESA: 0,068634 m³/CX
     if (ref === "17132.45.9999" || ref === "1.17132.45.9999") {
