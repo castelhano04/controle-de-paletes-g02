@@ -1984,6 +1984,410 @@ tbody tr:hover td {
     }
 }
 
+
+/* =====================================================
+   DESIGNER V7 — TABELAS / HIERARQUIA VISUAL
+   Camada visual: não altera regras, Firebase ou cálculos
+===================================================== */
+
+:root {
+    --g02-navy: #18384c;
+    --g02-navy-2: #234f6b;
+    --g02-sky: #eaf4fa;
+    --g02-line: #d7e4ec;
+    --g02-soft: #f5f9fc;
+    --g02-green-soft: #eaf7f0;
+    --g02-green-line: #c7e6d3;
+    --g02-blue-soft: #edf6fb;
+    --g02-blue-line: #cee3ef;
+}
+
+/* Dá mais profundidade à página sem pesar */
+body {
+    background:
+        radial-gradient(circle at 15% 0%, rgba(94,163,207,.10), transparent 27%),
+        linear-gradient(180deg, #eef5f9 0%, #e8f0f5 100%) !important;
+}
+
+.container {
+    max-width: 1320px !important;
+}
+
+/* Cabeçalho principal com acabamento de dashboard */
+.top-bar {
+    border: 1px solid rgba(130,165,187,.55) !important;
+    background: rgba(255,255,255,.88) !important;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 24px rgba(28,63,85,.07) !important;
+}
+
+/* Card da tabela com moldura interna e respiro */
+.area-recebimento > .table-card,
+#abaEstoque .table-card,
+#abaPedidos .table-card,
+.saldo-pagina-card {
+    background: linear-gradient(180deg, #f7fbfd 0%, #eef5f9 100%) !important;
+    border: 1px solid #c8dbe7 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 12px 30px rgba(35,73,96,.09) !important;
+    overflow: auto !important;
+}
+
+.table-title.table-title-premium {
+    min-height: 66px;
+    padding: 12px 16px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    background: linear-gradient(115deg, var(--g02-navy) 0%, var(--g02-navy-2) 62%, #2c698c 100%) !important;
+    border: 0 !important;
+    color: #fff !important;
+}
+
+.table-title-brand {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-align: left;
+}
+
+.table-title-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.20);
+    font-size: 18px;
+    color: #fff;
+}
+
+.table-title-copy {
+    min-width: 0;
+}
+
+.table-title-copy strong {
+    display: block;
+    color: #fff !important;
+    font-size: 14px;
+    line-height: 1.15;
+    letter-spacing: .45px;
+}
+
+.table-title-copy small {
+    display: block;
+    margin-top: 4px;
+    color: rgba(255,255,255,.72);
+    font-size: 10px;
+    font-weight: 650;
+    letter-spacing: .15px;
+}
+
+.table-title-badge {
+    flex-shrink: 0;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.13);
+    border: 1px solid rgba(255,255,255,.20);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: .5px;
+}
+
+/* A tabela passa a parecer uma coleção de cartões, não uma planilha seca */
+.area-recebimento .table-card table,
+#abaEstoque .table-card table,
+#abaPedidos .table-card table,
+.saldo-pagina-card table {
+    width: calc(100% - 20px) !important;
+    margin: 2px 10px 10px !important;
+    border-collapse: separate !important;
+    border-spacing: 0 7px !important;
+    table-layout: fixed;
+}
+
+.area-recebimento .table-card thead th,
+#abaEstoque .table-card thead th,
+#abaPedidos .table-card thead th,
+.saldo-pagina-card thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: transparent !important;
+    color: #61717d !important;
+    border: 0 !important;
+    padding: 10px 8px 6px !important;
+    height: auto !important;
+    font-size: 9.5px !important;
+    font-weight: 850 !important;
+    letter-spacing: .55px;
+}
+
+.area-recebimento .table-card tbody td,
+#abaEstoque .table-card tbody td,
+#abaPedidos .table-card tbody td,
+.saldo-pagina-card tbody td {
+    background: rgba(255,255,255,.96) !important;
+    border-top: 1px solid #dbe7ee !important;
+    border-bottom: 1px solid #dbe7ee !important;
+    padding: 9px 9px !important;
+    height: auto !important;
+    vertical-align: middle !important;
+    color: #25343e !important;
+}
+
+.area-recebimento .table-card tbody td:first-child,
+#abaEstoque .table-card tbody td:first-child,
+#abaPedidos .table-card tbody td:first-child,
+.saldo-pagina-card tbody td:first-child {
+    border-left: 1px solid #dbe7ee !important;
+    border-radius: 10px 0 0 10px;
+}
+
+.area-recebimento .table-card tbody td:last-child,
+#abaEstoque .table-card tbody td:last-child,
+#abaPedidos .table-card tbody td:last-child,
+.saldo-pagina-card tbody td:last-child {
+    border-right: 1px solid #dbe7ee !important;
+    border-radius: 0 10px 10px 0;
+}
+
+.area-recebimento .table-card tbody tr,
+#abaEstoque .table-card tbody tr,
+#abaPedidos .table-card tbody tr,
+.saldo-pagina-card tbody tr {
+    filter: drop-shadow(0 3px 4px rgba(25,55,73,.035));
+    transition: filter .16s ease, transform .16s ease;
+}
+
+.area-recebimento .table-card tbody tr:hover,
+#abaEstoque .table-card tbody tr:hover,
+#abaPedidos .table-card tbody tr:hover,
+.saldo-pagina-card tbody tr:hover {
+    filter: drop-shadow(0 7px 10px rgba(25,55,73,.095));
+}
+
+.area-recebimento .table-card tbody tr:hover td,
+#abaEstoque .table-card tbody tr:hover td,
+#abaPedidos .table-card tbody tr:hover td,
+.saldo-pagina-card tbody tr:hover td {
+    background: #fff !important;
+    border-color: #bcd5e4 !important;
+}
+
+/* Referência como identidade visual da linha */
+.ref-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.ref-code {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    padding: 5px 8px;
+    border-radius: 8px;
+    background: #eaf4fa;
+    border: 1px solid #c8dfed;
+    color: #173f59 !important;
+    font-size: 11.5px;
+    font-weight: 850 !important;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+}
+
+.ref-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: #f3f6f8;
+    color: #75838d !important;
+    font-size: 8.8px !important;
+    font-weight: 800 !important;
+    letter-spacing: .15px;
+}
+
+/* Recebido / saldo deixam de ser um bloco de texto */
+.qty-stack {
+    display: grid;
+    gap: 5px;
+    text-align: left;
+}
+
+.qty-box {
+    border-radius: 8px;
+    padding: 6px 7px;
+    border: 1px solid transparent;
+}
+
+.qty-box.recebido {
+    background: var(--g02-blue-soft);
+    border-color: var(--g02-blue-line);
+}
+
+.qty-box.saldo {
+    background: var(--g02-green-soft);
+    border-color: var(--g02-green-line);
+}
+
+.qty-label {
+    display: block;
+    margin-bottom: 3px;
+    color: #697985 !important;
+    font-size: 8px !important;
+    font-weight: 850 !important;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.qty-main {
+    display: block;
+    color: #20313c !important;
+    font-size: 11.5px !important;
+    font-weight: 850 !important;
+    line-height: 1.1;
+}
+
+.qty-sub {
+    display: block;
+    margin-top: 2px;
+    color: #6a7882 !important;
+    font-size: 9.5px !important;
+    font-weight: 700 !important;
+}
+
+.description-cell {
+    text-align: left !important;
+    padding-left: 13px !important;
+}
+
+.description-main {
+    display: block;
+    color: #293942 !important;
+    font-size: 11.2px;
+    font-weight: 750 !important;
+    line-height: 1.3;
+}
+
+.galpao-chip,
+.date-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    white-space: nowrap;
+    font-weight: 850 !important;
+}
+
+.galpao-chip {
+    min-width: 44px;
+    padding: 5px 8px;
+    background: #edf3f7;
+    border: 1px solid #d3e0e8;
+    color: #425664 !important;
+    font-size: 9px !important;
+}
+
+.date-chip {
+    padding: 5px 7px;
+    background: #f7f9fa;
+    border: 1px solid #dde5ea;
+    color: #55656f !important;
+    font-size: 9.5px !important;
+}
+
+#tabelaPaletes .btn-ver-containers,
+#tabelaEstoque .btn-ver-containers-estoque {
+    width: auto !important;
+    min-width: 92px !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 6px 9px !important;
+    min-height: 34px !important;
+    border-radius: 9px !important;
+    background: linear-gradient(180deg, #2f82b8, #246d9b) !important;
+    box-shadow: 0 4px 10px rgba(36,109,155,.14) !important;
+    font-size: 8.8px !important;
+    line-height: 1.08 !important;
+}
+
+#tabelaPaletes .action-btn,
+#tabelaEstoque .action-btn,
+#tabelaPedidos .action-btn {
+    border-radius: 8px !important;
+    box-shadow: 0 3px 8px rgba(23,53,71,.10) !important;
+}
+
+/* Totais com mais presença */
+.summary-box {
+    background: linear-gradient(145deg, #ffffff 0%, #f4f9fc 100%) !important;
+    box-shadow: 0 6px 16px rgba(34,74,98,.055) !important;
+}
+
+.summary-box strong {
+    font-size: 23px !important;
+}
+
+/* Rodapé do saldo com cara de fechamento */
+.tabela-saldo-pagina tfoot td {
+    background: linear-gradient(180deg, #dcecf6, #d1e5f1) !important;
+    border-top: 1px solid #aac6d7 !important;
+    color: #17394f !important;
+}
+
+@media(max-width: 850px) {
+    .table-title.table-title-premium {
+        min-height: 58px;
+        padding: 10px 12px !important;
+    }
+
+    .table-title-copy small {
+        display: none;
+    }
+
+    .table-title-badge {
+        display: none;
+    }
+
+    .area-recebimento .table-card table,
+    #abaEstoque .table-card table,
+    #abaPedidos .table-card table,
+    .saldo-pagina-card table {
+        width: calc(100% - 12px) !important;
+        margin-left: 6px !important;
+        margin-right: 6px !important;
+    }
+}
+
+@media print {
+    .area-recebimento .table-card table,
+    #abaEstoque .table-card table,
+    #abaPedidos .table-card table,
+    .saldo-pagina-card table {
+        border-spacing: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .area-recebimento .table-card tbody tr,
+    #abaEstoque .table-card tbody tr,
+    #abaPedidos .table-card tbody tr,
+    .saldo-pagina-card tbody tr {
+        filter: none !important;
+    }
+}
+
 </style>
     
 </head>
@@ -2361,8 +2765,15 @@ tbody tr:hover td {
 
     <div class="table-card">
 
-        <div class="table-title">
-            CONTROLE DE REFERÊNCIAS
+        <div class="table-title table-title-premium">
+            <div class="table-title-brand">
+                <span class="table-title-icon">▦</span>
+                <div class="table-title-copy">
+                    <strong>CONTROLE DE REFERÊNCIAS</strong>
+                    <small>Visão consolidada de recebimentos, saldo e containers</small>
+                </div>
+            </div>
+            <span class="table-title-badge">GALPÃO G02</span>
         </div>
 
         <table>
@@ -2455,8 +2866,15 @@ tbody tr:hover td {
 
             <div class="table-card saldo-pagina-card">
 
-                <div class="table-title">
-                    SALDO DISPONÍVEL - G02
+                <div class="table-title table-title-premium">
+                    <div class="table-title-brand">
+                        <span class="table-title-icon">◫</span>
+                        <div class="table-title-copy">
+                            <strong>SALDO DISPONÍVEL</strong>
+                            <small>Posição atual em CXS, PCS e cubagem disponível</small>
+                        </div>
+                    </div>
+                    <span class="table-title-badge">GALPÃO G02</span>
                 </div>
 
                 <table class="tabela-resumo-estoque tabela-saldo-pagina">
@@ -2517,8 +2935,15 @@ tbody tr:hover td {
 
 <div class="table-card">
 
-<div class="table-title">
-CONTROLE DE ESTOQUE
+<div class="table-title table-title-premium">
+    <div class="table-title-brand">
+        <span class="table-title-icon">▤</span>
+        <div class="table-title-copy">
+            <strong>CONTROLE DE ESTOQUE</strong>
+            <small>Movimentação e posição por referência e container</small>
+        </div>
+    </div>
+    <span class="table-title-badge">GALPÃO G02</span>
 </div>
 
 <table>
@@ -2643,8 +3068,15 @@ CONTROLE DE ESTOQUE
 
         <div class="table-card">
 
-            <div class="table-title">
-                PEDIDOS G02
+            <div class="table-title table-title-premium">
+                <div class="table-title-brand">
+                    <span class="table-title-icon">✓</span>
+                    <div class="table-title-copy">
+                        <strong>PEDIDOS G02</strong>
+                        <small>Acompanhamento de separação e paletes por pedido</small>
+                    </div>
+                </div>
+                <span class="table-title-badge">OPERAÇÃO</span>
             </div>
 
             <table>
@@ -4413,25 +4845,32 @@ function renderizar() {
 
                 tr.innerHTML = `
                     <td>
-                        <strong>${escapeHTML(referencia)}</strong>
-                        ${todosRegistros.length > 1 ? `<br><span style="font-size:10px;color:#64748b;">${todosRegistros.length} ENTRADAS</span>` : ""}
+                        <div class="ref-block">
+                            <span class="ref-code">${escapeHTML(referencia)}</span>
+                            ${todosRegistros.length > 1 ? `<span class="ref-meta">${todosRegistros.length} ENTRADAS</span>` : `<span class="ref-meta">1 ENTRADA</span>`}
+                        </div>
                     </td>
 
                     <td>
-                        <strong>Recebido:</strong>
-                        ${formatarQuantidade(recebidoCxs)} CXS<br>
-                        ${formatarQuantidade(recebidoPcs)} PCS
-                        <br><br>
-                        <strong>Saldo:</strong>
-                        ${formatarQuantidade(saldoCxs)} CXS<br>
-                        ${formatarQuantidade(saldoPcs)} PCS
+                        <div class="qty-stack">
+                            <div class="qty-box recebido">
+                                <span class="qty-label">Recebido</span>
+                                <span class="qty-main">${formatarQuantidade(recebidoCxs)} CXS</span>
+                                <span class="qty-sub">${formatarQuantidade(recebidoPcs)} PCS</span>
+                            </div>
+                            <div class="qty-box saldo">
+                                <span class="qty-label">Saldo atual</span>
+                                <span class="qty-main">${formatarQuantidade(saldoCxs)} CXS</span>
+                                <span class="qty-sub">${formatarQuantidade(saldoPcs)} PCS</span>
+                            </div>
+                        </div>
                     </td>
 
-                    <td class="description">
-                        ${escapeHTML(descricaoPrincipal)}
+                    <td class="description description-cell">
+                        <span class="description-main">${escapeHTML(descricaoPrincipal)}</span>
                     </td>
 
-                    <td>G02</td>
+                    <td><span class="galpao-chip">G02</span></td>
 
                     <td>
                         <button class="btn-blue btn-ver-containers"
@@ -4443,7 +4882,7 @@ function renderizar() {
                     </td>
 
                     <td style="text-align:center;">
-                        ${dataResumo}
+                        <span class="date-chip">${dataResumo}</span>
                     </td>
 
                     ${perfil === "admin" ? `
@@ -5629,21 +6068,23 @@ function abrirAba(tipo){
 
             tr.innerHTML = `
                 <td>
-                    <strong>${escapeHTML(referencia)}</strong>
-                    ${registros.length > 1
-                        ? `<br><span style="font-size:10px;color:#64748b;">${registros.length} ENTRADAS</span>`
-                        : ""
-                    }
+                    <div class="ref-block">
+                        <span class="ref-code">${escapeHTML(referencia)}</span>
+                        <span class="ref-meta">${registros.length} ${registros.length === 1 ? "ENTRADA" : "ENTRADAS"}</span>
+                    </div>
                 </td>
 
                 <td>
-                    <strong>${formatarQuantidade(saldoCxs)} CXS</strong><br>
-                    ${formatarQuantidade(saldoPcs)} PCS
+                    <div class="qty-box saldo">
+                        <span class="qty-label">Saldo atual</span>
+                        <span class="qty-main">${formatarQuantidade(saldoCxs)} CXS</span>
+                        <span class="qty-sub">${formatarQuantidade(saldoPcs)} PCS</span>
+                    </div>
                 </td>
 
-                <td>${escapeHTML(descricaoPrincipal)}</td>
+                <td class="description-cell"><span class="description-main">${escapeHTML(descricaoPrincipal)}</span></td>
 
-                <td>G02</td>
+                <td><span class="galpao-chip">G02</span></td>
 
                 <td>
                     <button
