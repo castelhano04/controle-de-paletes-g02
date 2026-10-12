@@ -18,40 +18,6 @@ body {
 }
 
 
-function exibirModuloEnderecamento() {
-
-    const sistemaPrincipal =
-        document.getElementById("sistema");
-
-    const modulo =
-        document.getElementById("sistemaEnderecamento");
-
-    if (!modulo) {
-        console.error("Módulo de endereçamento não encontrado.");
-        return false;
-    }
-
-    /*
-       O HTML original possui uma estrutura de DIVs antiga.
-       Em alguns navegadores o módulo novo pode acabar sendo interpretado
-       como filho do #sistema. Se o pai for escondido, a tela fica branca.
-
-       Antes de abrir o módulo, movemos ele diretamente para o BODY.
-       Assim os dois sistemas ficam visualmente independentes.
-    */
-    if (modulo.parentElement !== document.body) {
-        document.body.appendChild(modulo);
-    }
-
-    if (sistemaPrincipal) {
-        sistemaPrincipal.style.display = "none";
-    }
-
-    modulo.style.display = "block";
-
-    return true;
-}
-
 /* =========================
    LOGIN
 ========================= */
@@ -2382,6 +2348,37 @@ let enderecamentosG02 = [];
 let unsubscribeVagasG02 = null;
 let unsubscribeEnderecamentosG02 = null;
 
+
+
+function exibirModuloEnderecamento() {
+
+    const sistemaPrincipal =
+        document.getElementById("sistema");
+
+    const modulo =
+        document.getElementById("sistemaEnderecamento");
+
+    if (!modulo) {
+        console.error("Módulo de endereçamento não encontrado.");
+        return false;
+    }
+
+    /*
+       Garante que o módulo de endereçamento seja independente
+       da estrutura visual do sistema principal.
+    */
+    if (modulo.parentElement !== document.body) {
+        document.body.appendChild(modulo);
+    }
+
+    if (sistemaPrincipal) {
+        sistemaPrincipal.style.display = "none";
+    }
+
+    modulo.style.display = "block";
+
+    return true;
+}
 
 
 /* =========================
