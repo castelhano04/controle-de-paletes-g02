@@ -3101,6 +3101,36 @@ function obterM3PorCx(referencia) {
         return 0.057150;
     }
 
+    // 17132.45.9999 / 1.17132.45.9999
+    // Cubagem informada no cadastro CAMESA: 0,068634 m³/CX
+    if (ref === "17132.45.9999" || ref === "1.17132.45.9999") {
+        return 0.068634;
+    }
+
+    // 17132.46.9999 / 1.17132.46.9999
+    // Cubagem informada no cadastro CAMESA: 0,104272 m³/CX
+    if (ref === "17132.46.9999" || ref === "1.17132.46.9999") {
+        return 0.104272;
+    }
+
+    // 1.26052.02.1000
+    // Cubagem informada no cadastro CAMESA: 0,082900 m³/CX
+    if (ref === "1.26052.02.1000") {
+        return 0.082900;
+    }
+
+    // 1.26052.03.1000
+    // Cubagem informada no cadastro CAMESA: 0,119600 m³/CX
+    if (ref === "1.26052.03.1000") {
+        return 0.119600;
+    }
+
+    // 1.26053.02.1000
+    // Cubagem informada no cadastro CAMESA: 0,085400 m³/CX
+    if (ref === "1.26053.02.1000") {
+        return 0.085400;
+    }
+
     // MOP GIRATÓRIO - CAIXA MASTER 24 PCS
     if (ref === "1.26026.80.1011") {
         return 0.156180;
