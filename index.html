@@ -2778,6 +2778,180 @@ body.perfil-consulta #tabelaPaletes .description-main {
     background: linear-gradient(180deg, #e04655 0%, #cf2436 100%) !important;
 }
 
+
+/* =====================================================
+   V15 - LOGIN LIMPO E MODERNO
+===================================================== */
+
+#loginScreen {
+    background:
+        radial-gradient(circle at top left, rgba(255,255,255,.95) 0, rgba(255,255,255,0) 34%),
+        linear-gradient(135deg, #eef5f9 0%, #e3eef5 48%, #edf4f8 100%) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+#loginScreen::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(rgba(255,255,255,.20), rgba(255,255,255,.20)),
+        radial-gradient(circle at 80% 20%, rgba(55,119,157,.08), transparent 28%);
+}
+
+#loginScreen .login-box {
+    position: relative;
+    z-index: 1;
+    width: 410px !important;
+    max-width: 94vw !important;
+    padding: 34px 34px 28px !important;
+    border-radius: 20px !important;
+    background: rgba(255,255,255,.96) !important;
+    border: 1px solid rgba(167,193,209,.72) !important;
+    box-shadow:
+        0 24px 60px rgba(38,73,94,.14),
+        0 4px 16px rgba(38,73,94,.06) !important;
+    backdrop-filter: blur(12px);
+    text-align: left !important;
+}
+
+#loginScreen .login-box::before {
+    content: "G02";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    height: 28px;
+    padding: 0 12px;
+    margin-bottom: 18px;
+    border-radius: 999px;
+    background: #e7f1f7;
+    border: 1px solid #c9dce8;
+    color: #315c76;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .7px;
+}
+
+#loginScreen .login-box h2 {
+    margin: 0 !important;
+    color: #17384c !important;
+    font-size: 24px !important;
+    line-height: 1.15 !important;
+    font-weight: 850 !important;
+    letter-spacing: -.2px !important;
+    text-align: left !important;
+}
+
+#loginScreen .login-box p {
+    margin: 9px 0 24px !important;
+    color: #6d7f8a !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    text-align: left !important;
+}
+
+#loginScreen .assinatura {
+    position: absolute;
+    left: 34px;
+    bottom: 18px;
+    margin: 0 !important;
+    color: #91a0aa !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: .2px;
+}
+
+#loginScreen #senhaLogin {
+    width: 100% !important;
+    height: 48px !important;
+    margin: 0 0 12px !important;
+    padding: 0 14px !important;
+    border-radius: 10px !important;
+    border: 1px solid #b7cbd8 !important;
+    background: #fbfdfe !important;
+    color: #203946 !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+    box-shadow: none !important;
+    transition: .18s ease !important;
+}
+
+#loginScreen #senhaLogin::placeholder {
+    color: #98a6af !important;
+    font-weight: 500 !important;
+}
+
+#loginScreen #senhaLogin:focus {
+    border-color: #3c84ad !important;
+    background: #fff !important;
+    box-shadow: 0 0 0 4px rgba(60,132,173,.10) !important;
+}
+
+#loginScreen .login-box > button {
+    width: 100% !important;
+    height: 48px !important;
+    margin: 0 !important;
+    border-radius: 10px !important;
+    background: linear-gradient(180deg, #2f79a2 0%, #286a90 100%) !important;
+    border: 1px solid #245f82 !important;
+    box-shadow: 0 7px 16px rgba(40,106,144,.16) !important;
+    color: #fff !important;
+    font-size: 12px !important;
+    font-weight: 850 !important;
+    letter-spacing: .45px !important;
+    transition: .18s ease !important;
+}
+
+#loginScreen .login-box > button:hover {
+    transform: translateY(-1px) !important;
+    background: linear-gradient(180deg, #3484b1 0%, #2b729a 100%) !important;
+    box-shadow: 0 9px 20px rgba(40,106,144,.20) !important;
+}
+
+#loginScreen .login-box > button:active {
+    transform: translateY(0) !important;
+}
+
+#loginScreen .erro-login {
+    display: none;
+    margin: 12px 0 26px !important;
+    padding: 9px 11px !important;
+    border-radius: 9px !important;
+    background: #fff1f2 !important;
+    border: 1px solid #f1c7cc !important;
+    color: #a92736 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+}
+
+@media (max-width: 520px) {
+    #loginScreen {
+        padding: 16px !important;
+    }
+
+    #loginScreen .login-box {
+        width: 100% !important;
+        padding: 28px 22px 26px !important;
+        border-radius: 16px !important;
+    }
+
+    #loginScreen .assinatura {
+        left: 22px;
+        bottom: 14px;
+    }
+
+    #loginScreen .login-box h2 {
+        font-size: 21px !important;
+    }
+}
+
 </style>
     
 </head>
