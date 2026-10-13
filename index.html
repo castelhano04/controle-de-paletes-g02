@@ -2470,6 +2470,154 @@ body.perfil-consulta #tabelaPaletes .date-count {
     font-weight: 700 !important;
 }
 
+
+
+/* V10 - REFINO VISUAL DA ÁREA REFERÊNCIA / QUANTIDADE / DESCRIÇÃO */
+.area-recebimento .table-card > table thead th {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    font-size: 10.5px !important;
+    letter-spacing: .85px !important;
+}
+
+.area-recebimento .table-card > table tbody td {
+    padding: 16px 14px !important;
+}
+
+#tabelaPaletes .ref-block {
+    align-items: flex-start !important;
+    justify-content: center !important;
+    min-height: 62px !important;
+    gap: 7px !important;
+}
+
+#tabelaPaletes .ref-code {
+    display: inline-flex !important;
+    align-items: center !important;
+    min-height: 30px !important;
+    padding: 0 10px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(180deg,#eef6fb,#e2f0f8) !important;
+    border: 1px solid #c7deeb !important;
+    color: #0f4c73 !important;
+    font-size: 12.8px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.55) !important;
+}
+
+#tabelaPaletes .ref-meta {
+    background: #f2f5f7 !important;
+    border: 1px solid #dbe4ea !important;
+    border-radius: 999px !important;
+    padding: 4px 8px !important;
+    font-size: 9px !important;
+    color: #6e7e89 !important;
+}
+
+#tabelaPaletes .qty-stack {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(118px, 1fr)) !important;
+    gap: 9px !important;
+    align-items: stretch !important;
+}
+
+#tabelaPaletes .qty-box {
+    min-height: 68px !important;
+    padding: 9px 10px !important;
+    border-radius: 10px !important;
+    border: 1px solid #d7e4ec !important;
+    background: #ffffff !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.7) !important;
+    position: relative !important;
+}
+
+#tabelaPaletes .qty-box.recebido {
+    background: linear-gradient(180deg,#f4f9fd,#ebf4fa) !important;
+    border-color: #cddfeb !important;
+}
+
+#tabelaPaletes .qty-box.saldo {
+    background: linear-gradient(180deg,#f3fbf7,#e8f7ef) !important;
+    border-color: #c7e2d1 !important;
+}
+
+#tabelaPaletes .qty-box::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 10px 0 0 10px;
+    background: #5ba3cf;
+}
+
+#tabelaPaletes .qty-box.saldo::before {
+    background: #35a46f;
+}
+
+#tabelaPaletes .qty-label {
+    margin: 0 0 5px 0 !important;
+    font-size: 9px !important;
+    letter-spacing: .55px !important;
+    color: #6c7f8d !important;
+}
+
+#tabelaPaletes .qty-main {
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    color: #17384c !important;
+    line-height: 1.05 !important;
+}
+
+#tabelaPaletes .qty-sub {
+    margin-top: 4px !important;
+    font-size: 11px !important;
+    font-weight: 750 !important;
+    color: #5f7381 !important;
+}
+
+#tabelaPaletes .description-cell {
+    padding-left: 18px !important;
+}
+
+#tabelaPaletes .description-main {
+    display: block !important;
+    font-size: 12.4px !important;
+    font-weight: 800 !important;
+    color: #223b4b !important;
+    line-height: 1.35 !important;
+    letter-spacing: .1px !important;
+}
+
+body.perfil-consulta .area-recebimento .table-card > table {
+    min-width: 980px !important;
+}
+
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(1),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(1) { width: 18% !important; }
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(2),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(2) { width: 24% !important; }
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(3),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(3) { width: 28% !important; }
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(4),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(4) { width: 8% !important; }
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(5),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(5) { width: 12% !important; }
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(6),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(6) { width: 10% !important; }
+
+@media (max-width: 1180px) {
+    #tabelaPaletes .qty-stack {
+        grid-template-columns: 1fr !important;
+    }
+
+    #tabelaPaletes .qty-box {
+        min-height: 60px !important;
+    }
+}
+
 </style>
     
 </head>
