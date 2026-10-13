@@ -3696,6 +3696,289 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
  #sistemaEnderecamento .end-table td.end-empty::before{display:none;}
 }
 
+
+/* =====================================================
+   V26 - BANCO DE VAGAS / OCUPAÇÃO 1 PA POR VAGA
+===================================================== */
+
+.end-occupancy-card {
+    overflow: hidden;
+}
+
+.end-occupancy-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+    margin-bottom: 9px;
+}
+
+.end-occ-stat {
+    min-width: 0;
+    min-height: 66px;
+    padding: 9px 8px;
+    border-radius: 10px;
+    border: 1px solid #dbe6ec;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.end-occ-stat span {
+    font-size: 7.5px;
+    font-weight: 900;
+    letter-spacing: .55px;
+    color: #778994;
+}
+
+.end-occ-stat strong {
+    margin-top: 3px;
+    font-size: 19px;
+    line-height: 1;
+    font-weight: 900;
+    color: #1d4157;
+}
+
+.end-occ-stat.ocupadas {
+    background: #fff6f6;
+    border-color: #efd1d4;
+}
+
+.end-occ-stat.ocupadas strong {
+    color: #a92f3d;
+}
+
+.end-occ-stat.livres {
+    background: #eef9f3;
+    border-color: #cce6d7;
+}
+
+.end-occ-stat.livres strong {
+    color: #247049;
+}
+
+.end-occ-stat.percentual {
+    background: #eef6fb;
+    border-color: #d1e2ec;
+}
+
+.end-occ-progress {
+    height: 7px;
+    margin-bottom: 11px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #e7eef2;
+}
+
+.end-occ-progress-bar {
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #347ea6, #1b587a);
+    transition: width .25s ease;
+}
+
+.end-duplicate-warning {
+    margin-bottom: 9px;
+    padding: 9px 10px;
+    border-radius: 9px;
+    border: 1px solid #efc8cd;
+    background: #fff2f3;
+    color: #a12d3b;
+    font-size: 9px;
+    font-weight: 850;
+    line-height: 1.4;
+}
+
+.end-occ-section-title {
+    margin: 11px 0 7px;
+}
+
+.end-occ-section-title > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.end-occ-section-title strong {
+    color: #344f60;
+    font-size: 9px;
+    letter-spacing: .55px;
+}
+
+.end-occ-section-title span {
+    color: #80909a;
+    font-size: 8px;
+    font-weight: 650;
+}
+
+.end-occ-filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+#sistemaEnderecamento .end-occ-filters select,
+#sistemaEnderecamento .end-occ-search {
+    width: 100%;
+    height: 38px;
+    padding: 0 9px;
+    border-radius: 8px;
+    border: 1px solid #cbdce6;
+    background: #fff;
+    color: #355365;
+    font-size: 9px;
+    font-weight: 800;
+    outline: none;
+}
+
+#sistemaEnderecamento .end-occ-search {
+    margin-top: 6px;
+    font-size: 10px;
+}
+
+.end-occ-list-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 1px 6px;
+    color: #596f7d;
+}
+
+.end-occ-list-head span {
+    font-size: 9px;
+    font-weight: 900;
+}
+
+.end-occ-list-head small {
+    color: #87969f;
+    font-size: 7.5px;
+    font-weight: 800;
+}
+
+.end-occ-list {
+    max-height: 335px;
+    overflow-y: auto;
+    display: grid;
+    gap: 5px;
+    padding-right: 2px;
+}
+
+.end-slot-item {
+    min-height: 48px;
+    padding: 7px 9px;
+    border-radius: 9px;
+    border: 1px solid #dbe6ec;
+    background: #fff;
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    align-items: center;
+    gap: 7px;
+}
+
+.end-slot-main {
+    min-width: 0;
+}
+
+.end-slot-main strong {
+    display: block;
+    color: #244658;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .2px;
+}
+
+.end-slot-main small {
+    display: block;
+    margin-top: 2px;
+    color: #83919a;
+    font-size: 7.5px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.end-slot-status {
+    min-width: 58px;
+    padding: 5px 7px;
+    border-radius: 999px;
+    text-align: center;
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: .4px;
+}
+
+.end-slot-item.livre {
+    cursor: pointer;
+}
+
+.end-slot-item.livre:hover {
+    border-color: #b9d7c5;
+    background: #f5fbf7;
+}
+
+.end-slot-item.livre .end-slot-status {
+    background: #e8f7ef;
+    color: #26734b;
+    border: 1px solid #c5e2d1;
+}
+
+.end-slot-item.ocupada .end-slot-status {
+    background: #fff0f1;
+    color: #a42d3a;
+    border: 1px solid #ebc8cc;
+}
+
+.end-slot-pa {
+    display: block;
+    margin-top: 3px;
+    color: #9b3542;
+    font-size: 7.5px;
+    font-weight: 850;
+}
+
+.end-more-slots {
+    width: 100% !important;
+    height: 35px !important;
+    margin-top: 7px !important;
+    border-radius: 8px !important;
+    background: #edf4f8 !important;
+    color: #38627a !important;
+    border: 1px solid #d2e1e9 !important;
+    box-shadow: none !important;
+    font-size: 8.5px !important;
+}
+
+.end-map-footer-compact {
+    grid-template-columns: repeat(3, 1fr) !important;
+    margin-top: 10px !important;
+}
+
+@media(max-width:720px) {
+    .end-occ-list {
+        max-height: 390px;
+    }
+
+    .end-occ-stat {
+        min-height: 62px;
+    }
+
+    .end-occ-stat strong {
+        font-size: 18px;
+    }
+
+    #sistemaEnderecamento .end-occ-filters select {
+        height: 42px;
+        font-size: 9px;
+    }
+
+    #sistemaEnderecamento .end-occ-search {
+        height: 44px;
+        font-size: 11px;
+    }
+}
+
 </style>
     
 </head>
@@ -4740,34 +5023,115 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
                     </div>
 
                     <div id="endMensagem" class="end-status end-operation-message">
-                        Pronto para leitura do primeiro PA.
+                        
                     </div>
                 </div>
             </div>
 
-            <div class="end-card end-map-card">
+            <div class="end-card end-map-card end-occupancy-card">
                 <div class="end-card-heading">
                     <div>
-                        <span class="end-eyebrow">PADRÃO G02</span>
-                        <h3>Mapa de endereços</h3>
+                        <span class="end-eyebrow">BANCO DE VAGAS</span>
+                        <h3>Ocupação do galpão</h3>
                     </div>
-                    <span class="end-address-total">3.080 VAGAS</span>
+                    <span class="end-address-total">3.080 TOTAL</span>
                 </div>
 
-                <div class="end-address-example">
-                    <strong>972b120a</strong>
-                    <span>DEP 972 • RUA B • NÍVEL 1 • VAGA 20 • LADO A</span>
+                <div class="end-occupancy-stats">
+                    <div class="end-occ-stat ocupadas">
+                        <span>OCUPADAS</span>
+                        <strong id="endTotalOcupadas">0</strong>
+                    </div>
+
+                    <div class="end-occ-stat livres">
+                        <span>LIVRES</span>
+                        <strong id="endTotalLivres">3.080</strong>
+                    </div>
+
+                    <div class="end-occ-stat percentual">
+                        <span>OCUPAÇÃO</span>
+                        <strong id="endPercentualOcupacao">0%</strong>
+                    </div>
                 </div>
 
-                <div class="end-map-grid">
-                    <div class="end-map-row"><span>RUA A</span><strong>01–11</strong></div>
-                    <div class="end-map-row"><span>RUA B</span><strong>01–28</strong></div>
-                    <div class="end-map-row"><span>RUAS C–H</span><strong>01–34</strong></div>
-                    <div class="end-map-row"><span>RUA I</span><strong>01–33</strong></div>
-                    <div class="end-map-row"><span>RUA J</span><strong>01–32</strong></div>
+                <div class="end-occ-progress">
+                    <div id="endBarraOcupacao" class="end-occ-progress-bar"></div>
                 </div>
 
-                <div class="end-map-footer">
+                <div id="endAlertaDuplicidadeVagas" class="end-duplicate-warning" style="display:none;"></div>
+
+                <div class="end-occ-section-title">
+                    <div>
+                        <strong>CONSULTAR VAGAS</strong>
+                        <span>Veja exatamente quais posições estão livres ou ocupadas.</span>
+                    </div>
+                </div>
+
+                <div class="end-occ-filters">
+                    <select id="endFiltroRua" onchange="resetarListaVagasG02()">
+                        <option value="">TODAS AS RUAS</option>
+                        <option value="A">RUA A</option>
+                        <option value="B">RUA B</option>
+                        <option value="C">RUA C</option>
+                        <option value="D">RUA D</option>
+                        <option value="E">RUA E</option>
+                        <option value="F">RUA F</option>
+                        <option value="G">RUA G</option>
+                        <option value="H">RUA H</option>
+                        <option value="I">RUA I</option>
+                        <option value="J">RUA J</option>
+                    </select>
+
+                    <select id="endFiltroNivel" onchange="resetarListaVagasG02()">
+                        <option value="">TODOS NÍVEIS</option>
+                        <option value="0">NÍVEL 0</option>
+                        <option value="1">NÍVEL 1</option>
+                        <option value="2">NÍVEL 2</option>
+                        <option value="3">NÍVEL 3</option>
+                        <option value="4">NÍVEL 4</option>
+                    </select>
+
+                    <select id="endFiltroLado" onchange="resetarListaVagasG02()">
+                        <option value="">LADOS A/B</option>
+                        <option value="A">LADO A</option>
+                        <option value="B">LADO B</option>
+                    </select>
+
+                    <select id="endFiltroSituacao" onchange="resetarListaVagasG02()">
+                        <option value="LIVRE" selected>LIVRES</option>
+                        <option value="OCUPADA">OCUPADAS</option>
+                        <option value="">TODAS</option>
+                    </select>
+                </div>
+
+                <input
+                    id="endBuscaVagas"
+                    class="end-occ-search"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Buscar vaga. Ex.: 972b120a"
+                    oninput="resetarListaVagasG02()"
+                >
+
+                <div class="end-occ-list-head">
+                    <span id="endResumoVagas">3.080 vagas</span>
+                    <small>1 vaga = 1 palete</small>
+                </div>
+
+                <div id="endListaVagas" class="end-occ-list"></div>
+
+                <button
+                    id="endBtnMaisVagas"
+                    type="button"
+                    class="end-more-slots"
+                    onclick="mostrarMaisVagasG02()"
+                    style="display:none;"
+                >
+                    MOSTRAR MAIS VAGAS
+                </button>
+
+                <div class="end-map-footer end-map-footer-compact">
+                    <span>RUAS <b>A → J</b></span>
                     <span>NÍVEIS <b>0 • 1 • 2 • 3 • 4</b></span>
                     <span>LADOS <b>A • B</b></span>
                 </div>
@@ -4859,6 +5223,12 @@ let vagasG02 = [];
 let enderecamentosG02 = [];
 let unsubscribeVagasG02 = null;
 let unsubscribeEnderecamentosG02 = null;
+
+let bancoVagasG02 = [];
+let limiteListaVagasG02 = 120;
+let vagasG02Carregadas = false;
+let enderecamentosG02Carregados = false;
+let sincronizandoBancoVagasG02 = false;
 
 
 
@@ -4993,6 +5363,13 @@ function sair() {
         unsubscribeEnderecamentosG02();
         unsubscribeEnderecamentosG02 = null;
     }
+
+    vagasG02 = [];
+    enderecamentosG02 = [];
+    vagasG02Carregadas = false;
+    enderecamentosG02Carregados = false;
+    sincronizandoBancoVagasG02 = false;
+    limiteListaVagasG02 = 120;
 
     if(typeof unsubscribeCatalogoReferencias === "function"){
         unsubscribeCatalogoReferencias();
@@ -5723,6 +6100,7 @@ function limparMultiContainer() {
    Executa quando o DOM já estiver disponível.
 */
 document.addEventListener("DOMContentLoaded", () => {
+    garantirBancoVagasG02();
     preencherDatasLoteSeVazias();
     garantirLinhaMultiRef();
     garantirLinhaMultiContainer();
@@ -7403,6 +7781,407 @@ const CONFIG_RUAS_G02 = Object.freeze({
     J: 32
 });
 
+function gerarBancoVagasG02() {
+    const vagas = [];
+
+    Object.entries(CONFIG_RUAS_G02).forEach(([rua, limite]) => {
+        for (let nivel = 0; nivel <= 4; nivel++) {
+            for (let numero = 1; numero <= limite; numero++) {
+                const numeroFormatado = String(numero).padStart(2, "0");
+
+                ["A", "B"].forEach(lado => {
+                    vagas.push({
+                        codigo: `972${rua.toLowerCase()}${nivel}${numeroFormatado}${lado.toLowerCase()}`,
+                        deposito: "972",
+                        rua,
+                        nivel,
+                        numero,
+                        numeroFormatado,
+                        lado
+                    });
+                });
+            }
+        }
+    });
+
+    return vagas;
+}
+
+function garantirBancoVagasG02() {
+    if (!bancoVagasG02.length) {
+        bancoVagasG02 = gerarBancoVagasG02();
+    }
+
+    return bancoVagasG02;
+}
+
+function mapaOcupacaoAtualG02() {
+    const mapa = new Map();
+
+    /*
+       A coleção de endereçamentos ativos é a principal fonte da tela.
+       A coleção vagas_g02 atua como trava persistente entre aparelhos.
+    */
+    enderecamentosG02.forEach(item => {
+        const vaga = interpretarVagaG02(item.vaga);
+
+        if (vaga.valida && !mapa.has(vaga.codigo)) {
+            mapa.set(vaga.codigo, {
+                pa: item.pa || "",
+                produto: item.produto || "",
+                vaga: vaga.codigo,
+                origem: "enderecamentos"
+            });
+        }
+    });
+
+    vagasG02.forEach(item => {
+        const codigo = interpretarVagaG02(item.codigo || item.vaga || item.id || "");
+
+        if (
+            codigo.valida &&
+            String(item.status || "OCUPADA").toUpperCase() === "OCUPADA" &&
+            !mapa.has(codigo.codigo)
+        ) {
+            mapa.set(codigo.codigo, {
+                pa: item.pa || "",
+                produto: item.produto || "",
+                vaga: codigo.codigo,
+                origem: "banco"
+            });
+        }
+    });
+
+    return mapa;
+}
+
+function obterOcupanteVagaG02(codigo, ignorarPa = "") {
+    const vaga = interpretarVagaG02(codigo);
+    if (!vaga.valida) return null;
+
+    const ignorar = normalizarEndereco(ignorarPa);
+
+    const ativo = enderecamentosG02.find(item =>
+        String(item.vaga || "").trim().toLowerCase() === vaga.codigo.toLowerCase() &&
+        normalizarEndereco(item.pa) !== ignorar
+    );
+
+    if (ativo) {
+        return {
+            pa: ativo.pa || "",
+            produto: ativo.produto || "",
+            vaga: vaga.codigo
+        };
+    }
+
+    const trava = vagasG02.find(item =>
+        String(item.codigo || item.vaga || item.id || "").trim().toLowerCase() === vaga.codigo.toLowerCase() &&
+        String(item.status || "OCUPADA").toUpperCase() === "OCUPADA" &&
+        normalizarEndereco(item.pa) !== ignorar
+    );
+
+    if (trava) {
+        return {
+            pa: trava.pa || "",
+            produto: trava.produto || "",
+            vaga: vaga.codigo
+        };
+    }
+
+    return null;
+}
+
+function contarDuplicidadesVagasG02() {
+    const contagem = new Map();
+
+    enderecamentosG02.forEach(item => {
+        const vaga = interpretarVagaG02(item.vaga);
+        if (!vaga.valida) return;
+
+        if (!contagem.has(vaga.codigo)) {
+            contagem.set(vaga.codigo, []);
+        }
+
+        contagem.get(vaga.codigo).push(item.pa || "");
+    });
+
+    return [...contagem.entries()]
+        .filter(([, pas]) => pas.length > 1)
+        .map(([vaga, pas]) => ({ vaga, pas }));
+}
+
+function atualizarResumoOcupacaoG02() {
+    garantirBancoVagasG02();
+
+    const mapa = mapaOcupacaoAtualG02();
+    const total = bancoVagasG02.length;
+    const ocupadas = mapa.size;
+    const livres = Math.max(0, total - ocupadas);
+    const percentual = total > 0
+        ? (ocupadas / total) * 100
+        : 0;
+
+    const elOcupadas = document.getElementById("endTotalOcupadas");
+    const elLivres = document.getElementById("endTotalLivres");
+    const elPercentual = document.getElementById("endPercentualOcupacao");
+    const barra = document.getElementById("endBarraOcupacao");
+
+    if (elOcupadas) elOcupadas.textContent = ocupadas.toLocaleString("pt-BR");
+    if (elLivres) elLivres.textContent = livres.toLocaleString("pt-BR");
+    if (elPercentual) elPercentual.textContent = `${percentual.toFixed(1).replace(".", ",")}%`;
+    if (barra) barra.style.width = `${Math.min(100, percentual)}%`;
+
+    const duplicidades = contarDuplicidadesVagasG02();
+    const alerta = document.getElementById("endAlertaDuplicidadeVagas");
+
+    if (alerta) {
+        if (duplicidades.length) {
+            alerta.style.display = "block";
+            alerta.textContent =
+                `ATENÇÃO: existem ${duplicidades.length} vaga(s) antigas com mais de um PA. ` +
+                `Novos endereçamentos já estão bloqueados para impedir duplicidade.`;
+        } else {
+            alerta.style.display = "none";
+            alerta.textContent = "";
+        }
+    }
+}
+
+function resetarListaVagasG02() {
+    limiteListaVagasG02 = 120;
+    renderizarMapaOcupacaoG02();
+}
+
+function mostrarMaisVagasG02() {
+    limiteListaVagasG02 += 120;
+    renderizarMapaOcupacaoG02();
+}
+
+function usarVagaDoMapaG02(codigo) {
+    const ocupante = obterOcupanteVagaG02(codigo);
+
+    if (ocupante) {
+        alert(
+            `VAGA OCUPADA\n\n` +
+            `Vaga: ${codigo}\n` +
+            `PA atual: ${ocupante.pa || "-"}\n\n` +
+            "Esta vaga não permite vários paletes."
+        );
+        return;
+    }
+
+    const campo = document.getElementById("endVaga");
+
+    if (campo) {
+        campo.value = codigo;
+        atualizarInfoVagaEnderecamento();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setTimeout(() => focarCampoEndereco("endProduto"), 250);
+    }
+}
+
+function renderizarMapaOcupacaoG02() {
+    garantirBancoVagasG02();
+    atualizarResumoOcupacaoG02();
+
+    const listaEl = document.getElementById("endListaVagas");
+    const resumoEl = document.getElementById("endResumoVagas");
+    const btnMais = document.getElementById("endBtnMaisVagas");
+
+    if (!listaEl || !resumoEl || !btnMais) return;
+
+    const rua = String(document.getElementById("endFiltroRua")?.value || "").toUpperCase();
+    const nivelFiltro = String(document.getElementById("endFiltroNivel")?.value ?? "");
+    const lado = String(document.getElementById("endFiltroLado")?.value || "").toUpperCase();
+    const situacao = String(document.getElementById("endFiltroSituacao")?.value || "").toUpperCase();
+    const busca = String(document.getElementById("endBuscaVagas")?.value || "")
+        .trim()
+        .toLowerCase();
+
+    const mapa = mapaOcupacaoAtualG02();
+
+    const filtradas = bancoVagasG02.filter(vaga => {
+        const ocupada = mapa.has(vaga.codigo);
+
+        if (rua && vaga.rua !== rua) return false;
+        if (nivelFiltro !== "" && String(vaga.nivel) !== nivelFiltro) return false;
+        if (lado && vaga.lado !== lado) return false;
+
+        if (situacao === "LIVRE" && ocupada) return false;
+        if (situacao === "OCUPADA" && !ocupada) return false;
+
+        if (busca && !vaga.codigo.toLowerCase().includes(busca)) {
+            const ocupacao = mapa.get(vaga.codigo);
+            const pa = String(ocupacao?.pa || "").toLowerCase();
+
+            if (!pa.includes(busca)) {
+                return false;
+            }
+        }
+
+        return true;
+    });
+
+    resumoEl.textContent =
+        `${filtradas.length.toLocaleString("pt-BR")} vaga(s) encontrada(s)`;
+
+    const exibidas = filtradas.slice(0, limiteListaVagasG02);
+
+    listaEl.innerHTML = "";
+
+    if (!exibidas.length) {
+        listaEl.innerHTML = `
+            <div class="end-slot-item">
+                <div class="end-slot-main">
+                    <strong>Nenhuma vaga encontrada</strong>
+                    <small>Ajuste os filtros para consultar outras posições.</small>
+                </div>
+            </div>
+        `;
+        btnMais.style.display = "none";
+        return;
+    }
+
+    const frag = document.createDocumentFragment();
+
+    exibidas.forEach(vaga => {
+        const ocupacao = mapa.get(vaga.codigo);
+        const ocupada = !!ocupacao;
+
+        const card = document.createElement("div");
+        card.className = `end-slot-item ${ocupada ? "ocupada" : "livre"}`;
+
+        if (!ocupada) {
+            card.title = "Toque para usar esta vaga no endereçamento.";
+            card.onclick = () => usarVagaDoMapaG02(vaga.codigo);
+        }
+
+        card.innerHTML = `
+            <div class="end-slot-main">
+                <strong>${escapeHTML(vaga.codigo)}</strong>
+                <small>
+                    Rua ${vaga.rua} • Nível ${vaga.nivel} • Vaga ${vaga.numeroFormatado} • Lado ${vaga.lado}
+                </small>
+                ${
+                    ocupada
+                    ? `<span class="end-slot-pa">PA: ${escapeHTML(ocupacao.pa || "-")}</span>`
+                    : ""
+                }
+            </div>
+
+            <span class="end-slot-status">
+                ${ocupada ? "OCUPADA" : "LIVRE"}
+            </span>
+        `;
+
+        frag.appendChild(card);
+    });
+
+    listaEl.appendChild(frag);
+
+    btnMais.style.display =
+        filtradas.length > limiteListaVagasG02
+            ? "block"
+            : "none";
+}
+
+async function sincronizarBancoVagasG02() {
+    if (
+        sincronizandoBancoVagasG02 ||
+        !vagasG02Carregadas ||
+        !enderecamentosG02Carregados
+    ) {
+        return;
+    }
+
+    sincronizandoBancoVagasG02 = true;
+
+    try {
+        const ativosPorVaga = new Map();
+
+        enderecamentosG02.forEach(item => {
+            const vaga = interpretarVagaG02(item.vaga);
+
+            if (!vaga.valida) return;
+
+            if (!ativosPorVaga.has(vaga.codigo)) {
+                ativosPorVaga.set(vaga.codigo, item);
+            }
+        });
+
+        const locksAtuais = new Map();
+
+        vagasG02.forEach(item => {
+            const vaga = interpretarVagaG02(item.codigo || item.vaga || item.id || "");
+            if (vaga.valida) {
+                locksAtuais.set(vaga.codigo, item);
+            }
+        });
+
+        const operacoes = [];
+
+        ativosPorVaga.forEach((item, codigo) => {
+            const lock = locksAtuais.get(codigo);
+
+            if (
+                !lock ||
+                normalizarEndereco(lock.pa) !== normalizarEndereco(item.pa) ||
+                String(lock.status || "").toUpperCase() !== "OCUPADA"
+            ) {
+                const vaga = interpretarVagaG02(codigo);
+
+                operacoes.push({
+                    tipo: "set",
+                    ref: db.collection("vagas_g02").doc(codigo),
+                    dados: {
+                        codigo,
+                        vaga: codigo,
+                        pa: item.pa || "",
+                        produto: item.produto || "",
+                        rua: vaga.rua,
+                        nivel: vaga.nivel,
+                        numeroVaga: vaga.numero,
+                        lado: vaga.lado,
+                        galpao: "G02",
+                        status: "OCUPADA",
+                        atualizadoIso: new Date().toISOString(),
+                        atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
+                    }
+                });
+            }
+        });
+
+        locksAtuais.forEach((lock, codigo) => {
+            if (!ativosPorVaga.has(codigo)) {
+                operacoes.push({
+                    tipo: "delete",
+                    ref: db.collection("vagas_g02").doc(codigo)
+                });
+            }
+        });
+
+        for (let i = 0; i < operacoes.length; i += 400) {
+            const batch = db.batch();
+
+            operacoes.slice(i, i + 400).forEach(op => {
+                if (op.tipo === "set") {
+                    batch.set(op.ref, op.dados, { merge: true });
+                } else {
+                    batch.delete(op.ref);
+                }
+            });
+
+            await batch.commit();
+        }
+
+    } catch (erro) {
+        console.error("Falha ao sincronizar banco de vagas G02:", erro);
+    } finally {
+        sincronizandoBancoVagasG02 = false;
+    }
+}
+
+
 function interpretarVagaG02(codigo) {
     const bruto = String(codigo || "").trim().replace(/\s+/g, "").toLowerCase();
 
@@ -7475,8 +8254,25 @@ function atualizarInfoVagaEnderecamento() {
     }
 
     campo.value = resultado.codigo;
+
+    const paAtual = normalizarEndereco(
+        document.getElementById("endPa")?.value
+    );
+
+    const ocupante = obterOcupanteVagaG02(
+        resultado.codigo,
+        paAtual
+    );
+
+    if (ocupante) {
+        info.className = "end-status end-vaga-status warn";
+        info.textContent =
+            `✕ VAGA OCUPADA • PA ${ocupante.pa || "-"} • Esta vaga não permite vários paletes.`;
+        return;
+    }
+
     info.className = "end-status end-vaga-status ok";
-    info.textContent = `✓ ${resultado.codigo} • ${resultado.resumo}`;
+    info.textContent = `✓ LIVRE • ${resultado.codigo} • ${resultado.resumo}`;
 }
 
 function avancarAposVaga() {
@@ -7485,6 +8281,27 @@ function avancarAposVaga() {
     atualizarInfoVagaEnderecamento();
 
     if (!resultado.valida) {
+        focarCampoEndereco("endVaga");
+        return;
+    }
+
+    const paAtual = normalizarEndereco(
+        document.getElementById("endPa")?.value
+    );
+
+    const ocupante = obterOcupanteVagaG02(
+        resultado.codigo,
+        paAtual
+    );
+
+    if (ocupante) {
+        alert(
+            `VAGA OCUPADA\n\n` +
+            `Vaga: ${resultado.codigo}\n` +
+            `PA atual: ${ocupante.pa || "-"}\n\n` +
+            "Esta vaga não permite vários paletes."
+        );
+
         focarCampoEndereco("endVaga");
         return;
     }
@@ -7589,6 +8406,31 @@ async function salvarEnderecamentoG02() {
         return;
     }
 
+    const ocupanteAtual = obterOcupanteVagaG02(
+        vaga.codigo,
+        pa
+    );
+
+    if (ocupanteAtual) {
+        alert(
+            `VAGA OCUPADA\n\n` +
+            `Vaga: ${vaga.codigo}\n` +
+            `PA já armazenado: ${ocupanteAtual.pa || "-"}\n\n` +
+            "Esta vaga não permite vários paletes.\n" +
+            "Retire o PA atual dessa vaga antes de utilizar o endereço."
+        );
+
+        if (mensagem) {
+            mensagem.className = "end-status warn";
+            mensagem.textContent =
+                `${vaga.codigo} está ocupada pelo PA ${ocupanteAtual.pa || "-"}.`;
+        }
+
+        atualizarInfoVagaEnderecamento();
+        focarCampoEndereco("endVaga");
+        return;
+    }
+
     const anterior = enderecamentosG02.find(
         item => normalizarEndereco(item.pa) === pa
     );
@@ -7617,59 +8459,152 @@ async function salvarEnderecamentoG02() {
     }
 
     const agoraIso = new Date().toISOString();
+
     const atualRef =
         db.collection("enderecamentos_g02")
         .doc(idSeguroEndereco(pa));
+
+    const vagaRef =
+        db.collection("vagas_g02")
+        .doc(vaga.codigo);
 
     const historicoRef =
         db.collection("enderecamentos_g02_historico")
         .doc();
 
-    const batch = db.batch();
-
-    batch.set(
-        atualRef,
-        {
-            pa,
-            vaga: vaga.codigo,
-            rua: vaga.rua,
-            nivel: Number(vaga.nivel),
-            numeroVaga: vaga.numero,
-            lado: vaga.lado,
-            produto,
-            galpao: "G02",
-            status: "ENDEREÇADO",
-            atualizadoIso: agoraIso,
-            atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
-        },
-        { merge: true }
-    );
-
-    batch.set(
-        historicoRef,
-        {
-            pa,
-            vaga: vaga.codigo,
-            rua: vaga.rua,
-            nivel: Number(vaga.nivel),
-            numeroVaga: vaga.numero,
-            lado: vaga.lado,
-            produto,
-            galpao: "G02",
-            acao: anterior ? "REENDEREÇADO" : "ENDEREÇADO",
-            vagaAnterior: anterior?.vaga || "",
-            nivelAnterior:
-                anterior && Number.isFinite(Number(anterior.nivel))
-                    ? Number(anterior.nivel)
-                    : null,
-            produtoAnterior: anterior?.produto || "",
-            dataIso: agoraIso,
-            criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-        }
-    );
-
     try {
-        await batch.commit();
+        await db.runTransaction(async transaction => {
+            /*
+               As leituras acontecem antes das gravações para garantir
+               exclusividade real mesmo com dois aparelhos simultâneos.
+            */
+            const atualSnap =
+                await transaction.get(atualRef);
+
+            const vagaSnap =
+                await transaction.get(vagaRef);
+
+            const atualBanco =
+                atualSnap.exists
+                    ? atualSnap.data()
+                    : (anterior || null);
+
+            let vagaAnteriorRef = null;
+            let vagaAnteriorSnap = null;
+
+            const codigoAnterior =
+                interpretarVagaG02(atualBanco?.vaga || "");
+
+            if (
+                codigoAnterior.valida &&
+                codigoAnterior.codigo !== vaga.codigo
+            ) {
+                vagaAnteriorRef =
+                    db.collection("vagas_g02")
+                    .doc(codigoAnterior.codigo);
+
+                vagaAnteriorSnap =
+                    await transaction.get(vagaAnteriorRef);
+            }
+
+            if (vagaSnap.exists) {
+                const dadosVaga = vagaSnap.data() || {};
+                const paOcupante = normalizarEndereco(dadosVaga.pa);
+
+                if (
+                    String(dadosVaga.status || "OCUPADA").toUpperCase() === "OCUPADA" &&
+                    paOcupante &&
+                    paOcupante !== pa
+                ) {
+                    const erro = new Error("VAGA_OCUPADA");
+                    erro.codigoVaga = vaga.codigo;
+                    erro.paOcupante = dadosVaga.pa || "";
+                    throw erro;
+                }
+            }
+
+            /*
+               Se o PA estava em outro endereço, sua vaga antiga é
+               liberada dentro da mesma transação.
+            */
+            if (
+                vagaAnteriorRef &&
+                vagaAnteriorSnap &&
+                vagaAnteriorSnap.exists
+            ) {
+                const lockAnterior =
+                    vagaAnteriorSnap.data() || {};
+
+                if (
+                    normalizarEndereco(lockAnterior.pa) === pa
+                ) {
+                    transaction.delete(vagaAnteriorRef);
+                }
+            }
+
+            transaction.set(
+                vagaRef,
+                {
+                    codigo: vaga.codigo,
+                    vaga: vaga.codigo,
+                    pa,
+                    produto,
+                    rua: vaga.rua,
+                    nivel: Number(vaga.nivel),
+                    numeroVaga: vaga.numero,
+                    lado: vaga.lado,
+                    galpao: "G02",
+                    status: "OCUPADA",
+                    atualizadoIso: agoraIso,
+                    atualizadoEm:
+                        firebase.firestore.FieldValue.serverTimestamp()
+                },
+                { merge: true }
+            );
+
+            transaction.set(
+                atualRef,
+                {
+                    pa,
+                    vaga: vaga.codigo,
+                    rua: vaga.rua,
+                    nivel: Number(vaga.nivel),
+                    numeroVaga: vaga.numero,
+                    lado: vaga.lado,
+                    produto,
+                    galpao: "G02",
+                    status: "ENDEREÇADO",
+                    atualizadoIso: agoraIso,
+                    atualizadoEm:
+                        firebase.firestore.FieldValue.serverTimestamp()
+                },
+                { merge: true }
+            );
+
+            transaction.set(
+                historicoRef,
+                {
+                    pa,
+                    vaga: vaga.codigo,
+                    rua: vaga.rua,
+                    nivel: Number(vaga.nivel),
+                    numeroVaga: vaga.numero,
+                    lado: vaga.lado,
+                    produto,
+                    galpao: "G02",
+                    acao: anterior ? "REENDEREÇADO" : "ENDEREÇADO",
+                    vagaAnterior: anterior?.vaga || "",
+                    nivelAnterior:
+                        anterior && Number.isFinite(Number(anterior.nivel))
+                            ? Number(anterior.nivel)
+                            : null,
+                    produtoAnterior: anterior?.produto || "",
+                    dataIso: agoraIso,
+                    criadoEm:
+                        firebase.firestore.FieldValue.serverTimestamp()
+                }
+            );
+        });
 
         if (mensagem) {
             mensagem.className = "end-status ok";
@@ -7682,6 +8617,30 @@ async function salvarEnderecamentoG02() {
     } catch (erro) {
         console.error(erro);
 
+        if (
+            erro?.message === "VAGA_OCUPADA" ||
+            erro?.paOcupante
+        ) {
+            const paOcupante =
+                erro.paOcupante || "outro PA";
+
+            if (mensagem) {
+                mensagem.className = "end-status warn";
+                mensagem.textContent =
+                    `${vaga.codigo} já está ocupada pelo PA ${paOcupante}.`;
+            }
+
+            alert(
+                `VAGA OCUPADA\n\n` +
+                `Vaga: ${vaga.codigo}\n` +
+                `PA atual: ${paOcupante}\n\n` +
+                "Esta vaga não permite vários paletes."
+            );
+
+            focarCampoEndereco("endVaga");
+            return;
+        }
+
         if (mensagem) {
             mensagem.className = "end-status warn";
             mensagem.textContent =
@@ -7690,9 +8649,10 @@ async function salvarEnderecamentoG02() {
 
         alert(
             "Não foi possível salvar o endereçamento.\n\n" +
-            "Se o Firebase informar falta de permissão, será necessário liberar as novas coleções nas regras."
+            "O banco de vagas precisa ter permissão de leitura e gravação na coleção vagas_g02."
         );
     }
+
 }
 
 function editarEnderecamentoG02(paCodificado) {
@@ -7739,43 +8699,97 @@ async function removerEnderecamentoG02(paCodificado) {
         `PA: ${item.pa}\n` +
         `Vaga: ${item.vaga}\n` +
         `Produto: ${item.produto}\n\n` +
+        "A vaga ficará LIVRE imediatamente.\n" +
         "O histórico será preservado."
     )) {
         return;
     }
 
     const agoraIso = new Date().toISOString();
-    const batch = db.batch();
 
-    batch.delete(
+    const atualRef =
         db.collection("enderecamentos_g02")
-        .doc(idSeguroEndereco(item.pa))
-    );
+        .doc(idSeguroEndereco(item.pa));
 
-    batch.set(
-        db.collection("enderecamentos_g02_historico").doc(),
-        {
-            pa: item.pa,
-            vaga: item.vaga,
-            nivel: Number(item.nivel),
-            produto: item.produto,
-            galpao: "G02",
-            acao: "RETIRADO",
-            vagaAnterior: item.vaga,
-            nivelAnterior: Number(item.nivel),
-            produtoAnterior: item.produto,
-            dataIso: agoraIso,
-            criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-        }
-    );
+    const vagaInfo =
+        interpretarVagaG02(item.vaga);
+
+    const vagaRef =
+        vagaInfo.valida
+            ? db.collection("vagas_g02").doc(vagaInfo.codigo)
+            : null;
+
+    const historicoRef =
+        db.collection("enderecamentos_g02_historico")
+        .doc();
 
     try {
-        await batch.commit();
+        await db.runTransaction(async transaction => {
+            const atualSnap =
+                await transaction.get(atualRef);
+
+            let vagaSnap = null;
+
+            if (vagaRef) {
+                vagaSnap =
+                    await transaction.get(vagaRef);
+            }
+
+            if (vagaRef && vagaSnap?.exists) {
+                const dadosVaga =
+                    vagaSnap.data() || {};
+
+                if (
+                    !dadosVaga.pa ||
+                    normalizarEndereco(dadosVaga.pa) ===
+                        normalizarEndereco(item.pa)
+                ) {
+                    transaction.delete(vagaRef);
+                }
+            }
+
+            if (atualSnap.exists) {
+                transaction.delete(atualRef);
+            }
+
+            transaction.set(
+                historicoRef,
+                {
+                    pa: item.pa,
+                    vaga: item.vaga,
+                    rua: vagaInfo.valida ? vagaInfo.rua : (item.rua || ""),
+                    nivel: Number(item.nivel),
+                    numeroVaga:
+                        vagaInfo.valida
+                            ? vagaInfo.numero
+                            : (item.numeroVaga || null),
+                    lado:
+                        vagaInfo.valida
+                            ? vagaInfo.lado
+                            : (item.lado || ""),
+                    produto: item.produto,
+                    galpao: "G02",
+                    acao: "RETIRADO",
+                    vagaAnterior: item.vaga,
+                    nivelAnterior: Number(item.nivel),
+                    produtoAnterior: item.produto,
+                    dataIso: agoraIso,
+                    criadoEm:
+                        firebase.firestore.FieldValue.serverTimestamp()
+                }
+            );
+        });
+
     } catch (erro) {
         console.error(erro);
-        alert("Não foi possível retirar o endereçamento.");
+
+        alert(
+            "Não foi possível retirar o endereçamento.\n\n" +
+            "Confira a conexão e as permissões do banco de vagas."
+        );
     }
 }
+
 
 function renderizarEnderecamentosG02() {
     const tbody =
@@ -7817,6 +8831,8 @@ function renderizarEnderecamentosG02() {
 
     resumo.textContent =
         `${lista.length} de ${enderecamentosG02.length} PA(s)`;
+
+    atualizarResumoOcupacaoG02();
 
     tbody.innerHTML = "";
 
@@ -7862,10 +8878,35 @@ function renderizarEnderecamentosG02() {
 }
 
 function carregarEnderecamentoG02() {
-    /* Vagas definidas automaticamente pela estrutura física do G02. */
-    vagasG02 = [];
-    unsubscribeVagasG02 = null;
+    garantirBancoVagasG02();
+
     atualizarInfoVagaEnderecamento();
+    renderizarMapaOcupacaoG02();
+
+    if (typeof unsubscribeVagasG02 !== "function") {
+        unsubscribeVagasG02 =
+            db.collection("vagas_g02")
+            .where("galpao", "==", "G02")
+            .onSnapshot(snapshot => {
+                vagasG02 = [];
+
+                snapshot.forEach(doc => {
+                    vagasG02.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                vagasG02Carregadas = true;
+
+                atualizarInfoVagaEnderecamento();
+                renderizarMapaOcupacaoG02();
+                sincronizarBancoVagasG02();
+
+            }, erro => {
+                console.error("Erro ao carregar banco de vagas:", erro);
+            });
+    }
 
     if (typeof unsubscribeEnderecamentosG02 !== "function") {
         unsubscribeEnderecamentosG02 =
@@ -7881,8 +8922,14 @@ function carregarEnderecamentoG02() {
                     });
                 });
 
+                enderecamentosG02Carregados = true;
+
                 renderizarEnderecamentosG02();
                 preencherProdutosDatalistEndereco();
+                atualizarInfoVagaEnderecamento();
+                renderizarMapaOcupacaoG02();
+                sincronizarBancoVagasG02();
+
             }, erro => {
                 console.error("Erro ao carregar endereçamentos:", erro);
             });
