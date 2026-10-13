@@ -5397,6 +5397,198 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     }
 }
 
+
+/* =====================================================
+   V31 - PALETES ENDEREÇADOS COM LEITURA MAIOR
+===================================================== */
+
+/* Aumenta de verdade as fontes sem gerar rolagem lateral */
+#sistemaEnderecamento .end-table thead th {
+    font-size: 10px !important;
+    line-height: 1.12 !important;
+    padding: 10px 4px !important;
+    font-weight: 950 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    white-space: normal !important;
+}
+
+#sistemaEnderecamento .end-table tbody td {
+    height: 64px !important;
+    padding: 9px 4px !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+#sistemaEnderecamento .end-cell-pa strong,
+#sistemaEnderecamento .end-cell-vaga strong {
+    font-size: 12.5px !important;
+    line-height: 1.1 !important;
+    font-weight: 950 !important;
+    text-align: center !important;
+}
+
+#sistemaEnderecamento .end-address-detail {
+    margin-top: 5px !important;
+    font-size: 8.3px !important;
+    line-height: 1.18 !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+}
+
+#sistemaEnderecamento .end-cell-nivel .end-nivel {
+    width: 43px !important;
+    height: 31px !important;
+    font-size: 11px !important;
+    font-weight: 950 !important;
+}
+
+#sistemaEnderecamento .end-cell-produto span {
+    font-size: 11.2px !important;
+    line-height: 1.2 !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+}
+
+#sistemaEnderecamento .end-cell-data {
+    font-size: 9.8px !important;
+    line-height: 1.2 !important;
+    font-weight: 750 !important;
+    text-align: center !important;
+}
+
+#sistemaEnderecamento .end-table-actions .action-btn {
+    width: 32px !important;
+    min-width: 32px !important;
+    height: 32px !important;
+    flex-basis: 32px !important;
+    font-size: 13px !important;
+}
+
+/* Ajuste de distribuição para ganhar espaço nas informações principais */
+#sistemaEnderecamento .end-table .end-col-pa {
+    width: 17% !important;
+}
+
+#sistemaEnderecamento .end-table .end-col-vaga {
+    width: 19% !important;
+}
+
+#sistemaEnderecamento .end-table .end-col-nivel {
+    width: 9% !important;
+}
+
+#sistemaEnderecamento .end-table .end-col-produto {
+    width: 25% !important;
+}
+
+#sistemaEnderecamento .end-table .end-col-data {
+    width: 18% !important;
+}
+
+#sistemaEnderecamento .end-table .end-col-acoes {
+    width: 12% !important;
+}
+
+/*
+   Na largura de coletor/celular, mantém fonte legível.
+   A versão anterior reduzia demais aqui.
+*/
+@media(max-width: 720px) {
+    #sistemaEnderecamento .end-table thead th {
+        font-size: 8.8px !important;
+        padding: 9px 3px !important;
+        letter-spacing: .15px !important;
+    }
+
+    #sistemaEnderecamento .end-table tbody td {
+        height: 60px !important;
+        padding: 8px 3px !important;
+        font-size: 9.6px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-pa strong,
+    #sistemaEnderecamento .end-cell-vaga strong {
+        font-size: 10.8px !important;
+    }
+
+    #sistemaEnderecamento .end-address-detail {
+        margin-top: 4px !important;
+        font-size: 7.4px !important;
+        line-height: 1.15 !important;
+    }
+
+    #sistemaEnderecamento .end-cell-nivel .end-nivel {
+        width: 38px !important;
+        height: 28px !important;
+        font-size: 10px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-produto span {
+        font-size: 9.8px !important;
+        font-weight: 800 !important;
+    }
+
+    #sistemaEnderecamento .end-cell-data {
+        font-size: 8.4px !important;
+        line-height: 1.2 !important;
+    }
+
+    #sistemaEnderecamento .end-table-actions .action-btn {
+        width: 29px !important;
+        min-width: 29px !important;
+        height: 29px !important;
+        flex-basis: 29px !important;
+        font-size: 11px !important;
+    }
+}
+
+@media(max-width: 430px) {
+    #sistemaEnderecamento .end-table thead th {
+        font-size: 7.7px !important;
+        padding: 8px 2px !important;
+    }
+
+    #sistemaEnderecamento .end-table tbody td {
+        height: 58px !important;
+        padding: 7px 2px !important;
+        font-size: 8.6px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-pa strong,
+    #sistemaEnderecamento .end-cell-vaga strong {
+        font-size: 9.5px !important;
+    }
+
+    #sistemaEnderecamento .end-address-detail {
+        font-size: 6.5px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-nivel .end-nivel {
+        width: 34px !important;
+        height: 26px !important;
+        font-size: 9px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-produto span {
+        font-size: 8.7px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-data {
+        font-size: 7.4px !important;
+    }
+
+    #sistemaEnderecamento .end-table-actions .action-btn {
+        width: 26px !important;
+        min-width: 26px !important;
+        height: 26px !important;
+        flex-basis: 26px !important;
+        font-size: 9px !important;
+    }
+}
+
 </style>
     
 </head>
