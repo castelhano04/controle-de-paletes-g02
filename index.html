@@ -3000,6 +3000,61 @@ body.perfil-consulta #tabelaPaletes .description-main {
     font-weight: 700 !important;
 }
 
+
+
+/* V17 - PAINEL DE DATA E HORA */
+.filters {
+    align-items: stretch !important;
+}
+
+.datetime-widget {
+    margin-left: auto;
+    min-width: 250px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: linear-gradient(180deg, #f8fbfd 0%, #eef5f9 100%);
+    border: 1px solid #cfe0ea;
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.75);
+}
+
+.datetime-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #19384b;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.datetime-icon {
+    width: 18px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.datetime-weekday {
+    margin-top: 2px;
+    padding-left: 26px;
+    color: #657785;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .45px;
+    text-transform: uppercase;
+}
+
+@media (max-width: 1180px) {
+    .datetime-widget {
+        width: 100%;
+        min-width: 0;
+        margin-left: 0;
+    }
+}
+
 </style>
     
 </head>
@@ -3336,6 +3391,18 @@ body.perfil-consulta #tabelaPaletes .description-main {
             >
                 EXPORTAR EXCEL/CSV
             </button>
+
+            <div class="datetime-widget no-print" id="painelDataHora">
+                <div class="datetime-line">
+                    <span class="datetime-icon">📅</span>
+                    <span id="dataAtualPainel">--/--/----</span>
+                </div>
+                <div class="datetime-line">
+                    <span class="datetime-icon">🕒</span>
+                    <span id="horaAtualPainel">--:--:--</span>
+                </div>
+                <div class="datetime-weekday" id="diaSemanaPainel">--------</div>
+            </div>
 
         </div>
 
@@ -3897,7 +3964,37 @@ body.perfil-consulta #tabelaPaletes .description-main {
     </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js">
+
+function atualizarPainelDataHora() {
+    const elData = document.getElementById("dataAtualPainel");
+    const elHora = document.getElementById("horaAtualPainel");
+    const elDia = document.getElementById("diaSemanaPainel");
+
+    if (!elData || !elHora || !elDia) return;
+
+    const agora = new Date();
+
+    const data = agora.toLocaleDateString("pt-BR");
+    const hora = agora.toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+
+    const diaSemana = agora.toLocaleDateString("pt-BR", {
+        weekday: "long"
+    }).toUpperCase();
+
+    elData.textContent = data;
+    elHora.textContent = hora;
+    elDia.textContent = diaSemana;
+}
+
+atualizarPainelDataHora();
+setInterval(atualizarPainelDataHora, 1000);
+
+</script>
 
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
 
