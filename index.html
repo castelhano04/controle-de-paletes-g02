@@ -3964,37 +3964,7 @@ body.perfil-consulta #tabelaPaletes .description-main {
     </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js">
-
-function atualizarPainelDataHora() {
-    const elData = document.getElementById("dataAtualPainel");
-    const elHora = document.getElementById("horaAtualPainel");
-    const elDia = document.getElementById("diaSemanaPainel");
-
-    if (!elData || !elHora || !elDia) return;
-
-    const agora = new Date();
-
-    const data = agora.toLocaleDateString("pt-BR");
-    const hora = agora.toLocaleTimeString("pt-BR", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-    });
-
-    const diaSemana = agora.toLocaleDateString("pt-BR", {
-        weekday: "long"
-    }).toUpperCase();
-
-    elData.textContent = data;
-    elHora.textContent = hora;
-    elDia.textContent = diaSemana;
-}
-
-atualizarPainelDataHora();
-setInterval(atualizarPainelDataHora, 1000);
-
-</script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
 
@@ -7757,6 +7727,37 @@ async function excluirPedido(id){
 }
 
         
+
+/* =====================================================
+   V18 - DATA / HORA / DIA DA SEMANA
+===================================================== */
+function atualizarPainelDataHora() {
+    const elData = document.getElementById("dataAtualPainel");
+    const elHora = document.getElementById("horaAtualPainel");
+    const elDia = document.getElementById("diaSemanaPainel");
+
+    if (!elData || !elHora || !elDia) return;
+
+    const agora = new Date();
+
+    elData.textContent = agora.toLocaleDateString("pt-BR");
+
+    elHora.textContent = agora.toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+
+    elDia.textContent = agora
+        .toLocaleDateString("pt-BR", { weekday: "long" })
+        .toUpperCase();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarPainelDataHora();
+    setInterval(atualizarPainelDataHora, 1000);
+});
+
 </script>
 
 </body>
