@@ -3394,6 +3394,152 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     }
 }
 
+
+/* =====================================================
+   V22 - TABELA SALDO DISPONÍVEL MAIS PROFISSIONAL
+===================================================== */
+
+.saldo-pagina-card {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    border: 1px solid #d8e4eb !important;
+    box-shadow: 0 10px 24px rgba(26, 56, 76, .06) !important;
+}
+
+.tabela-saldo-pagina {
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    background: #fff !important;
+}
+
+.tabela-saldo-pagina thead th {
+    padding: 14px 10px !important;
+    font-size: 11px !important;
+    font-weight: 850 !important;
+    letter-spacing: .8px !important;
+    color: #5e7382 !important;
+    text-align: center !important;
+    background: #f3f8fb !important;
+    border-bottom: 1px solid #dbe7ee !important;
+}
+
+.tabela-saldo-pagina tbody td {
+    padding: 13px 10px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+    color: #213c4c !important;
+    text-align: center !important;
+    border-bottom: 1px solid #edf3f6 !important;
+    vertical-align: middle !important;
+    background: #ffffff !important;
+}
+
+.tabela-saldo-pagina tbody tr:nth-child(even) td {
+    background: #fbfdfe !important;
+}
+
+.tabela-saldo-pagina tbody tr:hover td {
+    background: #f4f9fc !important;
+}
+
+.tabela-saldo-pagina td.saldo-ref-cell {
+    text-align: center !important;
+}
+
+.saldo-ref-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #eef6fb 0%, #e3f0f8 100%);
+    border: 1px solid #c5dbe8;
+    color: #0f4b71;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: .15px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.75);
+}
+
+.saldo-number {
+    display: inline-block;
+    min-width: 70px;
+    color: #1f3a4a;
+    font-weight: 850;
+}
+
+.saldo-number.pcs {
+    color: #1e4259;
+}
+
+.saldo-number.m3 {
+    color: #234964;
+}
+
+.saldo-muted {
+    color: #83929b;
+    font-weight: 800;
+}
+
+.tabela-saldo-pagina tfoot td {
+    padding: 15px 10px !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    color: #10364d !important;
+    text-align: center !important;
+    background: linear-gradient(180deg, #edf5fa 0%, #e4f0f7 100%) !important;
+    border-top: 1px solid #cfe0eb !important;
+}
+
+.tabela-saldo-pagina tfoot td:first-child {
+    text-align: center !important;
+    letter-spacing: .55px;
+}
+
+.tabela-saldo-pagina .linha-sem-saldo td {
+    padding: 24px 12px !important;
+    color: #6d7f8a !important;
+    font-size: 12px !important;
+    font-weight: 750 !important;
+    text-align: center !important;
+    background: #fbfdfe !important;
+}
+
+.tabela-saldo-pagina th:nth-child(1),
+.tabela-saldo-pagina td:nth-child(1) {
+    width: 27% !important;
+}
+
+.tabela-saldo-pagina th:nth-child(2),
+.tabela-saldo-pagina td:nth-child(2) {
+    width: 12% !important;
+}
+
+.tabela-saldo-pagina th:nth-child(3),
+.tabela-saldo-pagina td:nth-child(3) {
+    width: 11% !important;
+}
+
+.tabela-saldo-pagina th:nth-child(4),
+.tabela-saldo-pagina td:nth-child(4) {
+    width: 14% !important;
+}
+
+.tabela-saldo-pagina th:nth-child(5),
+.tabela-saldo-pagina td:nth-child(5) {
+    width: 16% !important;
+}
+
+.tabela-saldo-pagina th:nth-child(6),
+.tabela-saldo-pagina td:nth-child(6) {
+    width: 20% !important;
+}
+
 </style>
     
 </head>
@@ -8841,7 +8987,7 @@ async function excluirPedido(id){
     if(referencias.length === 0){
 
         tbody.innerHTML = `
-            <tr>
+            <tr class="linha-sem-saldo">
                 <td colspan="6">
                     Nenhum saldo disponível.
                 </td>
@@ -8878,37 +9024,55 @@ async function excluirPedido(id){
         const cubagemConhecida =
             item.m3PorCx > 0;
 
+        tr.className = "saldo-row";
+
         tr.innerHTML = `
-            <td>
-                ${escapeHTML(referencia)}
+            <td class="saldo-ref-cell">
+                <span class="saldo-ref-chip">
+                    ${escapeHTML(referencia)}
+                </span>
             </td>
 
             <td>
-                ${formatarQuantidade(item.cxs)}
+                <span class="saldo-number">
+                    ${formatarQuantidade(item.cxs)}
+                </span>
             </td>
 
             <td title="${formatarQuantidade(item.pcsPorCx)} PCS por CX">
-                ${formatarQuantidade(item.pcsPorCx)}
+                <span class="saldo-number">
+                    ${formatarQuantidade(item.pcsPorCx)}
+                </span>
             </td>
 
             <td>
-                ${formatarQuantidade(item.pcs)}
+                <span class="saldo-number pcs">
+                    ${formatarQuantidade(item.pcs)}
+                </span>
             </td>
 
             <td title="Cubagem de 1 CX">
-                ${
-                    cubagemConhecida
-                    ? formatarM3PorCx(item.m3PorCx)
-                    : "-"
-                }
+                <span class="${
+                    cubagemConhecida ? "saldo-number m3" : "saldo-muted"
+                }">
+                    ${
+                        cubagemConhecida
+                        ? formatarM3PorCx(item.m3PorCx)
+                        : "-"
+                    }
+                </span>
             </td>
 
             <td title="Saldo em CXS × M³ por CX">
-                ${
-                    cubagemConhecida
-                    ? formatarM3Total(item.m3)
-                    : "-"
-                }
+                <span class="${
+                    cubagemConhecida ? "saldo-number m3" : "saldo-muted"
+                }">
+                    ${
+                        cubagemConhecida
+                        ? formatarM3Total(item.m3)
+                        : "-"
+                    }
+                </span>
             </td>
         `;
 
