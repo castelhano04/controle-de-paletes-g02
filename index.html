@@ -2952,6 +2952,54 @@ body.perfil-consulta #tabelaPaletes .description-main {
     }
 }
 
+
+
+/* V16 - LOGIN CAMESA LIMPO */
+#loginScreen .login-box.login-box-clean {
+    width: 390px !important;
+    padding: 34px 30px 26px !important;
+    text-align: center !important;
+}
+
+#loginScreen .login-box.login-box-clean::before {
+    display: none !important;
+}
+
+#loginScreen .login-box.login-box-clean h2 {
+    text-align: center !important;
+    margin: 0 0 8px !important;
+    font-size: 32px !important;
+    letter-spacing: 1.2px !important;
+    font-weight: 900 !important;
+    color: #17384c !important;
+}
+
+#loginScreen .login-box.login-box-clean p {
+    text-align: center !important;
+    margin: 0 0 24px !important;
+    font-size: 15px !important;
+    color: #6a7d89 !important;
+    font-weight: 600 !important;
+}
+
+#loginScreen .login-box.login-box-clean #senhaLogin {
+    margin-bottom: 14px !important;
+}
+
+#loginScreen .login-box.login-box-clean .erro-login {
+    margin: 12px 0 14px !important;
+}
+
+#loginScreen .assinatura.assinatura-login {
+    position: static !important;
+    display: block !important;
+    margin-top: 8px !important;
+    text-align: center !important;
+    color: #97a5af !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+}
+
 </style>
     
 </head>
@@ -3095,17 +3143,13 @@ body.perfil-consulta #tabelaPaletes .description-main {
 
 <div id="loginScreen">
 
-    <div class="login-box">
+    <div class="login-box login-box-clean">
 
-        <h2>CONTROLE DE MERCADORIA</h2>
+        <h2>CAMESA</h2>
 
-<p>
-    Acesso ao sistema - Galpão G02
-</p>
-
-<div class="assinatura">
-    By Castelhano
-</div>
+        <p>
+            Controle Galpão G02
+        </p>
 
         <input
             type="password"
@@ -3123,6 +3167,10 @@ body.perfil-consulta #tabelaPaletes .description-main {
             class="erro-login"
         >
             Senha incorreta.
+        </div>
+
+        <div class="assinatura assinatura-login">
+            By Casttelhano
         </div>
 
     </div>
