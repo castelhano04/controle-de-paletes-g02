@@ -3069,6 +3069,59 @@ body.perfil-consulta #tabelaPaletes .description-main {
     }
 }
 
+
+/* =====================================================
+   V20 - DATA/HORA NO ESPAÇO DO CADASTRO (ADM)
+===================================================== */
+
+.datetime-slot-admin {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+}
+
+.datetime-slot-admin .datetime-widget {
+    width: 100%;
+    max-width: 330px;
+    min-width: 0;
+    margin: 0 !important;
+    align-self: center !important;
+}
+
+.datetime-filter-slot {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.datetime-filter-slot:empty {
+    display: none !important;
+}
+
+/* No perfil ADM, o painel fica mais integrado ao formulário */
+body:not(.perfil-consulta) .datetime-slot-admin .datetime-widget {
+    min-height: 72px;
+    padding: 11px 18px !important;
+    border-radius: 12px !important;
+}
+
+/* Na consulta ele permanece na área de filtros */
+body.perfil-consulta .datetime-filter-slot .datetime-widget {
+    margin-top: 0 !important;
+}
+
+@media (max-width: 900px) {
+    .datetime-slot-admin {
+        grid-column: 1 / -1 !important;
+    }
+
+    .datetime-slot-admin .datetime-widget {
+        max-width: none;
+    }
+}
+
 </style>
     
 </head>
@@ -3318,6 +3371,8 @@ body.perfil-consulta #tabelaPaletes .description-main {
                 <input type="date" id="data">
             </div>
 
+            <div class="form-field span-5 datetime-slot-admin" id="slotDataHoraAdmin"></div>
+
         </div>
 
         <div class="buttons">
@@ -3406,16 +3461,18 @@ body.perfil-consulta #tabelaPaletes .description-main {
                 EXPORTAR EXCEL/CSV
             </button>
 
-            <div class="datetime-widget no-print" id="painelDataHora">
-                <div class="datetime-line">
-                    <span class="datetime-icon">📅</span>
-                    <span id="dataAtualPainel">--/--/----</span>
+            <div class="datetime-filter-slot no-print" id="slotDataHoraFiltros">
+                <div class="datetime-widget no-print" id="painelDataHora">
+                    <div class="datetime-line">
+                        <span class="datetime-icon">📅</span>
+                        <span id="dataAtualPainel">--/--/----</span>
+                    </div>
+                    <div class="datetime-line">
+                        <span class="datetime-icon">🕒</span>
+                        <span id="horaAtualPainel">--:--:--</span>
+                    </div>
+                    <div class="datetime-weekday" id="diaSemanaPainel">--------</div>
                 </div>
-                <div class="datetime-line">
-                    <span class="datetime-icon">🕒</span>
-                    <span id="horaAtualPainel">--:--:--</span>
-                </div>
-                <div class="datetime-weekday" id="diaSemanaPainel">--------</div>
             </div>
 
         </div>
@@ -4180,6 +4237,25 @@ sessionStorage.removeItem("abaAtivaG02");
 
 }
 
+
+function posicionarPainelDataHora() {
+    const painel = document.getElementById("painelDataHora");
+    const slotAdmin = document.getElementById("slotDataHoraAdmin");
+    const slotFiltros = document.getElementById("slotDataHoraFiltros");
+
+    if (!painel) return;
+
+    const destino =
+        perfil === "admin" && slotAdmin
+            ? slotAdmin
+            : slotFiltros;
+
+    if (destino && painel.parentElement !== destino) {
+        destino.appendChild(painel);
+    }
+}
+
+
 function configurarPermissoes(){
 
     document.body.classList.toggle("perfil-consulta", perfil === "consulta");
@@ -4203,6 +4279,8 @@ function configurarPermissoes(){
             botao.style.display = "inline-flex";
         });
     }
+
+    posicionarPainelDataHora();
 }
 
 
