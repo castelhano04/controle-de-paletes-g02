@@ -3122,6 +3122,278 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     }
 }
 
+
+/* =====================================================
+   V21 - CADASTRO EM LOTE
+===================================================== */
+
+.cadastro-master-card {
+    overflow: visible !important;
+}
+
+.cadastro-master-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 16px;
+}
+
+.cadastro-master-header h3 {
+    margin-bottom: 4px !important;
+}
+
+.cadastro-master-subtitle {
+    color: #72838e;
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.35;
+}
+
+.cadastro-mode-tabs {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px;
+    border-radius: 11px;
+    background: #edf3f7;
+    border: 1px solid #d5e2ea;
+    flex-wrap: wrap;
+}
+
+.cadastro-mode-btn {
+    height: 34px !important;
+    padding: 0 11px !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    color: #5b6d79 !important;
+    border: 1px solid transparent !important;
+    box-shadow: none !important;
+    font-size: 9.5px !important;
+    letter-spacing: .15px;
+}
+
+.cadastro-mode-btn.active {
+    background: #ffffff !important;
+    color: #1d526f !important;
+    border-color: #c7dae6 !important;
+    box-shadow: 0 3px 9px rgba(29,82,111,.08) !important;
+}
+
+.cadastro-mode-panel {
+    display: none;
+}
+
+.cadastro-mode-panel.active {
+    display: block;
+}
+
+.lote-common-grid {
+    display: grid;
+    grid-template-columns: 1.4fr .8fr;
+    gap: 10px;
+    max-width: 720px;
+}
+
+.lote-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 17px;
+    margin-bottom: 9px;
+}
+
+.lote-title-row > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.lote-title-row strong {
+    color: #243d4c;
+    font-size: 12px;
+}
+
+.lote-title-row span {
+    color: #7b8b95;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.btn-add-lote {
+    min-height: 34px !important;
+    height: 34px !important;
+    padding: 0 12px !important;
+    font-size: 9.5px !important;
+    white-space: nowrap;
+}
+
+.lote-table-shell {
+    border: 1px solid #d4e2eb;
+    border-radius: 11px;
+    overflow: hidden;
+    background: #fbfdfe;
+}
+
+.lote-table-head {
+    background: #e9f2f7;
+    border-bottom: 1px solid #d4e2eb;
+    color: #5e7483;
+    font-size: 8.8px;
+    font-weight: 850;
+    letter-spacing: .5px;
+}
+
+.lote-ref-grid,
+.lote-ref-row {
+    display: grid;
+    grid-template-columns:
+        minmax(170px, 1.05fr)
+        minmax(115px, .65fr)
+        minmax(90px, .45fr)
+        minmax(240px, 1.5fr)
+        38px;
+    gap: 8px;
+    align-items: center;
+}
+
+.lote-container-grid,
+.lote-container-row {
+    display: grid;
+    grid-template-columns: minmax(250px, 1.8fr) minmax(150px, .8fr) 38px;
+    gap: 8px;
+    align-items: center;
+}
+
+.lote-table-head > div {
+    padding: 9px 8px;
+}
+
+.lote-lines {
+    display: grid;
+}
+
+.lote-row {
+    padding: 8px;
+    border-bottom: 1px solid #e5edf2;
+    background: #fff;
+}
+
+.lote-row:last-child {
+    border-bottom: 0;
+}
+
+.lote-row:nth-child(even) {
+    background: #f9fcfe;
+}
+
+.lote-row input {
+    height: 36px !important;
+    min-width: 0;
+    font-size: 11px !important;
+}
+
+.lote-remove-btn {
+    width: 32px !important;
+    min-width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    border-radius: 8px !important;
+    background: #fff1f2 !important;
+    border: 1px solid #efc6cc !important;
+    color: #b72d3e !important;
+    box-shadow: none !important;
+}
+
+.lote-row .campo-auto {
+    background: #eef6fb !important;
+}
+
+.lote-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.lote-footer .buttons {
+    margin-top: 0 !important;
+}
+
+.lote-summary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 29px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #eef4f7;
+    border: 1px solid #d7e2e9;
+    color: #667984;
+    font-size: 9.5px;
+    font-weight: 800;
+}
+
+.multi-container-master-grid {
+    display: grid;
+    grid-template-columns: 1.15fr .55fr 1.55fr .75fr;
+    gap: 10px;
+}
+
+.cadastro-info-geral {
+    margin-top: 12px;
+}
+
+@media (max-width: 1000px) {
+    .cadastro-master-header {
+        flex-direction: column;
+    }
+
+    .cadastro-mode-tabs {
+        width: 100%;
+    }
+
+    .cadastro-mode-btn {
+        flex: 1 1 180px;
+    }
+
+    .multi-container-master-grid,
+    .lote-common-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .multi-container-desc {
+        grid-column: 1 / -1;
+    }
+
+    .lote-table-shell {
+        overflow-x: auto;
+    }
+
+    .lote-ref-grid,
+    .lote-ref-row {
+        min-width: 850px;
+    }
+
+    .lote-container-grid,
+    .lote-container-row {
+        min-width: 620px;
+    }
+}
+
+@media (max-width: 620px) {
+    .lote-common-grid,
+    .multi-container-master-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lote-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
 </style>
     
 </head>
@@ -3335,72 +3607,285 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
 
     <!-- CADASTRO -->
 
-    <div class="card no-print">
+    <div class="card no-print cadastro-master-card">
 
-        <h3>Cadastrar referência</h3>
-
-        <div class="form-grid cadastro-referencia-grid">
-
-            <div class="form-field span-3">
-                <label for="pa">Referência</label>
-                <input type="text" id="pa" placeholder="Ex.: 1.26030.80.1011" autocomplete="off">
+        <div class="cadastro-master-header">
+            <div>
+                <h3>Cadastrar recebimento</h3>
+                <div class="cadastro-master-subtitle">
+                    Escolha a forma mais rápida para lançar as entradas do G02.
+                </div>
             </div>
 
-            <div class="form-field span-2">
-                <label for="caixas">Quantidade</label>
-                <input type="number" id="caixas" placeholder="CXS" min="0" step="1" autocomplete="off">
+            <div class="cadastro-mode-tabs">
+                <button
+                    type="button"
+                    class="cadastro-mode-btn active"
+                    data-cadastro-mode="individual"
+                    onclick="trocarModoCadastro('individual')"
+                >
+                    INDIVIDUAL
+                </button>
+
+                <button
+                    type="button"
+                    class="cadastro-mode-btn"
+                    data-cadastro-mode="multiRef"
+                    onclick="trocarModoCadastro('multiRef')"
+                >
+                    VÁRIAS REFS / 1 CONTAINER
+                </button>
+
+                <button
+                    type="button"
+                    class="cadastro-mode-btn"
+                    data-cadastro-mode="multiContainer"
+                    onclick="trocarModoCadastro('multiContainer')"
+                >
+                    1 REF / VÁRIOS CONTAINERS
+                </button>
+            </div>
+        </div>
+
+        <!-- =========================================
+             MODO 1 - CADASTRO INDIVIDUAL
+        ========================================== -->
+        <div id="cadastroModoIndividual" class="cadastro-mode-panel active">
+
+            <div class="form-grid cadastro-referencia-grid">
+
+                <div class="form-field span-3">
+                    <label for="pa">Referência</label>
+                    <input type="text" id="pa" placeholder="Ex.: 1.26030.80.1011" autocomplete="off">
+                </div>
+
+                <div class="form-field span-2">
+                    <label for="caixas">Quantidade</label>
+                    <input type="number" id="caixas" placeholder="CXS" min="0" step="1" autocomplete="off">
+                </div>
+
+                <div class="form-field span-2">
+                    <label for="pcsPorCx">PCS por CX</label>
+                    <input type="number" id="pcsPorCx" placeholder="Ex.: 12" min="1" step="1" autocomplete="off">
+                </div>
+
+                <div class="form-field span-5">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" id="descricao" placeholder="Descrição da mercadoria" autocomplete="off">
+                </div>
+
+                <div class="form-field span-4">
+                    <label for="container">Container</label>
+                    <input type="text" id="container" placeholder="Nº do container" autocomplete="off">
+                </div>
+
+                <div class="form-field span-3">
+                    <label for="data">Data de recebimento</label>
+                    <input type="date" id="data">
+                </div>
+
+                <div class="form-field span-5 datetime-slot-admin" id="slotDataHoraAdmin"></div>
+
             </div>
 
-            <div class="form-field span-2">
-                <label for="pcsPorCx">PCS por CX</label>
-                <input type="number" id="pcsPorCx" placeholder="Ex.: 12" min="1" step="1" autocomplete="off">
-            </div>
+            <div class="buttons">
 
-            <div class="form-field span-5">
-                <label for="descricao">Descrição</label>
-                <input type="text" id="descricao" placeholder="Descrição da mercadoria" autocomplete="off">
-            </div>
+                <button
+                    class="btn-green"
+                    onclick="salvarPalete()"
+                    id="btnSalvar"
+                >
+                    SALVAR PALETE
+                </button>
 
-            <div class="form-field span-4">
-                <label for="container">Container</label>
-                <input type="text" id="container" placeholder="Nº do container" autocomplete="off">
-            </div>
+                <button
+                    class="btn-gray"
+                    onclick="limparFormulario()"
+                >
+                    LIMPAR
+                </button>
 
-            <div class="form-field span-3">
-                <label for="data">Data de recebimento</label>
-                <input type="date" id="data">
             </div>
-
-            <div class="form-field span-5 datetime-slot-admin" id="slotDataHoraAdmin"></div>
 
         </div>
 
-        <div class="buttons">
+        <!-- =========================================
+             MODO 2 - VÁRIAS REFERÊNCIAS / 1 CONTAINER
+        ========================================== -->
+        <div id="cadastroModoMultiRef" class="cadastro-mode-panel">
 
-            <button
-                class="btn-green"
-                onclick="salvarPalete()"
-                id="btnSalvar"
-            >
-                SALVAR PALETE
-            </button>
+            <div class="lote-common-grid">
 
-            <button
-                class="btn-gray"
-                onclick="limparFormulario()"
-            >
-                LIMPAR
-            </button>
+                <div class="form-field">
+                    <label for="loteRefContainer">Container</label>
+                    <input
+                        type="text"
+                        id="loteRefContainer"
+                        placeholder="Nº do container"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="loteRefData">Data de recebimento</label>
+                    <input type="date" id="loteRefData">
+                </div>
+
+            </div>
+
+            <div class="lote-title-row">
+                <div>
+                    <strong>Referências deste container</strong>
+                    <span>Adicione uma linha para cada mercadoria recebida.</span>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-blue btn-add-lote"
+                    onclick="adicionarLinhaMultiRef()"
+                >
+                    + ADICIONAR REFERÊNCIA
+                </button>
+            </div>
+
+            <div class="lote-table-shell">
+                <div class="lote-table-head lote-ref-grid">
+                    <div>REFERÊNCIA</div>
+                    <div>QUANTIDADE</div>
+                    <div>PCS/CX</div>
+                    <div>DESCRIÇÃO</div>
+                    <div></div>
+                </div>
+
+                <div id="linhasMultiRef" class="lote-lines"></div>
+            </div>
+
+            <div class="lote-footer">
+                <span id="resumoMultiRef" class="lote-summary">0 referências</span>
+
+                <div class="buttons">
+                    <button
+                        type="button"
+                        class="btn-green"
+                        onclick="salvarMultiRefUmContainer()"
+                    >
+                        SALVAR TODAS
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-gray"
+                        onclick="limparMultiRef()"
+                    >
+                        LIMPAR
+                    </button>
+                </div>
+            </div>
 
         </div>
 
-        <div class="info">
+        <!-- =========================================
+             MODO 3 - 1 REFERÊNCIA / VÁRIOS CONTAINERS
+        ========================================== -->
+        <div id="cadastroModoMultiContainer" class="cadastro-mode-panel">
+
+            <div class="multi-container-master-grid">
+
+                <div class="form-field">
+                    <label for="multiContainerRef">Referência</label>
+                    <input
+                        type="text"
+                        id="multiContainerRef"
+                        placeholder="Ex.: 1.26030.80.1011"
+                        autocomplete="off"
+                        oninput="atualizarDadosMultiContainer()"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="multiContainerPcs">PCS por CX</label>
+                    <input
+                        type="number"
+                        id="multiContainerPcs"
+                        placeholder="Ex.: 12"
+                        min="1"
+                        step="1"
+                    >
+                </div>
+
+                <div class="form-field multi-container-desc">
+                    <label for="multiContainerDescricao">Descrição</label>
+                    <input
+                        type="text"
+                        id="multiContainerDescricao"
+                        placeholder="Descrição da mercadoria"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="multiContainerData">Data de recebimento</label>
+                    <input type="date" id="multiContainerData">
+                </div>
+
+            </div>
+
+            <div class="lote-title-row">
+                <div>
+                    <strong>Containers desta referência</strong>
+                    <span>Cada container pode ter uma quantidade diferente.</span>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-blue btn-add-lote"
+                    onclick="adicionarLinhaMultiContainer()"
+                >
+                    + ADICIONAR CONTAINER
+                </button>
+            </div>
+
+            <div class="lote-table-shell">
+                <div class="lote-table-head lote-container-grid">
+                    <div>CONTAINER</div>
+                    <div>QUANTIDADE</div>
+                    <div></div>
+                </div>
+
+                <div id="linhasMultiContainer" class="lote-lines"></div>
+            </div>
+
+            <div class="lote-footer">
+                <span id="resumoMultiContainer" class="lote-summary">0 containers</span>
+
+                <div class="buttons">
+                    <button
+                        type="button"
+                        class="btn-green"
+                        onclick="salvarUmaRefVariosContainers()"
+                    >
+                        SALVAR TODOS
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-gray"
+                        onclick="limparMultiContainer()"
+                    >
+                        LIMPAR
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="info cadastro-info-geral">
             Galpão fixo: <strong>G02</strong>
             <br>
             <span>
-                PCS por CX é preenchido automaticamente para referências cadastradas na regra.
-                Para MOP, digite a QUANTIDADE EM PCS; o sistema divide automaticamente pelos PCS/CX e mostra as CXS.
-                Para os demais produtos, digite a quantidade em CXS.
+                PCS por CX é recuperado automaticamente quando a referência já é conhecida.
+                Para MOP, informe a quantidade em PCS; para os demais produtos, informe em CXS.
+                Cada linha salva vira uma entrada independente no Firebase, preservando container, data, saldo e histórico.
             </span>
         </div>
 
@@ -4282,6 +4767,688 @@ function configurarPermissoes(){
 
     posicionarPainelDataHora();
 }
+
+
+
+/* =====================================================
+   V21 - CADASTRO EM LOTE
+===================================================== */
+
+let contadorLinhaMultiRef = 0;
+let contadorLinhaMultiContainer = 0;
+
+function trocarModoCadastro(modo) {
+    if (perfil !== "admin") return;
+
+    const mapa = {
+        individual: "cadastroModoIndividual",
+        multiRef: "cadastroModoMultiRef",
+        multiContainer: "cadastroModoMultiContainer"
+    };
+
+    document.querySelectorAll(".cadastro-mode-panel")
+        .forEach(painel => painel.classList.remove("active"));
+
+    document.querySelectorAll(".cadastro-mode-btn")
+        .forEach(botao => {
+            botao.classList.toggle(
+                "active",
+                botao.dataset.cadastroMode === modo
+            );
+        });
+
+    const painel = document.getElementById(mapa[modo]);
+    if (painel) painel.classList.add("active");
+
+    if (modo === "multiRef") {
+        garantirLinhaMultiRef();
+    }
+
+    if (modo === "multiContainer") {
+        garantirLinhaMultiContainer();
+    }
+}
+
+function hojeIsoLocal() {
+    const agora = new Date();
+    const y = agora.getFullYear();
+    const m = String(agora.getMonth() + 1).padStart(2, "0");
+    const d = String(agora.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+}
+
+function preencherDatasLoteSeVazias() {
+    const ids = [
+        "loteRefData",
+        "multiContainerData"
+    ];
+
+    ids.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo && !campo.value) {
+            campo.value = hojeIsoLocal();
+        }
+    });
+}
+
+function obterDescricaoHistoricaReferencia(referencia) {
+    const chave = chaveReferencia(referencia);
+
+    const registros = paletes
+        .filter(p => chaveReferencia(p.pa) === chave)
+        .filter(p => String(p.descricao || "").trim())
+        .sort((a, b) =>
+            String(b.data || "").localeCompare(String(a.data || ""))
+        );
+
+    return registros.length
+        ? String(registros[0].descricao || "").trim()
+        : "";
+}
+
+function validarEntradaLote({
+    pa,
+    quantidade,
+    pcsPorCx,
+    descricao,
+    container,
+    data
+}) {
+    const ref = String(pa || "").trim();
+    const desc = String(descricao || "").trim();
+    const cont = String(container || "").trim();
+    const qtd = Number(quantidade);
+    const pcs = Number(pcsPorCx);
+
+    if (!ref) {
+        return "Informe a referência.";
+    }
+
+    if (!Number.isFinite(qtd) || qtd <= 0 || !Number.isInteger(qtd)) {
+        return `Quantidade inválida para ${ref}. Use número inteiro maior que zero.`;
+    }
+
+    if (!Number.isFinite(pcs) || pcs <= 0 || !Number.isInteger(pcs)) {
+        return `PCS/CX inválido para ${ref}.`;
+    }
+
+    if (!desc) {
+        return `Informe a descrição da referência ${ref}.`;
+    }
+
+    if (!cont) {
+        return `Informe o container da referência ${ref}.`;
+    }
+
+    if (!data) {
+        return `Informe a data de recebimento da referência ${ref}.`;
+    }
+
+    const entradaEmPcs = ehMopEntradaPcs(ref, desc);
+
+    if (entradaEmPcs && qtd % pcs !== 0) {
+        return (
+            `${ref}: para este MOP a quantidade é informada em PCS e deve fechar ` +
+            `caixas completas de ${pcs} PCS/CX.`
+        );
+    }
+
+    return null;
+}
+
+async function gravarEntradasLote(entradas) {
+    if (perfil !== "admin") {
+        alert("Você não tem permissão.");
+        return false;
+    }
+
+    if (!Array.isArray(entradas) || !entradas.length) {
+        alert("Nenhuma entrada para salvar.");
+        return false;
+    }
+
+    if (entradas.length > 400) {
+        alert("O limite por operação é de 400 entradas.");
+        return false;
+    }
+
+    for (let i = 0; i < entradas.length; i++) {
+        const erro = validarEntradaLote(entradas[i]);
+
+        if (erro) {
+            alert(
+                `LINHA ${i + 1}\n\n${erro}`
+            );
+            return false;
+        }
+    }
+
+    const confirmar = confirm(
+        `SALVAR RECEBIMENTO EM LOTE?\n\n` +
+        `${entradas.length} entrada(s) serão gravadas no G02.\n\n` +
+        "Cada referência/container será mantido como um registro independente."
+    );
+
+    if (!confirmar) return false;
+
+    const batch = db.batch();
+
+    entradas.forEach(item => {
+        const ref = db.collection("paletes").doc();
+
+        batch.set(ref, {
+            pa: String(item.pa).trim(),
+            caixas: Number(item.quantidade),
+            saldoAtual: Number(item.quantidade),
+            pcsPorCx: Number(item.pcsPorCx),
+            descricao: String(item.descricao).trim(),
+            container: String(item.container).trim(),
+            data: item.data,
+            galpao: GALPAO
+        });
+    });
+
+    try {
+        await batch.commit();
+
+        /*
+           Catálogo é salvo depois do batch.
+           O primeiro PCS/CX registrado para cada referência
+           continua sendo o padrão permanente.
+        */
+        const refsUnicas = new Map();
+
+        entradas.forEach(item => {
+            const chave = chaveCatalogoReferencia(item.pa);
+
+            if (!refsUnicas.has(chave)) {
+                refsUnicas.set(chave, item);
+            }
+        });
+
+        for (const item of refsUnicas.values()) {
+            await salvarCatalogoReferenciaSeNecessario(
+                item.pa,
+                item.pcsPorCx,
+                item.descricao
+            );
+        }
+
+        alert(
+            `✅ RECEBIMENTO SALVO\n\n` +
+            `${entradas.length} entrada(s) cadastrada(s) com sucesso.`
+        );
+
+        return true;
+
+    } catch (erro) {
+        console.error("Erro ao salvar lote:", erro);
+
+        alert(
+            "Não foi possível salvar o recebimento em lote.\n\n" +
+            "Nenhuma entrada deste lote foi concluída."
+        );
+
+        return false;
+    }
+}
+
+/* -------------------------
+   VÁRIAS REFS / 1 CONTAINER
+------------------------- */
+
+function garantirLinhaMultiRef() {
+    const lista = document.getElementById("linhasMultiRef");
+    if (lista && !lista.children.length) {
+        adicionarLinhaMultiRef();
+    }
+
+    preencherDatasLoteSeVazias();
+}
+
+function adicionarLinhaMultiRef(dados = {}) {
+    const lista = document.getElementById("linhasMultiRef");
+    if (!lista) return;
+
+    const id = ++contadorLinhaMultiRef;
+
+    const linha = document.createElement("div");
+    linha.className = "lote-row lote-ref-row";
+    linha.dataset.linhaId = id;
+
+    linha.innerHTML = `
+        <input
+            type="text"
+            class="mr-ref"
+            placeholder="Referência"
+            autocomplete="off"
+            value="${escapeHTML(dados.pa || "")}"
+            oninput="atualizarLinhaMultiRef(this)"
+        >
+
+        <input
+            type="number"
+            class="mr-qtd"
+            placeholder="CXS"
+            min="1"
+            step="1"
+            value="${escapeHTML(dados.quantidade || "")}"
+        >
+
+        <input
+            type="number"
+            class="mr-pcs"
+            placeholder="PCS/CX"
+            min="1"
+            step="1"
+            value="${escapeHTML(dados.pcsPorCx || "")}"
+        >
+
+        <input
+            type="text"
+            class="mr-desc"
+            placeholder="Descrição"
+            autocomplete="off"
+            value="${escapeHTML(dados.descricao || "")}"
+        >
+
+        <button
+            type="button"
+            class="lote-remove-btn"
+            title="Remover linha"
+            onclick="removerLinhaLote(this, 'multiRef')"
+        >✕</button>
+    `;
+
+    lista.appendChild(linha);
+
+    atualizarResumoMultiRef();
+
+    const campoRef = linha.querySelector(".mr-ref");
+    if (campoRef && dados.pa) {
+        atualizarLinhaMultiRef(campoRef);
+    }
+}
+
+function atualizarLinhaMultiRef(campoRef) {
+    const linha = campoRef.closest(".lote-ref-row");
+    if (!linha) return;
+
+    const ref = campoRef.value.trim();
+    const pcsCampo = linha.querySelector(".mr-pcs");
+    const descCampo = linha.querySelector(".mr-desc");
+    const qtdCampo = linha.querySelector(".mr-qtd");
+
+    const conhecido = obterPcsPorCxConhecido(ref);
+
+    if (conhecido !== null) {
+        pcsCampo.value = conhecido.valor;
+        pcsCampo.readOnly = true;
+        pcsCampo.classList.add("campo-auto");
+    } else {
+        pcsCampo.readOnly = false;
+        pcsCampo.classList.remove("campo-auto");
+    }
+
+    const descConhecida =
+        obterDescricaoHistoricaReferencia(ref);
+
+    if (descConhecida && !descCampo.value.trim()) {
+        descCampo.value = descConhecida;
+    }
+
+    if (qtdCampo) {
+        qtdCampo.placeholder =
+            ehReferenciaEntradaPcs(ref)
+                ? "PCS"
+                : "CXS";
+    }
+}
+
+function removerLinhaLote(botao, tipo) {
+    const linha = botao.closest(".lote-row");
+    if (linha) linha.remove();
+
+    if (tipo === "multiRef") {
+        atualizarResumoMultiRef();
+        garantirLinhaMultiRef();
+    } else {
+        atualizarResumoMultiContainer();
+        garantirLinhaMultiContainer();
+    }
+}
+
+function atualizarResumoMultiRef() {
+    const linhas =
+        document.querySelectorAll("#linhasMultiRef .lote-ref-row");
+
+    const resumo = document.getElementById("resumoMultiRef");
+
+    if (resumo) {
+        resumo.textContent =
+            `${linhas.length} referência(s)`;
+    }
+}
+
+function coletarMultiRef() {
+    const container =
+        document.getElementById("loteRefContainer")
+            ?.value.trim() || "";
+
+    const data =
+        document.getElementById("loteRefData")
+            ?.value || "";
+
+    return [...document.querySelectorAll("#linhasMultiRef .lote-ref-row")]
+        .map(linha => {
+            const pa =
+                linha.querySelector(".mr-ref")?.value.trim() || "";
+
+            const pcsConhecido =
+                obterPcsPorCxConhecido(pa);
+
+            const pcsPorCx =
+                pcsConhecido !== null
+                    ? pcsConhecido.valor
+                    : Number(
+                        linha.querySelector(".mr-pcs")?.value
+                    );
+
+            return {
+                pa,
+                quantidade:
+                    Number(linha.querySelector(".mr-qtd")?.value),
+                pcsPorCx,
+                descricao:
+                    linha.querySelector(".mr-desc")?.value.trim() || "",
+                container,
+                data
+            };
+        })
+        .filter(item =>
+            item.pa ||
+            item.quantidade ||
+            item.descricao
+        );
+}
+
+async function salvarMultiRefUmContainer() {
+    const entradas = coletarMultiRef();
+
+    if (!document.getElementById("loteRefContainer")?.value.trim()) {
+        alert("Informe o container.");
+        document.getElementById("loteRefContainer")?.focus();
+        return;
+    }
+
+    if (!entradas.length) {
+        alert("Adicione pelo menos uma referência.");
+        return;
+    }
+
+    const ok = await gravarEntradasLote(entradas);
+
+    if (ok) {
+        limparMultiRef();
+    }
+}
+
+function limparMultiRef() {
+    const cont = document.getElementById("loteRefContainer");
+    const data = document.getElementById("loteRefData");
+    const lista = document.getElementById("linhasMultiRef");
+
+    if (cont) cont.value = "";
+    if (data) data.value = hojeIsoLocal();
+    if (lista) lista.innerHTML = "";
+
+    adicionarLinhaMultiRef();
+}
+
+/* -------------------------
+   1 REF / VÁRIOS CONTAINERS
+------------------------- */
+
+function garantirLinhaMultiContainer() {
+    const lista =
+        document.getElementById("linhasMultiContainer");
+
+    if (lista && !lista.children.length) {
+        adicionarLinhaMultiContainer();
+    }
+
+    preencherDatasLoteSeVazias();
+}
+
+function adicionarLinhaMultiContainer(dados = {}) {
+    const lista =
+        document.getElementById("linhasMultiContainer");
+
+    if (!lista) return;
+
+    const id = ++contadorLinhaMultiContainer;
+
+    const linha = document.createElement("div");
+    linha.className = "lote-row lote-container-row";
+    linha.dataset.linhaId = id;
+
+    linha.innerHTML = `
+        <input
+            type="text"
+            class="mc-container"
+            placeholder="Nº do container"
+            autocomplete="off"
+            value="${escapeHTML(dados.container || "")}"
+        >
+
+        <input
+            type="number"
+            class="mc-qtd"
+            placeholder="Quantidade"
+            min="1"
+            step="1"
+            value="${escapeHTML(dados.quantidade || "")}"
+        >
+
+        <button
+            type="button"
+            class="lote-remove-btn"
+            title="Remover linha"
+            onclick="removerLinhaLote(this, 'multiContainer')"
+        >✕</button>
+    `;
+
+    lista.appendChild(linha);
+    atualizarResumoMultiContainer();
+    atualizarPlaceholderMultiContainer();
+}
+
+function atualizarDadosMultiContainer() {
+    const ref =
+        document.getElementById("multiContainerRef")
+            ?.value.trim() || "";
+
+    const campoPcs =
+        document.getElementById("multiContainerPcs");
+
+    const campoDesc =
+        document.getElementById("multiContainerDescricao");
+
+    const conhecido = obterPcsPorCxConhecido(ref);
+
+    if (campoPcs) {
+        if (conhecido !== null) {
+            campoPcs.value = conhecido.valor;
+            campoPcs.readOnly = true;
+            campoPcs.classList.add("campo-auto");
+        } else {
+            campoPcs.readOnly = false;
+            campoPcs.classList.remove("campo-auto");
+        }
+    }
+
+    const descConhecida =
+        obterDescricaoHistoricaReferencia(ref);
+
+    if (
+        campoDesc &&
+        descConhecida &&
+        !campoDesc.value.trim()
+    ) {
+        campoDesc.value = descConhecida;
+    }
+
+    atualizarPlaceholderMultiContainer();
+}
+
+function atualizarPlaceholderMultiContainer() {
+    const ref =
+        document.getElementById("multiContainerRef")
+            ?.value.trim() || "";
+
+    const descricao =
+        document.getElementById("multiContainerDescricao")
+            ?.value.trim() || "";
+
+    const placeholder =
+        ehMopEntradaPcs(ref, descricao)
+            ? "Quantidade em PCS"
+            : "Quantidade em CXS";
+
+    document
+        .querySelectorAll("#linhasMultiContainer .mc-qtd")
+        .forEach(campo => {
+            campo.placeholder = placeholder;
+        });
+}
+
+function atualizarResumoMultiContainer() {
+    const linhas =
+        document.querySelectorAll(
+            "#linhasMultiContainer .lote-container-row"
+        );
+
+    const resumo =
+        document.getElementById("resumoMultiContainer");
+
+    if (resumo) {
+        resumo.textContent =
+            `${linhas.length} container(s)`;
+    }
+}
+
+function coletarMultiContainer() {
+    const pa =
+        document.getElementById("multiContainerRef")
+            ?.value.trim() || "";
+
+    const descricao =
+        document.getElementById("multiContainerDescricao")
+            ?.value.trim() || "";
+
+    const data =
+        document.getElementById("multiContainerData")
+            ?.value || "";
+
+    const conhecido =
+        obterPcsPorCxConhecido(pa);
+
+    const pcsPorCx =
+        conhecido !== null
+            ? conhecido.valor
+            : Number(
+                document.getElementById("multiContainerPcs")
+                    ?.value
+            );
+
+    return [
+        ...document.querySelectorAll(
+            "#linhasMultiContainer .lote-container-row"
+        )
+    ]
+        .map(linha => ({
+            pa,
+            quantidade:
+                Number(linha.querySelector(".mc-qtd")?.value),
+            pcsPorCx,
+            descricao,
+            container:
+                linha.querySelector(".mc-container")
+                    ?.value.trim() || "",
+            data
+        }))
+        .filter(item =>
+            item.container ||
+            item.quantidade
+        );
+}
+
+async function salvarUmaRefVariosContainers() {
+    const pa =
+        document.getElementById("multiContainerRef")
+            ?.value.trim() || "";
+
+    if (!pa) {
+        alert("Informe a referência.");
+        document.getElementById("multiContainerRef")?.focus();
+        return;
+    }
+
+    const entradas = coletarMultiContainer();
+
+    if (!entradas.length) {
+        alert("Adicione pelo menos um container.");
+        return;
+    }
+
+    const ok = await gravarEntradasLote(entradas);
+
+    if (ok) {
+        limparMultiContainer();
+    }
+}
+
+function limparMultiContainer() {
+    const ref = document.getElementById("multiContainerRef");
+    const pcs = document.getElementById("multiContainerPcs");
+    const desc = document.getElementById("multiContainerDescricao");
+    const data = document.getElementById("multiContainerData");
+    const lista = document.getElementById("linhasMultiContainer");
+
+    if (ref) ref.value = "";
+
+    if (pcs) {
+        pcs.value = "";
+        pcs.readOnly = false;
+        pcs.classList.remove("campo-auto");
+    }
+
+    if (desc) desc.value = "";
+    if (data) data.value = hojeIsoLocal();
+    if (lista) lista.innerHTML = "";
+
+    adicionarLinhaMultiContainer();
+}
+
+/*
+   Inicialização visual do lote.
+   Executa quando o DOM já estiver disponível.
+*/
+document.addEventListener("DOMContentLoaded", () => {
+    preencherDatasLoteSeVazias();
+    garantirLinhaMultiRef();
+    garantirLinhaMultiContainer();
+
+    const descMulti =
+        document.getElementById("multiContainerDescricao");
+
+    if (descMulti) {
+        descMulti.addEventListener(
+            "input",
+            atualizarPlaceholderMultiContainer
+        );
+    }
+});
 
 
 /* =========================
