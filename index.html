@@ -5251,6 +5251,152 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     }
 }
 
+
+/* =====================================================
+   V30 - VAGA COM RUA MAIÚSCULA + TABELA MAIS VISÍVEL
+===================================================== */
+
+#sistemaEnderecamento .end-table-wrap {
+    border-radius: 12px !important;
+}
+
+#sistemaEnderecamento .end-table thead th {
+    font-size: 8.8px !important;
+    line-height: 1.12 !important;
+    padding: 8px 5px !important;
+    letter-spacing: .32px !important;
+    text-align: center !important;
+}
+
+#sistemaEnderecamento .end-table tbody td {
+    height: 54px !important;
+    padding: 8px 5px !important;
+    font-size: 10px !important;
+    line-height: 1.18 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+#sistemaEnderecamento .end-cell-pa strong,
+#sistemaEnderecamento .end-cell-vaga strong {
+    font-size: 11px !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+}
+
+#sistemaEnderecamento .end-address-detail {
+    margin-top: 4px !important;
+    font-size: 7.2px !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+}
+
+#sistemaEnderecamento .end-cell-nivel .end-nivel {
+    width: 40px !important;
+    height: 28px !important;
+    font-size: 10px !important;
+    font-weight: 950 !important;
+}
+
+#sistemaEnderecamento .end-cell-produto span {
+    font-size: 9.8px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+}
+
+#sistemaEnderecamento .end-cell-data {
+    font-size: 8.9px !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+}
+
+#sistemaEnderecamento .end-table-actions .action-btn {
+    width: 30px !important;
+    min-width: 30px !important;
+    height: 30px !important;
+    flex-basis: 30px !important;
+    font-size: 12px !important;
+}
+
+@media(max-width: 720px) {
+    #sistemaEnderecamento .end-table thead th {
+        font-size: 7.3px !important;
+        padding: 7px 3px !important;
+    }
+
+    #sistemaEnderecamento .end-table tbody td {
+        height: 50px !important;
+        padding: 7px 3px !important;
+        font-size: 8.5px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-pa strong,
+    #sistemaEnderecamento .end-cell-vaga strong {
+        font-size: 9px !important;
+    }
+
+    #sistemaEnderecamento .end-address-detail {
+        font-size: 6.1px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-nivel .end-nivel {
+        width: 33px !important;
+        height: 24px !important;
+        font-size: 8.4px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-produto span {
+        font-size: 8.4px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-data {
+        font-size: 7.4px !important;
+    }
+
+    #sistemaEnderecamento .end-table-actions .action-btn {
+        width: 25px !important;
+        min-width: 25px !important;
+        height: 25px !important;
+        flex-basis: 25px !important;
+        font-size: 9px !important;
+    }
+}
+
+@media(max-width: 430px) {
+    #sistemaEnderecamento .end-table thead th {
+        font-size: 6.5px !important;
+    }
+
+    #sistemaEnderecamento .end-table tbody td {
+        font-size: 7.6px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-pa strong,
+    #sistemaEnderecamento .end-cell-vaga strong {
+        font-size: 8.1px !important;
+    }
+
+    #sistemaEnderecamento .end-address-detail {
+        font-size: 5.6px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-produto span {
+        font-size: 7.5px !important;
+    }
+
+    #sistemaEnderecamento .end-cell-data {
+        font-size: 6.6px !important;
+    }
+
+    #sistemaEnderecamento .end-table-actions .action-btn {
+        width: 23px !important;
+        min-width: 23px !important;
+        height: 23px !important;
+        flex-basis: 23px !important;
+        font-size: 8px !important;
+    }
+}
+
 </style>
     
 </head>
@@ -9408,7 +9554,7 @@ function renderizarMapaOcupacaoG02() {
         card.innerHTML = `
             <div class="end-slot-main">
                 <div class="end-slot-top">
-                    <span class="end-slot-code">${escapeHTML(vaga.codigo)}</span>
+                    <span class="end-slot-code">${escapeHTML(interpretarVagaG02(vaga.codigo).codigoExibicao || vaga.codigo)}</span>
 
                     <span class="end-slot-status">
                         ${ocupada ? "OCUPADA" : "LIVRE"}
@@ -9579,10 +9725,12 @@ function interpretarVagaG02(codigo) {
 
     const numeroFormatado = String(numero).padStart(2, "0");
     const codigoPadrao = `972${rua.toLowerCase()}${nivel}${numeroFormatado}${lado.toLowerCase()}`;
+    const codigoExibicao = `972${rua}${nivel}${numeroFormatado}${lado.toLowerCase()}`;
 
     return {
         valida: true,
         codigo: codigoPadrao,
+        codigoExibicao,
         deposito: "972",
         rua,
         nivel,
@@ -9618,7 +9766,7 @@ function atualizarInfoVagaEnderecamento() {
         return;
     }
 
-    campo.value = resultado.codigo;
+    campo.value = resultado.codigoExibicao || resultado.codigo;
 
     const paAtual = normalizarEndereco(
         document.getElementById("endPa")?.value
@@ -9637,7 +9785,7 @@ function atualizarInfoVagaEnderecamento() {
     }
 
     info.className = "end-status end-vaga-status ok";
-    info.textContent = `✓ LIVRE • ${resultado.codigo} • ${resultado.resumo}`;
+    info.textContent = `✓ LIVRE • ${resultado.codigoExibicao || resultado.codigo} • ${resultado.resumo}`;
 }
 
 function avancarAposVaga() {
@@ -9662,7 +9810,7 @@ function avancarAposVaga() {
     if (ocupante) {
         alert(
             `VAGA OCUPADA\n\n` +
-            `Vaga: ${resultado.codigo}\n` +
+            `Vaga: ${resultado.codigoExibicao || resultado.codigo}\n` +
             `PA atual: ${ocupante.pa || "-"}\n\n` +
             "Esta vaga não permite vários paletes."
         );
@@ -9779,7 +9927,7 @@ async function salvarEnderecamentoG02() {
     if (ocupanteAtual) {
         alert(
             `VAGA OCUPADA\n\n` +
-            `Vaga: ${vaga.codigo}\n` +
+            `Vaga: ${vaga.codigoExibicao || vaga.codigo}\n` +
             `PA já armazenado: ${ocupanteAtual.pa || "-"}\n\n` +
             "Esta vaga não permite vários paletes.\n" +
             "Retire o PA atual dessa vaga antes de utilizar o endereço."
@@ -9788,7 +9936,7 @@ async function salvarEnderecamentoG02() {
         if (mensagem) {
             mensagem.className = "end-status warn";
             mensagem.textContent =
-                `${vaga.codigo} está ocupada pelo PA ${ocupanteAtual.pa || "-"}.`;
+                `${vaga.codigoExibicao || vaga.codigo} está ocupada pelo PA ${ocupanteAtual.pa || "-"}.`;
         }
 
         atualizarInfoVagaEnderecamento();
@@ -9812,7 +9960,7 @@ async function salvarEnderecamentoG02() {
                 `PA: ${pa}\n` +
                 `Vaga atual: ${anterior.vaga}\n` +
                 `Produto: ${anterior.produto}\n\n` +
-                `Novo endereço: ${vaga.codigo} • Nível ${vaga.nivel}\n` +
+                `Novo endereço: ${vaga.codigoExibicao || vaga.codigo} • Nível ${vaga.nivel}\n` +
                 `Novo produto/ref.: ${produto}\n\n` +
                 "Deseja reendereçar este PA?"
             );
@@ -9974,7 +10122,7 @@ async function salvarEnderecamentoG02() {
         if (mensagem) {
             mensagem.className = "end-status ok";
             mensagem.textContent =
-                `${pa} → ${vaga.codigo} • Rua ${vaga.rua} • Nível ${vaga.nivel} • Vaga ${vaga.numeroFormatado} • Lado ${vaga.lado}`;
+                `${pa} → ${vaga.codigoExibicao || vaga.codigo} • Rua ${vaga.rua} • Nível ${vaga.nivel} • Vaga ${vaga.numeroFormatado} • Lado ${vaga.lado}`;
         }
 
         limparFormularioEnderecamento(true);
@@ -9992,12 +10140,12 @@ async function salvarEnderecamentoG02() {
             if (mensagem) {
                 mensagem.className = "end-status warn";
                 mensagem.textContent =
-                    `${vaga.codigo} já está ocupada pelo PA ${paOcupante}.`;
+                    `${vaga.codigoExibicao || vaga.codigo} já está ocupada pelo PA ${paOcupante}.`;
             }
 
             alert(
                 `VAGA OCUPADA\n\n` +
-                `Vaga: ${vaga.codigo}\n` +
+                `Vaga: ${vaga.codigoExibicao || vaga.codigo}\n` +
                 `PA atual: ${paOcupante}\n\n` +
                 "Esta vaga não permite vários paletes."
             );
@@ -10227,7 +10375,7 @@ function renderizarEnderecamentosG02() {
             </td>
 
             <td data-label="VAGA" class="end-cell-vaga">
-                <strong>${escapeHTML(item.vaga)}</strong>
+                <strong>${escapeHTML((interpretarVagaG02(item.vaga).codigoExibicao || item.vaga))}</strong>
                 <span class="end-address-detail">${escapeHTML(detalheVaga)}</span>
             </td>
 
