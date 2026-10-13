@@ -3540,6 +3540,88 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     width: 20% !important;
 }
 
+
+/* =====================================================
+   V23 - TOTAL GERAL NO CABEÇALHO DO SALDO
+===================================================== */
+
+.saldo-title-premium {
+    align-items: center !important;
+}
+
+.saldo-header-totals {
+    min-width: 0;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 4px 14px;
+    text-align: center;
+}
+
+.saldo-header-total-title {
+    color: rgba(255,255,255,.86);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: .95px;
+}
+
+.saldo-header-total-items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.saldo-header-total-item {
+    min-width: 108px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.18);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.saldo-total-label {
+    color: rgba(255,255,255,.72);
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: .65px;
+}
+
+.saldo-header-total-item strong {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: .1px;
+    line-height: 1;
+}
+
+@media (max-width: 1100px) {
+    .saldo-title-premium {
+        flex-wrap: wrap;
+        justify-content: center !important;
+    }
+
+    .saldo-title-premium .table-title-brand,
+    .saldo-title-premium .table-title-badge {
+        flex: 0 0 auto;
+    }
+
+    .saldo-header-totals {
+        order: 3;
+        width: 100%;
+        padding-top: 8px;
+    }
+}
+
 </style>
     
 </head>
@@ -4247,7 +4329,7 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
 
             <div class="table-card saldo-pagina-card">
 
-                <div class="table-title table-title-premium">
+                <div class="table-title table-title-premium saldo-title-premium">
                     <div class="table-title-brand">
                         <span class="table-title-icon">◫</span>
                         <div class="table-title-copy">
@@ -4255,6 +4337,28 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
                             <small>Posição atual em CXS, PCS e cubagem disponível</small>
                         </div>
                     </div>
+
+                    <div class="saldo-header-totals">
+                        <div class="saldo-header-total-title">TOTAL GERAL</div>
+
+                        <div class="saldo-header-total-items">
+                            <div class="saldo-header-total-item">
+                                <span class="saldo-total-label">CXS</span>
+                                <strong id="totalSaldoCxs">0</strong>
+                            </div>
+
+                            <div class="saldo-header-total-item">
+                                <span class="saldo-total-label">PCS</span>
+                                <strong id="totalSaldoPcs">0</strong>
+                            </div>
+
+                            <div class="saldo-header-total-item">
+                                <span class="saldo-total-label">M³</span>
+                                <strong id="totalSaldoM3">0,000</strong>
+                            </div>
+                        </div>
+                    </div>
+
                     <span class="table-title-badge">GALPÃO G02</span>
                 </div>
 
@@ -4273,16 +4377,6 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
 
                     <tbody id="resumoSaldoReferencias"></tbody>
 
-                    <tfoot>
-                        <tr class="linha-total-saldo">
-                            <td><strong>TOTAL GERAL</strong></td>
-                            <td id="totalSaldoCxs">0</td>
-                            <td>-</td>
-                            <td id="totalSaldoPcs">0</td>
-                            <td>-</td>
-                            <td id="totalSaldoM3">0,000</td>
-                        </tr>
-                    </tfoot>
 
                 </table>
 
