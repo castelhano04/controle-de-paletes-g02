@@ -2416,6 +2416,60 @@ body {
 #tabelaPaletes .acoes-grupo-ref {flex-wrap:wrap!important;justify-content:center!important;gap:5px!important;}
 @media(max-width:1120px){.area-recebimento .table-card {overflow-x:auto!important;} .area-recebimento .table-card > table {min-width:1030px!important;}}
 
+
+/* V9 - AJUSTE EXCLUSIVO DO LOGIN DE CONSULTA */
+body.perfil-consulta .area-recebimento .table-card > table {
+    min-width: 920px !important;
+}
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(1),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(1) { width: 15% !important; }
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(2),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(2) { width: 17% !important; }
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(3),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(3) { width: 29% !important; }
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(4),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(4) { width: 8% !important; }
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(5),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(5) { width: 14% !important; }
+body.perfil-consulta .area-recebimento .table-card > table thead th:nth-child(6),
+body.perfil-consulta .area-recebimento .table-card > table tbody td:nth-child(6) { width: 17% !important; }
+
+body.perfil-consulta #tabelaPaletes .date-chip {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 3px 2px !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    line-height: 1.25 !important;
+    font-size: 9.5px !important;
+    box-sizing: border-box !important;
+}
+
+body.perfil-consulta #tabelaPaletes td:nth-child(6) {
+    overflow: hidden !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+}
+
+body.perfil-consulta #tabelaPaletes .date-main {
+    display: block !important;
+    font-weight: 800 !important;
+    color: #405b6e !important;
+}
+
+body.perfil-consulta #tabelaPaletes .date-count {
+    display: block !important;
+    margin-top: 2px !important;
+    font-size: 8.5px !important;
+    color: #7a8b97 !important;
+    font-weight: 700 !important;
+}
+
 </style>
     
 </head>
@@ -3516,6 +3570,8 @@ sessionStorage.removeItem("abaAtivaG02");
 }
 
 function configurarPermissoes(){
+
+    document.body.classList.toggle("perfil-consulta", perfil === "consulta");
 
     const cadastro = document.querySelector("#abaPaletes .card.no-print");
     const adminNavs = document.querySelectorAll('[data-admin-only="true"]');
@@ -4865,10 +4921,13 @@ function renderizar() {
 
                 let dataResumo = "-";
                 if (datasUnicas.length === 1) {
-                    dataResumo = formatarDataBR(datasUnicas[0]);
+                    dataResumo = `<span class="date-main">${formatarDataBR(datasUnicas[0])}</span>`;
                 } else if (datasUnicas.length > 1) {
                     const maisRecente = [...datasUnicas].sort().reverse()[0];
-                    dataResumo = `ÚLTIMA: ${formatarDataBR(maisRecente)}<br><span style="font-size:10px;color:#64748b;">${datasUnicas.length} DATAS</span>`;
+                    dataResumo = `
+                        <span class="date-main">ÚLTIMA: ${formatarDataBR(maisRecente)}</span>
+                        <span class="date-count">${datasUnicas.length} DATAS</span>
+                    `;
                 }
 
                 tr.innerHTML = `
