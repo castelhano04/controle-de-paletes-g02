@@ -3979,6 +3979,570 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     }
 }
 
+
+/* =====================================================
+   V27 - ENDEREÇAMENTO G02 MOBILE PRO
+===================================================== */
+
+#sistemaEnderecamento {
+    min-height: 100vh !important;
+    padding: 0 0 28px !important;
+    background:
+        radial-gradient(circle at top right, rgba(63,132,169,.10), transparent 32%),
+        linear-gradient(180deg, #edf4f8 0%, #f5f8fa 52%, #edf3f6 100%) !important;
+}
+
+#sistemaEnderecamento .end-container {
+    width: 100% !important;
+    max-width: 760px !important;
+    margin: 0 auto !important;
+    padding: 0 10px 24px !important;
+}
+
+#sistemaEnderecamento .end-topbar-mobile {
+    top: 0;
+    z-index: 60;
+    min-height: 72px;
+    margin: 0 -10px 8px !important;
+    padding: 11px 13px !important;
+    border-radius: 0 0 17px 17px !important;
+    background:
+        linear-gradient(125deg, #153b53 0%, #1f5f84 68%, #2d779c 100%) !important;
+    box-shadow: 0 8px 24px rgba(20,56,78,.18) !important;
+}
+
+.end-brand-mobile {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.end-brand-mark {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: rgba(255,255,255,.13);
+    border: 1px solid rgba(255,255,255,.20);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: .6px;
+}
+
+#sistemaEnderecamento .end-topbar-mobile strong {
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    letter-spacing: .55px !important;
+}
+
+#sistemaEnderecamento .end-topbar-mobile .end-subtitle {
+    margin-top: 3px;
+    color: rgba(255,255,255,.70) !important;
+    font-size: 8.5px !important;
+    font-weight: 650;
+    letter-spacing: .2px;
+}
+
+#sistemaEnderecamento .end-topbar-mobile .btn-sair {
+    min-width: 61px !important;
+    height: 38px !important;
+    padding: 0 11px !important;
+    border-radius: 10px !important;
+    font-size: 9px !important;
+}
+
+.end-mobile-nav {
+    position: sticky;
+    top: 80px;
+    z-index: 45;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    margin: 0 0 8px;
+    padding: 5px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.94);
+    border: 1px solid #d8e4eb;
+    box-shadow: 0 5px 14px rgba(29,63,84,.07);
+    backdrop-filter: blur(8px);
+}
+
+.end-mobile-nav button {
+    min-width: 0;
+    height: 39px !important;
+    padding: 0 6px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border-radius: 8px !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #526a79 !important;
+    font-size: 8.5px !important;
+    font-weight: 900 !important;
+    letter-spacing: .35px;
+}
+
+.end-mobile-nav button:hover,
+.end-mobile-nav button:focus {
+    background: #eaf3f8 !important;
+    color: #1f5d80 !important;
+}
+
+.end-mobile-nav button span {
+    width: 21px;
+    height: 21px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    background: #e5f0f6;
+    color: #266687;
+    font-size: 7.5px;
+    font-weight: 950;
+}
+
+.end-mobile-main {
+    display: block !important;
+}
+
+#sistemaEnderecamento .end-card {
+    scroll-margin-top: 134px;
+    margin-bottom: 9px !important;
+    padding: 15px !important;
+    border-radius: 15px !important;
+    border: 1px solid #d8e4eb !important;
+    background: rgba(255,255,255,.97) !important;
+    box-shadow: 0 8px 22px rgba(30,64,84,.055) !important;
+}
+
+#sistemaEnderecamento .end-scan-card {
+    border-top: 3px solid #2b739a !important;
+}
+
+.end-card-heading,
+.end-list-header {
+    margin-bottom: 13px;
+}
+
+.end-card-heading h3,
+.end-list-header h3 {
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    letter-spacing: -.15px;
+}
+
+.end-eyebrow {
+    margin-bottom: 2px;
+    color: #7d8f9a;
+    font-size: 7.7px;
+    letter-spacing: 1px;
+}
+
+.end-ready-badge {
+    min-height: 29px !important;
+    padding: 0 10px !important;
+    background: #edf6fb !important;
+    border-color: #cfe1eb !important;
+    color: #2a6685 !important;
+}
+
+.end-flow-guide {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1.25fr;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 14px;
+    padding: 8px;
+    border-radius: 11px;
+    background: #f3f7fa;
+    border: 1px solid #e0e9ee;
+}
+
+.end-flow-guide > i {
+    color: #9cadb7;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.end-flow-item {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.end-flow-item > span {
+    width: 25px;
+    height: 25px;
+    flex: 0 0 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #dfeaf0;
+    color: #527080;
+    font-size: 9px;
+    font-weight: 950;
+}
+
+.end-flow-item.active > span {
+    background: #286f96;
+    color: #fff;
+}
+
+.end-flow-item strong {
+    display: block;
+    color: #355464;
+    font-size: 8.5px;
+    line-height: 1.1;
+}
+
+.end-flow-item small {
+    display: block;
+    margin-top: 2px;
+    color: #8a99a2;
+    font-size: 6.8px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.end-form-mobile {
+    gap: 10px !important;
+}
+
+.end-scan-field {
+    padding: 10px;
+    border-radius: 12px;
+    background: #f8fbfc;
+    border: 1px solid #e1eaef;
+}
+
+.end-scan-label {
+    margin: 0 0 7px !important;
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+}
+
+.end-field-number {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #e3f0f7;
+    color: #236787;
+    font-size: 11px;
+    font-weight: 950;
+}
+
+.end-field-copy {
+    min-width: 0;
+    display: block;
+}
+
+.end-field-copy strong {
+    display: block;
+    color: #395565;
+    font-size: 9.5px;
+    font-weight: 900;
+    letter-spacing: .45px;
+}
+
+.end-field-copy small {
+    display: block;
+    margin-top: 2px;
+    color: #8a99a2;
+    font-size: 7.5px;
+    font-weight: 650;
+}
+
+#sistemaEnderecamento .end-scan-field input {
+    height: 61px !important;
+    padding: 0 15px !important;
+    border-radius: 10px !important;
+    border: 1.5px solid #b9ceda !important;
+    background: #fff !important;
+    font-size: 19px !important;
+    font-weight: 900 !important;
+    letter-spacing: .15px;
+}
+
+#sistemaEnderecamento .end-scan-field input::placeholder {
+    color: #a3afb6 !important;
+    font-weight: 650 !important;
+}
+
+#sistemaEnderecamento .end-scan-field input:focus {
+    border-color: #2d789f !important;
+    box-shadow: 0 0 0 4px rgba(45,120,159,.11) !important;
+}
+
+.end-vaga-status {
+    min-height: 0 !important;
+    margin-top: -2px;
+}
+
+.end-vaga-status:empty {
+    display: none !important;
+}
+
+.end-vaga-status.ok,
+.end-vaga-status.warn {
+    display: flex !important;
+    min-height: 46px !important;
+    padding: 9px 11px !important;
+}
+
+.end-actions-mobile {
+    margin-top: 2px;
+    grid-template-columns: minmax(0,1fr) 94px !important;
+}
+
+.end-actions-mobile .end-primary {
+    height: 55px !important;
+    border-radius: 11px !important;
+    background: linear-gradient(180deg, #237e52, #17683f) !important;
+    box-shadow: 0 6px 13px rgba(24,103,64,.16) !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+}
+
+.end-actions-mobile .end-secondary {
+    height: 55px !important;
+    border-radius: 11px !important;
+    font-size: 9.5px !important;
+}
+
+.end-operation-message:empty {
+    display: none !important;
+}
+
+.end-operation-message:not(:empty) {
+    display: flex !important;
+    min-height: 46px !important;
+    margin-top: 1px;
+}
+
+/* Painel de vagas */
+#sistemaEnderecamento .end-occupancy-card {
+    border-top: 3px solid #4487a9 !important;
+}
+
+.end-occupancy-stats {
+    gap: 6px !important;
+}
+
+.end-occ-stat {
+    min-height: 72px !important;
+    border-radius: 11px !important;
+}
+
+.end-occ-stat span {
+    font-size: 7.2px !important;
+}
+
+.end-occ-stat strong {
+    font-size: 20px !important;
+}
+
+.end-occ-progress {
+    height: 8px !important;
+    margin: 3px 0 14px !important;
+}
+
+.end-occ-section-title {
+    padding-top: 3px;
+    border-top: 1px solid #edf2f5;
+}
+
+.end-occ-filters {
+    gap: 6px !important;
+}
+
+#sistemaEnderecamento .end-occ-filters select {
+    height: 43px !important;
+    border-radius: 9px !important;
+    background: #f8fbfc !important;
+    font-size: 8.8px !important;
+}
+
+#sistemaEnderecamento .end-occ-search {
+    height: 46px !important;
+    margin-top: 7px !important;
+    border-radius: 10px !important;
+    background: #fff !important;
+    font-size: 11px !important;
+}
+
+.end-occ-list {
+    max-height: 430px !important;
+    gap: 6px !important;
+}
+
+.end-slot-item {
+    min-height: 55px !important;
+    padding: 9px 10px !important;
+    border-radius: 10px !important;
+}
+
+.end-slot-main strong {
+    font-size: 12px !important;
+}
+
+.end-slot-main small {
+    font-size: 7.8px !important;
+}
+
+.end-slot-status {
+    min-width: 64px !important;
+    padding: 6px 8px !important;
+}
+
+/* Paletes endereçados */
+#sistemaEnderecamento .end-list-card {
+    border-top: 3px solid #6a8798 !important;
+}
+
+#sistemaEnderecamento .end-busca-mobile input {
+    height: 48px !important;
+    padding: 0 13px !important;
+    border-radius: 10px !important;
+    border: 1px solid #cbdce6 !important;
+    background: #fff !important;
+}
+
+.end-count-pill {
+    min-height: 30px !important;
+    padding: 0 10px !important;
+}
+
+/* Mobile/coletor */
+@media(max-width:720px) {
+    #sistemaEnderecamento .end-container {
+        padding: 0 7px 20px !important;
+    }
+
+    #sistemaEnderecamento .end-topbar-mobile {
+        margin-left: -7px !important;
+        margin-right: -7px !important;
+        margin-bottom: 7px !important;
+    }
+
+    .end-mobile-nav {
+        top: 78px;
+    }
+
+    #sistemaEnderecamento .end-card {
+        scroll-margin-top: 132px;
+        padding: 12px !important;
+        margin-bottom: 8px !important;
+        border-radius: 13px !important;
+    }
+
+    .end-flow-guide {
+        grid-template-columns: 1fr auto 1fr auto 1.18fr;
+        padding: 7px;
+    }
+
+    .end-flow-item {
+        gap: 5px;
+    }
+
+    .end-flow-item > span {
+        width: 23px;
+        height: 23px;
+        flex-basis: 23px;
+    }
+
+    .end-flow-item small {
+        display: none;
+    }
+
+    .end-scan-field {
+        padding: 9px;
+    }
+
+    #sistemaEnderecamento .end-scan-field input {
+        height: 62px !important;
+        font-size: 19px !important;
+    }
+
+    .end-actions-mobile {
+        grid-template-columns: 1fr 88px !important;
+    }
+
+    .end-actions-mobile .end-primary,
+    .end-actions-mobile .end-secondary {
+        height: 56px !important;
+        width: 100% !important;
+    }
+
+    .end-list-header {
+        gap: 7px;
+    }
+
+    .end-list-header h3 {
+        font-size: 15px !important;
+    }
+
+    .end-count-pill {
+        font-size: 7.5px !important;
+    }
+
+    #sistemaEnderecamento .end-table tbody {
+        padding: 6px !important;
+    }
+
+    #sistemaEnderecamento .end-table tr {
+        border-radius: 10px !important;
+    }
+}
+
+@media(max-width:390px) {
+    .end-brand-mark {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
+    }
+
+    #sistemaEnderecamento .end-topbar-mobile strong {
+        font-size: 14px !important;
+    }
+
+    .end-mobile-nav button {
+        font-size: 7.7px !important;
+    }
+
+    .end-mobile-nav button span {
+        width: 19px;
+        height: 19px;
+    }
+
+    .end-flow-item strong {
+        font-size: 7.8px;
+    }
+
+    .end-actions-mobile {
+        grid-template-columns: 1fr !important;
+    }
+
+    .end-actions-mobile .end-secondary {
+        height: 45px !important;
+    }
+}
+
 </style>
     
 </head>
@@ -4966,53 +5530,114 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     <div class="end-container">
 
         <div class="end-topbar end-topbar-mobile">
-            <div>
-                <strong>ENDEREÇAMENTO G02</strong>
-                <div class="end-subtitle">PA → VAGA → REFERÊNCIA / DESCRIÇÃO</div>
+            <div class="end-brand-mobile">
+                <span class="end-brand-mark">G02</span>
+                <div>
+                    <strong>ENDEREÇAMENTO</strong>
+                    <div class="end-subtitle">Controle de posições do galpão</div>
+                </div>
             </div>
+
             <button class="btn-sair" onclick="sair()">SAIR</button>
         </div>
 
+        <div class="end-mobile-nav">
+            <button type="button" onclick="scrollEnderecoSecao('endSecaoOperacao')">
+                <span>01</span>
+                OPERAÇÃO
+            </button>
+
+            <button type="button" onclick="scrollEnderecoSecao('endSecaoVagas')">
+                <span>02</span>
+                VAGAS
+            </button>
+
+            <button type="button" onclick="scrollEnderecoSecao('endSecaoPaletes')">
+                <span>03</span>
+                PALETES
+            </button>
+        </div>
+
         <div class="end-mobile-main">
-            <div class="end-card end-scan-card">
+            <div class="end-card end-scan-card" id="endSecaoOperacao">
                 <div class="end-card-heading">
                     <div>
                         <span class="end-eyebrow">OPERAÇÃO</span>
                         <h3>Endereçar palete</h3>
                     </div>
-                    <span class="end-ready-badge">LEITOR ATIVO</span>
+                    <span class="end-ready-badge">1 PA / VAGA</span>
                 </div>
 
-                <div class="end-steps end-steps-mobile">
-                    <span class="end-step"><b>1</b> PA</span>
-                    <span class="end-step"><b>2</b> VAGA</span>
-                    <span class="end-step"><b>3</b> REF/DESC</span>
+                <div class="end-flow-guide">
+                    <div class="end-flow-item active">
+                        <span>1</span>
+                        <div>
+                            <strong>PA</strong>
+                            <small>Palete</small>
+                        </div>
+                    </div>
+
+                    <i>›</i>
+
+                    <div class="end-flow-item">
+                        <span>2</span>
+                        <div>
+                            <strong>VAGA</strong>
+                            <small>Posição</small>
+                        </div>
+                    </div>
+
+                    <i>›</i>
+
+                    <div class="end-flow-item">
+                        <span>3</span>
+                        <div>
+                            <strong>PRODUTO</strong>
+                            <small>Ref./descrição</small>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="end-form end-form-mobile">
                     <div class="end-field end-scan-field">
-                        <label for="endPa">1 • PALETE / PA</label>
+                        <label for="endPa" class="end-scan-label">
+                            <span class="end-field-number">1</span>
+                            <span class="end-field-copy">
+                                <strong>PALETE / PA</strong>
+                                <small>Leia o código do palete</small>
+                            </span>
+                        </label>
                         <input id="endPa" type="text" inputmode="numeric" autocomplete="off"
-                            placeholder="Bipe o PA"
+                            placeholder="PA do palete"
                             onkeydown="if(event.key==='Enter'){event.preventDefault();focarCampoEndereco('endVaga');}">
                     </div>
 
                     <div class="end-field end-scan-field">
-                        <label for="endVaga">2 • VAGA</label>
+                        <label for="endVaga" class="end-scan-label">
+                            <span class="end-field-number">2</span>
+                            <span class="end-field-copy">
+                                <strong>VAGA</strong>
+                                <small>Ex.: 972b120a</small>
+                            </span>
+                        </label>
                         <input id="endVaga" type="text" autocomplete="off" autocapitalize="none" spellcheck="false"
-                            placeholder="Ex.: 972b120a"
+                            placeholder="972b120a"
                             oninput="atualizarInfoVagaEnderecamento()"
                             onkeydown="if(event.key==='Enter'){event.preventDefault();avancarAposVaga();}">
                     </div>
 
-                    <div id="endVagaInfo" class="end-status end-vaga-status">
-                        Bipe uma vaga no padrão 972 + rua + nível + vaga + lado.
-                    </div>
+                    <div id="endVagaInfo" class="end-status end-vaga-status"></div>
 
                     <div class="end-field end-scan-field">
-                        <label for="endProduto">3 • REFERÊNCIA OU DESCRIÇÃO</label>
+                        <label for="endProduto" class="end-scan-label">
+                            <span class="end-field-number">3</span>
+                            <span class="end-field-copy">
+                                <strong>REFERÊNCIA / DESCRIÇÃO</strong>
+                                <small>Identifique a mercadoria</small>
+                            </span>
+                        </label>
                         <input id="endProduto" type="text" autocomplete="off" list="endProdutosDatalist"
-                            placeholder="Ex.: 1.26030.80.1011 ou MOP"
+                            placeholder="Referência ou descrição"
                             onkeydown="if(event.key==='Enter'){event.preventDefault();salvarEnderecamentoG02();}">
                         <datalist id="endProdutosDatalist"></datalist>
                     </div>
@@ -5028,13 +5653,13 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
                 </div>
             </div>
 
-            <div class="end-card end-map-card end-occupancy-card">
+            <div class="end-card end-map-card end-occupancy-card" id="endSecaoVagas">
                 <div class="end-card-heading">
                     <div>
-                        <span class="end-eyebrow">BANCO DE VAGAS</span>
-                        <h3>Ocupação do galpão</h3>
+                        <span class="end-eyebrow">DISPONIBILIDADE</span>
+                        <h3>Vagas do galpão</h3>
                     </div>
-                    <span class="end-address-total">3.080 TOTAL</span>
+                    <span class="end-address-total">3.080 POSIÇÕES</span>
                 </div>
 
                 <div class="end-occupancy-stats">
@@ -5138,10 +5763,10 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
             </div>
         </div>
 
-        <div class="end-card end-list-card">
+        <div class="end-card end-list-card" id="endSecaoPaletes">
             <div class="end-list-header">
                 <div>
-                    <span class="end-eyebrow">CONSULTA RÁPIDA</span>
+                    <span class="end-eyebrow">MOVIMENTAÇÃO ATUAL</span>
                     <h3>Paletes endereçados</h3>
                 </div>
                 <span id="endResumoEnderecados" class="end-count end-count-pill">0 paletes endereçados</span>
@@ -5230,6 +5855,22 @@ let vagasG02Carregadas = false;
 let enderecamentosG02Carregados = false;
 let sincronizandoBancoVagasG02 = false;
 
+
+
+
+function scrollEnderecoSecao(id) {
+    const alvo = document.getElementById(id);
+    if (!alvo) return;
+
+    alvo.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+    if (id === "endSecaoOperacao") {
+        setTimeout(() => focarCampoEndereco("endPa"), 350);
+    }
+}
 
 
 function exibirModuloEnderecamento() {
@@ -8243,7 +8884,7 @@ function atualizarInfoVagaEnderecamento() {
 
     if (resultado.vazia) {
         info.className = "end-status end-vaga-status";
-        info.textContent = "Bipe uma vaga no padrão 972 + rua + nível + vaga + lado.";
+        info.textContent = "";
         return;
     }
 
