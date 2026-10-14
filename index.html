@@ -5589,6 +5589,269 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     }
 }
 
+
+/* =====================================================
+   V32 - GERADOR DE PLAQUINHAS DE ENDEREÇAMENTO
+===================================================== */
+
+.end-mobile-nav {
+    grid-template-columns: repeat(4, 1fr) !important;
+}
+
+#sistemaEnderecamento .end-label-card {
+    border-top: 3px solid #7a97a8 !important;
+}
+
+.end-label-helper,
+.end-label-note {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #f6fafc;
+    border: 1px solid #d9e6ee;
+    color: #4f6877;
+    font-size: 11px;
+    line-height: 1.4;
+    font-weight: 650;
+    text-align: center;
+}
+
+.end-label-form {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    align-items: end;
+    margin-bottom: 10px;
+}
+
+.end-label-field {
+    min-width: 0;
+}
+
+.end-label-field label {
+    display: block;
+    margin-bottom: 6px;
+    color: #4b6574;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .45px;
+}
+
+.end-label-field select,
+.end-label-field input {
+    width: 100%;
+    height: 46px;
+    border-radius: 10px;
+    border: 1.5px solid #bdd1dc;
+    background: #fff;
+    color: #193f56;
+    padding: 0 12px;
+    font-size: 15px;
+    font-weight: 800;
+    outline: none;
+}
+
+.end-label-field select:focus,
+.end-label-field input:focus {
+    border-color: #2d789f;
+    box-shadow: 0 0 0 4px rgba(45,120,159,.11);
+}
+
+.end-label-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.end-label-actions .end-primary,
+.end-label-actions .end-secondary,
+.end-print-btn {
+    min-width: 180px;
+    height: 50px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.end-print-btn {
+    background: linear-gradient(180deg, #2f74a0, #215a7d);
+    color: #fff;
+    box-shadow: 0 6px 14px rgba(33,90,125,.16);
+}
+
+.end-label-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 12px;
+}
+
+.end-label-empty,
+.end-label-preview-notice {
+    grid-column: 1 / -1;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    background: #f6fafc;
+    border: 1px dashed #c9dae4;
+    color: #607a89;
+    font-weight: 700;
+    font-size: 11px;
+}
+
+.end-placa-item {
+    min-width: 0;
+}
+
+.end-placa-canvas {
+    min-height: 188px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1.5px solid #d9e6ee;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(30,64,84,.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.end-placa-barcode-wrap {
+    width: 100%;
+    height: 84px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid #1f2937;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.end-placa-barcode-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.end-placa-codigo-pequeno {
+    margin-top: 7px;
+    color: #364f5f;
+    font-size: 14px;
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: .5px;
+    text-align: center;
+}
+
+.end-placa-codigo-grande {
+    margin-top: 8px;
+    color: #111827;
+    font-size: 42px;
+    line-height: .95;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .end-label-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .end-mobile-nav button {
+        gap: 4px;
+    }
+
+    .end-mobile-nav button span {
+        width: 18px;
+        height: 18px;
+        font-size: 7px;
+    }
+
+    .end-label-form {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .end-label-field select,
+    .end-label-field input {
+        height: 48px;
+        font-size: 15px;
+    }
+
+    .end-label-actions .end-primary,
+    .end-label-actions .end-secondary,
+    .end-print-btn {
+        min-width: 0;
+        width: calc(50% - 4px);
+        height: 48px;
+        font-size: 11px;
+    }
+
+    .end-label-preview-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .end-placa-canvas {
+        min-height: 180px;
+        padding: 10px;
+    }
+
+    .end-placa-barcode-wrap {
+        height: 80px;
+    }
+
+    .end-placa-codigo-pequeno {
+        font-size: 13px;
+    }
+
+    .end-placa-codigo-grande {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 430px) {
+    .end-mobile-nav {
+        gap: 4px;
+    }
+
+    .end-mobile-nav button {
+        font-size: 7px !important;
+        padding: 0 3px !important;
+    }
+
+    .end-label-form {
+        grid-template-columns: 1fr;
+    }
+
+    .end-label-actions .end-primary,
+    .end-label-actions .end-secondary,
+    .end-print-btn {
+        width: 100%;
+    }
+
+    .end-placa-barcode-wrap {
+        height: 74px;
+    }
+
+    .end-placa-codigo-pequeno {
+        font-size: 12px;
+    }
+
+    .end-placa-codigo-grande {
+        font-size: 34px;
+    }
+}
+
 </style>
     
 </head>
@@ -6602,6 +6865,11 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
                 <span>03</span>
                 PALETES
             </button>
+
+            <button type="button" onclick="scrollEnderecoSecao('endSecaoPlaquinhas')">
+                <span>04</span>
+                PLAQUINHAS
+            </button>
         </div>
 
         <div class="end-mobile-main">
@@ -6840,6 +7108,86 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
                 </table>
             </div>
         </div>
+
+        <div class="end-card end-label-card" id="endSecaoPlaquinhas">
+            <div class="end-list-header">
+                <div>
+                    <span class="end-eyebrow">IMPRESSÃO DE ENDEREÇOS</span>
+                    <h3>Gerar plaquinhas</h3>
+                </div>
+                <span id="endResumoPlaquinhas" class="end-count end-count-pill">0 plaquinhas geradas</span>
+            </div>
+
+            <div class="end-label-helper">
+                Gere plaquinhas por rua, nível, intervalo e lado. Se deixar a rua como “todas”, o sistema gera em lote para o G02 inteiro.
+            </div>
+
+            <div class="end-label-form">
+                <div class="end-label-field">
+                    <label for="endPlacaRua">RUA</label>
+                    <select id="endPlacaRua" onchange="atualizarFaixaPlaquinhasG02()">
+                        <option value="">TODAS AS RUAS</option>
+                        <option value="A">RUA A</option>
+                        <option value="B">RUA B</option>
+                        <option value="C">RUA C</option>
+                        <option value="D">RUA D</option>
+                        <option value="E">RUA E</option>
+                        <option value="F">RUA F</option>
+                        <option value="G">RUA G</option>
+                        <option value="H">RUA H</option>
+                        <option value="I">RUA I</option>
+                        <option value="J">RUA J</option>
+                    </select>
+                </div>
+
+                <div class="end-label-field">
+                    <label for="endPlacaNivel">NÍVEL</label>
+                    <select id="endPlacaNivel">
+                        <option value="">TODOS OS NÍVEIS</option>
+                        <option value="0">NÍVEL 0</option>
+                        <option value="1">NÍVEL 1</option>
+                        <option value="2">NÍVEL 2</option>
+                        <option value="3">NÍVEL 3</option>
+                        <option value="4">NÍVEL 4</option>
+                    </select>
+                </div>
+
+                <div class="end-label-field">
+                    <label for="endPlacaInicio">VAGA INICIAL</label>
+                    <input id="endPlacaInicio" type="number" min="1" step="1" placeholder="Ex.: 1">
+                </div>
+
+                <div class="end-label-field">
+                    <label for="endPlacaFim">VAGA FINAL</label>
+                    <input id="endPlacaFim" type="number" min="1" step="1" placeholder="Ex.: 20">
+                </div>
+
+                <div class="end-label-field">
+                    <label for="endPlacaLado">LADO</label>
+                    <select id="endPlacaLado">
+                        <option value="AMBOS">A + B</option>
+                        <option value="A">SOMENTE A</option>
+                        <option value="B">SOMENTE B</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="end-label-note" id="endPlacaLimiteInfo">
+                Se o intervalo estiver em branco, a geração usa toda a faixa válida da rua selecionada.
+            </div>
+
+            <div class="end-label-actions">
+                <button type="button" class="end-primary" onclick="gerarPlaquinhasG02()">GERAR PLAQUINHAS</button>
+                <button type="button" class="end-secondary" onclick="limparPlaquinhasG02()">LIMPAR</button>
+                <button type="button" class="end-print-btn" onclick="imprimirPlaquinhasG02()">IMPRIMIR</button>
+            </div>
+
+            <div id="endPreviewPlaquinhas" class="end-label-preview-grid">
+                <div class="end-label-empty">
+                    Nenhuma plaquinha gerada ainda.
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -6873,6 +7221,9 @@ const SENHA_ENDERECAMENTO = "camesa123";
 let perfil = "";
 
 const GALPAO = "G02";
+
+let endPlaquinhasGeradas = [];
+const END_PREVIEW_PLAQUINHAS_MAX = 120;
 
 let paletes = [];
 
@@ -10604,9 +10955,359 @@ function renderizarEnderecamentosG02() {
     });
 }
 
+/* =========================
+   PLAQUINHAS DE ENDEREÇAMENTO
+========================= */
+
+const CODE39_PATTERNS = Object.freeze({
+    "0":"bsbSBsBsb","1":"BsbSbsbsB","2":"bsBSbsbsB","3":"BsBSbsbsb",
+    "4":"bsbSBsbsB","5":"BsbSBsbsb","6":"bsBSBsbsb","7":"bsbSbsBsB",
+    "8":"BsbSbsBsb","9":"bsBSbsBsb","A":"BsbsbSbsB","B":"bsBsbSbsB",
+    "C":"BsBsbSbsb","D":"bsbsBSbsB","E":"BsbsBSbsb","F":"bsBsBSbsb",
+    "G":"bsbsbSBsB","H":"BsbsbSBsb","I":"bsBsbSBsb","J":"bsbsBSBsb",
+    "K":"BsbsbsbSB","L":"bsBsbsbSB","M":"BsBsbsbSb","N":"bsbsBsbSB",
+    "O":"BsbsBsbSb","P":"bsBsBsbSb","Q":"bsbsbsBSB","R":"BsbsbsBSb",
+    "S":"bsBsbsBSb","T":"bsbsBsBSb","U":"BSbsbsbsB","V":"bSBsbsbsB",
+    "W":"BSBsbsbsb","X":"bSbsBsbsB","Y":"BSbsBsbsb","Z":"bSBsBsbsb",
+    "-":"bSbsbsBsB",".":"BSbsbsBsb"," ":"bSBsbsBsb","*":"bSbsBsBsb",
+    "$":"bSbSbSbsb","/":"bSbSbsbSb","+":"bSbsbSbSb","%":"bsbSbSbSb"
+});
+
+const CODE39_EXTENDED = Object.freeze({
+    "a":"+A","b":"+B","c":"+C","d":"+D","e":"+E","f":"+F","g":"+G","h":"+H","i":"+I","j":"+J",
+    "k":"+K","l":"+L","m":"+M","n":"+N","o":"+O","p":"+P","q":"+Q","r":"+R","s":"+S","t":"+T",
+    "u":"+U","v":"+V","w":"+W","x":"+X","y":"+Y","z":"+Z"
+});
+
+function formatarCodigoVagaDisplayG02(rua, nivel, numero, lado) {
+    const numeroFormatado = String(Number(numero) || 0).padStart(2, "0");
+    return `972${String(rua || "").toUpperCase()}${nivel}${numeroFormatado}${String(lado || "").toLowerCase()}`;
+}
+
+function atualizarFaixaPlaquinhasG02() {
+    const rua = (document.getElementById("endPlacaRua")?.value || "").toUpperCase();
+    const inicio = document.getElementById("endPlacaInicio");
+    const fim = document.getElementById("endPlacaFim");
+    const info = document.getElementById("endPlacaLimiteInfo");
+
+    if (!inicio || !fim || !info) return;
+
+    if (!rua) {
+        inicio.removeAttribute("max");
+        fim.removeAttribute("max");
+        info.textContent = "Rua em branco = geração em lote para todas as ruas do G02. Se o intervalo estiver vazio, cada rua usa sua faixa completa.";
+        return;
+    }
+
+    const limite = Number(CONFIG_RUAS_G02[rua] || 0);
+    if (limite > 0) {
+        inicio.max = String(limite);
+        fim.max = String(limite);
+        info.textContent = `Rua ${rua}: vagas de 01 até ${String(limite).padStart(2, "0")} em todos os níveis disponíveis.`;
+    }
+}
+
+function obterRuasPlaquinhasG02() {
+    const rua = (document.getElementById("endPlacaRua")?.value || "").toUpperCase();
+    return rua ? [rua] : Object.keys(CONFIG_RUAS_G02);
+}
+
+function obterNiveisPlaquinhasG02() {
+    const nivel = document.getElementById("endPlacaNivel")?.value || "";
+    return nivel === "" ? ["0", "1", "2", "3", "4"] : [String(nivel)];
+}
+
+function obterLadosPlaquinhasG02() {
+    const lado = (document.getElementById("endPlacaLado")?.value || "AMBOS").toUpperCase();
+    if (lado === "A") return ["a"];
+    if (lado === "B") return ["b"];
+    return ["a", "b"];
+}
+
+function code39ExpandValue(value) {
+    const texto = String(value || "");
+    let expandido = "";
+
+    for (const ch of texto) {
+        if (CODE39_PATTERNS[ch]) {
+            expandido += ch;
+        } else if (CODE39_EXTENDED[ch]) {
+            expandido += CODE39_EXTENDED[ch];
+        } else if (CODE39_PATTERNS[ch.toUpperCase()]) {
+            expandido += ch.toUpperCase();
+        }
+    }
+
+    return `*${expandido}*`;
+}
+
+function gerarSvgCode39(value) {
+    const encoded = code39ExpandValue(value);
+    const narrow = 2;
+    const wide = 4.4;
+    const gap = 2;
+    const height = 78;
+    const quiet = 10;
+
+    let x = quiet;
+    const rects = [];
+
+    for (let i = 0; i < encoded.length; i++) {
+        const patt = CODE39_PATTERNS[encoded[i]];
+        if (!patt) continue;
+
+        for (const sym of patt) {
+            const largura = (sym === "B" || sym === "S") ? wide : narrow;
+            const barra = (sym === "b" || sym === "B");
+
+            if (barra) {
+                rects.push(`<rect x="${x.toFixed(1)}" y="0" width="${largura.toFixed(1)}" height="${height}" fill="#111827"></rect>`);
+            }
+
+            x += largura;
+        }
+
+        if (i < encoded.length - 1) {
+            x += gap;
+        }
+    }
+
+    x += quiet;
+
+    return `
+        <svg
+            class="end-placa-barcode-svg"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 ${x.toFixed(1)} ${height}"
+            preserveAspectRatio="none"
+            aria-label="Código de barras ${String(value || "")}"
+            role="img"
+        >
+            <rect x="0" y="0" width="${x.toFixed(1)}" height="${height}" fill="#ffffff"></rect>
+            ${rects.join("")}
+        </svg>
+    `;
+}
+
+function montarPlaquinhaHtmlG02(codigo) {
+    const valor = String(codigo || "");
+    return `
+        <article class="end-placa-item">
+            <div class="end-placa-canvas">
+                <div class="end-placa-barcode-wrap">
+                    ${gerarSvgCode39(valor)}
+                </div>
+
+                <div class="end-placa-codigo-pequeno">${escapeHTML(valor)}</div>
+                <div class="end-placa-codigo-grande">${escapeHTML(valor)}</div>
+            </div>
+        </article>
+    `;
+}
+
+function renderizarPreviewPlaquinhasG02() {
+    const area = document.getElementById("endPreviewPlaquinhas");
+    const resumo = document.getElementById("endResumoPlaquinhas");
+
+    if (!area || !resumo) return;
+
+    const total = endPlaquinhasGeradas.length;
+    resumo.textContent = `${total} plaquinha(s) gerada(s)`;
+
+    if (!total) {
+        area.innerHTML = `<div class="end-label-empty">Nenhuma plaquinha gerada ainda.</div>`;
+        return;
+    }
+
+    const itens = endPlaquinhasGeradas.slice(0, END_PREVIEW_PLAQUINHAS_MAX);
+    let html = "";
+
+    if (total > END_PREVIEW_PLAQUINHAS_MAX) {
+        html += `
+            <div class="end-label-preview-notice">
+                Exibindo ${END_PREVIEW_PLAQUINHAS_MAX} de ${total} plaquinhas para manter a tela leve. Na impressão saem todas.
+            </div>
+        `;
+    }
+
+    html += itens.map(item => montarPlaquinhaHtmlG02(item.codigo)).join("");
+    area.innerHTML = html;
+}
+
+function limparPlaquinhasG02() {
+    const ids = ["endPlacaRua", "endPlacaNivel", "endPlacaInicio", "endPlacaFim", "endPlacaLado"];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.tagName === "SELECT") {
+            if (id === "endPlacaLado") el.value = "AMBOS";
+            else el.value = "";
+        } else {
+            el.value = "";
+        }
+    });
+
+    endPlaquinhasGeradas = [];
+    atualizarFaixaPlaquinhasG02();
+    renderizarPreviewPlaquinhasG02();
+}
+
+function gerarPlaquinhasG02() {
+    const ruas = obterRuasPlaquinhasG02();
+    const niveis = obterNiveisPlaquinhasG02();
+    const lados = obterLadosPlaquinhasG02();
+    const inicioInformado = Number(document.getElementById("endPlacaInicio")?.value || 0);
+    const fimInformado = Number(document.getElementById("endPlacaFim")?.value || 0);
+
+    const resultado = [];
+
+    ruas.forEach(rua => {
+        const limite = Number(CONFIG_RUAS_G02[rua] || 0);
+        if (!limite) return;
+
+        let inicio = inicioInformado > 0 ? inicioInformado : 1;
+        let fim = fimInformado > 0 ? fimInformado : limite;
+
+        inicio = Math.max(1, inicio);
+        fim = Math.min(limite, fim);
+
+        if (inicio > fim) {
+            const tmp = inicio;
+            inicio = fim;
+            fim = tmp;
+        }
+
+        for (const nivel of niveis) {
+            for (let numero = inicio; numero <= fim; numero++) {
+                for (const lado of lados) {
+                    resultado.push({
+                        rua,
+                        nivel: String(nivel),
+                        numero,
+                        lado,
+                        codigo: formatarCodigoVagaDisplayG02(rua, String(nivel), numero, lado)
+                    });
+                }
+            }
+        }
+    });
+
+    endPlaquinhasGeradas = resultado;
+    renderizarPreviewPlaquinhasG02();
+    scrollEnderecoSecao("endSecaoPlaquinhas");
+}
+
+function imprimirPlaquinhasG02() {
+    if (!endPlaquinhasGeradas.length) {
+        alert("Gere as plaquinhas antes de imprimir.");
+        return;
+    }
+
+    const janela = window.open("", "_blank", "width=1200,height=900");
+    if (!janela) {
+        alert("Não foi possível abrir a tela de impressão.");
+        return;
+    }
+
+    const htmlPlacas = endPlaquinhasGeradas.map(item => montarPlaquinhaHtmlG02(item.codigo)).join("");
+
+    janela.document.write(`
+        <html>
+            <head>
+                <title>Plaquinhas G02</title>
+                <style>
+                    * { box-sizing: border-box; }
+                    body {
+                        margin: 0;
+                        padding: 14px;
+                        font-family: Arial, Helvetica, sans-serif;
+                        background: #ffffff;
+                        color: #0f172a;
+                    }
+                    .print-head {
+                        margin-bottom: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 10px;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    .print-grid {
+                        display: grid;
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                        gap: 14px;
+                    }
+                    .end-placa-item {
+                        break-inside: avoid;
+                        page-break-inside: avoid;
+                    }
+                    .end-placa-canvas {
+                        border: 2px solid #cfd8df;
+                        border-radius: 8px;
+                        background: #fff;
+                        padding: 12px;
+                        min-height: 182px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .end-placa-barcode-wrap {
+                        width: 100%;
+                        height: 82px;
+                        border: 2px solid #1f2937;
+                        padding: 5px;
+                        background: #ffffff;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .end-placa-barcode-svg {
+                        width: 100%;
+                        height: 100%;
+                        display: block;
+                    }
+                    .end-placa-codigo-pequeno {
+                        margin-top: 7px;
+                        font-size: 14px;
+                        font-weight: 700;
+                        letter-spacing: .5px;
+                    }
+                    .end-placa-codigo-grande {
+                        margin-top: 8px;
+                        font-size: 44px;
+                        line-height: 1;
+                        font-weight: 900;
+                        letter-spacing: 1px;
+                    }
+                    @media print {
+                        body { padding: 8mm; }
+                        .print-head { margin-bottom: 8mm; }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="print-head">
+                    <span>CAMESA • PLAQUINHAS DE ENDEREÇAMENTO G02</span>
+                    <span>${endPlaquinhasGeradas.length} plaquinha(s)</span>
+                </div>
+                <div class="print-grid">${htmlPlacas}</div>
+                <script>window.onload = function(){ setTimeout(function(){ window.print(); }, 250); };</script>
+            </body>
+        </html>
+    `);
+
+    janela.document.close();
+}
+
+
+
 function carregarEnderecamentoG02() {
     garantirBancoVagasG02();
 
+    atualizarFaixaPlaquinhasG02();
+    renderizarPreviewPlaquinhasG02();
     atualizarInfoVagaEnderecamento();
     renderizarMapaOcupacaoG02();
 
