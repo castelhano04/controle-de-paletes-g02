@@ -5928,6 +5928,75 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     }
 }
 
+
+/* =====================================================
+   V35 - PLAQUINHAS EM ABA SEPARADA + EXPORTAÇÃO .ZPL
+===================================================== */
+
+.end-module-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin: 0 0 9px;
+    padding: 5px;
+    border-radius: 13px;
+    background: #ffffff;
+    border: 1px solid #d5e2e9;
+    box-shadow: 0 5px 14px rgba(29,63,84,.06);
+}
+
+.end-module-tabs button {
+    height: 44px !important;
+    border: 1px solid transparent !important;
+    border-radius: 9px !important;
+    background: transparent !important;
+    color: #657985 !important;
+    box-shadow: none !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    letter-spacing: .45px;
+}
+
+.end-module-tabs button.active {
+    background: linear-gradient(180deg, #285f80, #214f6c) !important;
+    border-color: #214f6c !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(33,79,108,.15) !important;
+}
+
+/* Navegação operacional volta a ter apenas 3 itens */
+#endViewEndereco .end-mobile-nav {
+    grid-template-columns: repeat(3, 1fr) !important;
+}
+
+/* Plaquinhas realmente ocupam uma tela própria */
+#endViewPlaquinhas {
+    width: 100%;
+}
+
+#endViewPlaquinhas .end-label-card {
+    margin-top: 0 !important;
+    min-height: calc(100vh - 160px);
+}
+
+@media(max-width:720px) {
+    .end-module-tabs {
+        position: sticky;
+        top: 80px;
+        z-index: 48;
+        margin-bottom: 7px;
+    }
+
+    .end-module-tabs button {
+        height: 42px !important;
+        font-size: 9px !important;
+    }
+
+    #endViewEndereco .end-mobile-nav {
+        top: 132px;
+    }
+}
+
 </style>
     
 </head>
@@ -6926,29 +6995,44 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
             <button class="btn-sair" onclick="sair()">SAIR</button>
         </div>
 
-        <div class="end-mobile-nav">
-            <button type="button" onclick="scrollEnderecoSecao('endSecaoOperacao')">
-                <span>01</span>
-                OPERAÇÃO
+        <div class="end-module-tabs">
+            <button
+                id="endTabEndereco"
+                type="button"
+                class="active"
+                onclick="abrirAbaEnderecoInterna('endereco')"
+            >
+                ENDEREÇAMENTO
             </button>
 
-            <button type="button" onclick="scrollEnderecoSecao('endSecaoVagas')">
-                <span>02</span>
-                VAGAS
-            </button>
-
-            <button type="button" onclick="scrollEnderecoSecao('endSecaoPaletes')">
-                <span>03</span>
-                PALETES
-            </button>
-
-            <button type="button" onclick="scrollEnderecoSecao('endSecaoPlaquinhas')">
-                <span>04</span>
+            <button
+                id="endTabPlaquinhas"
+                type="button"
+                onclick="abrirAbaEnderecoInterna('plaquinhas')"
+            >
                 PLAQUINHAS
             </button>
         </div>
 
-        <div class="end-mobile-main">
+        <div id="endViewEndereco">
+            <div class="end-mobile-nav">
+                <button type="button" onclick="scrollEnderecoSecao('endSecaoOperacao')">
+                    <span>01</span>
+                    OPERAÇÃO
+                </button>
+
+                <button type="button" onclick="scrollEnderecoSecao('endSecaoVagas')">
+                    <span>02</span>
+                    VAGAS
+                </button>
+
+                <button type="button" onclick="scrollEnderecoSecao('endSecaoPaletes')">
+                    <span>03</span>
+                    PALETES
+                </button>
+            </div>
+
+            <div class="end-mobile-main">
             <div class="end-card end-scan-card" id="endSecaoOperacao">
                 <div class="end-card-heading">
                     <div>
@@ -7185,6 +7269,9 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
             </div>
         </div>
 
+        </div><!-- /endViewEndereco -->
+
+        <div id="endViewPlaquinhas" style="display:none;">
         <div class="end-card end-label-card" id="endSecaoPlaquinhas">
             <div class="end-list-header">
                 <div>
@@ -7260,7 +7347,7 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
                     class="end-prn-btn"
                     onclick="baixarArquivoEtiquetasG02()"
                 >
-                    BAIXAR ARQUIVO .PRN
+                    BAIXAR ARQUIVO .ZPL
                 </button>
 
                 <button
@@ -7290,6 +7377,7 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
                 </div>
             </div>
         </div>
+        </div><!-- /endViewPlaquinhas -->
     </div>
 </div>
 
@@ -7356,6 +7444,70 @@ let sincronizandoBancoVagasG02 = false;
 
 
 
+
+
+function abrirAbaEnderecoInterna(aba) {
+    const viewEndereco =
+        document.getElementById("endViewEndereco");
+
+    const viewPlaquinhas =
+        document.getElementById("endViewPlaquinhas");
+
+    const tabEndereco =
+        document.getElementById("endTabEndereco");
+
+    const tabPlaquinhas =
+        document.getElementById("endTabPlaquinhas");
+
+    const mostrarPlaquinhas =
+        aba === "plaquinhas";
+
+    if (viewEndereco) {
+        viewEndereco.style.display =
+            mostrarPlaquinhas ? "none" : "block";
+    }
+
+    if (viewPlaquinhas) {
+        viewPlaquinhas.style.display =
+            mostrarPlaquinhas ? "block" : "none";
+    }
+
+    if (tabEndereco) {
+        tabEndereco.classList.toggle(
+            "active",
+            !mostrarPlaquinhas
+        );
+    }
+
+    if (tabPlaquinhas) {
+        tabPlaquinhas.classList.toggle(
+            "active",
+            mostrarPlaquinhas
+        );
+    }
+
+    sessionStorage.setItem(
+        "abaInternaEnderecoG02",
+        mostrarPlaquinhas
+            ? "plaquinhas"
+            : "endereco"
+    );
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    if (!mostrarPlaquinhas) {
+        setTimeout(
+            () => focarCampoEndereco("endPa"),
+            250
+        );
+    } else {
+        atualizarFaixaPlaquinhasG02();
+        renderizarPreviewPlaquinhasG02();
+    }
+}
 
 function scrollEnderecoSecao(id) {
     const alvo = document.getElementById(id);
@@ -11302,11 +11454,11 @@ function gerarPlaquinhasG02() {
 
     atualizarStatusPrnG02(
         resultado.length
-            ? `${resultado.length} etiqueta(s) pronta(s) para gerar o arquivo da impressora.`
+            ? `${resultado.length} etiqueta(s) pronta(s) para gerar o arquivo ZPL.`
             : ""
     );
 
-    scrollEnderecoSecao("endSecaoPlaquinhas");
+    abrirAbaEnderecoInterna("plaquinhas");
 }
 
 
@@ -11430,7 +11582,7 @@ function baixarArquivoEtiquetasG02() {
 
     link.href = url;
     link.download =
-        `ETIQUETAS_G02_${dataNome}_${horaNome}.prn`;
+        `ETIQUETAS_G02_${dataNome}_${horaNome}.zpl`;
 
     document.body.appendChild(link);
     link.click();
@@ -11441,7 +11593,7 @@ function baixarArquivoEtiquetasG02() {
     }, 1500);
 
     atualizarStatusPrnG02(
-        `${endPlaquinhasGeradas.length} etiqueta(s) exportada(s) no padrão da impressora.`
+        `${endPlaquinhasGeradas.length} etiqueta(s) exportada(s) em arquivo ZPL.`
     );
 }
 
@@ -11611,6 +11763,12 @@ function imprimirPlaquinhasG02() {
 
 function carregarEnderecamentoG02() {
     garantirBancoVagasG02();
+
+    const abaInternaSalva =
+        sessionStorage.getItem("abaInternaEnderecoG02")
+        || "endereco";
+
+    abrirAbaEnderecoInterna(abaInternaSalva);
 
     atualizarFaixaPlaquinhasG02();
     renderizarPreviewPlaquinhasG02();
