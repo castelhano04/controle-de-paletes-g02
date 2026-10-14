@@ -5852,6 +5852,82 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     }
 }
 
+
+/* =====================================================
+   V34 - ARQUIVO DE ETIQUETAS NO PADRÃO DA IMPRESSORA
+===================================================== */
+
+.end-prn-btn,
+.end-copy-prn-btn {
+    min-width: 180px;
+    height: 50px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.end-prn-btn {
+    background: linear-gradient(180deg, #176f49, #115c3b);
+    box-shadow: 0 6px 14px rgba(17,92,59,.16);
+}
+
+.end-copy-prn-btn {
+    background: linear-gradient(180deg, #667f90, #516a7a);
+    box-shadow: 0 6px 14px rgba(81,106,122,.14);
+}
+
+.end-prn-status {
+    min-height: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.end-prn-status:empty {
+    display: none;
+}
+
+.end-prn-status.ok {
+    display: block;
+    padding: 9px 11px;
+    border-radius: 9px;
+    background: #eff9f3;
+    border: 1px solid #d1e8db;
+    color: #2a6d4b;
+}
+
+.end-prn-status.warn {
+    display: block;
+    padding: 9px 11px;
+    border-radius: 9px;
+    background: #fff4f4;
+    border: 1px solid #efd3d6;
+    color: #9b3441;
+}
+
+@media(max-width:720px) {
+    .end-label-actions .end-prn-btn,
+    .end-label-actions .end-copy-prn-btn {
+        min-width: 0;
+        width: calc(50% - 4px);
+        height: 48px;
+        font-size: 10.5px;
+    }
+}
+
+@media(max-width:430px) {
+    .end-label-actions .end-prn-btn,
+    .end-label-actions .end-copy-prn-btn {
+        width: 100%;
+    }
+}
+
 </style>
     
 </head>
@@ -7178,9 +7254,35 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
 
             <div class="end-label-actions">
                 <button type="button" class="end-primary" onclick="gerarPlaquinhasG02()">GERAR PLAQUINHAS</button>
+
+                <button
+                    type="button"
+                    class="end-prn-btn"
+                    onclick="baixarArquivoEtiquetasG02()"
+                >
+                    BAIXAR ARQUIVO .PRN
+                </button>
+
+                <button
+                    type="button"
+                    class="end-copy-prn-btn"
+                    onclick="copiarComandosEtiquetasG02()"
+                >
+                    COPIAR COMANDOS
+                </button>
+
+                <button
+                    type="button"
+                    class="end-print-btn"
+                    onclick="imprimirPlaquinhasG02()"
+                >
+                    IMPRIMIR VISUAL
+                </button>
+
                 <button type="button" class="end-secondary" onclick="limparPlaquinhasG02()">LIMPAR</button>
-                <button type="button" class="end-print-btn" onclick="imprimirPlaquinhasG02()">IMPRIMIR</button>
             </div>
+
+            <div id="endPrnStatus" class="end-prn-status"></div>
 
             <div id="endPreviewPlaquinhas" class="end-label-preview-grid">
                 <div class="end-label-empty">
@@ -11148,8 +11250,10 @@ function limparPlaquinhasG02() {
     });
 
     endPlaquinhasGeradas = [];
+
     atualizarFaixaPlaquinhasG02();
     renderizarPreviewPlaquinhasG02();
+    atualizarStatusPrnG02("");
 }
 
 function gerarPlaquinhasG02() {
@@ -11193,9 +11297,211 @@ function gerarPlaquinhasG02() {
     });
 
     endPlaquinhasGeradas = resultado;
+
     renderizarPreviewPlaquinhasG02();
+
+    atualizarStatusPrnG02(
+        resultado.length
+            ? `${resultado.length} etiqueta(s) pronta(s) para gerar o arquivo da impressora.`
+            : ""
+    );
+
     scrollEnderecoSecao("endSecaoPlaquinhas");
 }
+
+
+function montarComandoEtiquetaG02(item) {
+    const STX = "\x02";
+
+    const rua =
+        String(item.rua || "").toUpperCase();
+
+    const nivel =
+        String(item.nivel ?? "");
+
+    const vaga =
+        String(Number(item.numero) || 0).padStart(2, "0");
+
+    /*
+       O endereço utilizado no código de barras segue o padrão
+       do sistema G02:
+       972 + RUA MAIÚSCULA + NÍVEL + VAGA(2 dígitos) + lado minúsculo.
+
+       Exemplo:
+       972E120a
+
+       IMPORTANTE:
+       Não existe "/" antes do endereço.
+    */
+    const ladoCodigo =
+        String(item.lado || "").toLowerCase();
+
+    const codigo =
+        `972${rua}${nivel}${vaga}${ladoCodigo}`;
+
+    /*
+       Na impressão grande, os componentes são enviados separadamente
+       exatamente nas posições do modelo fornecido.
+    */
+    return [
+        `${STX}KI7`,
+        `${STX}C0200`,
+        `${STX}L`,
+        `D11`,
+        `1E8412001560055 ${codigo}`,
+        `153400100100000 972`,
+        `154400100100098 ${rua}`,
+        `157500100100115 ${nivel}`,
+        `154400100100230 ${vaga}`,
+        `154400100100310 ${ladoCodigo}`,
+        `1X1100001480025B335155004004`,
+        `Q0001`,
+        `E`
+    ].join("\r\n");
+}
+
+function gerarConteudoPrnEtiquetasG02() {
+    if (!endPlaquinhasGeradas.length) {
+        return "";
+    }
+
+    /*
+       Cada etiqueta é enviada como um bloco completo.
+       Não adiciona "/" antes do endereço.
+    */
+    return endPlaquinhasGeradas
+        .map(item => montarComandoEtiquetaG02(item))
+        .join("\r\n");
+}
+
+function atualizarStatusPrnG02(texto, tipo = "ok") {
+    const el =
+        document.getElementById("endPrnStatus");
+
+    if (!el) return;
+
+    el.className =
+        `end-prn-status ${tipo}`;
+
+    el.textContent =
+        texto || "";
+}
+
+function baixarArquivoEtiquetasG02() {
+    if (!endPlaquinhasGeradas.length) {
+        alert("Gere as plaquinhas antes de baixar o arquivo.");
+        return;
+    }
+
+    const conteudo =
+        gerarConteudoPrnEtiquetasG02();
+
+    /*
+       Blob mantém o caractere STX real (ASCII 02),
+       necessário para o comando da impressora.
+    */
+    const blob =
+        new Blob(
+            [conteudo],
+            { type: "application/octet-stream" }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    const agora =
+        new Date();
+
+    const dataNome =
+        [
+            agora.getFullYear(),
+            String(agora.getMonth() + 1).padStart(2, "0"),
+            String(agora.getDate()).padStart(2, "0")
+        ].join("");
+
+    const horaNome =
+        [
+            String(agora.getHours()).padStart(2, "0"),
+            String(agora.getMinutes()).padStart(2, "0")
+        ].join("");
+
+    link.href = url;
+    link.download =
+        `ETIQUETAS_G02_${dataNome}_${horaNome}.prn`;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => {
+        URL.revokeObjectURL(url);
+    }, 1500);
+
+    atualizarStatusPrnG02(
+        `${endPlaquinhasGeradas.length} etiqueta(s) exportada(s) no padrão da impressora.`
+    );
+}
+
+async function copiarComandosEtiquetasG02() {
+    if (!endPlaquinhasGeradas.length) {
+        alert("Gere as plaquinhas antes de copiar os comandos.");
+        return;
+    }
+
+    const conteudo =
+        gerarConteudoPrnEtiquetasG02();
+
+    try {
+        await navigator.clipboard.writeText(conteudo);
+
+        atualizarStatusPrnG02(
+            `${endPlaquinhasGeradas.length} etiqueta(s): comandos copiados.`
+        );
+
+    } catch (erro) {
+        console.error("Falha ao copiar comandos:", erro);
+
+        /*
+           Fallback para navegadores/coletadores que bloqueiam
+           navigator.clipboard.
+        */
+        const area =
+            document.createElement("textarea");
+
+        area.value = conteudo;
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+        area.style.pointerEvents = "none";
+
+        document.body.appendChild(area);
+
+        area.focus();
+        area.select();
+
+        let copiado = false;
+
+        try {
+            copiado =
+                document.execCommand("copy");
+        } catch (erroFallback) {
+            console.error(erroFallback);
+        }
+
+        area.remove();
+
+        if (copiado) {
+            atualizarStatusPrnG02(
+                `${endPlaquinhasGeradas.length} etiqueta(s): comandos copiados.`
+            );
+        } else {
+            alert("Não foi possível copiar automaticamente os comandos.");
+        }
+    }
+}
+
 
 function imprimirPlaquinhasG02() {
     if (!endPlaquinhasGeradas.length) {
