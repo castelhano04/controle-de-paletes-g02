@@ -6653,6 +6653,259 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     font-weight: 800 !important;
 }
 
+
+/* =====================================================
+   V39 - EDITAR / EXCLUIR PEDIDOS NO HISTÓRICO
+===================================================== */
+
+.end-gerenciar-pedidos-lista {
+    display: grid;
+    gap: 8px;
+}
+
+.end-gerenciar-pedido-item {
+    padding: 12px;
+    border-radius: 11px;
+    border: 1px solid #d9e5eb;
+    background: #ffffff;
+}
+
+.end-gerenciar-pedido-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.end-gerenciar-pedido-top > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.end-gerenciar-pedido-top > div span {
+    color: #81919a;
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: .55px;
+}
+
+.end-gerenciar-pedido-top > div strong {
+    color: #173f56;
+    font-size: 15px;
+    font-weight: 950;
+}
+
+.end-gerenciar-pedido-dados {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-top: 9px;
+}
+
+.end-gerenciar-pedido-dados span {
+    min-width: 0;
+    padding: 8px 5px;
+    border-radius: 8px;
+    border: 1px solid #e0e9ee;
+    background: #f7fafc;
+    color: #72858f;
+    font-size: 7px;
+    font-weight: 750;
+    text-align: center;
+}
+
+.end-gerenciar-pedido-dados b {
+    display: block;
+    margin-bottom: 2px;
+    color: #31586c;
+    font-size: 10px;
+    font-weight: 950;
+}
+
+.end-gerenciar-pedido-aviso {
+    margin-top: 8px;
+    padding: 7px 9px;
+    border-radius: 8px;
+    border: 1px solid #eadfbd;
+    background: #fffaf0;
+    color: #816a2c;
+    font-size: 7.5px;
+    font-weight: 750;
+    line-height: 1.35;
+    text-align: center;
+}
+
+.end-gerenciar-pedido-acoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    margin-top: 9px;
+}
+
+.end-gerenciar-pedido-acoes button {
+    height: 40px !important;
+    border-radius: 9px !important;
+    box-shadow: none !important;
+    font-size: 9px !important;
+    font-weight: 900 !important;
+}
+
+.end-gerenciar-pedido-acoes .editar {
+    background: #e8f3f9 !important;
+    border: 1px solid #c8dce8 !important;
+    color: #266688 !important;
+}
+
+.end-gerenciar-pedido-acoes .excluir {
+    background: #fff0f1 !important;
+    border: 1px solid #eccbd0 !important;
+    color: #a6313e !important;
+}
+
+.end-editar-pedido-box {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1.5px solid #bdd4e1;
+    background: #f8fbfc;
+}
+
+.end-editar-pedido-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.end-editar-pedido-header > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.end-editar-pedido-header span {
+    color: #7c8f99;
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: .55px;
+}
+
+.end-editar-pedido-header strong {
+    color: #17435d;
+    font-size: 16px;
+    font-weight: 950;
+}
+
+.end-editar-pedido-header button {
+    height: 34px !important;
+    padding: 0 11px !important;
+    border-radius: 8px !important;
+    background: #edf3f6 !important;
+    border: 1px solid #d6e2e8 !important;
+    color: #607684 !important;
+    box-shadow: none !important;
+    font-size: 8px !important;
+    font-weight: 900 !important;
+}
+
+.end-editar-pedido-info {
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #dae5eb;
+    background: #ffffff;
+    color: #657b87;
+    font-size: 8px;
+    font-weight: 750;
+    text-align: center;
+}
+
+.end-editar-produto-wrap {
+    min-width: 0;
+}
+
+.end-editar-produto-wrap input {
+    width: 100%;
+}
+
+.end-editar-produto-wrap small {
+    display: block;
+    margin: 4px 2px 0;
+    color: #55806b;
+    font-size: 7px;
+    font-weight: 800;
+}
+
+.end-editar-add-item {
+    width: 100% !important;
+    height: 39px !important;
+    margin-top: 8px !important;
+    border-radius: 9px !important;
+    background: #edf5f9 !important;
+    border: 1px solid #d0e0e9 !important;
+    color: #386b85 !important;
+    box-shadow: none !important;
+    font-size: 8.5px !important;
+    font-weight: 900 !important;
+}
+
+.end-editar-pedido-actions {
+    display: grid;
+    grid-template-columns: 1fr 110px;
+    gap: 7px;
+    margin-top: 10px;
+}
+
+.end-editar-pedido-actions button {
+    height: 45px !important;
+    border-radius: 9px !important;
+    box-shadow: none !important;
+    font-size: 9px !important;
+    font-weight: 900 !important;
+}
+
+.end-editar-pedido-actions .salvar {
+    background: #23774f !important;
+    color: #ffffff !important;
+    border: 0 !important;
+}
+
+.end-editar-pedido-actions .cancelar {
+    background: #edf3f6 !important;
+    color: #607684 !important;
+    border: 1px solid #d6e2e8 !important;
+}
+
+@media(max-width:720px) {
+    .end-gerenciar-pedido-dados {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .end-editar-pedido-actions {
+        grid-template-columns: 1fr 95px;
+    }
+}
+
+@media(max-width:430px) {
+    .end-gerenciar-pedido-top > div strong {
+        font-size: 13px;
+    }
+
+    .end-gerenciar-pedido-acoes {
+        gap: 5px;
+    }
+
+    .end-gerenciar-pedido-acoes button {
+        font-size: 8px !important;
+    }
+
+    .end-editar-pedido-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
 </style>
     
 </head>
@@ -8140,6 +8393,70 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
 
             <!-- HISTÓRICO -->
             <div id="endPedidoViewHistorico" style="display:none;">
+
+                <div class="end-card end-pedido-card">
+                    <div class="end-list-header">
+                        <div>
+                            <span class="end-eyebrow">GERENCIAMENTO</span>
+                            <h3>Gerenciar pedidos</h3>
+                        </div>
+                        <span id="endHistoricoPedidosResumo" class="end-count end-count-pill">0 pedidos</span>
+                    </div>
+
+                    <div class="end-busca end-busca-mobile">
+                        <input
+                            id="endBuscaGerenciarPedidos"
+                            type="text"
+                            autocomplete="off"
+                            placeholder="Buscar número do pedido ou item"
+                            oninput="renderizarGerenciarPedidosG02()"
+                        >
+                    </div>
+
+                    <div id="endGerenciarPedidosLista" class="end-gerenciar-pedidos-lista"></div>
+
+                    <div id="endEditarPedidoBox" class="end-editar-pedido-box" style="display:none;">
+                        <div class="end-editar-pedido-header">
+                            <div>
+                                <span>EDITANDO PEDIDO</span>
+                                <strong id="endEditarPedidoNumero">-</strong>
+                            </div>
+
+                            <button type="button" onclick="cancelarEdicaoPedidoG02()">FECHAR</button>
+                        </div>
+
+                        <div class="end-editar-pedido-info">
+                            Quantidades não podem ficar menores do que o que já foi baixado.
+                        </div>
+
+                        <div class="end-pedido-itens-head end-editar-itens-head">
+                            <span>REFERÊNCIA / DESCRIÇÃO</span>
+                            <span>QTD CXS</span>
+                            <span></span>
+                        </div>
+
+                        <div id="endEditarPedidoItens" class="end-pedido-itens"></div>
+
+                        <button
+                            type="button"
+                            class="end-editar-add-item"
+                            onclick="adicionarLinhaEdicaoPedidoG02()"
+                        >
+                            + ADICIONAR ITEM
+                        </button>
+
+                        <div class="end-editar-pedido-actions">
+                            <button type="button" class="salvar" onclick="salvarEdicaoPedidoG02()">
+                                SALVAR ALTERAÇÕES
+                            </button>
+
+                            <button type="button" class="cancelar" onclick="cancelarEdicaoPedidoG02()">
+                                CANCELAR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="end-card end-pedido-card">
                     <div class="end-list-header">
                         <div>
@@ -8339,6 +8656,8 @@ let unsubscribeMovimentacoesBaixaG02 = null;
 let contadorItemNovoPedidoG02 = 0;
 let baixaPedidoContextoG02 = null;
 let pedidoBaixaSelecionadoIdG02 = "";
+let pedidoEditandoIdG02 = "";
+let contadorItemEdicaoPedidoG02 = 0;
 
 
 
@@ -8573,6 +8892,8 @@ function sair() {
     movimentacoesBaixaG02 = [];
     baixaPedidoContextoG02 = null;
     pedidoBaixaSelecionadoIdG02 = "";
+    pedidoEditandoIdG02 = "";
+    contadorItemEdicaoPedidoG02 = 0;
 
     vagasG02 = [];
     enderecamentosG02 = [];
@@ -12181,6 +12502,7 @@ function abrirSubAbaPedidoG02(aba) {
     }
 
     if (alvo === "historico") {
+        renderizarGerenciarPedidosG02();
         renderizarHistoricoBaixaG02();
     }
 }
@@ -13634,6 +13956,522 @@ async function confirmarBaixaPedidoG02() {
     }
 }
 
+
+function renderizarGerenciarPedidosG02() {
+    const lista =
+        document.getElementById("endGerenciarPedidosLista");
+
+    const resumo =
+        document.getElementById("endHistoricoPedidosResumo");
+
+    if (!lista || !resumo) return;
+
+    const termo =
+        normalizarProdutoPedidoG02(
+            document.getElementById("endBuscaGerenciarPedidos")?.value || ""
+        );
+
+    const filtrados =
+        pedidosBaixaG02
+            .filter(pedido => {
+                if (!termo) return true;
+
+                const texto =
+                    normalizarProdutoPedidoG02(
+                        [
+                            pedido.numero,
+                            ...(pedido.itens || []).map(item => item.produto)
+                        ].join(" ")
+                    );
+
+                return texto.includes(termo);
+            })
+            .sort((a, b) =>
+                String(b.atualizadoIso || b.criadoIso || "")
+                    .localeCompare(
+                        String(a.atualizadoIso || a.criadoIso || "")
+                    )
+            );
+
+    resumo.textContent =
+        `${filtrados.length} pedido(s)`;
+
+    if (!filtrados.length) {
+        lista.innerHTML = `
+            <div class="end-pedido-empty">
+                Nenhum pedido encontrado.
+            </div>
+        `;
+        return;
+    }
+
+    lista.innerHTML =
+        filtrados.map(pedido => {
+            const r =
+                calcularResumoPedidoBaixaG02(pedido);
+
+            const status =
+                String(pedido.status || "ABERTO").toUpperCase();
+
+            const possuiMovimentacao =
+                movimentacoesBaixaG02.some(
+                    mov => mov.pedidoId === pedido.id
+                );
+
+            return `
+                <div class="end-gerenciar-pedido-item">
+                    <div class="end-gerenciar-pedido-top">
+                        <div>
+                            <span>PEDIDO</span>
+                            <strong>${escapeHTML(pedido.numero || "-")}</strong>
+                        </div>
+
+                        <span class="end-pedido-status ${status === "CONCLUIDO" ? "done" : "open"}">
+                            ${status === "CONCLUIDO" ? "CONCLUÍDO" : "ABERTO"}
+                        </span>
+                    </div>
+
+                    <div class="end-gerenciar-pedido-dados">
+                        <span>
+                            <b>${r.totalItens}</b>
+                            item(ns)
+                        </span>
+
+                        <span>
+                            <b>${formatarQuantidade(r.total)}</b>
+                            CXS total
+                        </span>
+
+                        <span>
+                            <b>${formatarQuantidade(r.baixado)}</b>
+                            CXS baixadas
+                        </span>
+
+                        <span>
+                            <b>${formatarQuantidade(r.restante)}</b>
+                            CXS faltando
+                        </span>
+                    </div>
+
+                    ${
+                        possuiMovimentacao
+                        ? `
+                            <div class="end-gerenciar-pedido-aviso">
+                                Este pedido possui histórico de baixas. Excluir o pedido não apaga as movimentações já registradas.
+                            </div>
+                        `
+                        : ""
+                    }
+
+                    <div class="end-gerenciar-pedido-acoes">
+                        <button
+                            type="button"
+                            class="editar"
+                            onclick="editarPedidoHistoricoG02('${encodeURIComponent(pedido.id)}')"
+                        >
+                            ✎ EDITAR
+                        </button>
+
+                        <button
+                            type="button"
+                            class="excluir"
+                            onclick="excluirPedidoHistoricoG02('${encodeURIComponent(pedido.id)}')"
+                        >
+                            🗑 EXCLUIR
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join("");
+}
+
+function gerarIdItemEdicaoPedidoG02() {
+    contadorItemEdicaoPedidoG02 += 1;
+
+    return (
+        `edit_${Date.now()}_` +
+        contadorItemEdicaoPedidoG02
+    );
+}
+
+function editarPedidoHistoricoG02(idCodificado) {
+    const id =
+        decodeURIComponent(idCodificado);
+
+    const pedido =
+        pedidosBaixaG02.find(
+            p => p.id === id
+        );
+
+    if (!pedido) {
+        alert("Pedido não encontrado.");
+        return;
+    }
+
+    pedidoEditandoIdG02 =
+        id;
+
+    const box =
+        document.getElementById("endEditarPedidoBox");
+
+    const numero =
+        document.getElementById("endEditarPedidoNumero");
+
+    const lista =
+        document.getElementById("endEditarPedidoItens");
+
+    if (!box || !numero || !lista) return;
+
+    numero.textContent =
+        pedido.numero || "-";
+
+    lista.innerHTML = "";
+
+    (pedido.itens || []).forEach(item => {
+        adicionarLinhaEdicaoPedidoG02(item);
+    });
+
+    if (!(pedido.itens || []).length) {
+        adicionarLinhaEdicaoPedidoG02();
+    }
+
+    box.style.display = "block";
+
+    box.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+function adicionarLinhaEdicaoPedidoG02(dados = {}) {
+    const lista =
+        document.getElementById("endEditarPedidoItens");
+
+    if (!lista) return;
+
+    const id =
+        dados.id ||
+        gerarIdItemEdicaoPedidoG02();
+
+    const baixado =
+        Number(dados.baixado || 0);
+
+    const linha =
+        document.createElement("div");
+
+    linha.className =
+        "end-pedido-item-row end-editar-pedido-item-row";
+
+    linha.dataset.itemId =
+        id;
+
+    linha.dataset.baixado =
+        String(baixado);
+
+    linha.innerHTML = `
+        <div class="end-editar-produto-wrap">
+            <input
+                class="end-editar-item-produto"
+                type="text"
+                autocomplete="off"
+                placeholder="Referência ou descrição"
+                value="${escapeHTML(dados.produto || "")}"
+            >
+
+            ${
+                baixado > 0
+                ? `
+                    <small>
+                        Já baixado: ${formatarQuantidade(baixado)} CXS
+                    </small>
+                `
+                : ""
+            }
+        </div>
+
+        <input
+            class="end-editar-item-qtd"
+            type="number"
+            min="${Math.max(1, baixado)}"
+            step="1"
+            placeholder="CXS"
+            value="${dados.quantidade || ""}"
+        >
+
+        <button
+            type="button"
+            class="end-pedido-item-remove"
+            onclick="removerLinhaEdicaoPedidoG02(this)"
+            title="Remover item"
+        >✕</button>
+    `;
+
+    lista.appendChild(linha);
+}
+
+function removerLinhaEdicaoPedidoG02(botao) {
+    const linha =
+        botao.closest(".end-editar-pedido-item-row");
+
+    if (!linha) return;
+
+    const baixado =
+        Number(linha.dataset.baixado || 0);
+
+    if (baixado > 0) {
+        alert(
+            "Este item já possui baixa registrada e não pode ser removido do pedido."
+        );
+        return;
+    }
+
+    linha.remove();
+
+    const lista =
+        document.getElementById("endEditarPedidoItens");
+
+    if (
+        lista &&
+        !lista.children.length
+    ) {
+        adicionarLinhaEdicaoPedidoG02();
+    }
+}
+
+function cancelarEdicaoPedidoG02() {
+    pedidoEditandoIdG02 =
+        "";
+
+    const box =
+        document.getElementById("endEditarPedidoBox");
+
+    const lista =
+        document.getElementById("endEditarPedidoItens");
+
+    if (box) {
+        box.style.display = "none";
+    }
+
+    if (lista) {
+        lista.innerHTML = "";
+    }
+}
+
+function coletarItensEdicaoPedidoG02() {
+    return [
+        ...document.querySelectorAll(
+            "#endEditarPedidoItens .end-editar-pedido-item-row"
+        )
+    ].map(linha => ({
+        id:
+            linha.dataset.itemId ||
+            gerarIdItemEdicaoPedidoG02(),
+
+        produto:
+            String(
+                linha.querySelector(".end-editar-item-produto")?.value || ""
+            ).trim(),
+
+        quantidade:
+            Number(
+                linha.querySelector(".end-editar-item-qtd")?.value || 0
+            ),
+
+        baixado:
+            Number(
+                linha.dataset.baixado || 0
+            )
+    }));
+}
+
+async function salvarEdicaoPedidoG02() {
+    if (!pedidoEditandoIdG02) {
+        alert("Nenhum pedido em edição.");
+        return;
+    }
+
+    const pedido =
+        pedidosBaixaG02.find(
+            p => p.id === pedidoEditandoIdG02
+        );
+
+    if (!pedido) {
+        alert("Pedido não encontrado.");
+        cancelarEdicaoPedidoG02();
+        return;
+    }
+
+    const itens =
+        coletarItensEdicaoPedidoG02()
+        .filter(item =>
+            item.produto ||
+            item.quantidade ||
+            item.baixado
+        );
+
+    if (!itens.length) {
+        alert("O pedido precisa ter pelo menos um item.");
+        return;
+    }
+
+    for (let i = 0; i < itens.length; i++) {
+        const item =
+            itens[i];
+
+        if (!item.produto) {
+            alert(
+                `Item ${i + 1}: informe a referência ou descrição.`
+            );
+            return;
+        }
+
+        if (
+            !Number.isInteger(item.quantidade) ||
+            item.quantidade <= 0
+        ) {
+            alert(
+                `Item ${i + 1}: informe uma quantidade inteira maior que zero.`
+            );
+            return;
+        }
+
+        if (
+            item.quantidade <
+            item.baixado
+        ) {
+            alert(
+                `Item ${i + 1}: já foram baixadas ${formatarQuantidade(item.baixado)} CXS. ` +
+                `A nova quantidade não pode ser menor que esse valor.`
+            );
+            return;
+        }
+    }
+
+    const concluido =
+        itens.every(item =>
+            Number(item.baixado || 0) >=
+            Number(item.quantidade || 0)
+        );
+
+    const confirmar =
+        confirm(
+            `SALVAR ALTERAÇÕES?\n\n` +
+            `Pedido: ${pedido.numero}\n` +
+            `Itens: ${itens.length}`
+        );
+
+    if (!confirmar) return;
+
+    try {
+        await db.collection("pedidos_g02")
+            .doc(pedido.id)
+            .update({
+                itens,
+                status:
+                    concluido
+                        ? "CONCLUIDO"
+                        : "ABERTO",
+                atualizadoIso:
+                    new Date().toISOString(),
+                atualizadoEm:
+                    firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+        cancelarEdicaoPedidoG02();
+
+    } catch (erro) {
+        console.error(
+            "Erro ao editar pedido:",
+            erro
+        );
+
+        alert(
+            "Não foi possível salvar as alterações do pedido."
+        );
+    }
+}
+
+async function excluirPedidoHistoricoG02(idCodificado) {
+    const id =
+        decodeURIComponent(idCodificado);
+
+    const pedido =
+        pedidosBaixaG02.find(
+            p => p.id === id
+        );
+
+    if (!pedido) {
+        alert("Pedido não encontrado.");
+        return;
+    }
+
+    const movimentos =
+        movimentacoesBaixaG02.filter(
+            mov => mov.pedidoId === id
+        );
+
+    const resumo =
+        calcularResumoPedidoBaixaG02(pedido);
+
+    const mensagem =
+        movimentos.length
+            ? (
+                `EXCLUIR PEDIDO ${pedido.numero}?\n\n` +
+                `${movimentos.length} baixa(s) já foram registradas.\n` +
+                `Essas movimentações serão PRESERVADAS no histórico.\n\n` +
+                `Baixado: ${formatarQuantidade(resumo.baixado)} CXS\n` +
+                `Faltando: ${formatarQuantidade(resumo.restante)} CXS\n\n` +
+                `Deseja excluir somente o cadastro do pedido?`
+            )
+            : (
+                `EXCLUIR PEDIDO ${pedido.numero}?\n\n` +
+                `Esta ação remove o pedido do controle.\n\n` +
+                `Deseja continuar?`
+            );
+
+    if (!confirm(mensagem)) {
+        return;
+    }
+
+    try {
+        await db.collection("pedidos_g02")
+            .doc(id)
+            .delete();
+
+        if (
+            pedidoBaixaSelecionadoIdG02 === id
+        ) {
+            pedidoBaixaSelecionadoIdG02 = "";
+            baixaPedidoContextoG02 = null;
+
+            const select =
+                document.getElementById("endBaixaPedidoSelect");
+
+            if (select) {
+                select.value = "";
+            }
+
+            renderizarResumoPedidoSelecionadoG02();
+        }
+
+        if (
+            pedidoEditandoIdG02 === id
+        ) {
+            cancelarEdicaoPedidoG02();
+        }
+
+    } catch (erro) {
+        console.error(
+            "Erro ao excluir pedido:",
+            erro
+        );
+
+        alert(
+            "Não foi possível excluir o pedido."
+        );
+    }
+}
+
 function renderizarHistoricoBaixaG02() {
     const lista =
         document.getElementById("endHistoricoBaixaLista");
@@ -13753,6 +14591,7 @@ function iniciarListenersPedidosBaixaG02() {
                 });
 
                 renderizarPedidosBaixaG02();
+                renderizarGerenciarPedidosG02();
                 atualizarSelectPedidosBaixaG02();
                 renderizarResumoPedidoSelecionadoG02();
 
@@ -13775,6 +14614,7 @@ function iniciarListenersPedidosBaixaG02() {
                     });
                 });
 
+                renderizarGerenciarPedidosG02();
                 renderizarHistoricoBaixaG02();
 
             }, erro => {
