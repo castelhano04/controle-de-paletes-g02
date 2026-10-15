@@ -6631,6 +6631,28 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     }
 }
 
+
+/* =====================================================
+   V37 - BAIXA PARCIAL AUTOMÁTICA
+===================================================== */
+
+#sistemaEnderecamento #endBaixaQuantidade {
+    background: #f1f8f4 !important;
+    border-color: #bcdcca !important;
+    color: #195b3d !important;
+    font-weight: 950 !important;
+}
+
+#sistemaEnderecamento #endBaixaQuantidade:focus {
+    border-color: #2b8558 !important;
+    box-shadow: 0 0 0 4px rgba(43,133,88,.10) !important;
+}
+
+#sistemaEnderecamento #endBaixaQtdInfo {
+    color: #3c7257 !important;
+    font-weight: 800 !important;
+}
+
 </style>
     
 </head>
@@ -8071,13 +8093,27 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
 
                             <div class="end-label-field">
                                 <label for="endBaixaSaldoPa">SALDO ATUAL DO PA (CXS)</label>
-                                <input id="endBaixaSaldoPa" type="number" min="1" step="1" placeholder="Informe no 1º uso">
+                                <input
+                                    id="endBaixaSaldoPa"
+                                    type="number"
+                                    min="1"
+                                    step="1"
+                                    placeholder="Informe no 1º uso"
+                                    oninput="sincronizarQuantidadeBaixaComSaldoG02()"
+                                >
                                 <small id="endBaixaSaldoInfo"></small>
                             </div>
 
                             <div class="end-label-field">
                                 <label for="endBaixaQuantidade">QTD DA BAIXA (CXS)</label>
-                                <input id="endBaixaQuantidade" type="number" min="1" step="1" placeholder="Quantidade">
+                                <input
+                                    id="endBaixaQuantidade"
+                                    type="number"
+                                    min="1"
+                                    step="1"
+                                    placeholder="Quantidade"
+                                    oninput="validarQuantidadeDigitadaBaixaG02()"
+                                >
                                 <small id="endBaixaQtdInfo"></small>
                             </div>
                         </div>
@@ -12717,6 +12753,22 @@ function limparDetalhesBaixaPedidoG02(limparPa = true) {
         msg.textContent = "";
     }
 
+    const saldoCampo =
+        document.getElementById("endBaixaSaldoPa");
+
+    const qtdCampo =
+        document.getElementById("endBaixaQuantidade");
+
+    if (saldoCampo) {
+        saldoCampo.value = "";
+        saldoCampo.readOnly = false;
+    }
+
+    if (qtdCampo) {
+        qtdCampo.value = "";
+        qtdCampo.removeAttribute("max");
+    }
+
     if (limparPa) {
         const pa =
             document.getElementById("endBaixaPa");
@@ -12937,11 +12989,186 @@ function prepararBaixaPedidoG02() {
     }
 
     atualizarItemSelecionadoBaixaG02();
+    sincronizarQuantidadeBaixaComSaldoG02();
 
     if (msg) {
         msg.className = "end-status ok";
         msg.textContent =
             `PA localizado em ${vagaInfo.valida ? vagaInfo.codigoExibicao : endereco.vaga}.`;
+    }
+}
+
+
+function obterLimitesBaixaAtualG02() {
+    const pedido =
+        obterPedidoSelecionadoBaixaG02();
+
+    if (!pedido) {
+        return {
+            item: null,
+            faltaPedido: 0,
+            saldoPa: 0,
+            maximo: 0
+        };
+    }
+
+    const itemId =
+        document.getElementById("endBaixaItemSelect")?.value || "";
+
+    const item =
+        (pedido.itens || []).find(
+            i => i.id === itemId
+        ) || null;
+
+    if (!item) {
+        return {
+            item: null,
+            faltaPedido: 0,
+            saldoPa: 0,
+            maximo: 0
+        };
+    }
+
+    const faltaPedido =
+        Math.max(
+            0,
+            Number(item.quantidade || 0) -
+            Number(item.baixado || 0)
+        );
+
+    const saldoPa =
+        Number(
+            document.getElementById("endBaixaSaldoPa")?.value || 0
+        );
+
+    const maximo =
+        (
+            Number.isFinite(saldoPa) &&
+            saldoPa > 0
+        )
+            ? Math.min(faltaPedido, saldoPa)
+            : 0;
+
+    return {
+        item,
+        faltaPedido,
+        saldoPa,
+        maximo
+    };
+}
+
+function sincronizarQuantidadeBaixaComSaldoG02() {
+    const qtdCampo =
+        document.getElementById("endBaixaQuantidade");
+
+    const info =
+        document.getElementById("endBaixaQtdInfo");
+
+    const saldoInfo =
+        document.getElementById("endBaixaSaldoInfo");
+
+    if (!qtdCampo) return;
+
+    const limites =
+        obterLimitesBaixaAtualG02();
+
+    if (!limites.item) {
+        qtdCampo.value = "";
+        qtdCampo.removeAttribute("max");
+
+        if (info) {
+            info.textContent = "";
+        }
+
+        return;
+    }
+
+    if (
+        !Number.isFinite(limites.saldoPa) ||
+        limites.saldoPa <= 0
+    ) {
+        qtdCampo.value = "";
+        qtdCampo.removeAttribute("max");
+
+        if (info) {
+            info.textContent =
+                `Faltam ${formatarQuantidade(limites.faltaPedido)} CXS deste item. Informe primeiro o saldo do PA.`;
+        }
+
+        return;
+    }
+
+    qtdCampo.max =
+        String(Math.trunc(limites.maximo));
+
+    /*
+       A baixa padrão sempre usa o menor valor entre:
+       - o que falta no pedido
+       - o saldo existente no PA
+
+       Exemplo:
+       faltam 24 CXS no pedido
+       PA possui 12 CXS
+       => baixa sugerida = 12 CXS
+    */
+    qtdCampo.value =
+        String(Math.trunc(limites.maximo));
+
+    if (info) {
+        if (limites.saldoPa < limites.faltaPedido) {
+            info.textContent =
+                `Baixa parcial automática: este PA possui ${formatarQuantidade(limites.saldoPa)} CXS. Após a baixa ainda faltarão ${formatarQuantidade(limites.faltaPedido - limites.maximo)} CXS no pedido.`;
+        } else if (limites.saldoPa > limites.faltaPedido) {
+            info.textContent =
+                `O pedido precisa de ${formatarQuantidade(limites.faltaPedido)} CXS. Após a baixa restarão ${formatarQuantidade(limites.saldoPa - limites.maximo)} CXS neste PA.`;
+        } else {
+            info.textContent =
+                `Quantidade exata: ${formatarQuantidade(limites.maximo)} CXS.`;
+        }
+    }
+
+    if (
+        saldoInfo &&
+        !document.getElementById("endBaixaSaldoPa")?.readOnly
+    ) {
+        saldoInfo.textContent =
+            `Saldo informado: ${formatarQuantidade(limites.saldoPa)} CXS.`;
+    }
+}
+
+function validarQuantidadeDigitadaBaixaG02() {
+    const qtdCampo =
+        document.getElementById("endBaixaQuantidade");
+
+    const info =
+        document.getElementById("endBaixaQtdInfo");
+
+    if (!qtdCampo) return;
+
+    const limites =
+        obterLimitesBaixaAtualG02();
+
+    if (!limites.item || limites.maximo <= 0) {
+        return;
+    }
+
+    const digitado =
+        Number(qtdCampo.value || 0);
+
+    qtdCampo.max =
+        String(Math.trunc(limites.maximo));
+
+    if (
+        Number.isFinite(digitado) &&
+        digitado > limites.maximo
+    ) {
+        qtdCampo.value =
+            String(Math.trunc(limites.maximo));
+
+        if (info) {
+            info.textContent =
+                `Máximo permitido nesta baixa: ${formatarQuantidade(limites.maximo)} CXS.`;
+        }
     }
 }
 
@@ -12983,20 +13210,12 @@ function atualizarItemSelecionadoBaixaG02() {
             `Faltam ${formatarQuantidade(falta)} CXS deste item no pedido.`;
     }
 
-    const saldo =
-        Number(
-            document.getElementById("endBaixaSaldoPa")?.value
-        );
-
-    const sugestao =
-        Number.isFinite(saldo) && saldo > 0
-            ? Math.min(falta, saldo)
-            : falta;
-
-    if (qtd && sugestao > 0) {
-        qtd.value =
-            String(Math.trunc(sugestao));
-    }
+    /*
+       Se o saldo do PA já for conhecido, a quantidade é sugerida
+       automaticamente. Se for o primeiro uso do PA, aguardamos o
+       operador informar o saldo e então sincronizamos a baixa.
+    */
+    sincronizarQuantidadeBaixaComSaldoG02();
 }
 
 async function confirmarBaixaPedidoG02() {
