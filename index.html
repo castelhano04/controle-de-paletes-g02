@@ -14057,7 +14057,7 @@ function renderizarGerenciarPedidosG02() {
                         possuiMovimentacao
                         ? `
                             <div class="end-gerenciar-pedido-aviso">
-                                Este pedido possui histórico de baixas. Excluir o pedido não apaga as movimentações já registradas.
+                                Este pedido possui histórico de baixas. Ao excluir o pedido, as movimentações deste pedido também serão apagadas.
                             </div>
                         `
                         : ""
@@ -14405,27 +14405,33 @@ async function excluirPedidoHistoricoG02(idCodificado) {
         return;
     }
 
-    const movimentos =
+    const movimentosTela =
         movimentacoesBaixaG02.filter(
-            mov => mov.pedidoId === id
+            mov =>
+                mov.pedidoId === id ||
+                String(mov.pedidoNumero || "") ===
+                String(pedido.numero || "")
         );
 
     const resumo =
         calcularResumoPedidoBaixaG02(pedido);
 
     const mensagem =
-        movimentos.length
+        movimentosTela.length
             ? (
-                `EXCLUIR PEDIDO ${pedido.numero}?\n\n` +
-                `${movimentos.length} baixa(s) já foram registradas.\n` +
-                `Essas movimentações serão PRESERVADAS no histórico.\n\n` +
+                `EXCLUIR PEDIDO ${pedido.numero} E SEU HISTÓRICO?\n\n` +
+                `${movimentosTela.length} baixa(s) aparecem no histórico.\n\n` +
+                `Ao confirmar, serão apagados:\n` +
+                `• cadastro do pedido\n` +
+                `• todas as movimentações/baixas deste pedido\n\n` +
                 `Baixado: ${formatarQuantidade(resumo.baixado)} CXS\n` +
                 `Faltando: ${formatarQuantidade(resumo.restante)} CXS\n\n` +
-                `Deseja excluir somente o cadastro do pedido?`
+                `IMPORTANTE: esta exclusão NÃO desfaz o estoque nem reendereça PAs.\n\n` +
+                `Deseja continuar?`
             )
             : (
                 `EXCLUIR PEDIDO ${pedido.numero}?\n\n` +
-                `Esta ação remove o pedido do controle.\n\n` +
+                `O cadastro do pedido será removido.\n\n` +
                 `Deseja continuar?`
             );
 
@@ -14434,6 +14440,60 @@ async function excluirPedidoHistoricoG02(idCodificado) {
     }
 
     try {
+        /*
+           Busca diretamente no Firebase para apagar todas as movimentações
+           do pedido, inclusive se alguma ainda não estiver carregada na tela.
+        */
+        const refsMovimentacoes =
+            new Map();
+
+        const snapPorId =
+            await db.collection("movimentacoes_g02")
+                .where("pedidoId", "==", id)
+                .get();
+
+        snapPorId.forEach(doc => {
+            refsMovimentacoes.set(
+                doc.ref.path,
+                doc.ref
+            );
+        });
+
+        /*
+           Fallback pelo número do pedido para registros antigos.
+           Evita deixar movimentações órfãs no histórico.
+        */
+        const snapPorNumero =
+            await db.collection("movimentacoes_g02")
+                .where("pedidoNumero", "==", pedido.numero)
+                .get();
+
+        snapPorNumero.forEach(doc => {
+            refsMovimentacoes.set(
+                doc.ref.path,
+                doc.ref
+            );
+        });
+
+        const refs =
+            [...refsMovimentacoes.values()];
+
+        /*
+           Firestore limita batches. Usamos blocos menores para manter
+           margem de segurança.
+        */
+        for (let i = 0; i < refs.length; i += 400) {
+            const batch =
+                db.batch();
+
+            refs.slice(i, i + 400)
+                .forEach(ref => {
+                    batch.delete(ref);
+                });
+
+            await batch.commit();
+        }
+
         await db.collection("pedidos_g02")
             .doc(id)
             .delete();
@@ -14460,15 +14520,31 @@ async function excluirPedidoHistoricoG02(idCodificado) {
             cancelarEdicaoPedidoG02();
         }
 
+        alert(
+            `Pedido ${pedido.numero} excluído.\n\n` +
+            `${refs.length} movimentação(ões) do histórico também foram apagadas.`
+        );
+
     } catch (erro) {
         console.error(
-            "Erro ao excluir pedido:",
+            "Erro ao excluir pedido e histórico:",
             erro
         );
 
-        alert(
-            "Não foi possível excluir o pedido."
-        );
+        let mensagemErro =
+            "Não foi possível excluir o pedido e suas movimentações.";
+
+        if (
+            erro?.code === "permission-denied" ||
+            String(erro?.message || "")
+                .toLowerCase()
+                .includes("permission")
+        ) {
+            mensagemErro =
+                "O Firebase bloqueou a exclusão. Verifique as permissões de pedidos_g02 e movimentacoes_g02.";
+        }
+
+        alert(mensagemErro);
     }
 }
 
