@@ -13312,6 +13312,27 @@ async function confirmarBaixaPedidoG02() {
             const enderecoBanco =
                 enderecoSnap.data();
 
+            /*
+               IMPORTANTE - FIRESTORE TRANSACTION:
+               todas as leituras precisam acontecer antes da primeira
+               gravação. Por isso a vaga é lida aqui, antes de qualquer
+               transaction.update/set/delete.
+            */
+            const vagaInfo =
+                interpretarVagaG02(enderecoBanco.vaga);
+
+            let vagaRef = null;
+            let vagaSnap = null;
+
+            if (vagaInfo.valida) {
+                vagaRef =
+                    db.collection("vagas_g02")
+                    .doc(vagaInfo.codigo);
+
+                vagaSnap =
+                    await transaction.get(vagaRef);
+            }
+
             if (
                 String(pedidoBanco.status || "ABERTO").toUpperCase()
                 === "CONCLUIDO"
@@ -13404,21 +13425,6 @@ async function confirmarBaixaPedidoG02() {
                         firebase.firestore.FieldValue.serverTimestamp()
                 }
             );
-
-            const vagaInfo =
-                interpretarVagaG02(enderecoBanco.vaga);
-
-            let vagaRef = null;
-            let vagaSnap = null;
-
-            if (vagaInfo.valida) {
-                vagaRef =
-                    db.collection("vagas_g02")
-                    .doc(vagaInfo.codigo);
-
-                vagaSnap =
-                    await transaction.get(vagaRef);
-            }
 
             if (saldoDepois <= 0) {
                 transaction.delete(enderecoRef);
@@ -13604,7 +13610,25 @@ async function confirmarBaixaPedidoG02() {
         } else if (erro?.message === "ACIMA_DO_SALDO") {
             mensagem =
                 `A quantidade excede o saldo do PA. Máximo: ${formatarQuantidade(erro.maximo)} CXS.`;
+        } else if (
+            erro?.code === "permission-denied" ||
+            String(erro?.message || "").toLowerCase().includes("permission")
+        ) {
+            mensagem =
+                "O Firebase bloqueou a gravação por falta de permissão nas coleções de pedidos/baixas.";
+        } else if (
+            String(erro?.message || "").toLowerCase().includes("all reads") ||
+            String(erro?.message || "").toLowerCase().includes("transaction")
+        ) {
+            mensagem =
+                "Falha na transação do Firebase. A operação não foi gravada.";
         }
+
+        console.error(
+            "DETALHE DA BAIXA G02:",
+            erro?.code || "",
+            erro?.message || erro
+        );
 
         alert(mensagem);
     }
