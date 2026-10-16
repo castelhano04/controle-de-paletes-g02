@@ -6908,22 +6908,108 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
 
 
 /* =====================================================
-   V42 - MAPA COMPLETO DO GALPÃO G02
+   V43 - MAPA VISUAL OPERACIONAL G02
 ===================================================== */
 
 .end-occ-section-title-map {
     margin-top: 14px;
 }
 
-.end-full-map-legend {
+.end-panorama-hero {
+    border: 1px solid #c7d9e3;
+    border-radius: 22px;
+    background: linear-gradient(180deg, #f8fbfd 0%, #edf4f8 100%);
+    box-shadow: 0 12px 30px rgba(19, 53, 76, 0.08);
+    padding: 16px;
+    margin-bottom: 14px;
+}
+
+.end-panorama-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.end-panorama-title-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.end-panorama-title-main strong {
+    color: #12384d;
+    font-size: 22px;
+    font-weight: 950;
+    letter-spacing: .8px;
+}
+
+.end-panorama-title-main small {
+    color: #587283;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .45px;
+}
+
+.end-panorama-badges {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    align-items: center;
-    margin-bottom: 12px;
+    justify-content: flex-end;
 }
 
-.end-full-map-chip {
+.end-panorama-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid #d4e1e8;
+    background: #ffffff;
+    color: #4f6673;
+    font-size: 10px;
+    font-weight: 950;
+    letter-spacing: .35px;
+}
+
+.end-panorama-badge b {
+    font-size: 14px;
+    color: #133b52;
+}
+
+.end-panorama-badge.livre {
+    background: #eefaf1;
+    border-color: #bfdcc6;
+    color: #2d7841;
+}
+
+.end-panorama-badge.ocupada {
+    background: #fff2f3;
+    border-color: #edc6cb;
+    color: #a43742;
+}
+
+.end-panorama-badge.total {
+    background: #f7fafc;
+    border-color: #d6e2e9;
+}
+
+.end-panorama-badge.percentual {
+    background: #eef6fb;
+    border-color: #c8dde9;
+    color: #2e6787;
+}
+
+.end-panorama-legend-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.end-panorama-chip {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -6935,252 +7021,282 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     color: #54707f;
     font-size: 10px;
     font-weight: 900;
-    letter-spacing: .3px;
-    text-align: center;
+    letter-spacing: .35px;
 }
 
-.end-full-map-chip.livre {
+.end-panorama-chip.livre {
     background: #ecf8ef;
     border-color: #b8debf;
     color: #2d7841;
 }
 
-.end-full-map-chip.ocupada {
+.end-panorama-chip.ocupada {
     background: #fff0f1;
     border-color: #efc8cd;
     color: #a43843;
 }
 
-.end-full-map-chip.acao {
+.end-panorama-chip.acao {
     background: #eef6fb;
     border-color: #c8dde9;
     color: #2e6787;
 }
 
-.end-full-map-wrap {
+.end-panorama-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.end-panorama-nav button {
+    min-height: 36px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid #c7d9e3;
+    background: linear-gradient(180deg, #ffffff 0%, #eef5f9 100%);
+    color: #1f4f69;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: .4px;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.end-panorama-nav button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(33, 79, 108, 0.10);
+}
+
+.end-panorama-map {
     display: grid;
-    gap: 12px;
-    max-height: 980px;
+    gap: 16px;
+    max-height: 1120px;
     overflow: auto;
     padding-right: 4px;
     margin-bottom: 14px;
 }
 
-.end-full-map-street-card {
-    border: 1px solid #d7e3ea;
-    border-radius: 18px;
-    background: linear-gradient(180deg, #ffffff 0%, #f9fbfd 100%);
-    box-shadow: 0 10px 26px rgba(34, 68, 90, 0.06);
-    padding: 12px;
+.end-panorama-street {
+    border: 1px solid #ccdce5;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 10px 24px rgba(20, 52, 75, 0.06);
 }
 
-.end-full-map-street-head {
+.end-panorama-street-head {
+    background: linear-gradient(180deg, #355f7a 0%, #1f4964 100%);
+    color: #ffffff;
+    padding: 14px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 12px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e2ebf0;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
-.end-full-map-street-title {
+.end-panorama-street-title {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
 }
 
-.end-full-map-street-title strong {
-    color: #173f56;
-    font-size: 18px;
+.end-panorama-street-title strong {
+    font-size: 22px;
     font-weight: 950;
-    letter-spacing: .5px;
+    letter-spacing: .7px;
 }
 
-.end-full-map-street-title small {
-    color: #6f8490;
+.end-panorama-street-title small {
     font-size: 11px;
     font-weight: 800;
+    opacity: .9;
+    letter-spacing: .35px;
 }
 
-.end-full-map-street-stats {
+.end-panorama-street-counters {
     display: flex;
-    flex-wrap: wrap;
     gap: 8px;
-    justify-content: flex-end;
+    flex-wrap: wrap;
 }
 
-.end-full-map-street-stats span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+.end-panorama-street-counters span {
     min-height: 32px;
     padding: 0 12px;
     border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-size: 10px;
-    font-weight: 900;
-    letter-spacing: .3px;
-    border: 1px solid;
+    font-weight: 950;
+    letter-spacing: .35px;
+    border: 1px solid rgba(255,255,255,.22);
 }
 
-.end-full-map-street-stats .livres {
-    color: #2d7841;
-    background: #ecf8ef;
-    border-color: #b8debf;
+.end-panorama-street-counters .livres {
+    background: rgba(54, 196, 90, 0.16);
+    color: #dff7e4;
 }
 
-.end-full-map-street-stats .ocupadas {
-    color: #a43843;
-    background: #fff0f1;
-    border-color: #efc8cd;
+.end-panorama-street-counters .ocupadas {
+    background: rgba(255, 112, 124, 0.16);
+    color: #ffe3e6;
 }
 
-.end-full-map-level-row {
+.end-panorama-body {
+    padding: 12px;
+    background: linear-gradient(180deg, #f4f8fb 0%, #edf3f7 100%);
+}
+
+.end-panorama-level {
     display: grid;
-    grid-template-columns: 105px 1fr;
+    grid-template-columns: 98px 1fr;
     gap: 10px;
-    align-items: start;
-    margin-top: 10px;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.end-full-map-level-label {
-    position: sticky;
-    left: 0;
-    top: 0;
-    z-index: 1;
+.end-panorama-level:last-child {
+    margin-bottom: 0;
+}
+
+.end-panorama-level-tag {
+    min-height: 62px;
+    border-radius: 16px;
+    border: 1px solid #d2dfe7;
+    background: #ffffff;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    min-height: 70px;
-    padding: 10px 8px;
-    border-radius: 14px;
-    border: 1px solid #d7e5eb;
-    background: #f4f8fb;
+    color: #173f56;
     text-align: center;
 }
 
-.end-full-map-level-label strong {
-    color: #173f56;
-    font-size: 12px;
+.end-panorama-level-tag strong {
+    font-size: 15px;
     font-weight: 950;
     letter-spacing: .4px;
 }
 
-.end-full-map-level-label small {
-    margin-top: 3px;
-    color: #708591;
+.end-panorama-level-tag small {
     font-size: 10px;
     font-weight: 800;
+    color: #78909d;
+    margin-top: 2px;
 }
 
-.end-full-map-level-slots {
+.end-panorama-track {
+    border: 1px solid #d5e2e9;
+    border-radius: 18px;
+    background: #ffffff;
+    padding: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.end-panorama-track-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(66px, 1fr));
-    gap: 8px;
+    grid-auto-flow: column;
+    grid-auto-columns: 42px;
+    gap: 6px;
+    align-items: center;
+    min-width: max-content;
 }
 
-.end-full-map-slot {
-    min-height: 62px;
-    border-radius: 14px;
+.end-panorama-slot {
+    min-height: 48px;
+    border-radius: 12px;
     border: 1px solid;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 2px;
     cursor: pointer;
     transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
     box-shadow: 0 4px 12px rgba(28, 62, 86, .05);
 }
 
-.end-full-map-slot:hover {
+.end-panorama-slot:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(28, 62, 86, .10);
+    box-shadow: 0 8px 18px rgba(28, 62, 86, .10);
     filter: brightness(.99);
 }
 
-.end-full-map-slot .num {
-    font-size: 15px;
+.end-panorama-slot .code {
+    font-size: 10px;
     font-weight: 950;
+    letter-spacing: .2px;
+    line-height: 1;
+}
+
+.end-panorama-slot .mini {
+    font-size: 8px;
+    font-weight: 900;
     letter-spacing: .3px;
     line-height: 1;
 }
 
-.end-full-map-slot small {
-    font-size: 9px;
-    font-weight: 900;
-    letter-spacing: .35px;
-    line-height: 1;
-}
-
-.end-full-map-slot.livre {
+.end-panorama-slot.livre {
     background: linear-gradient(180deg, #f5fff7 0%, #eaf8ee 100%);
     border-color: #bfdcc6;
     color: #2a7841;
 }
 
-.end-full-map-slot.ocupada {
+.end-panorama-slot.ocupada {
     background: linear-gradient(180deg, #fff7f8 0%, #feecee 100%);
     border-color: #edc6cb;
     color: #a43742;
 }
 
 @media (max-width: 860px) {
-    .end-full-map-level-row {
+    .end-panorama-title-main strong {
+        font-size: 19px;
+    }
+
+    .end-panorama-level {
         grid-template-columns: 1fr;
     }
 
-    .end-full-map-level-label {
-        position: static;
+    .end-panorama-level-tag {
         min-height: auto;
-    }
-
-    .end-full-map-level-slots {
-        grid-template-columns: repeat(auto-fit, minmax(58px, 1fr));
-    }
-
-    .end-full-map-slot {
-        min-height: 56px;
-    }
-
-    .end-full-map-slot .num {
-        font-size: 13px;
+        padding: 10px;
     }
 }
 
 @media (max-width: 520px) {
-    .end-full-map-street-head {
-        flex-direction: column;
-        align-items: stretch;
+    .end-panorama-hero,
+    .end-panorama-body {
+        padding: 12px;
     }
 
-    .end-full-map-street-stats {
-        justify-content: flex-start;
+    .end-panorama-street-head {
+        padding: 12px;
     }
 
-    .end-full-map-wrap {
-        max-height: none;
+    .end-panorama-street-title strong {
+        font-size: 18px;
     }
 
-    .end-full-map-level-slots {
-        grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
-        gap: 6px;
+    .end-panorama-track-grid {
+        grid-auto-columns: 40px;
+        gap: 5px;
     }
 
-    .end-full-map-slot {
-        min-height: 52px;
-        border-radius: 12px;
+    .end-panorama-slot {
+        min-height: 44px;
     }
 
-    .end-full-map-slot .num {
-        font-size: 12px;
+    .end-panorama-slot .code {
+        font-size: 9px;
     }
 
-    .end-full-map-slot small {
-        font-size: 8px;
+    .end-panorama-slot .mini {
+        font-size: 7px;
     }
 }
-
 </style>
     
 </head>
@@ -8190,6 +8306,14 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
             </button>
 
             <button
+                id="endTabMapa"
+                type="button"
+                onclick="abrirAbaEnderecoInterna('mapa')"
+            >
+                MAPA DE POSIÇÕES
+            </button>
+
+            <button
                 id="endTabPedidos"
                 type="button"
                 onclick="abrirAbaEnderecoInterna('pedidos')"
@@ -8351,21 +8475,6 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
 
                 <div id="endAlertaDuplicidadeVagas" class="end-duplicate-warning" style="display:none;"></div>
 
-                <div class="end-occ-section-title end-occ-section-title-map">
-                    <div>
-                        <strong>MAPA COMPLETO DO GALPÃO</strong>
-                        <span>Todas as vagas por rua, nível, número e lado, com cores de ocupação.</span>
-                    </div>
-                </div>
-
-                <div class="end-full-map-legend">
-                    <span class="end-full-map-chip livre">LIVRE</span>
-                    <span class="end-full-map-chip ocupada">OCUPADA</span>
-                    <span class="end-full-map-chip acao">TOQUE NA VAGA LIVRE PARA USAR NO ENDEREÇAMENTO</span>
-                </div>
-
-                <div id="endMapaCompletoVagas" class="end-full-map-wrap"></div>
-
                 <div class="end-occ-section-title">
                     <div>
                         <strong>CONSULTAR VAGAS</strong>
@@ -8477,6 +8586,51 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
         </div>
 
         </div><!-- /endViewEndereco -->
+
+        <div id="endViewMapa" style="display:none;">
+            <div class="end-card end-map-card end-occupancy-card">
+                <div class="end-card-heading">
+                    <div>
+                        <span class="end-eyebrow">VISÃO OPERACIONAL</span>
+                        <h3>Mapa de posições do galpão</h3>
+                    </div>
+                    <span class="end-address-total">DEPÓSITO 972</span>
+                </div>
+
+                <div class="end-occ-section-title end-occ-section-title-map">
+                    <div>
+                        <strong>MAPA VISUAL DE POSIÇÕES</strong>
+                        <span>Visão completa do G02 por ruas, níveis, vagas e lados com status por cor.</span>
+                    </div>
+                </div>
+
+                <div class="end-panorama-hero">
+                    <div class="end-panorama-title-row">
+                        <div class="end-panorama-title-main">
+                            <strong>MAPA DE POSIÇÕES</strong>
+                            <small>DEPÓSITO 972 • GALPÃO G02</small>
+                        </div>
+
+                        <div class="end-panorama-badges">
+                            <span class="end-panorama-badge livre">LIVRES <b id="endMapaHeroLivres">0</b></span>
+                            <span class="end-panorama-badge ocupada">OCUPADAS <b id="endMapaHeroOcupadas">0</b></span>
+                            <span class="end-panorama-badge total">TOTAL <b id="endMapaHeroTotal">0</b></span>
+                            <span class="end-panorama-badge percentual">OCUPAÇÃO <b id="endMapaHeroPercentual">0%</b></span>
+                        </div>
+                    </div>
+
+                    <div class="end-panorama-legend-row">
+                        <span class="end-panorama-chip livre">VAGA LIVRE</span>
+                        <span class="end-panorama-chip ocupada">VAGA OCUPADA</span>
+                        <span class="end-panorama-chip acao">TOQUE NA POSIÇÃO PARA VER OU USAR</span>
+                    </div>
+
+                    <div id="endMapaNavRuas" class="end-panorama-nav"></div>
+                </div>
+
+                <div id="endMapaCompletoVagas" class="end-panorama-map"></div>
+            </div>
+        </div><!-- /endViewMapa -->
 
         <div id="endViewPedidos" style="display:none;">
             <div class="end-pedido-nav">
@@ -8959,18 +9113,20 @@ let limpandoMovimentacoesOrfasG02 = false;
 function abrirAbaEnderecoInterna(aba) {
     const views = {
         endereco: document.getElementById("endViewEndereco"),
+        mapa: document.getElementById("endViewMapa"),
         pedidos: document.getElementById("endViewPedidos"),
         plaquinhas: document.getElementById("endViewPlaquinhas")
     };
 
     const tabs = {
         endereco: document.getElementById("endTabEndereco"),
+        mapa: document.getElementById("endTabMapa"),
         pedidos: document.getElementById("endTabPedidos"),
         plaquinhas: document.getElementById("endTabPlaquinhas")
     };
 
     const abaValida =
-        ["endereco", "pedidos", "plaquinhas"].includes(aba)
+        ["endereco", "mapa", "pedidos", "plaquinhas"].includes(aba)
             ? aba
             : "endereco";
 
@@ -9007,6 +9163,10 @@ function abrirAbaEnderecoInterna(aba) {
             () => focarCampoEndereco("endPa"),
             250
         );
+    }
+
+    if (abaValida === "mapa") {
+        renderizarMapaOcupacaoG02();
     }
 
     if (abaValida === "pedidos") {
@@ -11758,6 +11918,16 @@ function atualizarResumoOcupacaoG02() {
     if (elPercentual) elPercentual.textContent = `${percentual.toFixed(1).replace(".", ",")}%`;
     if (barra) barra.style.width = `${Math.min(100, percentual)}%`;
 
+    const heroOcupadas = document.getElementById("endMapaHeroOcupadas");
+    const heroLivres = document.getElementById("endMapaHeroLivres");
+    const heroTotal = document.getElementById("endMapaHeroTotal");
+    const heroPercentual = document.getElementById("endMapaHeroPercentual");
+
+    if (heroOcupadas) heroOcupadas.textContent = ocupadas.toLocaleString("pt-BR");
+    if (heroLivres) heroLivres.textContent = livres.toLocaleString("pt-BR");
+    if (heroTotal) heroTotal.textContent = total.toLocaleString("pt-BR");
+    if (heroPercentual) heroPercentual.textContent = `${percentual.toFixed(1).replace(".", ",")}%`;
+
     const duplicidades = contarDuplicidadesVagasG02();
     const alerta = document.getElementById("endAlertaDuplicidadeVagas");
 
@@ -11808,6 +11978,19 @@ function usarVagaDoMapaG02(codigo) {
 }
 
 
+
+function irParaMapaRuaG02(rua) {
+    const alvo =
+        document.getElementById(`endMapaRua${String(rua || "").toUpperCase()}`);
+
+    if (alvo) {
+        alvo.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+}
+
 function abrirDetalheVagaMapaCompletoG02(codigo) {
     const vagaInfo =
         interpretarVagaG02(codigo);
@@ -11840,6 +12023,9 @@ function renderizarMapaCompletoGalpaoG02() {
     const mapaEl =
         document.getElementById("endMapaCompletoVagas");
 
+    const navEl =
+        document.getElementById("endMapaNavRuas");
+
     if (!mapaEl) return;
 
     const mapa =
@@ -11850,18 +12036,27 @@ function renderizarMapaCompletoGalpaoG02() {
 
     mapaEl.innerHTML = "";
 
+    if (navEl) {
+        navEl.innerHTML = "";
+
+        ruas.forEach(rua => {
+            const btn =
+                document.createElement("button");
+
+            btn.type = "button";
+            btn.textContent = `RUA ${rua}`;
+            btn.onclick = () => irParaMapaRuaG02(rua);
+
+            navEl.appendChild(btn);
+        });
+    }
+
     const frag =
         document.createDocumentFragment();
 
     ruas.forEach(rua => {
         const limite =
             CONFIG_RUAS_G02[rua];
-
-        const card =
-            document.createElement("section");
-
-        card.className =
-            "end-full-map-street-card";
 
         const vagasRua =
             bancoVagasG02.filter(
@@ -11876,51 +12071,64 @@ function renderizarMapaCompletoGalpaoG02() {
         const livresRua =
             Math.max(0, vagasRua.length - ocupadasRua);
 
-        const header =
-            document.createElement("div");
+        const section =
+            document.createElement("section");
 
-        header.className =
-            "end-full-map-street-head";
+        section.className =
+            "end-panorama-street";
 
-        header.innerHTML = `
-            <div class="end-full-map-street-title">
-                <strong>RUA ${rua}</strong>
-                <small>${vagasRua.length.toLocaleString("pt-BR")} posições</small>
-            </div>
+        section.id =
+            `endMapaRua${rua}`;
 
-            <div class="end-full-map-street-stats">
-                <span class="livres">${livresRua.toLocaleString("pt-BR")} LIVRES</span>
-                <span class="ocupadas">${ocupadasRua.toLocaleString("pt-BR")} OCUPADAS</span>
+        section.innerHTML = `
+            <div class="end-panorama-street-head">
+                <div class="end-panorama-street-title">
+                    <strong>RUA ${rua}</strong>
+                    <small>${vagasRua.length.toLocaleString("pt-BR")} POSIÇÕES • LADOS A / B</small>
+                </div>
+
+                <div class="end-panorama-street-counters">
+                    <span class="livres">${livresRua.toLocaleString("pt-BR")} LIVRES</span>
+                    <span class="ocupadas">${ocupadasRua.toLocaleString("pt-BR")} OCUPADAS</span>
+                </div>
             </div>
         `;
 
-        card.appendChild(header);
+        const body =
+            document.createElement("div");
 
-        for (let nivel = 0; nivel <= 4; nivel++) {
+        body.className =
+            "end-panorama-body";
+
+        for (let nivel = 4; nivel >= 0; nivel--) {
             const row =
                 document.createElement("div");
 
             row.className =
-                "end-full-map-level-row";
+                "end-panorama-level";
 
-            const levelLabel =
+            const label =
                 document.createElement("div");
 
-            levelLabel.className =
-                "end-full-map-level-label";
+            label.className =
+                "end-panorama-level-tag";
 
-            levelLabel.innerHTML = `
+            label.innerHTML = `
                 <strong>NÍVEL ${nivel}</strong>
                 <small>Rua ${rua}</small>
             `;
 
-            row.appendChild(levelLabel);
-
-            const slots =
+            const track =
                 document.createElement("div");
 
-            slots.className =
-                "end-full-map-level-slots";
+            track.className =
+                "end-panorama-track";
+
+            const grid =
+                document.createElement("div");
+
+            grid.className =
+                "end-panorama-track-grid";
 
             for (let numero = 1; numero <= limite; numero++) {
                 const numeroFormatado =
@@ -11944,34 +12152,40 @@ function renderizarMapaCompletoGalpaoG02() {
 
                     button.type = "button";
                     button.className =
-                        `end-full-map-slot ${ocupado ? "ocupada" : "livre"}`;
+                        `end-panorama-slot ${ocupado ? "ocupada" : "livre"}`;
 
                     button.onclick = () =>
                         abrirDetalheVagaMapaCompletoG02(codigo);
 
                     button.innerHTML = `
-                        <span class="num">${numeroFormatado}${lado}</span>
-                        <small>${ocupado ? "OCUP." : "LIVRE"}</small>
+                        <span class="code">${numeroFormatado}${lado}</span>
+                        <span class="mini">${ocupado ? "OCUP." : "LIVRE"}</span>
                     `;
 
                     button.title =
                         ocupado
                             ? (
-                                `${codigoExibicao}\n` +
-                                `PA: ${ocupacao.pa || "-"}\n` +
+                                `${codigoExibicao}
+` +
+                                `PA: ${ocupacao.pa || "-"}
+` +
                                 `Produto: ${ocupacao.produto || "-"}`
                             )
-                            : `${codigoExibicao}\nVaga livre`;
+                            : `${codigoExibicao}
+Vaga livre`;
 
-                    slots.appendChild(button);
+                    grid.appendChild(button);
                 });
             }
 
-            row.appendChild(slots);
-            card.appendChild(row);
+            track.appendChild(grid);
+            row.appendChild(label);
+            row.appendChild(track);
+            body.appendChild(row);
         }
 
-        frag.appendChild(card);
+        section.appendChild(body);
+        frag.appendChild(section);
     });
 
     mapaEl.appendChild(frag);
