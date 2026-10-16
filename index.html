@@ -6906,6 +6906,281 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     }
 }
 
+
+/* =====================================================
+   V42 - MAPA COMPLETO DO GALPÃO G02
+===================================================== */
+
+.end-occ-section-title-map {
+    margin-top: 14px;
+}
+
+.end-full-map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.end-full-map-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid #d5e1e7;
+    background: #f7fafc;
+    color: #54707f;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .3px;
+    text-align: center;
+}
+
+.end-full-map-chip.livre {
+    background: #ecf8ef;
+    border-color: #b8debf;
+    color: #2d7841;
+}
+
+.end-full-map-chip.ocupada {
+    background: #fff0f1;
+    border-color: #efc8cd;
+    color: #a43843;
+}
+
+.end-full-map-chip.acao {
+    background: #eef6fb;
+    border-color: #c8dde9;
+    color: #2e6787;
+}
+
+.end-full-map-wrap {
+    display: grid;
+    gap: 12px;
+    max-height: 980px;
+    overflow: auto;
+    padding-right: 4px;
+    margin-bottom: 14px;
+}
+
+.end-full-map-street-card {
+    border: 1px solid #d7e3ea;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #ffffff 0%, #f9fbfd 100%);
+    box-shadow: 0 10px 26px rgba(34, 68, 90, 0.06);
+    padding: 12px;
+}
+
+.end-full-map-street-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2ebf0;
+}
+
+.end-full-map-street-title {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.end-full-map-street-title strong {
+    color: #173f56;
+    font-size: 18px;
+    font-weight: 950;
+    letter-spacing: .5px;
+}
+
+.end-full-map-street-title small {
+    color: #6f8490;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.end-full-map-street-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.end-full-map-street-stats span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .3px;
+    border: 1px solid;
+}
+
+.end-full-map-street-stats .livres {
+    color: #2d7841;
+    background: #ecf8ef;
+    border-color: #b8debf;
+}
+
+.end-full-map-street-stats .ocupadas {
+    color: #a43843;
+    background: #fff0f1;
+    border-color: #efc8cd;
+}
+
+.end-full-map-level-row {
+    display: grid;
+    grid-template-columns: 105px 1fr;
+    gap: 10px;
+    align-items: start;
+    margin-top: 10px;
+}
+
+.end-full-map-level-label {
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 70px;
+    padding: 10px 8px;
+    border-radius: 14px;
+    border: 1px solid #d7e5eb;
+    background: #f4f8fb;
+    text-align: center;
+}
+
+.end-full-map-level-label strong {
+    color: #173f56;
+    font-size: 12px;
+    font-weight: 950;
+    letter-spacing: .4px;
+}
+
+.end-full-map-level-label small {
+    margin-top: 3px;
+    color: #708591;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.end-full-map-level-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(66px, 1fr));
+    gap: 8px;
+}
+
+.end-full-map-slot {
+    min-height: 62px;
+    border-radius: 14px;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+    box-shadow: 0 4px 12px rgba(28, 62, 86, .05);
+}
+
+.end-full-map-slot:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(28, 62, 86, .10);
+    filter: brightness(.99);
+}
+
+.end-full-map-slot .num {
+    font-size: 15px;
+    font-weight: 950;
+    letter-spacing: .3px;
+    line-height: 1;
+}
+
+.end-full-map-slot small {
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .35px;
+    line-height: 1;
+}
+
+.end-full-map-slot.livre {
+    background: linear-gradient(180deg, #f5fff7 0%, #eaf8ee 100%);
+    border-color: #bfdcc6;
+    color: #2a7841;
+}
+
+.end-full-map-slot.ocupada {
+    background: linear-gradient(180deg, #fff7f8 0%, #feecee 100%);
+    border-color: #edc6cb;
+    color: #a43742;
+}
+
+@media (max-width: 860px) {
+    .end-full-map-level-row {
+        grid-template-columns: 1fr;
+    }
+
+    .end-full-map-level-label {
+        position: static;
+        min-height: auto;
+    }
+
+    .end-full-map-level-slots {
+        grid-template-columns: repeat(auto-fit, minmax(58px, 1fr));
+    }
+
+    .end-full-map-slot {
+        min-height: 56px;
+    }
+
+    .end-full-map-slot .num {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 520px) {
+    .end-full-map-street-head {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .end-full-map-street-stats {
+        justify-content: flex-start;
+    }
+
+    .end-full-map-wrap {
+        max-height: none;
+    }
+
+    .end-full-map-level-slots {
+        grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+        gap: 6px;
+    }
+
+    .end-full-map-slot {
+        min-height: 52px;
+        border-radius: 12px;
+    }
+
+    .end-full-map-slot .num {
+        font-size: 12px;
+    }
+
+    .end-full-map-slot small {
+        font-size: 8px;
+    }
+}
+
 </style>
     
 </head>
@@ -8076,6 +8351,21 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
 
                 <div id="endAlertaDuplicidadeVagas" class="end-duplicate-warning" style="display:none;"></div>
 
+                <div class="end-occ-section-title end-occ-section-title-map">
+                    <div>
+                        <strong>MAPA COMPLETO DO GALPÃO</strong>
+                        <span>Todas as vagas por rua, nível, número e lado, com cores de ocupação.</span>
+                    </div>
+                </div>
+
+                <div class="end-full-map-legend">
+                    <span class="end-full-map-chip livre">LIVRE</span>
+                    <span class="end-full-map-chip ocupada">OCUPADA</span>
+                    <span class="end-full-map-chip acao">TOQUE NA VAGA LIVRE PARA USAR NO ENDEREÇAMENTO</span>
+                </div>
+
+                <div id="endMapaCompletoVagas" class="end-full-map-wrap"></div>
+
                 <div class="end-occ-section-title">
                     <div>
                         <strong>CONSULTAR VAGAS</strong>
@@ -8658,6 +8948,9 @@ let baixaPedidoContextoG02 = null;
 let pedidoBaixaSelecionadoIdG02 = "";
 let pedidoEditandoIdG02 = "";
 let contadorItemEdicaoPedidoG02 = 0;
+let pedidosBaixaCarregadosG02 = false;
+let movimentacoesBaixaCarregadasG02 = false;
+let limpandoMovimentacoesOrfasG02 = false;
 
 
 
@@ -8894,6 +9187,9 @@ function sair() {
     pedidoBaixaSelecionadoIdG02 = "";
     pedidoEditandoIdG02 = "";
     contadorItemEdicaoPedidoG02 = 0;
+    pedidosBaixaCarregadosG02 = false;
+    movimentacoesBaixaCarregadasG02 = false;
+    limpandoMovimentacoesOrfasG02 = false;
 
     vagasG02 = [];
     enderecamentosG02 = [];
@@ -11511,9 +11807,180 @@ function usarVagaDoMapaG02(codigo) {
     }
 }
 
+
+function abrirDetalheVagaMapaCompletoG02(codigo) {
+    const vagaInfo =
+        interpretarVagaG02(codigo);
+
+    if (!vagaInfo.valida) {
+        alert("Vaga inválida.");
+        return;
+    }
+
+    const ocupacao =
+        mapaOcupacaoAtualG02().get(vagaInfo.codigo);
+
+    if (!ocupacao) {
+        usarVagaDoMapaG02(vagaInfo.codigo);
+        return;
+    }
+
+    alert(
+        `VAGA OCUPADA\n\n` +
+        `Vaga: ${vagaInfo.codigoExibicao || vagaInfo.codigo}\n` +
+        `PA: ${ocupacao.pa || "-"}\n` +
+        `Produto: ${ocupacao.produto || "-"}\n\n` +
+        "Esta vaga não permite vários paletes."
+    );
+}
+
+function renderizarMapaCompletoGalpaoG02() {
+    garantirBancoVagasG02();
+
+    const mapaEl =
+        document.getElementById("endMapaCompletoVagas");
+
+    if (!mapaEl) return;
+
+    const mapa =
+        mapaOcupacaoAtualG02();
+
+    const ruas =
+        Object.keys(CONFIG_RUAS_G02);
+
+    mapaEl.innerHTML = "";
+
+    const frag =
+        document.createDocumentFragment();
+
+    ruas.forEach(rua => {
+        const limite =
+            CONFIG_RUAS_G02[rua];
+
+        const card =
+            document.createElement("section");
+
+        card.className =
+            "end-full-map-street-card";
+
+        const vagasRua =
+            bancoVagasG02.filter(
+                vaga => vaga.rua === rua
+            );
+
+        const ocupadasRua =
+            vagasRua.filter(vaga =>
+                mapa.has(vaga.codigo)
+            ).length;
+
+        const livresRua =
+            Math.max(0, vagasRua.length - ocupadasRua);
+
+        const header =
+            document.createElement("div");
+
+        header.className =
+            "end-full-map-street-head";
+
+        header.innerHTML = `
+            <div class="end-full-map-street-title">
+                <strong>RUA ${rua}</strong>
+                <small>${vagasRua.length.toLocaleString("pt-BR")} posições</small>
+            </div>
+
+            <div class="end-full-map-street-stats">
+                <span class="livres">${livresRua.toLocaleString("pt-BR")} LIVRES</span>
+                <span class="ocupadas">${ocupadasRua.toLocaleString("pt-BR")} OCUPADAS</span>
+            </div>
+        `;
+
+        card.appendChild(header);
+
+        for (let nivel = 0; nivel <= 4; nivel++) {
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "end-full-map-level-row";
+
+            const levelLabel =
+                document.createElement("div");
+
+            levelLabel.className =
+                "end-full-map-level-label";
+
+            levelLabel.innerHTML = `
+                <strong>NÍVEL ${nivel}</strong>
+                <small>Rua ${rua}</small>
+            `;
+
+            row.appendChild(levelLabel);
+
+            const slots =
+                document.createElement("div");
+
+            slots.className =
+                "end-full-map-level-slots";
+
+            for (let numero = 1; numero <= limite; numero++) {
+                const numeroFormatado =
+                    String(numero).padStart(2, "0");
+
+                ["A", "B"].forEach(lado => {
+                    const codigo =
+                        `972${rua.toLowerCase()}${nivel}${numeroFormatado}${lado.toLowerCase()}`;
+
+                    const codigoExibicao =
+                        `972${rua}${nivel}${numeroFormatado}${lado.toLowerCase()}`;
+
+                    const ocupacao =
+                        mapa.get(codigo);
+
+                    const ocupado =
+                        !!ocupacao;
+
+                    const button =
+                        document.createElement("button");
+
+                    button.type = "button";
+                    button.className =
+                        `end-full-map-slot ${ocupado ? "ocupada" : "livre"}`;
+
+                    button.onclick = () =>
+                        abrirDetalheVagaMapaCompletoG02(codigo);
+
+                    button.innerHTML = `
+                        <span class="num">${numeroFormatado}${lado}</span>
+                        <small>${ocupado ? "OCUP." : "LIVRE"}</small>
+                    `;
+
+                    button.title =
+                        ocupado
+                            ? (
+                                `${codigoExibicao}\n` +
+                                `PA: ${ocupacao.pa || "-"}\n` +
+                                `Produto: ${ocupacao.produto || "-"}`
+                            )
+                            : `${codigoExibicao}\nVaga livre`;
+
+                    slots.appendChild(button);
+                });
+            }
+
+            row.appendChild(slots);
+            card.appendChild(row);
+        }
+
+        frag.appendChild(card);
+    });
+
+    mapaEl.appendChild(frag);
+}
+
 function renderizarMapaOcupacaoG02() {
     garantirBancoVagasG02();
     atualizarResumoOcupacaoG02();
+    renderizarMapaCompletoGalpaoG02();
 
     const listaEl = document.getElementById("endListaVagas");
     const resumoEl = document.getElementById("endResumoVagas");
@@ -14498,6 +14965,30 @@ async function excluirPedidoHistoricoG02(idCodificado) {
             .doc(id)
             .delete();
 
+        /*
+           Remove imediatamente da memória para a tela sumir na hora,
+           sem depender do tempo do listener do Firestore.
+        */
+        pedidosBaixaG02 =
+            pedidosBaixaG02.filter(
+                p => p.id !== id
+            );
+
+        movimentacoesBaixaG02 =
+            movimentacoesBaixaG02.filter(
+                mov =>
+                    !(
+                        mov.pedidoId === id ||
+                        String(mov.pedidoNumero || "") ===
+                        String(pedido.numero || "")
+                    )
+            );
+
+        renderizarPedidosBaixaG02();
+        renderizarGerenciarPedidosG02();
+        atualizarSelectPedidosBaixaG02();
+        renderizarHistoricoBaixaG02();
+
         if (
             pedidoBaixaSelecionadoIdG02 === id
         ) {
@@ -14548,6 +15039,96 @@ async function excluirPedidoHistoricoG02(idCodificado) {
     }
 }
 
+
+function movimentacaoPertenceAPedidoExistenteG02(mov) {
+    const pedidoId =
+        String(mov?.pedidoId || "");
+
+    const pedidoNumero =
+        String(mov?.pedidoNumero || "");
+
+    return pedidosBaixaG02.some(pedido => {
+        const mesmoId =
+            pedidoId &&
+            String(pedido.id || "") === pedidoId;
+
+        const mesmoNumero =
+            pedidoNumero &&
+            String(pedido.numero || "") === pedidoNumero;
+
+        return mesmoId || mesmoNumero;
+    });
+}
+
+async function limparMovimentacoesOrfasG02() {
+    if (
+        limpandoMovimentacoesOrfasG02 ||
+        !pedidosBaixaCarregadosG02 ||
+        !movimentacoesBaixaCarregadasG02
+    ) {
+        return;
+    }
+
+    const orfas =
+        movimentacoesBaixaG02.filter(
+            mov =>
+                !movimentacaoPertenceAPedidoExistenteG02(mov)
+        );
+
+    if (!orfas.length) {
+        return;
+    }
+
+    limpandoMovimentacoesOrfasG02 = true;
+
+    try {
+        /*
+           Essas movimentações pertencem a pedidos que já não existem.
+           Como a regra desejada é "excluir pedido = excluir histórico",
+           removemos também sobras de versões antigas.
+        */
+        for (let i = 0; i < orfas.length; i += 400) {
+            const batch =
+                db.batch();
+
+            orfas.slice(i, i + 400)
+                .forEach(mov => {
+                    if (!mov.id) return;
+
+                    batch.delete(
+                        db.collection("movimentacoes_g02")
+                        .doc(mov.id)
+                    );
+                });
+
+            await batch.commit();
+        }
+
+        const idsOrfaos =
+            new Set(
+                orfas
+                .map(mov => mov.id)
+                .filter(Boolean)
+            );
+
+        movimentacoesBaixaG02 =
+            movimentacoesBaixaG02.filter(
+                mov => !idsOrfaos.has(mov.id)
+            );
+
+        renderizarGerenciarPedidosG02();
+        renderizarHistoricoBaixaG02();
+
+    } catch (erro) {
+        console.error(
+            "Erro ao limpar movimentações órfãs:",
+            erro
+        );
+    } finally {
+        limpandoMovimentacoesOrfasG02 = false;
+    }
+}
+
 function renderizarHistoricoBaixaG02() {
     const lista =
         document.getElementById("endHistoricoBaixaLista");
@@ -14564,6 +15145,9 @@ function renderizarHistoricoBaixaG02() {
 
     const filtradas =
         movimentacoesBaixaG02
+        .filter(mov =>
+            movimentacaoPertenceAPedidoExistenteG02(mov)
+        )
         .filter(mov => {
             if (!termo) return true;
 
@@ -14666,10 +15250,15 @@ function iniciarListenersPedidosBaixaG02() {
                     });
                 });
 
+                pedidosBaixaCarregadosG02 = true;
+
                 renderizarPedidosBaixaG02();
                 renderizarGerenciarPedidosG02();
                 atualizarSelectPedidosBaixaG02();
                 renderizarResumoPedidoSelecionadoG02();
+                renderizarHistoricoBaixaG02();
+
+                limparMovimentacoesOrfasG02();
 
             }, erro => {
                 console.error("Erro ao carregar pedidos de baixa:", erro);
@@ -14690,8 +15279,12 @@ function iniciarListenersPedidosBaixaG02() {
                     });
                 });
 
+                movimentacoesBaixaCarregadasG02 = true;
+
                 renderizarGerenciarPedidosG02();
                 renderizarHistoricoBaixaG02();
+
+                limparMovimentacoesOrfasG02();
 
             }, erro => {
                 console.error("Erro ao carregar movimentações:", erro);
