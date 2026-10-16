@@ -8161,6 +8161,516 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
     }
 }
 
+
+/* =====================================================
+   V47 - MAPA DE POSIÇÕES / LAYOUT OPERACIONAL PROFISSIONAL
+===================================================== */
+
+#sistemaEnderecamento.end-mapa-fullscreen .end-container {
+    width: calc(100vw - 18px) !important;
+    max-width: none !important;
+    margin: 0 auto !important;
+    padding: 8px !important;
+}
+
+/* Cabeçalho geral do sistema mais compacto na aba mapa */
+#sistemaEnderecamento.end-mapa-fullscreen .end-topbar-mobile {
+    min-height: 54px !important;
+    margin: 0 0 7px !important;
+    padding: 7px 12px !important;
+    border-radius: 14px !important;
+}
+
+#sistemaEnderecamento.end-mapa-fullscreen .end-brand-mark {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+}
+
+#sistemaEnderecamento.end-mapa-fullscreen .end-module-tabs {
+    min-height: 48px !important;
+    padding: 5px !important;
+    margin-bottom: 7px !important;
+    border-radius: 13px !important;
+    gap: 5px !important;
+}
+
+#sistemaEnderecamento.end-mapa-fullscreen .end-module-tabs button {
+    min-height: 38px !important;
+    border-radius: 9px !important;
+    font-size: 9px !important;
+    letter-spacing: .35px !important;
+}
+
+/* Card principal */
+#endViewMapa .end-map-v47-card {
+    padding: 10px !important;
+    border-radius: 16px !important;
+    border-top: 3px solid #2c7196 !important;
+    box-shadow: 0 10px 28px rgba(25, 60, 80, .07) !important;
+}
+
+/* Toolbar superior: título e totais na mesma faixa */
+.end-map-v47-toolbar {
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 4px 4px 10px;
+    border-bottom: 1px solid #dfe9ee;
+}
+
+.end-map-v47-title {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.end-map-v47-title > span {
+    color: #53809a;
+    font-size: 7px;
+    font-weight: 950;
+    letter-spacing: .75px;
+}
+
+.end-map-v47-title > strong {
+    margin-top: 2px;
+    color: #102f42;
+    font-size: 20px;
+    font-weight: 950;
+    line-height: 1.05;
+}
+
+.end-map-v47-title > small {
+    margin-top: 3px;
+    color: #718792;
+    font-size: 8px;
+    font-weight: 750;
+}
+
+.end-map-v47-global-stats {
+    gap: 5px !important;
+    flex-wrap: nowrap !important;
+}
+
+.end-map-v47-global-stats .end-panorama-badge {
+    min-height: 34px !important;
+    padding: 0 10px !important;
+    border-radius: 10px !important;
+    font-size: 7px !important;
+}
+
+.end-map-v47-global-stats .end-panorama-badge b {
+    font-size: 11px !important;
+}
+
+/* Legenda + ruas */
+.end-map-v47-controls {
+    margin-top: 8px;
+    padding: 8px;
+    border: 1px solid #dce7ec;
+    border-radius: 12px;
+    background: #f7fafb;
+}
+
+.end-map-v47-legend {
+    margin: 0 0 7px !important;
+    gap: 6px !important;
+}
+
+.end-map-v47-legend .end-panorama-chip {
+    min-height: 25px !important;
+    padding: 0 9px !important;
+    border-radius: 7px !important;
+    font-size: 7px !important;
+}
+
+.end-map-v47-legend .end-panorama-chip i {
+    width: 7px;
+    height: 7px;
+    margin-right: 5px;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+.end-map-v47-legend .livre i {
+    background: #59b870;
+}
+
+.end-map-v47-legend .ocupada i {
+    background: #d85b67;
+}
+
+#endViewMapa .end-map-v47-nav {
+    display: grid !important;
+    grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+    margin: 0 !important;
+}
+
+#endViewMapa .end-map-v47-nav button {
+    min-width: 0 !important;
+    width: 100% !important;
+    min-height: 39px !important;
+    padding: 4px 5px !important;
+    border-radius: 8px !important;
+    border: 1px solid #c9dbe5 !important;
+    background: #fff !important;
+    color: #315c73 !important;
+    box-shadow: none !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+}
+
+#endViewMapa .end-map-v47-nav button span {
+    font-size: 9px;
+    font-weight: 950;
+    line-height: 1;
+}
+
+#endViewMapa .end-map-v47-nav button small {
+    color: #8a9ca5;
+    font-size: 6px;
+    font-weight: 850;
+    line-height: 1;
+}
+
+#endViewMapa .end-map-v47-nav button.active {
+    border-color: #215675 !important;
+    background: linear-gradient(180deg, #2e6c90, #214e6a) !important;
+    color: #fff !important;
+    box-shadow: 0 5px 12px rgba(33,78,106,.16) !important;
+}
+
+#endViewMapa .end-map-v47-nav button.active small {
+    color: rgba(255,255,255,.72) !important;
+}
+
+/* Área do mapa */
+#endViewMapa .end-map-v47-map {
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 8px 0 0 !important;
+}
+
+.end-map-v47-street {
+    border: 1px solid #cbdce5;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #eef4f7;
+}
+
+/* Cabeçalho da rua */
+.end-map-v47-street-head {
+    min-height: 57px;
+    padding: 8px 11px;
+    background: linear-gradient(115deg, #234f69, #173d55);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.end-map-v47-street-name {
+    display: flex;
+    flex-direction: column;
+}
+
+.end-map-v47-street-name > span {
+    color: #b9cfdb;
+    font-size: 6px;
+    font-weight: 950;
+    letter-spacing: .75px;
+}
+
+.end-map-v47-street-name > strong {
+    margin-top: 1px;
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 950;
+}
+
+.end-map-v47-street-name > small {
+    margin-top: 4px;
+    color: #cfdee6;
+    font-size: 7px;
+    font-weight: 750;
+}
+
+.end-map-v47-street-stats {
+    display: flex;
+    gap: 5px;
+}
+
+.end-map-v47-street-stats > div {
+    min-width: 76px;
+    height: 39px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.end-map-v47-street-stats span {
+    color: #b9ccd7;
+    font-size: 5.5px;
+    font-weight: 950;
+    letter-spacing: .45px;
+}
+
+.end-map-v47-street-stats strong {
+    margin-top: 1px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 950;
+}
+
+.end-map-v47-street-stats .livre strong {
+    color: #9af0ad;
+}
+
+.end-map-v47-street-stats .ocupada strong {
+    color: #ffadb6;
+}
+
+/* Board estilo grade de estoque */
+.end-map-v47-board {
+    width: 100%;
+    padding: 7px;
+    background: #f2f6f8;
+}
+
+.end-map-v47-grid-row {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 4px;
+    align-items: stretch;
+}
+
+.end-map-v47-cell-grid {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+    width: 100%;
+}
+
+.end-map-v47-number-row {
+    margin-bottom: 3px;
+}
+
+.end-map-v47-corner {
+    height: 25px;
+    border-radius: 6px;
+    background: #d9e6ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.end-map-v47-corner span {
+    color: #526e7d;
+    font-size: 6px;
+    font-weight: 950;
+    letter-spacing: .55px;
+}
+
+.end-map-v47-number {
+    min-width: 0;
+    height: 25px;
+    border-radius: 5px;
+    border: 1px solid #d3e0e6;
+    background: #e6eef2;
+    color: #365b6e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(7px, .60vw, 11px);
+    font-weight: 950;
+}
+
+/* Linhas A/B separadas */
+.end-map-v47-slot-row {
+    min-height: 34px;
+    margin-bottom: 2px;
+}
+
+.end-map-v47-slot-row.fim-nivel {
+    margin-bottom: 5px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #cbdbe3;
+}
+
+.end-map-v47-slot-row.fim-nivel:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.end-map-v47-row-label {
+    min-height: 34px;
+    border-radius: 7px;
+    overflow: hidden;
+    border: 1px solid #c4d6df;
+    background: #fff;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.end-map-v47-row-label > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.end-map-v47-row-label .nivel {
+    background: #244f69;
+    color: #fff;
+}
+
+.end-map-v47-row-label .lado {
+    background: #fff;
+    color: #294f64;
+}
+
+.end-map-v47-row-label span {
+    font-size: 5px;
+    font-weight: 900;
+    letter-spacing: .35px;
+    opacity: .72;
+}
+
+.end-map-v47-row-label strong {
+    margin-top: 1px;
+    font-size: 12px;
+    font-weight: 950;
+    line-height: 1;
+}
+
+/* Cada vaga fica maior e mais legível */
+.end-map-v47-slot {
+    min-width: 0 !important;
+    width: 100% !important;
+    height: 34px !important;
+    padding: 0 !important;
+    border-radius: 5px !important;
+    border: 1px solid !important;
+    box-shadow: none !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    cursor: pointer;
+    transition: filter .12s ease, transform .12s ease;
+}
+
+.end-map-v47-slot:hover {
+    filter: brightness(.95);
+    transform: translateY(-1px);
+}
+
+.end-map-v47-slot .estado {
+    font-size: clamp(8px, .72vw, 12px);
+    font-weight: 950;
+    line-height: 1;
+}
+
+.end-map-v47-slot small {
+    font-size: clamp(5px, .42vw, 7px);
+    font-weight: 950;
+    line-height: 1;
+}
+
+.end-map-v47-slot.livre {
+    background: #e2f5e6 !important;
+    border-color: #9fd1aa !important;
+    color: #25713a !important;
+}
+
+.end-map-v47-slot.ocupada {
+    background: #f9dfe2 !important;
+    border-color: #e49ca5 !important;
+    color: #a32936 !important;
+}
+
+/* Um leve contraste alternado entre lados */
+.end-map-v47-slot-row.lado-b .end-map-v47-slot.livre {
+    background: #d8f0de !important;
+}
+
+.end-map-v47-slot-row.lado-b .end-map-v47-slot.ocupada {
+    background: #f4d5d9 !important;
+}
+
+/* Desktop: encaixar tudo confortavelmente */
+@media(min-width: 1000px) {
+    #endViewMapa .end-map-v47-card {
+        min-height: calc(100vh - 132px);
+    }
+}
+
+/* Responsivo */
+@media(max-width: 999px) {
+    .end-map-v47-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .end-map-v47-global-stats {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    #endViewMapa .end-map-v47-nav {
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    }
+
+    .end-map-v47-street-head {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .end-map-v47-street-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .end-map-v47-street-stats > div {
+        min-width: 0;
+    }
+
+    .end-map-v47-grid-row {
+        grid-template-columns: 64px minmax(0, 1fr);
+        gap: 2px;
+    }
+
+    .end-map-v47-cell-grid {
+        gap: 1px;
+    }
+
+    .end-map-v47-row-label strong {
+        font-size: 10px;
+    }
+
+    .end-map-v47-slot {
+        border-radius: 3px !important;
+    }
+
+    .end-map-v47-slot small {
+        display: none;
+    }
+}
+
 </style>
     
 </head>
@@ -9460,47 +9970,33 @@ body.perfil-consulta .datetime-filter-slot .datetime-widget {
         </div><!-- /endViewEndereco -->
 
         <div id="endViewMapa" style="display:none;">
-            <div class="end-card end-map-card end-occupancy-card">
-                <div class="end-card-heading">
-                    <div>
-                        <span class="end-eyebrow">VISÃO OPERACIONAL</span>
-                        <h3>Mapa de posições do galpão</h3>
+            <div class="end-card end-map-card end-occupancy-card end-map-v47-card">
+                <div class="end-map-v47-toolbar">
+                    <div class="end-map-v47-title">
+                        <span>VISÃO OPERACIONAL • DEPÓSITO 972</span>
+                        <strong>Mapa de posições</strong>
+                        <small>Selecione uma rua e consulte todos os níveis e lados sem sair da tela.</small>
                     </div>
-                    <span class="end-address-total">DEPÓSITO 972</span>
+
+                    <div class="end-panorama-badges end-map-v47-global-stats">
+                        <span class="end-panorama-badge livre">LIVRES <b id="endMapaHeroLivres">0</b></span>
+                        <span class="end-panorama-badge ocupada">OCUPADAS <b id="endMapaHeroOcupadas">0</b></span>
+                        <span class="end-panorama-badge total">TOTAL <b id="endMapaHeroTotal">0</b></span>
+                        <span class="end-panorama-badge percentual">OCUPAÇÃO <b id="endMapaHeroPercentual">0%</b></span>
+                    </div>
                 </div>
 
-                <div class="end-occ-section-title end-occ-section-title-map">
-                    <div>
-                        <strong>MAPA VISUAL DE POSIÇÕES</strong>
-                        <span>Visão completa do G02 por ruas, níveis, vagas e lados com status por cor.</span>
+                <div class="end-map-v47-controls">
+                    <div class="end-panorama-legend-row end-map-v47-legend">
+                        <span class="end-panorama-chip livre"><i></i> LIVRE</span>
+                        <span class="end-panorama-chip ocupada"><i></i> OCUPADA</span>
+                        <span class="end-panorama-chip acao">CLIQUE NA POSIÇÃO PARA CONSULTAR / USAR</span>
                     </div>
+
+                    <div id="endMapaNavRuas" class="end-panorama-nav end-map-v47-nav"></div>
                 </div>
 
-                <div class="end-panorama-hero">
-                    <div class="end-panorama-title-row">
-                        <div class="end-panorama-title-main">
-                            <strong>MAPA DE POSIÇÕES</strong>
-                            <small>DEPÓSITO 972 • GALPÃO G02</small>
-                        </div>
-
-                        <div class="end-panorama-badges">
-                            <span class="end-panorama-badge livre">LIVRES <b id="endMapaHeroLivres">0</b></span>
-                            <span class="end-panorama-badge ocupada">OCUPADAS <b id="endMapaHeroOcupadas">0</b></span>
-                            <span class="end-panorama-badge total">TOTAL <b id="endMapaHeroTotal">0</b></span>
-                            <span class="end-panorama-badge percentual">OCUPAÇÃO <b id="endMapaHeroPercentual">0%</b></span>
-                        </div>
-                    </div>
-
-                    <div class="end-panorama-legend-row">
-                        <span class="end-panorama-chip livre">VAGA LIVRE</span>
-                        <span class="end-panorama-chip ocupada">VAGA OCUPADA</span>
-                        <span class="end-panorama-chip acao">TOQUE NA POSIÇÃO PARA VER OU USAR</span>
-                    </div>
-
-                    <div id="endMapaNavRuas" class="end-panorama-nav"></div>
-                </div>
-
-                <div id="endMapaCompletoVagas" class="end-panorama-map"></div>
+                <div id="endMapaCompletoVagas" class="end-panorama-map end-map-v47-map"></div>
             </div>
         </div><!-- /endViewMapa -->
 
@@ -13696,37 +14192,50 @@ function renderizarMapaCompletoGalpaoG02() {
         mapaRuaSelecionadaG02 = "A";
     }
 
-    /*
-       Navegação A-J.
-       Só uma rua é desenhada por vez para aproveitar toda a tela.
-    */
-    if (navEl) {
-        navEl.innerHTML = "";
-
-        ruas.forEach(rua => {
-            const btn =
-                document.createElement("button");
-
-            btn.type = "button";
-            btn.textContent = `RUA ${rua}`;
-
-            btn.className =
-                rua === mapaRuaSelecionadaG02
-                    ? "active"
-                    : "";
-
-            btn.onclick =
-                () => irParaMapaRuaG02(rua);
-
-            navEl.appendChild(btn);
-        });
-    }
-
     const rua =
         mapaRuaSelecionadaG02;
 
     const limite =
         CONFIG_RUAS_G02[rua];
+
+    /*
+       Navegação rápida das ruas A-J.
+    */
+    if (navEl) {
+        navEl.innerHTML = "";
+
+        ruas.forEach(itemRua => {
+            const vagasDaRua =
+                bancoVagasG02.filter(
+                    vaga => vaga.rua === itemRua
+                );
+
+            const ocupadasDaRua =
+                vagasDaRua.filter(vaga =>
+                    mapa.has(vaga.codigo)
+                ).length;
+
+            const btn =
+                document.createElement("button");
+
+            btn.type = "button";
+
+            btn.className =
+                itemRua === rua
+                    ? "active"
+                    : "";
+
+            btn.onclick =
+                () => irParaMapaRuaG02(itemRua);
+
+            btn.innerHTML = `
+                <span>RUA ${itemRua}</span>
+                <small>${ocupadasDaRua} ocup.</small>
+            `;
+
+            navEl.appendChild(btn);
+        });
+    }
 
     const vagasRua =
         bancoVagasG02.filter(
@@ -13750,17 +14259,17 @@ function renderizarMapaCompletoGalpaoG02() {
             : 0;
 
     mapaEl.innerHTML = `
-        <section class="end-map-fit-street">
-            <div class="end-map-fit-head">
-                <div class="end-map-fit-title">
+        <section class="end-map-v47-street">
+            <div class="end-map-v47-street-head">
+                <div class="end-map-v47-street-name">
                     <span>RUA SELECIONADA</span>
                     <strong>RUA ${rua}</strong>
                     <small>
-                        ${limite} vagas físicas • 5 níveis • lados A e B
+                        ${limite} posições físicas • 5 níveis • lados A e B
                     </small>
                 </div>
 
-                <div class="end-map-fit-stats">
+                <div class="end-map-v47-street-stats">
                     <div class="livre">
                         <span>LIVRES</span>
                         <strong>${livresRua}</strong>
@@ -13778,104 +14287,109 @@ function renderizarMapaCompletoGalpaoG02() {
                 </div>
             </div>
 
-            <div class="end-map-fit-board" id="endMapaFitBoard"></div>
+            <div class="end-map-v47-board" id="endMapaV47Board"></div>
         </section>
     `;
 
     const board =
-        document.getElementById("endMapaFitBoard");
+        document.getElementById("endMapaV47Board");
 
     if (!board) return;
 
     /*
-       Cabeçalho dos números das vagas.
-       Um número ocupa uma coluna; A/B ficam dentro da mesma coluna.
+       Cabeçalho com os números físicos das vagas.
     */
-    const topRow =
+    const numberRow =
         document.createElement("div");
 
-    topRow.className =
-        "end-map-fit-row end-map-fit-numbers";
+    numberRow.className =
+        "end-map-v47-grid-row end-map-v47-number-row";
 
     const corner =
         document.createElement("div");
 
     corner.className =
-        "end-map-fit-level-spacer";
+        "end-map-v47-corner";
 
-    corner.textContent =
-        "NÍVEL";
+    corner.innerHTML = `
+        <span>POSIÇÃO</span>
+    `;
 
-    topRow.appendChild(corner);
+    numberRow.appendChild(corner);
 
-    const numbers =
+    const numberGrid =
         document.createElement("div");
 
-    numbers.className =
-        "end-map-fit-number-grid";
+    numberGrid.className =
+        "end-map-v47-cell-grid";
 
-    numbers.style.gridTemplateColumns =
+    numberGrid.style.gridTemplateColumns =
         `repeat(${limite}, minmax(0, 1fr))`;
 
     for (let numero = 1; numero <= limite; numero++) {
-        const head =
+        const cell =
             document.createElement("div");
 
-        head.className =
-            "end-map-fit-number";
+        cell.className =
+            "end-map-v47-number";
 
-        head.textContent =
+        cell.textContent =
             String(numero).padStart(2, "0");
 
-        numbers.appendChild(head);
+        numberGrid.appendChild(cell);
     }
 
-    topRow.appendChild(numbers);
-    board.appendChild(topRow);
+    numberRow.appendChild(numberGrid);
+    board.appendChild(numberRow);
 
     /*
-       Níveis de cima para baixo: 4,3,2,1,0.
+       Cada nível possui duas linhas independentes:
+       LADO A e LADO B.
+       Isso deixa as posições muito mais legíveis sem scroll lateral.
     */
     for (let nivel = 4; nivel >= 0; nivel--) {
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "end-map-fit-row";
-
-        const level =
-            document.createElement("div");
-
-        level.className =
-            "end-map-fit-level";
-
-        level.innerHTML = `
-            <span>NÍVEL</span>
-            <strong>${nivel}</strong>
-        `;
-
-        row.appendChild(level);
-
-        const grid =
-            document.createElement("div");
-
-        grid.className =
-            "end-map-fit-slots-grid";
-
-        grid.style.gridTemplateColumns =
-            `repeat(${limite}, minmax(0, 1fr))`;
-
-        for (let numero = 1; numero <= limite; numero++) {
-            const numeroFormatado =
-                String(numero).padStart(2, "0");
-
-            const modulo =
+        ["A", "B"].forEach((lado, indiceLado) => {
+            const row =
                 document.createElement("div");
 
-            modulo.className =
-                "end-map-fit-position";
+            row.className =
+                `end-map-v47-grid-row end-map-v47-slot-row ` +
+                `${lado === "A" ? "lado-a" : "lado-b"} ` +
+                `${indiceLado === 1 ? "fim-nivel" : ""}`;
 
-            ["A", "B"].forEach(lado => {
+            const rowLabel =
+                document.createElement("div");
+
+            rowLabel.className =
+                "end-map-v47-row-label";
+
+            rowLabel.innerHTML = `
+                <div class="nivel">
+                    <span>NÍVEL</span>
+                    <strong>${nivel}</strong>
+                </div>
+
+                <div class="lado">
+                    <span>LADO</span>
+                    <strong>${lado}</strong>
+                </div>
+            `;
+
+            row.appendChild(rowLabel);
+
+            const grid =
+                document.createElement("div");
+
+            grid.className =
+                "end-map-v47-cell-grid";
+
+            grid.style.gridTemplateColumns =
+                `repeat(${limite}, minmax(0, 1fr))`;
+
+            for (let numero = 1; numero <= limite; numero++) {
+                const numeroFormatado =
+                    String(numero).padStart(2, "0");
+
                 const codigo =
                     `972${rua.toLowerCase()}${nivel}${numeroFormatado}${lado.toLowerCase()}`;
 
@@ -13894,36 +14408,44 @@ function renderizarMapaCompletoGalpaoG02() {
                 btn.type = "button";
 
                 btn.className =
-                    `end-map-fit-side ${ocupado ? "ocupada" : "livre"}`;
+                    `end-map-v47-slot ${ocupado ? "ocupada" : "livre"}`;
 
                 btn.onclick =
                     () => abrirDetalheVagaMapaCompletoG02(codigo);
 
-                btn.innerHTML = `
-                    <span>${lado}</span>
-                    <i>${ocupado ? "●" : "○"}</i>
-                `;
+                btn.innerHTML = ocupado
+                    ? `
+                        <span class="estado">●</span>
+                        <small>OC</small>
+                    `
+                    : `
+                        <span class="estado">✓</span>
+                        <small>L</small>
+                    `;
 
                 btn.title =
                     ocupado
                         ? (
                             `${codigoExibicao}
 ` +
+                            `OCUPADA
+` +
                             `PA: ${ocupacao.pa || "-"}
 ` +
                             `Produto: ${ocupacao.produto || "-"}`
                         )
-                        : `${codigoExibicao}
-Vaga livre`;
+                        : (
+                            `${codigoExibicao}
+` +
+                            `LIVRE`
+                        );
 
-                modulo.appendChild(btn);
-            });
+                grid.appendChild(btn);
+            }
 
-            grid.appendChild(modulo);
-        }
-
-        row.appendChild(grid);
-        board.appendChild(row);
+            row.appendChild(grid);
+            board.appendChild(row);
+        });
     }
 }
 
